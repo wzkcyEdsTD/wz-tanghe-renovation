@@ -18,12 +18,14 @@ import "./font/DIN.css";
 import * as filters from "./filters"; // 全局过滤器
 import ElementUI from "element-ui";
 import VueBus from "vue-bus";
+import echarts from "echarts";
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
 });
 Vue.use(VueBus);
 Vue.use(ElementUI);
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

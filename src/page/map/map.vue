@@ -5,7 +5,7 @@
     </div>
     <div class="mask-wrapper">
       <div class="left"></div>
-      <div class="bottom"></div>
+      <!-- <div class="bottom"></div> -->
     </div>
   </div>
 </template>

@@ -1,62 +1,102 @@
 <template>
   <div class="target-wrapper">
     <ul class="content">
-      <li class="item">
-        <img class="icon" src="../../../common/images/item1.png" />
+      <li class="item selected">
+        <div class="left">
+          <img class="icon" src="./images/item1.png" />
+        </div>
         <div class="right">
           <div class="title">
             项目总数<span class="small">/2020年</span>
           </div>
           <div class="info">
-            <div class="number">{{WzAllData.outpatientCount}}<span class="tiny">(个)</span></div>
-            <div class="desc"> 
-              <span class="small">同比去年增加投资</span>
-              <span class="amount">-34.223万元</span>
+            <div class="number">31242<span class="tiny">(个)</span></div>
+            <div class="desc">
+              <span class="text">同比去年增加投资</span>
+              <div class="content">
+                <span class="amount" style="color: #FC5453">-34.223万元</span>
+                <i class="ratio-down"></i>
+              </div>
             </div>
           </div>
         </div>
       </li>
       <li class="item">
-        <img class="icon" src="../../../common/images/item2.png" />
+        <div class="left">
+          <img class="icon" src="./images/item2.png" />
+        </div>
         <div class="right">
           <div class="title">
             卡点断点数<span class="small">/2020年</span>
           </div>
           <div class="info">
-            <div class="number">{{WzAllData.designatedHospitals}}<span class="tiny">(个)</span></div>
+            <div class="number">6623<span class="tiny">(个)</span></div>
             <div class="desc">
-              <span class="small">同比去年增加数量</span>
-              <span class="amount">-214个</span>
+              <span class="text">同比去年增加数量</span>
+              <div class="content">
+                <span class="amount" style="color: #FC5453">-214个</span>
+                <i class="ratio-down"></i>
+              </div>
             </div>
           </div>
         </div>
       </li>
       <li class="item">
-        <img class="icon" src="../../../common/images/item3.png" />
+        <div class="left">
+          <img class="icon" src="./images/item3.png" />
+        </div>
         <div class="right">
           <div class="title">
             资源数量<span class="small">/2020年</span>
           </div>
           <div class="info">
-            <div class="number">{{WzAllData.medicalInsuranceInstitution}}<span class="tiny">(个)</span></div>
+            <div class="number">99732<span class="tiny">(个)</span></div>
             <div class="desc">
-              <span class="small">同比去年增加数量</span>
-              <span class="amount">+142个</span>
+              <span class="text">同比去年增加数量</span>
+              <div class="content">
+                <span class="amount" style="color: #2EEA16">+142个</span>
+                <i class="ratio-up"></i>
+              </div>
             </div>
           </div>
         </div>
       </li>
       <li class="item">
-        <img class="icon" src="../../../common/images/item4.png" />
+        <div class="left">
+          <img class="icon" src="./images/item4.png" />
+        </div>
         <div class="right">
           <div class="title">
             未来规划<span class="small">/2020年</span>
           </div>
           <div class="info">
-            <div class="number">{{WzAllData.medicalInsurancePayment}}<span class="tiny">(个)</span></div>
+            <div class="number">98821<span class="tiny">(个)</span></div>
             <div class="desc">
-              <span class="small">同比去年增加数量</span>
-              <span class="amount">+623万元</span>
+              <span class="text">同比去年增加数量</span>
+              <div class="content">
+                <span class="amount" style="color: #2EEA16">+623万元</span>
+                <i class="ratio-up"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="item">
+        <div class="left">
+          <img class="icon" src="./images/item5.png" />
+        </div>
+        <div class="right">
+          <div class="title">
+            项目分析<span class="small">/2020年</span>
+          </div>
+          <div class="info">
+            <div class="number">2882<span class="tiny">(个)</span></div>
+            <div class="desc">
+              <span class="text">同比去年增加数量</span>
+              <div class="content">
+                <span class="amount" style="color: #2EEA16">+623个</span>
+                <i class="ratio-up"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -74,16 +114,16 @@ export default {
     ...mapGetters("map", ["WzAllData"]),
   },
   async mounted() {
-    await this.fetchWzAllData();
+    // await this.fetchWzAllData();
   },
   methods: {
     ...mapActions("map", ["SetWzAllData"]),
     /**
      * 概览数据
      */
-    async fetchWzAllData() {
-      await this.SetWzAllData();
-    },
+    // async fetchWzAllData() {
+    //   await this.SetWzAllData();
+    // },
   },
 };
 </script>
@@ -99,9 +139,29 @@ export default {
     .item {
       display: flex;
       align-items: center;
-      margin-top: 2vh;
-      .icon {
-        width: 0.52rem;
+      margin-top: 3vh;
+      &.selected {
+        .left {
+          .bg-image("./images/light-sel");
+        }
+        .right {
+          .title::before {
+            background-image: linear-gradient(90deg, #16EAEA 0%, transparent 100%);
+          }
+        }
+      }
+      .left {
+        position: relative;
+        width: 54px;
+        height: 35px;
+        .bg-image("./images/light-unsel");
+        .icon {
+          position: absolute;
+          width: 41px;
+          top: -16px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
       }
       .right {
         display: flex;
@@ -118,14 +178,11 @@ export default {
           color: #ffffff;
           text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
           position: relative;
-          // margin-bottom: 3vh;
-          // padding-left: 15px;
         }
         .title::before {
           content: "";
           position: absolute;
           bottom: 0;
-          // left: 5px;
           width: 100px;
           height: 15px;
           z-index: -1;
@@ -136,6 +193,7 @@ export default {
           margin-top: .7vh;
           display: flex;
           .number {
+            width: 120px;
             color: #fff;
             font-size: 27px;
             font-family: DIN;
@@ -144,10 +202,33 @@ export default {
           .desc {
             display: flex;
             flex-direction: column;
-            margin-left: 30px;
-            .amount {
-              font-family: DIN;
-              font-size: 12px;
+            justify-content: space-between;
+            font-size: 12px;
+            .text {
+              color: #c9c9c9;
+              font-family: PingFang;
+            }
+            .content {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              .amount {
+                font-family: DIN;
+              }
+              >i {
+                position: relative;
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+              }
+              .ratio-up {
+                border-bottom: 5px solid #04b72d;
+              }
+              .ratio-down {
+                border-top: 5px solid #fc5453;
+              }
             }
           }
         }

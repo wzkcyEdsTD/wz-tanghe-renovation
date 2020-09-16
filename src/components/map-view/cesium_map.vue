@@ -3,6 +3,7 @@
     <div id="cesiumContainer" />
     <div v-if="mapLoaded">
       <TotalTarget />
+      <Summary />
     </div>
   </div>
 </template>
@@ -10,6 +11,7 @@
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
 import TotalTarget from "./totalTarget/totalTarget";
+import Summary from "./summary/summary";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
 const Cesium = window.Cesium;
@@ -27,7 +29,8 @@ export default {
     ...mapGetters("map", ["medicalListWithGeometry"]),
   },
   components: {
-    TotalTarget
+    TotalTarget,
+    Summary
   },
   async mounted() {
     this.init3DMap(() => {

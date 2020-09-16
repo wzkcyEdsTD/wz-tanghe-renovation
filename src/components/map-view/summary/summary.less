@@ -1,0 +1,175 @@
+.summary {
+  position: fixed;
+  box-sizing: border-box;
+  top: 6vh;
+  bottom: 40px;
+  overflow: hidden;
+  right: 10px;
+  width: 360px;
+  // height: 700px;
+  color: white;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  z-index: 999;
+  .search-container {
+    margin-bottom: 20px;
+    .search-header {
+      display        : flex;
+      align-items    : center;
+      justify-content: space-between;
+      width          : 99%;
+      margin-top     : 5px;
+      .bg-image('./images/search-input');
+      .searchFilterInput {
+        width: 80%;
+        .el-input__inner {
+          background: none;
+          border    : none;
+          color     : white;
+        }
+      }
+      .button-container {
+        width          : 20%;
+        display        : flex;
+        justify-content: space-around;
+        .button-item {
+          position: relative;
+          flex    : 1;
+          &:after {
+            content         : " ";
+            position        : absolute;
+            right           : 1px;
+            top             : 50%;
+            width           : 1px;
+            height          : 0.15rem;
+            bottom          : 0;
+            border-right    : 1px solid #165FEA;
+            transform-origin: 100% 0;
+            transform       : scaleX(0.5);
+            transform       : translateY(-50%);
+          }
+          &:last-child {
+            &:after {
+              display: none;
+            }
+          }
+        }
+        .icon-common {
+          display: block;
+          margin-top: 5px;
+          width  : 0.27rem;
+          height : 0.27rem;
+        }
+        .icon-clear {
+          .bg-image('./images/clear');
+        }
+        .icon-search {
+          .bg-image('./images/search');
+        }
+      }
+    }
+    .result-wrapper {
+      width  : 99%;
+      height : 20vh;
+      font-family: PingFang;
+      .result-list {
+        height    : 100%;
+        overflow-y: auto;
+        .result-item {
+          display        : flex;
+          justify-content: space-between;
+          align-items    : center;
+          padding        : 5px 0 5px 15px;
+          height: 34px;
+          line-height: 34px;
+          font-size: 13px;
+          .index {
+            flex: 1;
+          }
+          .name {
+            flex: 3;
+          }
+          .speed {
+            flex: 1;
+          }
+          &.header {
+            font-size: 16px;
+          }
+        }
+        li:nth-child(odd) {
+          background: rgba(0, 12, 34, 0.69);
+        }
+        li:nth-child(even) {
+          background: rgba(22, 95, 234, 0.24);
+        }
+      }
+    }
+  }
+
+  .composition-container {
+    .echart {
+      width: 100%;
+    }
+    .small {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+      font-family: DIN;
+      -webkit-transform-origin-x: 0;
+      -webkit-transform: scale(0.9);
+    }
+  }
+
+  .result-list::-webkit-scrollbar {
+    width     : 5px;
+    background: rgba(1, 41, 38, .3);
+  }
+  
+  .result-list::-webkit-scrollbar-thumb {
+    background-color: #073691;
+    box-shadow      : 0px 3px 6px 0px #012623;
+  }
+
+  .title-wrapper {
+    display: flex;
+    align-items: flex-end;
+    .pre {
+      display: block;
+      width: 10px;
+      height: 24px;
+      background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
+      transform: skewX(-30deg);
+    }
+    .title {
+      display: block;
+      height: 35px;
+      line-height: 35px;
+      font-family: YouSheBiaoTiHei;
+      font-size: 27px;
+      letter-spacing: 0px;
+      color: #ffffff;
+      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+      position: relative;
+      padding-left: 12px;
+    }
+    .title::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 2px;
+      width: 300px;
+      height: 15px;
+      z-index: -1;
+      background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+      transform: skewX(-30deg);
+    }
+    .desc {
+      margin-left: 4px;
+      font-size: 11px;
+      font-family: PingFang;
+      color: #fff;
+      opacity: .8;
+    }
+  }
+}

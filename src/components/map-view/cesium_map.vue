@@ -4,6 +4,9 @@
     <div v-if="mapLoaded">
       <TotalTarget />
       <Summary />
+      <RoadLine ref="roadline" />
+      <LayerHub />
+      <DetailPopup ref="detailPopup" />
     </div>
   </div>
 </template>
@@ -12,11 +15,21 @@
 import { ServiceUrl } from "config/server/mapConfig";
 import TotalTarget from "./totalTarget/totalTarget";
 import Summary from "./summary/summary";
+import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
+import LayerHub from "./layerHub/layerHub";
+import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
 const Cesium = window.Cesium;
 
 export default {
+  components: {
+    TotalTarget,
+    Summary,
+    RoadLine,
+    LayerHub,
+    DetailPopup
+  },
   data() {
     return {
       mapLoaded: false,
@@ -28,68 +41,28 @@ export default {
   computed: {
     ...mapGetters("map", ["medicalListWithGeometry"]),
   },
-  components: {
-    TotalTarget,
-    Summary
-  },
   async mounted() {
     this.init3DMap(() => {
       this.mapLoaded = true;
       this.initPostRender();
       this.initHandler();
-      this.validate();
     });
     this.eventRegsiter();
   },
   methods: {
-    async validate() {
-      // let authorCode = this.$route.query.authorCode;
-      // if (!authorCode) return (this.authFailshallPop = true);
-      // const res = await doValidation(authorCode);
-      // res ? (this.validated = true) : (this.authFailshallPop = true);
-      this.validated = true;
-    },
     initPostRender() {
       window.earth.scene.postRender.addEventListener(() => {
-        if (
-          !window.earth ||
-          !this.mapLoaded ||
-          !Object.keys(this.$refs).length
-        )
-          return;
-        //  *****[medicalList] 医疗点位*****
-        const medicalList = this.medicalListWithGeometry;
-        if (medicalList && medicalList.length) {
-          const extent = getCurrentExtent();
-          const G_medicalList = [];
-          medicalList.map((item) => {
-            if (item.geometry && isContainByExtent(extent, item.geometry)) {
-              const { x, y } = item.geometry;
-              const pointToWindow = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
-                window.earth.scene,
-                Cesium.Cartesian3.fromDegrees(x, y, 0)
-              );
-              G_medicalList.push({ ...item, pointToWindow });
-            }
-          });
-          this.$refs.medicalPopup &&
-            this.$refs.medicalPopup.doPopup(G_medicalList);
-        } else {
-          this.$refs.medicalPopup && this.$refs.medicalPopup.doPopup([]);
-        }
-        //  *****[videoCircle]  事件传递点位*****
-        if (this.$refs.videoCircle.shallPop) {
-          this.$refs.videoCircle && this.$refs.videoCircle.doPopup();
-        }
-        //  *****[detailPopup]  详情查看点位*****
-        const forceEntity = this.$refs.detailPopup.forceEntity;
-        if (forceEntity.extra_data) {
-          const pointToWindow = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
-            window.earth.scene,
-            forceEntity.position
-          );
-          this.$refs.detailPopup.renderForceEntity(pointToWindow);
-        }
+          if (!window.earth || !this.mapLoaded || !Object.keys(this.$refs).length)
+            return;
+          //  *****[detailPopup]  详情查看点位*****
+          const forceEntity = this.$refs.detailPopup.forceEntity;
+          if (forceEntity.extra_data) {
+            const pointToWindow = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
+              window.earth.scene,
+              forceEntity.position
+            );
+            this.$refs.detailPopup.renderForceEntity(pointToWindow);
+          }
       });
     },
     initHandler() {
@@ -99,17 +72,11 @@ export default {
       // 监听左键点击事件
       this.handler.setInputAction((e) => {
         const pick = window.earth.scene.pick(e.position);
+        console.log('pick', pick)
         if (!pick.id || typeof pick.id != "object") return;
-        //  *****[videoCircle]  监控视频点*****
-        if (pick && pick.id.id && ~pick.id.id.indexOf("videopoint_")) {
-          this.$refs.videoCircle.doSetRtmpList();
-          this.$bus.$emit("cesium-3d-videoPointClick", {
-            mp_id: pick.id.id,
-            mp_name: pick.id.name,
-          });
-        }
         //  *****[detailPopup]  资源详情点*****
         if (pick.id.extra_data) {
+          console.log('gogogo')
           this.$refs.detailPopup.getForceEntity({
             extra_data: pick.id.extra_data,
             fix_data: pick.id.fix_data,
@@ -121,16 +88,24 @@ export default {
     eventRegsiter() {
       this.$bus.$off("cesium-3d-switch");
       this.$bus.$on("cesium-3d-switch", ({ value }) => {
-        const _LAYER_ = window.earth.scene.layers.find("baimo");
-        _LAYER_.visible = !value ? false : true;
         //  底图切换
-        this.datalayer.show = !value ? false : true;
-        this.imagelayer
-          ? (this.imagelayer.show = !value ? true : false)
+        // this.datalayer.show = !value ? false : true;
+        // this.imagelayer
+        //   ? (this.imagelayer.show = !value ? true : false)
+        //   : !value
+        //   ? (this.imagelayer = window.earth.imageryLayers.addImageryProvider(
+        //       new Cesium.SuperMapImageryProvider({
+        //         url: ServiceUrl.SWImage,
+        //       })
+        //     ))
+        //   : undefined;
+        this.imagelayer.show = !value ? false : true;
+        this.datalayer
+          ? (this.datalayer.show = !value ? true : false)
           : !value
-          ? (this.imagelayer = window.earth.imageryLayers.addImageryProvider(
+          ? (this.datalayer = window.earth.imageryLayers.addImageryProvider(
               new Cesium.SuperMapImageryProvider({
-                url: ServiceUrl.SWImage,
+                url: ServiceUrl.DataImage,
               })
             ))
           : undefined;
@@ -147,9 +122,16 @@ export default {
       viewer.scene.globe.baseColor = new Cesium.Color.fromCssColorString(
         "rgba(13,24,45, 1)"
       );
-      this.datalayer = viewer.imageryLayers.addImageryProvider(
+      window.earth = viewer;
+
+      // this.datalayer = viewer.imageryLayers.addImageryProvider(
+      //   new Cesium.SuperMapImageryProvider({
+      //     url: ServiceUrl.DataImage,
+      //   })
+      // );
+      this.imagelayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.DataImage,
+          url: ServiceUrl.SWImage,
         })
       );
       const mapMvt = viewer.scene.addVectorTilesMap({
@@ -157,7 +139,7 @@ export default {
         name: "mapMvt",
         viewer,
       });
-      window.earth = viewer;
+
       // const baimoPromise = viewer.scene.addS3MTilesLayerByScp(
       //   ServiceUrl.WZBaimo,
       //   {
@@ -188,35 +170,27 @@ export default {
       //   };
       //   LAYER.visibleDistanceMax = 5000;
       // });
+
+      const tanghePromise = viewer.scene.addS3MTilesLayerByScp(
+        ServiceUrl.TANGHE3D,
+        {
+          name: "tanghe3d",
+        }
+      );
+      Cesium.when(tanghePromise, () => {
+        const LAYER = viewer.scene.layers.find("tanghe3d");
+        LAYER.visibleDistanceMax = 5000;
+      })
+
       // 移除缓冲圈
       $(".cesium-widget-credits").hide();
       viewer.scene.globe.depthTestAgainstTerrain = false;
       this.cameraMove();
-      this.addPointLight();
       fn && fn();
-    },
-    addPointLight() {
-      // window.earth.scene.bloomEffect.threshold = 0.85;
-      // window.earth.scene.bloomEffect.bloomIntensity = 5;
-      window.earth.scene.fxaa = true;
-      // const position = new Cesium.Cartesian3(
-      //   -2876658.347784866,
-      //   4840022.695245349,
-      //   2996644.580693739
-      // );
-      // const options = {
-      //   intensity: 0.5,
-      // };
-      // const directionalLight_v = new Cesium.DirectionalLight(position, options);
-      // window.earth.scene.addLightSource(directionalLight_v);
     },
     cameraMove() {
       window.earth.scene.camera.setView({
-        destination: {
-          x: -2875301.1196146533,
-          y: 4843728.17360857,
-          z: 2993569.51865382,
-        },
+        destination : Cesium.Cartesian3.fromDegrees(120.66625660935506, 27.981332018707733, 1000.0),
         orientation: {
           heading: 0.0033168860454315663,
           pitch: -0.5808830390057396,

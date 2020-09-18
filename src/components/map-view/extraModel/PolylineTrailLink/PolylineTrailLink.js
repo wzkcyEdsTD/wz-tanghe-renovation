@@ -1,3 +1,11 @@
+/*
+ * @Author: eds
+ * @Date: 2020-09-10 10:14:37
+ * @LastEditTime: 2020-09-10 20:25:30
+ * @LastEditors: eds
+ * @Description:
+ * @FilePath: \wz-city-culture-tour\src\components\sourcelayer\extraModel\PolylineTrailLink\PolylineTrailLink.js
+ */
 Object.defineProperties(PolylineTrailLinkMaterialProperty.prototype, {
   isConstant: {
     get: function() {

@@ -5,17 +5,34 @@
       class="leaflet-popup"
       :style="{transform:`translate3d(${forcePosition.x}px,${forcePosition.y}px, 0)`}"
     >
-      <a class="leaflet-popup-close-button" href="#" @click="closePopup">×</a>
+      <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
       <div class="leaflet-popup-content-wrapper">
         <div id="forcePopUpLink" class="leaflet-popup-content">
           <div class="leaflet-popup-content">
-            <header>{{forceEntity.extra_data.SHORTNAME || forceEntity.extra_data.NAME}}</header>
-            <ul class="content-body">
-              <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
-                <span>{{key}}</span>
-                <span>{{item}}</span>
-              </li>
-            </ul>
+            <div class="desc-wrapper">
+              <div class="item">
+                <span class="label">点位名称：</span>
+                <span class="content">{{forceEntity.extra_data.NAME}}</span>
+              </div>
+              <div class="item">
+                <span class="label">地址：</span>
+                <span class="content">{{forceEntity.extra_data.ADDR_SCOPE}}</span>
+              </div>
+              <div class="item">
+                <span class="label">建设状态：</span>
+                <span class="content state">{{forceEntity.extra_data.STATE}}</span>
+              </div>
+              <div class="item">
+                <span class="label">负责人：</span>
+                <span class="content">{{forceEntity.extra_data.ZHB_DEPTID}}</span>
+              </div>
+            </div>
+            <!-- <div class="btn-wrapper">
+              <span>视频</span>
+              <span>无人机</span>
+              <span>全景</span>
+              <span>效果</span>
+            </div>-->
           </div>
         </div>
       </div>
@@ -42,6 +59,7 @@ export default {
      */
     getForceEntity(forceEntity) {
       this.forceEntity = forceEntity;
+      console.log("olei", forceEntity);
     },
     /**
      *  框体移动
@@ -74,67 +92,54 @@ export default {
 
   .leaflet-popup-close-button {
     position: absolute;
-    top: 20px;
-    right: 30px;
-    text-align: center;
-    width: 18px;
-    height: 18px;
-    font: 20px/14px Tahoma, Verdana, sans-serif;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    background: transparent;
-    cursor: pointer;
+    top: -25px;
+    right: -15px;
+    width: 38px;
+    height: 38px;
+    .bg-image("./images/detail_close2");
   }
 
   .leaflet-popup-content-wrapper {
-    background-image: url("./images/detail.png");
+    background-image: url("./images/detail2.png");
     text-align: center;
-    height: 151px;
-    width: 271px;
+    height: 253px;
+    width: 253px;
     box-sizing: border-box;
-    padding: 28px 26px;
+    padding: 14px;
   }
 
   .leaflet-popup-content {
     color: #fff;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
     height: 100%;
-    > header {
-      height: 24px;
-      line-height: 24px;
-      box-sizing: border-box;
-      padding-right: 20px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    > .content-body {
-      flex: 1;
-      overflow-y: auto;
-      > li {
-        font-size: 14px;
-        height: 22px;
-        line-height: 22px;
-        font-weight: 300;
-        float: left;
-        width: 100%;
-        // border-bottom: 1px rgba(255,255,255,0.6) solid;
-        > span {
+    .desc-wrapper {
+      text-align: left;
+      .item {
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        font-family: PingFang;
+        &::before {
+          content: "";
           display: inline-block;
-          vertical-align: top;
-          height: 100%;
-          float: left;
-          flex: 1;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          width: 122px;
+          width: 4px;
+          height: 4px;
+          background: #165FEA;
+          border-radius: 50%;
+          margin-right: 3px;
         }
-        > span:first-child {
-          width: 90px;
+        .label {
+          width: 80px;
+          font-size: 14px;
+        }
+        .content {
+          flex: 1;
+          font-size: 12px;
+          color: #C9C9C9;
+          line-height: 18px;
+        }
+        .state {
+          color: #16EAEA;
         }
       }
     }

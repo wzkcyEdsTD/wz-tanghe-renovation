@@ -11,19 +11,19 @@
           </div>
           <div class="info">
             <div class="number">31242<span class="tiny">(个)</span></div>
-            <div class="desc">
+            <!-- <div class="desc">
               <span class="text">同比去年增加投资</span>
               <div class="content">
                 <span class="amount" style="color: #FC5453">-34.223万元</span>
                 <i class="ratio-down"></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </li>
       <li class="item">
         <div class="left">
-          <img class="icon" src="./images/item2.png" />
+          <img class="icon item2" src="./images/item2.png" />
         </div>
         <div class="right">
           <div class="title">
@@ -31,19 +31,19 @@
           </div>
           <div class="info">
             <div class="number">6623<span class="tiny">(个)</span></div>
-            <div class="desc">
+            <!-- <div class="desc">
               <span class="text">同比去年增加数量</span>
               <div class="content">
                 <span class="amount" style="color: #FC5453">-214个</span>
                 <i class="ratio-down"></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </li>
       <li class="item">
         <div class="left">
-          <img class="icon" src="./images/item3.png" />
+          <img class="icon item3" src="./images/item3.png" />
         </div>
         <div class="right">
           <div class="title">
@@ -51,19 +51,19 @@
           </div>
           <div class="info">
             <div class="number">99732<span class="tiny">(个)</span></div>
-            <div class="desc">
+            <!-- <div class="desc">
               <span class="text">同比去年增加数量</span>
               <div class="content">
                 <span class="amount" style="color: #2EEA16">+142个</span>
                 <i class="ratio-up"></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </li>
       <li class="item">
         <div class="left">
-          <img class="icon" src="./images/item4.png" />
+          <img class="icon item4" src="./images/item4.png" />
         </div>
         <div class="right">
           <div class="title">
@@ -71,19 +71,19 @@
           </div>
           <div class="info">
             <div class="number">98821<span class="tiny">(个)</span></div>
-            <div class="desc">
+            <!-- <div class="desc">
               <span class="text">同比去年增加数量</span>
               <div class="content">
                 <span class="amount" style="color: #2EEA16">+623万元</span>
                 <i class="ratio-up"></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </li>
       <li class="item">
         <div class="left">
-          <img class="icon" src="./images/item5.png" />
+          <img class="icon item5" src="./images/item5.png" />
         </div>
         <div class="right">
           <div class="title">
@@ -91,13 +91,13 @@
           </div>
           <div class="info">
             <div class="number">2882<span class="tiny">(个)</span></div>
-            <div class="desc">
+            <!-- <div class="desc">
               <span class="text">同比去年增加数量</span>
               <div class="content">
                 <span class="amount" style="color: #2EEA16">+623个</span>
                 <i class="ratio-up"></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </li>
@@ -161,6 +161,15 @@ export default {
           top: -16px;
           left: 50%;
           transform: translateX(-50%);
+        }
+        .item2 {
+          width: 46px;
+        }
+        .item3 {
+          width: 42px;
+        }
+        .item5 {
+          width: 44px;
         }
       }
       .right {

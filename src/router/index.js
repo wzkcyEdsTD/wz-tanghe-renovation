@@ -15,15 +15,15 @@ const router = new Router({
   mode: "hash",
   routes: [{
       path: "/",
-      redirect: "Map"
+      redirect: "sourcelayer"
     },
     {
-      path: "/map",
-      name: "Map",
+      path: "/sourcelayer",
+      name: "sourcelayer",
       meta: {
         title: "智慧塘河"
       },
-      component: resolve => require(["page/map/map"], resolve)
+      component: resolve => require(["page/sourcelayer/sourcelayer"], resolve)
     },
   ]
 })

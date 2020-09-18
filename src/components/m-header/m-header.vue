@@ -5,7 +5,7 @@
       <img class="shadow" src="./images/shadow.png" alt="">
     </div>
     <div class="info">
-      <span class="time">2020年3月26日 12:43:22</span>
+      <span class="time">2020年8月26日 12:43:22</span>
     </div>
   </div>
 </template>

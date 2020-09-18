@@ -31,7 +31,9 @@ export const ServiceUrl = {
       "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012JZ/config",
     OTHERS:
       "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012QT/config"
-  }
+  },
+  // 三维塘河
+  TANGHE3D: "http://172.20.83.223:8098//iserver/services/3D-TangHe3D/rest/realspace/datas/th/config"
 };
 
 export const BimSourceURL = {

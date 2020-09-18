@@ -69,7 +69,7 @@
         <span class="title">项目构成</span>
         <span class="desc">截至2020年5月15日</span>
       </div>
-      <div style="height:200px;" class="echart" ref="pieEchart"></div>
+      <div style="height:180px;" class="echart" ref="pieEchart"></div>
     </div>
     <div class="composition-container">
       <div class="title-wrapper">
@@ -89,6 +89,7 @@
       <span class="small">单位：个</span>
       <div style="height:160px;" class="echart" ref="lineEchart"></div>
     </div>
+    <div class="mask-right"></div>
   </div>
 </template>
 
@@ -261,7 +262,7 @@ export default {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: "#16EAEA" },
-                  { offset: 1, color: "rgba(19,94,115, 0.2)" },
+                  { offset: 1, color: "rgba(19,94,115,0)" },
                 ]),
               },
             },
@@ -283,7 +284,7 @@ export default {
             color: "#fff",
             fontSize: 11,
           },
-          selectedMode: false,
+          // selectedMode: false,
           data: ["公益性项目", "基础类项目", "产业发展项目"],
         },
         color: ["#FC5453", "#FEEC00", "#16EAEA"],
@@ -292,18 +293,6 @@ export default {
           top: "8%",
           width: '85%',
         },
-        // xAxis: [
-        //   {
-        //     type: "category",
-        //     boundaryGap: false,
-        //     data: ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-        //   },
-        // ],
-        // yAxis: [
-        //   {
-        //     type: "value",
-        //   },
-        // ],
         xAxis: {
           boundaryGap: false,
           axisTick: {
@@ -346,11 +335,11 @@ export default {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: "#770F0F" },
-                  { offset: 1, color: "rgba(252,84,83,0.2)" }
+                  { offset: 1, color: "rgba(252,84,83,0)" }
                 ])
               }
             },
-            symbol: 'none',
+            // symbol: 'none',
             data: [720, 132, 101, 134, 90, 230, 210, 542],
           },
           {
@@ -360,11 +349,11 @@ export default {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: "#FEEC00" },
-                  { offset: 1, color: "rgba(255,255,255,0.2)" }
+                  { offset: 1, color: "rgba(255,255,255,0)" }
                 ])
               }
             },
-            symbol: 'none',
+            // symbol: 'none',
             data: [620, 182, 191, 234, 290, 330, 310, 678],
           },
           {
@@ -374,11 +363,11 @@ export default {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: "#0A6589" },
-                  { offset: 1, color: "rgba(0,255,235,0.2)" }
+                  { offset: 1, color: "rgba(0,255,235,0)" }
                 ])
               }
             },
-            symbol: 'none',
+            // symbol: 'none',
             data: [550, 232, 201, 154, 190, 330, 410, 721],
           }
         ],

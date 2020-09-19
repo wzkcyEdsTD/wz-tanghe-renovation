@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import CesiumMap from "components/map-view/cesium_map";
+import CesiumMap from "components/sourcelayer/cesium_map";
 import { mapGetters, mapActions } from "vuex";
 
 export default {

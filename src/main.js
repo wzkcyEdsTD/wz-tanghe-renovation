@@ -19,6 +19,10 @@ import * as filters from "./filters"; // 全局过滤器
 import ElementUI from "element-ui";
 import VueBus from "vue-bus";
 import echarts from "echarts";
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
+
+Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);

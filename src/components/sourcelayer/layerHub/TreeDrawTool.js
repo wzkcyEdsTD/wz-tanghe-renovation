@@ -94,7 +94,15 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
     );
     forceDrawFeatures = [...drawFeatures];
   } else {
-    forceDrawFeatures = result.features;
+    if (node.id === '项目') {
+      result.features.forEach(item => {
+        if (item.attributes.XMJZQK) {
+          forceDrawFeatures.push(item)
+        }
+      })
+    } else {
+      forceDrawFeatures = result.features;
+    }
   }
 
   forceDrawFeatures.map(item => {
@@ -150,7 +158,7 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
           4
         ),
         billboard: {
-          image: `/static/images/map-ico/${node.icon}.png`,
+          image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.XMJZQK.trim()}.png`,
           width: 43,
           height: 74,
           disableDepthTestDistance: Number.POSITIVE_INFINITY

@@ -1,93 +1,101 @@
 <template>
   <div id="forcePopUp" v-if="showPopUp">
     <div id="forcePopUpContent" class="leaflet-popup">
-      <div class="leaflet-popup-title">
-        <span class="pre"></span>
-        <span class="title">详情</span>
-      </div>
       <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
       <div class="leaflet-popup-content-wrapper">
         <div id="forcePopUpLink" class="leaflet-popup-content">
           <div class="leaflet-popup-content">
+            <div class="name-wrapper">
+              <span class="name">{{forceEntity.NAME}}</span>
+            </div>
             <div class="img-wrapper">
-              <swiper ref="mySwiper" class="swiper-wrapper" :options="swiperOptions">
-                <swiper-slide v-for="(item,i) in imgs" :key="i" class="swiper-item">
-                  <img :src="`/static/images/${item}.png`" />
-                </swiper-slide>
-                <div class="swiper-pagination" slot="pagination"></div>
-              </swiper>
+              <div class="flex-container">
+                <div class="swiper-buttons swiper-button-left"></div>
+                <swiper ref="mySwiper" class="swiper-wrapper" :options="swiperOptions">
+                  <swiper-slide v-for="(item,i) in imgs" :key="i" class="swiper-item">
+                    <img :src="`/static/images/${item}.png`" />
+                  </swiper-slide>
+                  <div class="swiper-pagination" slot="pagination"></div>
+                </swiper>
+                <div class="swiper-buttons swiper-button-right"></div>
+              </div>
+              <div class="decorate-line"></div>
             </div>
             <div class="desc-wrapper">
               <div class="desc-item">
-                <span class="label">点位名称：</span>
-                <span class="content">{{forceEntity.NAME}}</span>
+                <div class="title">
+                  <span class="title-pre"></span>投资类型
+                </div>
+                <div class="content">{{forceEntity.FUNDTYPE}}</div>
               </div>
               <div class="desc-item">
-                <span class="label">建设规模和内容：</span>
-                <span class="content">{{forceEntity.CONTENTGM}}</span>
-              </div>
-              <div class="flex">
-                <div class="desc-item">
-                  <span class="label">投资类型：</span>
-                  <span class="content">{{forceEntity.FUNDTYPE}}</span>
+                <div class="title">
+                  <span class="title-pre"></span>建设类型
                 </div>
-                <div class="desc-item">
-                  <span class="label">建设类型：</span>
-                  <span class="content">{{forceEntity.CONSTYPE_1}}-{{forceEntity.CONSTYPE2}}</span>
-                </div>
-              </div>
-              <div class="flex">
-                <div class="desc-item">
-                  <span class="label">建设性质：</span>
-                  <span class="content">{{forceEntity.STATE}}</span>
-                </div>
-                <div class="desc-item">
-                  <span class="label">建设地点：</span>
-                  <span class="content">{{forceEntity.ADDR_SCOPE}}-{{forceEntity.ADDR_STREET}}</span>
-                </div>
-              </div>
-              <div class="flex">
-                <div class="desc-item">
-                  <span class="label">计划建成期限：</span>
-                  <span class="content">{{forceEntity.NAME}}</span>
-                </div>
-                <div class="desc-item">
-                  <span class="label">总投资：</span>
-                  <span class="content">{{forceEntity.TOTALAMOUNT}}</span>
-                </div>
+                <div class="content">{{forceEntity.CONSTYPE_1}}{{forceEntity.CONSTYPE2?`-${forceEntity.CONSTYPE2}`:''}}</div>
               </div>
               <div class="desc-item">
-                <span class="label">责任单位：</span>
-                <span class="content">{{forceEntity.ZR_DEPTID}}</span>
+                <div class="title">
+                  <span class="title-pre"></span>建设性质
+                </div>
+                <div class="content">{{forceEntity.STATE}}</div>
               </div>
               <div class="desc-item">
-                <span class="label">组织实施单位：</span>
-                <span class="content">{{forceEntity.SS_DEPTID}}</span>
+                <div class="title">
+                  <span class="title-pre"></span>建设地点
+                </div>
+                <div class="content">{{forceEntity.ADDR_SCOPE}}{{forceEntity.ADDR_STREET?`-${forceEntity.ADDR_STREET}`: ''}}</div>
               </div>
               <div class="desc-item">
-                <span class="label">2020年项目投资计划：</span>
+                <div class="title">
+                  <span class="title-pre"></span>计划建设期限
+                </div>
+                <div class="content">{{forceEntity.CONSYEARB2}}-{{forceEntity.CONSYEARE2}}</div>
+              </div>
+              <div class="desc-item">
+                <div class="title">
+                  <span class="title-pre"></span>总投资
+                </div>
+                <div class="content">{{forceEntity.TOTALAMOUNT}}</div>
+              </div>
+              <div class="desc-item">
+                <div class="title">
+                  <span class="title-pre"></span>责任单位
+                </div>
+                <div class="content">{{forceEntity.ZR_DEPTID}}</div>
+              </div>
+              <div class="desc-item">
+                <div class="title">
+                  <span class="title-pre"></span>组织实施单位
+                </div>
+                <div class="content">{{forceEntity.SS_DEPTID}}</div>
               </div>
             </div>
             <div class="plan-wrapper">
-              <div class="plan-item">
-                <div class="icon icon1"></div>
-                <div class="title">投资计划</div>
-                <div class="state">493</div>
+              <div class="title">
+                <span class="title-pre"></span>2020年项目投资计划
               </div>
-              <div class="plan-item">
-                <div class="icon icon2"></div>
-                <div class="title">年末工程形象进度</div>
-                <div class="state">建成</div>
-              </div>
-              <div class="plan-item">
-                <div class="icon icon3"></div>
-                <div class="title">截至5月15日投资额</div>
-                <div class="state">493</div>
-              </div>
-              <div class="plan-item">
-                <div class="icon icon4"></div>
-                <div class="title">截至5月15日形象进度</div>
-                <div class="state">完工</div>
+              <div class="plan-flex">
+                <div class="plan-item">
+                  <div class="icon icon1"></div>
+                  <div class="label">投资计划</div>
+                  <div class="state">493</div>
+                </div>
+                <div class="plan-item">
+                  <div class="icon icon2"></div>
+                  <div class="label">年末工程形象进度</div>
+                  <div class="state">建成</div>
+                </div>
+                <div class="plan-item">
+                  <div class="icon icon3"></div>
+                  <div class="label">截至5月15日投资额</div>
+                  <div class="state">493</div>
+                </div>
+                <div class="plan-item">
+                  <div class="icon icon4"></div>
+                  <div class="label">截至5月15日形象进度</div>
+                  <div class="state">完工</div>
+                </div>
               </div>
             </div>
             <div class="btn-wrapper">
@@ -110,20 +118,14 @@ export default {
       showPopUp: false,
       forceEntity: {},
       swiperOptions: {
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "3",
-        coverflowEffect: {
-          rotate: -40,
-          stretch: -20,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
-        },
+        slidesPerView: 1,
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-right",
+          prevEl: ".swiper-button-left",
         },
       },
       imgs: ["img", "img", "img", "img"],
@@ -158,63 +160,52 @@ export default {
     transform: translate(-50%, -50%);
     text-align: center;
   }
-
-  .leaflet-popup-title {
-    position: absolute;
-    top: -20px;
-    left: 5px;
+  .name-wrapper {
     display: flex;
     align-items: flex-end;
-    .pre {
-      display: block;
-      width: 6px;
-      height: 18px;
-      background: linear-gradient(
-        180deg,
-        #16eaea 0%,
-        rgba(11, 48, 117, 0) 100%
-      );
-      transform: skewX(-30deg);
-    }
-    .title {
+    margin-top: 30px;
+    .name {
       display: block;
       height: 25px;
       line-height: 25px;
       font-family: YouSheBiaoTiHei;
-      font-size: 17px;
+      font-size: 26px;
       letter-spacing: 0px;
       color: #ffffff;
       text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
       position: relative;
       padding-left: 12px;
+      z-index: 2;
     }
-    .title::before {
+    .name::before {
       content: "";
       position: absolute;
-      bottom: 0;
-      left: 2px;
-      width: 300px;
+      bottom: -3px;
+      left: 5px;
+      width: 200px;
       height: 15px;
       z-index: -1;
-      background-image: linear-gradient(90deg, #1950b9 0%, transparent 100%);
+      background-image: linear-gradient(90deg, #16EAEA 0%, transparent 100%);
       transform: skewX(-30deg);
     }
   }
 
   .leaflet-popup-close-button {
     position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 38px;
-    height: 38px;
-    .bg-image("./images/detail_close2");
+    top: -15px;
+    right: -30px;
+    width: 51px;
+    height: 51px;
+    cursor: pointer;
+    .bg-image("./images/detail_close");
+    z-index: 999;
   }
 
   .leaflet-popup-content-wrapper {
     background-image: url("./images/detail.png");
     text-align: center;
-    height: 462px;
-    width: 500px;
+    height: 803px;
+    width: 800px;
     box-sizing: border-box;
     padding: 14px;
   }
@@ -224,80 +215,94 @@ export default {
     overflow: hidden;
     height: 100%;
     .desc-wrapper {
-      margin-top: 10px;
-      text-align: left;
+      display: flex;
+      flex-wrap:wrap;
       .desc-item {
-        margin-bottom: 5px;
         display: flex;
-        align-items: top;
-        font-family: PingFang;
-        line-height: 18px;
-        .label {
-          font-size: 12px;
-          &::before {
-            content: "";
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background: #165fea;
-            border-radius: 50%;
-            margin-right: 3px;
-            vertical-align: middle;
-          }
-        }
+        flex-direction: column;
+        align-items: center;
+        margin: 15px 0;
+        width: 25%;
+        border-right: 1px solid #16EAEA;
         .content {
-          flex: 1;
-          font-size: 12px;
-          color: #c9c9c9;
+          margin: 10px 0;
+          padding: 0 15px;
+          font-family: PingFang;
+          font-size: 16px;
         }
-        .state {
-          color: #16eaea;
-        }
-      }
-      .flex {
-        > .desc-item {
-          width: 50%;
-        }
+        &:nth-child(4n) {
+           border-right: none;
+       }
       }
     }
     .img-wrapper {
       position: relative;
-      height: 100px;
+      margin-top: 10px;      
+      .flex-container {
+        display: flex;
+        align-items: top;
+        justify-content: center;
+        height: 218px;
+      }
+      .swiper-buttons {
+        cursor: pointer;
+        width: 28px;
+        height: 180px;
+        .bg-image("./images/swiper-btn");
+      }
+      .swiper-button-left {
+        margin-right: 20px;
+      }
+      .swiper-button-right {
+        margin-left: 20px;
+        transform: rotate(180deg);
+      }
       .swiper-wrapper {
-        height: 100%;
-        .swiper-item {
-          > img {
-            width: 100%;
-          }
-        }
+        margin: 0;
+        width: 333px;
         .swiper-pagination {
           position: absolute;
-          bottom: 0;
+          bottom: 5px;
         }
         .swiper-pagination-bullet {
-          background: #fff;
+          background: #16EAEA;
           opacity: 0.38;
           width: 6px;
           height: 6px;
+          border-radius: 0%;
         }
         .swiper-pagination-bullet-active {
-          background-color: #fff;
+          background-color: #16EAEA;
           opacity: 1;
         }
       }
+      .decorate-line {
+        position: absolute;
+        bottom: 0;
+        width: 766px;
+        height: 25px;
+        .bg-image("./images/decorate-line");
+      }
     }
     .plan-wrapper {
-      display: flex;
-      justify-items: space-between;
+      margin-top: 15px;
       font-family: PingFang;
+      .title {
+        padding: 0 35px;
+        margin-bottom: 15px;
+      }
+      .plan-flex {
+        display: flex;
+        justify-content: space-between;
+      }
       .plan-item {
         flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
         .icon {
-          width: 60px;
-          height: 80px;
+          width: 94px;
+          height: 120px;
         }
         .icon1 {
           .bg-image("./images/icon1");
@@ -311,14 +316,12 @@ export default {
         .icon4 {
           .bg-image("./images/icon4");
         }
-        .title {
-          margin-top: -5px;
-          font-size: 12px;
-          transform: scale(0.83);
+        .label {
+          font-size: 14px;
         }
         .state {
           margin-top: 3px;
-          font-size: 12px;
+          font-size: 18px;
           color: #16eaea;
         }
       }
@@ -326,13 +329,13 @@ export default {
     .btn-wrapper {
       display: flex;
       justify-content: center;
-      margin-top: 20px;
+      margin-top: 35px;
       .btn-item {
-        width: 50px;
-        height: 17px;
-        line-height: 17px;
+        width: 81px;
+        height: 34px;
+        line-height: 34px;
         margin: 0 10px;
-        font-size: 12px;
+        font-size: 14px;
       }
       .can {
         .bg-image("./images/btn-can");
@@ -340,6 +343,21 @@ export default {
       .cant {
         .bg-image("./images/btn-cant");
       }
+    }
+  }
+  .title {
+    // padding: 0 50px;
+    // margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    font-family: YouSheBiaoTiHei;
+    font-size: 20px;
+    color: #00CBFF;
+    .title-pre {
+      margin-right: 5px;
+      width: 7px;
+      height: 16px;
+      .bg-image("./images/title-bg");
     }
   }
 }

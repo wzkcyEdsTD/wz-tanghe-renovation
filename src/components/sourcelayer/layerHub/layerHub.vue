@@ -48,17 +48,21 @@
           show-checkbox
           node-key="id"
           :filter-node-method="filterNode"
-          @check-change="checkChange"
+          @check-change="nodeCheckChange"
         />
       </div>
+    </div>
+    <div class="sign-wrapper">
+      <img src="/static/images/common/sign@2x.png">
     </div>
   </div>
 </template>
 
 <script>
-import { treeDrawTool, fixTreeWithExtra } from "./TreeDrawTool";
+import { mapGetters, mapActions } from "vuex";
+import { treeDrawTool } from "./TreeDrawTool";
 import {
-  FIXED_SOURCE,
+  TARGET_SOURCE,
   CESIUM_TREE_OPTION,
 } from "config/server/tangheTreeOption";
 const Cesium = window.Cesium;
@@ -67,7 +71,7 @@ export default {
   name: "layerHub",
   data() {
     return {
-      FIXED_SOURCE,
+      TARGET_SOURCE,
       //  tile layers
       tileLayers: {},
       //  cesium Object
@@ -77,6 +81,7 @@ export default {
       currentLayer: 'yx',
       yearList: [2016, 2017, 2018, 2019],
       currentYear: 2019,
+      currentTarget: '',
       showBaimo: false,
       showMenu: false,
       data: CESIUM_TREE_OPTION,
@@ -85,17 +90,25 @@ export default {
   computed: {
   },
   created() {
-    this.FIXED_SOURCE.forEach((item) => {
-      this.getPOIPickedFeature(item)
-    })
+    console.log(666)
+    this.eventRegsiter()
   },
   methods: {
+    ...mapActions("map", ["setProject"]),
+    eventRegsiter() {
+      this.$bus.$off("cesium-targetChange");
+      this.$bus.$on("cesium-targetChange", ({target}) => {
+        console.log("target", target);
+        this.currentTarget = target
+      });
+    },
     /**
      * POI fetch
      * @param {object} node
      */
     getPOIPickedFeature(node, fn) {
-      const { dataset, url } = node;
+      const { newdataset, url } = node;
+      console.log(888, newdataset, url)
       var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
       getFeatureParam = new SuperMap.REST.FilterParameter({
         attributeFilter: `SMID <= 1000`,
@@ -103,11 +116,12 @@ export default {
       getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
         queryParameter: getFeatureParam,
         toIndex: -1,
-        datasetNames: [dataset],
+        datasetNames: [newdataset],
       });
       getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(url, {
         eventListeners: {
           processCompleted: async (res) => {
+            console.log(999, res)
             treeDrawTool(this, res, node);
           },
           processFailed: (msg) => console.log(msg),
@@ -131,56 +145,47 @@ export default {
     filterNode(value, data) {
       return !value ? true : data.label.indexOf(value) !== -1;
     },
-    checkChange(node, checked) {
-      console.log(666)
-      // if (checked) {
-      //   if (node.type == "mvt" && node.map && node.icon) {
-      //     if (node.id && this.entityMap[node.id]) {
-      //       this.entityMap[node.id].show = true;
-      //       return;
-      //     }
-
-      //     // 专题集合添加
-      //     if(node.label == "精品旅游路线") {
-      //       this.$bus.$emit(node.componentEvent, { value: node.componentKey });
-      //     } else {
-      //       this.getPOIPickedFeature(node.dataset, null, node);
-      //     }
-      //   } else if (node.type == "model") {
-      //     node.componentEvent &&
-      //       node.componentKey &&
-      //       this.$bus.$emit(node.componentEvent, { value: node.componentKey });
-      //   } else if (node.type == "image") {
-      //     const LAYER = this.tileLayers[node.id];
-      //     this.tileLayers[
-      //       node.id
-      //     ] = window.earth.imageryLayers.addImageryProvider(
-      //       new Cesium.SuperMapImageryProvider({
-      //         url: node.url,
-      //         name: node.id,
-      //       })
-      //     );
-      //   }
-      //   node.camera && this.viewer.scene.camera.setView(node.camera);
-      // } else {
-      //   const LAYER =
-      //     node.type == "model"
-      //       ? this.viewer.scene.layers.find(node.id)
-      //       : this.tileLayers[node.id];
-      //   LAYER && (LAYER.show = false);
-
-      //   // dataSources 实体集合隐藏
-      //   if (
-      //     node.icon &&
-      //     this.entityMap[node.id] &&
-      //     this.viewer.dataSources.length
-      //   ) {
-      //     this.entityMap[node.id].show = false;
-      //   }
-
-      //   node.componentEvent &&
-      //     this.$bus.$emit(node.componentEvent, { value: null });
-      // }
+    nodeCheckChange(node, checked) {
+      if (checked) {
+        if (node.type == "mvt" && node.id) {
+          if (node.id && this.entityMap[node.id]) {
+            this.entityMap[node.id].show = true;
+          } else {
+            this.getPOIPickedFeature(node);
+          }
+        } else if (node.type == "model") {
+          node.componentEvent &&
+            node.componentKey &&
+            this.$bus.$emit(node.componentEvent, { value: node.componentKey });
+        } else if (node.type == "image") {
+          const LAYER = this.tileLayers[node.id];
+          this.tileLayers[
+            node.id
+          ] = window.earth.imageryLayers.addImageryProvider(
+            new Cesium.SuperMapImageryProvider({
+              url: node.url,
+              name: node.id,
+            })
+          );
+        }
+        //  有相机视角配置 -> 跳视角
+        node.camera && window.earth.scene.camera.setView(node.camera);
+      } else {
+        const LAYER =
+          node.type == "model"
+            ? window.earth.scene.layers.find(node.id)
+            : this.tileLayers[node.id];
+        LAYER && (LAYER.show = false);
+        if (
+          node.icon &&
+          this.entityMap[node.id] &&
+          window.earth.dataSources.length
+        ) {
+          this.entityMap[node.id].show = false;
+        }
+        node.componentEvent &&
+          this.$bus.$emit(node.componentEvent, { value: null });
+      }
     },
   },
   watch: {
@@ -192,6 +197,29 @@ export default {
         this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
       }
     },
+    currentTarget(val) {
+      console.log('newval', val)
+      if (val === '绿道断点') {
+        this.$bus.$emit("cesium-lvdao-switch", { value: true });
+      } else {
+        this.$bus.$emit("cesium-lvdao-switch", { value: false });
+      }
+      this.TARGET_SOURCE.forEach((item) => {
+        if (item.id == val) {
+          console.log(666)
+          if (item.id && this.entityMap[item.id]) {
+            this.entityMap[item.id].show = true;
+          } else {
+            console.log(777)
+            this.getPOIPickedFeature(item);
+          }
+        } else {
+          if (item.id && this.entityMap[item.id]) {
+            this.entityMap[item.id].show = false;
+          }
+        }
+      })
+    }
     // currentYear(val) {
     //   this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
     // }

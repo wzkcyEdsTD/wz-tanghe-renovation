@@ -4,68 +4,74 @@ const SW_DATA = "/data-th_zy/rest/data";
 const SW_DATA_NAME = "th_zy:";
 const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
 
-//  控规专题
-const KG_INFO = [
-  {
-    label: "控规信息",
-    url: `${SERVER_HOST}/map-KongGui_LuCheng/rest/maps/%E6%8E%A7%E8%A7%84%E4%B8%89%E5%8C%BA20200304%40172.20.83.196_swdata`
-  }
-];
+const SW_DATA2 = "/data-thzt/rest/data";
+const SW_DATA_NAME2 = "thzt:";
+const SERVER_DEFAULT_DATA2 = SERVER_HOST + SW_DATA2;
 
-
-export const FIXED_SOURCE = [
+export const TARGET_SOURCE = [
   {
     id: "项目",
     label: "项目",
     url: SERVER_DEFAULT_DATA,
-    dataset: `${SW_DATA_NAME}项目`,
+    newdataset: `${SW_DATA_NAME}项目`,
     icon: false,
+    type: "mvt",
+    saveData: "setProject"
+  },
+  {
+    id: "绿道断点",
+    label: "绿道断点",
+    url: SERVER_DEFAULT_DATA,
+    newdataset: `${SW_DATA_NAME}绿道断点`,
+    icon: '卡点',
     type: "mvt",
   },
 ];
 
+//  桥梁
+const BRIDGE_INFO = [
+  {
+    label: "桥梁",
+    dataset: "bridge"
+  }
+];
+
+//  公共设施
+const PUBLIC_INFO = [
+  { label: "公厕", dataset: "toilet" },
+  { label: "场馆", dataset: "venues" },
+  { label: "公园", dataset: "park" },
+  { label: "景点", dataset: "scenic_spot" },
+  { label: "古树名木", dataset: "tree" },
+  { label: "公园配套设施", dataset: "park_facilities" },
+];
+
 export const CESIUM_TREE_OPTION = [
-  {
-    id: "航道",
-    label: "航道",
-    children: KG_INFO.map(v => {
-      return {
-        ...v,
-        id: v.label,
-        type: "image"
-      };
-    })
-  },
-  {
-    id: "河道",
-    label: "河道",
-    children: KG_INFO.map(v => {
-      return {
-        ...v,
-        id: v.label,
-        type: "image"
-      };
-    })
-  },
   {
     id: "桥梁",
     label: "桥梁",
-    children: KG_INFO.map(v => {
+    children: BRIDGE_INFO.map(v => {
       return {
         ...v,
         id: v.label,
-        type: "image"
+        icon: v.label,
+        url: SERVER_DEFAULT_DATA2,
+        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        type: "mvt"
       };
     })
   },
   {
-    id: "码头",
-    label: "码头",
-    children: KG_INFO.map(v => {
+    id: "公共设施",
+    label: "公共设施",
+    children: PUBLIC_INFO.map(v => {
       return {
         ...v,
         id: v.label,
-        type: "image"
+        icon: v.label,
+        url: SERVER_DEFAULT_DATA2,
+        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        type: "mvt"
       };
     })
   }

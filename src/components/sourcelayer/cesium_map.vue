@@ -35,6 +35,7 @@ export default {
       mapLoaded: false,
       imagelayer: undefined,
       datalayer: undefined,
+      lvdaolayer: undefined,
       handler: undefined,
       isTotalTarget: true
     };
@@ -110,6 +111,22 @@ export default {
               ));
         }
       });
+      this.$bus.$off("cesium-lvdao-switch");
+      this.$bus.$on("cesium-lvdao-switch", ({ value }) => {
+        //  绿道切换
+        console.log("lvdao-switch");
+        if (value) {
+          this.lvdaolayer
+            ? (this.lvdaolayer.show = true)
+            : (this.lvdaolayer = window.earth.imageryLayers.addImageryProvider(
+                new Cesium.SuperMapImageryProvider({
+                  url: ServiceUrl.LVDAOImage,
+                })
+              ));
+        } else {
+          this.lvdaolayer ? this.lvdaolayer.show = false : null
+        }
+      });
       this.$bus.$off("cesium-3d-switch");
       this.$bus.$on("cesium-3d-switch", ({ value }) => {
         console.log('gogogogo', value)
@@ -180,6 +197,7 @@ export default {
           url: ServiceUrl.SWImage,
         })
       );
+
       const mapMvt = viewer.scene.addVectorTilesMap({
         url: ServiceUrl.YJMVT,
         name: "mapMvt",

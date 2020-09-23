@@ -7,12 +7,13 @@
  * @FilePath: \wz-city-culture-tour\src\store\modules\map\getters.js
  */
 // 获取state
-export const forceMapTypeBase = state => state.forceMapTypeBase;
+// export const forceMapTypeBase = state => state.forceMapTypeBase;
 export const currentMapType = state => state.currentMapType;
-export const mapLoaded = state => state.mapLoaded;
-export const isInfoFrame = state => state.isInfoFrame;
-export const rtmpList = state => state.rtmpList;
-export const medicalList = state => state.medicalList;
-export const medicalListWithGeometry = state => state.medicalListWithGeometry;
-export const hospitalList = state => state.hospitalList;
-export const WzAllData = state => state.WzAllData;
+// export const mapLoaded = state => state.mapLoaded;
+// export const isInfoFrame = state => state.isInfoFrame;
+// export const rtmpList = state => state.rtmpList;
+// export const medicalList = state => state.medicalList;
+// export const medicalListWithGeometry = state => state.medicalListWithGeometry;
+// export const hospitalList = state => state.hospitalList;
+// export const WzAllData = state => state.WzAllData;
+export const projectList = state => state.projectList;

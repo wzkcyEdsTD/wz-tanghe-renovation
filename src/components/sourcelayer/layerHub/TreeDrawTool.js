@@ -95,11 +95,13 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
     forceDrawFeatures = [...drawFeatures];
   } else {
     if (node.id === '项目') {
+      console.log('node', node)
       result.features.forEach(item => {
         if (item.attributes.XMJZQK) {
           forceDrawFeatures.push(item)
         }
       })
+      context[node.saveData](forceDrawFeatures);
     } else {
       forceDrawFeatures = result.features;
     }

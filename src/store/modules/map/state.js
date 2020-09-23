@@ -7,19 +7,22 @@
  * @FilePath: \wz-city-culture-tour\src\store\modules\map\state.js
  */
 const state = {
-  forceMapTypeBase: true,
+  // forceMapTypeBase: true,
   currentMapType: "cesiumMap", // 地图类型  四色图 sandian cesiumMap
-  mapLoaded: false, // 地图底图是否加载完毕
-  //  详情
-  isInfoFrame: false,
-  //  视频列表
-  rtmpList: [],
-  //  医院数据
-  medicalList: {},
-  medicalListWithGeometry: [],
-  //  医院
-  hospitalList: [],
-  //  总体概览
-  WzAllData: {}
+  // mapLoaded: false, // 地图底图是否加载完毕
+  // //  详情
+  // isInfoFrame: false,
+  // //  视频列表
+  // rtmpList: [],
+  // //  医院数据
+  // medicalList: {},
+  // medicalListWithGeometry: [],
+  // //  医院
+  // hospitalList: [],
+  // //  总体概览
+  // WzAllData: {}
+
+  // 项目
+  projectList: [],
 };
 export default state;

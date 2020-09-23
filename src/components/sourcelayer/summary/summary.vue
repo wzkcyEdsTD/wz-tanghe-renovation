@@ -25,12 +25,12 @@
       </div>
       <div class="result-wrapper">
         <ul class="result-list">
-          <li class="result-item header">
+          <li class="result-item header" v-for="(item,index) in projectList" :key="index">
             <span class="index">序号</span>
             <span class="name">名称</span>
             <span class="speed">进度</span>
           </li>
-          <li class="result-item">
+          <!-- <li class="result-item">
             <span class="index">01</span>
             <span class="name">葡萄8-5地块</span>
             <span class="speed">完工</span>
@@ -59,7 +59,7 @@
             <span class="index">01</span>
             <span class="name">葡萄8-5地块</span>
             <span class="speed">完工</span>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -103,11 +104,20 @@ export default {
       lineEchart: null, // 折线图
     };
   },
+  computed: {
+    ...mapGetters("map", ["projectList"]),
+  },
   mounted() {
     this.drawPie();
     this.drawBar();
     this.drawLine();
   },
+  // watch:{
+  //   '$store.state.projectList':function(newFlag, oldFlag){
+  //     // 需要执行的代码
+  //     console.log('fffffffffffffuck')
+  //   }
+  // },
   methods: {
     drawPie() {
       const pieData = [

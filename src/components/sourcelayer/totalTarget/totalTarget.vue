@@ -1,101 +1,22 @@
 <template>
   <div class="target-wrapper">
     <ul class="content">
-      <li class="item selected">
+      <li class="item" :class="{selected: item.type==currentTarget}" :style="{cursor: (item.click ? 'pointer' : 'default')}"
+        v-for="(item, i) in targetList" :key="i" @click="changeTarget(item)">
         <div class="left">
-          <img class="icon" src="./images/item1.png" />
+          <img class="icon" :src="require('./images/'+item.icon+'.png')" />
         </div>
         <div class="right">
           <div class="title">
-            项目总数<span class="small">/2020年</span>
+            {{item.title}}<span class="small">/{{item.year}}年</span>
           </div>
           <div class="info">
-            <div class="number">31242<span class="tiny">(个)</span></div>
+            <div class="number">{{item.number}}<span class="tiny">({{item.unit}})</span></div>
             <!-- <div class="desc">
               <span class="text">同比去年增加投资</span>
               <div class="content">
                 <span class="amount" style="color: #FC5453">-34.223万元</span>
                 <i class="ratio-down"></i>
-              </div>
-            </div> -->
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="left">
-          <img class="icon item2" src="./images/item2.png" />
-        </div>
-        <div class="right">
-          <div class="title">
-            卡点断点数<span class="small">/2020年</span>
-          </div>
-          <div class="info">
-            <div class="number">6623<span class="tiny">(个)</span></div>
-            <!-- <div class="desc">
-              <span class="text">同比去年增加数量</span>
-              <div class="content">
-                <span class="amount" style="color: #FC5453">-214个</span>
-                <i class="ratio-down"></i>
-              </div>
-            </div> -->
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="left">
-          <img class="icon item3" src="./images/item3.png" />
-        </div>
-        <div class="right">
-          <div class="title">
-            资源数量<span class="small">/2020年</span>
-          </div>
-          <div class="info">
-            <div class="number">99732<span class="tiny">(个)</span></div>
-            <!-- <div class="desc">
-              <span class="text">同比去年增加数量</span>
-              <div class="content">
-                <span class="amount" style="color: #2EEA16">+142个</span>
-                <i class="ratio-up"></i>
-              </div>
-            </div> -->
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="left">
-          <img class="icon item4" src="./images/item4.png" />
-        </div>
-        <div class="right">
-          <div class="title">
-            未来规划<span class="small">/2020年</span>
-          </div>
-          <div class="info">
-            <div class="number">98821<span class="tiny">(个)</span></div>
-            <!-- <div class="desc">
-              <span class="text">同比去年增加数量</span>
-              <div class="content">
-                <span class="amount" style="color: #2EEA16">+623万元</span>
-                <i class="ratio-up"></i>
-              </div>
-            </div> -->
-          </div>
-        </div>
-      </li>
-      <li class="item">
-        <div class="left">
-          <img class="icon item5" src="./images/item5.png" />
-        </div>
-        <div class="right">
-          <div class="title">
-            项目分析<span class="small">/2020年</span>
-          </div>
-          <div class="info">
-            <div class="number">2882<span class="tiny">(个)</span></div>
-            <!-- <div class="desc">
-              <span class="text">同比去年增加数量</span>
-              <div class="content">
-                <span class="amount" style="color: #2EEA16">+623个</span>
-                <i class="ratio-up"></i>
               </div>
             </div> -->
           </div>
@@ -110,11 +31,58 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "totalTarget",
-  computed: {
-    ...mapGetters("map", ["WzAllData"]),
+  // computed: {
+  //   ...mapGetters("map", ["WzAllData"]),
+  // },
+  data() {
+    return {
+      targetList: [{
+        title: '项目总数',
+        type: '项目',
+        year: '2020',
+        number: '31242',
+        unit: '个',
+        icon: 'item1',
+        click: true
+      }, {
+        title: '卡点断点数',
+        type: '绿道断点',
+        year: '2020',
+        number: '6623',
+        unit: '个',
+        icon: 'item2',
+        click: true
+      }, {
+        title: '资源数量',
+        type: '资源',
+        year: '2020',
+        number: '99732',
+        unit: '个',
+        icon: 'item3',
+        click: false
+      }, {
+        title: '未来规划',
+        type: '规划',
+        year: '2020',
+        number: '98821',
+        unit: '个',
+        icon: 'item4',
+        click: false
+      }, {
+        title: '项目分析',
+        type: '分析',
+        year: '2020',
+        number: '2882',
+        unit: '个',
+        icon: 'item5',
+        click: false
+      }],
+      currentTarget: '项目'
+    }
   },
   async mounted() {
     // await this.fetchWzAllData();
+    this.changeTarget(this.targetList[0])
   },
   methods: {
     ...mapActions("map", ["SetWzAllData"]),
@@ -124,6 +92,14 @@ export default {
     // async fetchWzAllData() {
     //   await this.SetWzAllData();
     // },
+    changeTarget(item) {
+      if (item.click) {
+        this.currentTarget = item.type
+        this.$bus.$emit("cesium-targetChange", {
+          target: this.currentTarget
+        });
+      }
+    }
   },
 };
 </script>

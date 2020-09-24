@@ -120,7 +120,7 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
 
   forceDrawFeatures.map(item => {
     const entityOption = {
-      id: `${item.attributes.SMID}@${node.icon}`,
+      id: `${node.id}_${item.attributes.SMID}@${node.icon}`,
       label: {
         text: item.attributes.NAME,
         color: Cesium.Color.fromCssColorString("#fff"),
@@ -172,11 +172,11 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
         ),
         billboard: {
           image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.XMJZQK.trim()}.png`,
-          width: 43,
-          height: 74,
+          width: 32,
+          height: 32,
           // sizeInMeters: true,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
-          translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)
+          // translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)
         }
       };
 

@@ -1,8 +1,9 @@
 <template>
   <div class="target-wrapper">
     <ul class="content">
-      <li class="item" :class="{selected: ~currentTarget.indexOf(item.type)}" :style="{cursor: (item.click ? 'pointer' : 'default')}"
-        v-for="(item, i) in targetList" :key="i" @click="changeTarget(item)">
+      <!-- <li class="item" :class="{selected: ~currentTarget.indexOf(item.type)}" :style="{cursor: (item.click ? 'pointer' : 'default')}"
+        v-for="(item, i) in targetList" :key="i" @click="changeTarget(item)"> -->
+      <li class="item" v-for="(item, i) in targetList" :key="i" >
         <div class="left">
           <img class="icon" :src="require('./images/'+item.icon+'.png')" />
         </div>
@@ -90,7 +91,7 @@ export default {
   },
   async mounted() {
     // await this.fetchWzAllData();
-    this.changeTarget(this.targetList[0])
+    // this.changeTarget(this.targetList[0])
   },
   methods: {
     ...mapActions("map", ["SetWzAllData"]),
@@ -100,19 +101,19 @@ export default {
     // async fetchWzAllData() {
     //   await this.SetWzAllData();
     // },
-    changeTarget(item) {
-      if (item.click) {
-        let index = this.currentTarget.indexOf(item.type)
-        if (index >= 0) {
-          this.currentTarget.splice(index, 1)
-        } else {
-          this.currentTarget.push(item.type)
-        }
-        this.$bus.$emit("cesium-targetChange", {
-          target: item.type
-        });
-      }
-    }
+    // changeTarget(item) {
+    //   if (item.click) {
+    //     let index = this.currentTarget.indexOf(item.type)
+    //     if (index >= 0) {
+    //       this.currentTarget.splice(index, 1)
+    //     } else {
+    //       this.currentTarget.push(item.type)
+    //     }
+    //     this.$bus.$emit("cesium-targetChange", {
+    //       target: item.type
+    //     });
+    //   }
+    // }
   },
 };
 </script>

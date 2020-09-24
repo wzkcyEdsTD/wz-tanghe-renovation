@@ -17,7 +17,8 @@ export const ServiceUrl = {
   SWImage:
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-YX2019SW/rest/realspace/datas/YX_2019_SW",
     // "http://172.20.83.223:8098/iserver/services/3D-YX_2019_SW/rest/realspace/datas/YX_2019_SW",
-    "http://172.168.3.183:8090/iserver/services/3D-yx2019/rest/realspace/datas/YX_2019_SW",
+    // "http://172.168.3.183:8090/iserver/services/3D-yx2019/rest/realspace/datas/YX_2019_SW",
+    "http://172.168.3.183:8090/iserver/services/map-agscachev2-Layers/rest/maps/Layers",
   //  大数据底图
   DataImage:
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DSJCGS2000SW/rest/realspace/datas/DSJ_CGS2000_SW",
@@ -42,10 +43,15 @@ export const ServiceUrl = {
   TANGHE3D: 
     // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
     "http://172.168.3.183:8090/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
+  // 二维塘河
+  TANGHE2D: 
+    // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
+    "http://172.168.3.183:8090/iserver/services/3D-thmplus/rest/realspace/datas/thmplus",
   // 绿道
   LVDAOImage: 
     // "http://172.20.83.223:8098/iserver/services/3D-ld/rest/realspace/datas/ld",
-    "http://172.168.3.183:8090/iserver/services/3D-ld/rest/realspace/datas/ld"
+    // "http://172.168.3.183:8090/iserver/services/3D-ld/rest/realspace/datas/ld"
+    "http://172.168.3.183:8090/iserver/services/3D-ldplus/rest/realspace/datas/ldplus"
 };
 
 export const BimSourceURL = {

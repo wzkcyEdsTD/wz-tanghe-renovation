@@ -145,7 +145,8 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
             image: `/static/images/${node.icon}.png`,
             width: node.icon_size == "large" ? 48 : 32,
             height: node.icon_size == "large" ? 48 : 35,
-            disableDepthTestDistance: Number.POSITIVE_INFINITY
+            disableDepthTestDistance: Number.POSITIVE_INFINITY,
+            translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)
           }
         };
 

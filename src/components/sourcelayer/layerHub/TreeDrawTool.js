@@ -175,7 +175,8 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
           width: 43,
           height: 74,
           // sizeInMeters: true,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)
         }
       };
 

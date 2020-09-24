@@ -8,12 +8,16 @@
             <div class="name-wrapper">
               <span class="name">{{forceEntity.NAME}}</span>
             </div>
-            <div class="img-wrapper">
+            <div class="img-wrapper" v-show="type == 'duandian'">
               <div class="flex-container">
                 <div class="swiper-buttons swiper-button-left"></div>
                 <swiper ref="mySwiper" class="swiper-wrapper" :options="swiperOptions">
-                  <swiper-slide v-for="(item,i) in imgs" :key="i" class="swiper-item">
-                    <img :src="`/static/images/${item}.png`" />
+                  <!-- <swiper-slide v-for="(item,i) in imgs" :key="i" class="swiper-item"> -->
+                  <swiper-slide class="swiper-item">
+                    <!-- <img :src="`/static/images/${item}.png`" /> -->
+                    <viewer>
+                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
+                    </viewer>
                   </swiper-slide>
                   <div class="swiper-pagination" slot="pagination"></div>
                 </swiper>
@@ -21,7 +25,7 @@
               </div>
               <div class="decorate-line"></div>
             </div>
-            <div class="desc-wrapper">
+            <div class="desc-wrapper" v-show="type == 'project'">
               <div class="desc-item">
                 <div class="title">
                   <span class="title-pre"></span>投资类型
@@ -71,31 +75,38 @@
                 <div class="content">{{forceEntity.SS_DEPTID}}</div>
               </div>
             </div>
+            <div class="desc-wrapper" v-show="type == 'duandian'">
+              <div class="desc-item">
+                <div class="title">
+                  <span class="title-pre"></span>断点位置
+                </div>
+                <div class="content">{{forceEntity.NAME}}</div>
+              </div>
+              <div class="desc-item">
+                <div class="title">
+                  <span class="title-pre"></span>断点长度
+                </div>
+                <div class="content">{{forceEntity.LENGTH}}</div>
+              </div>
+              <div class="desc-item">
+                <div class="title">
+                  <span class="title-pre"></span>计划贯通时间
+                </div>
+                <div class="content">{{forceEntity.JHGTSJ}}</div>
+              </div>
+              <div class="desc-item">
+                <div class="title">
+                  <span class="title-pre"></span>责任单位
+                </div>
+                <div class="content">{{forceEntity.ZRDW}}</div>
+              </div>
+            </div>
             <div class="plan-wrapper">
               <div class="title">
-                <span class="title-pre"></span>2020年项目投资计划
+                <span class="title-pre"></span>存在问题
               </div>
-              <div class="plan-flex">
-                <div class="plan-item">
-                  <div class="icon icon1"></div>
-                  <div class="label">投资计划</div>
-                  <div class="state">493</div>
-                </div>
-                <div class="plan-item">
-                  <div class="icon icon2"></div>
-                  <div class="label">年末工程形象进度</div>
-                  <div class="state">建成</div>
-                </div>
-                <div class="plan-item">
-                  <div class="icon icon3"></div>
-                  <div class="label">截至5月15日投资额</div>
-                  <div class="state">493</div>
-                </div>
-                <div class="plan-item">
-                  <div class="icon icon4"></div>
-                  <div class="label">截至5月15日形象进度</div>
-                  <div class="state">完工</div>
-                </div>
+              <div class="question">
+                {{forceEntity.CZWT}}
               </div>
             </div>
             <div class="btn-wrapper">
@@ -128,7 +139,12 @@ export default {
           prevEl: ".swiper-button-left",
         },
       },
-      imgs: ["img", "img", "img", "img"],
+      // imgs: ["img", "img", "img", "img"],
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      srcList: [
+        'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+        'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
+      ]
     };
   },
   async mounted() {
@@ -141,6 +157,14 @@ export default {
         console.log("extra_data", item.extra_data);
         this.forceEntity = item.extra_data;
         this.showPopUp = true;
+        this.type = 'project'
+      });
+      this.$bus.$off("cesium-kadianClick");
+      this.$bus.$on("cesium-kadianClick", (item) => {
+        console.log("extra_data", item.extra_data);
+        this.forceEntity = item.extra_data;
+        this.showPopUp = true;
+        this.type = 'duandian'
       });
     },
     closePopup() {
@@ -202,10 +226,10 @@ export default {
   }
 
   .leaflet-popup-content-wrapper {
-    background-image: url("./images/detail.png");
+    .bg-image("./images/detail");
     text-align: center;
-    height: 803px;
-    width: 800px;
+    // height: 782px;
+    width: 780px;
     box-sizing: border-box;
     padding: 14px;
   }
@@ -290,6 +314,10 @@ export default {
       .title {
         padding: 0 35px;
         margin-bottom: 15px;
+      }
+      .question {
+        padding: 0 35px;
+        text-align: left;
       }
       .plan-flex {
         display: flex;

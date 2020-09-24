@@ -21,8 +21,15 @@ import VueBus from "vue-bus";
 import echarts from "echarts";
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+import Viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
 
 Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
+Vue.use(Viewer, {
+  defaultOptions: {
+    zIndex: 9999
+  }
+})
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);

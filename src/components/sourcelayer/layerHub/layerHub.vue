@@ -52,9 +52,9 @@
         />
       </div>
     </div>
-    <div class="sign-wrapper" v-if="currentTarget=='项目'">
+    <!-- <div class="sign-wrapper" v-if="currentTarget=='项目'">
       <img src="/static/images/common/sign@2x.png">
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -62,7 +62,7 @@
 import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "./TreeDrawTool";
 import {
-  TARGET_SOURCE,
+  // TARGET_SOURCE,
   CESIUM_TREE_OPTION,
 } from "config/server/tangheTreeOption";
 const Cesium = window.Cesium;
@@ -71,7 +71,7 @@ export default {
   name: "layerHub",
   data() {
     return {
-      TARGET_SOURCE,
+      // TARGET_SOURCE,
       //  tile layers
       tileLayers: {},
       //  cesium Object
@@ -81,7 +81,7 @@ export default {
       currentLayer: 'yx',
       yearList: [2016, 2017, 2018, 2019],
       currentYear: 2019,
-      currentTarget: '',
+      // currentTarget: '',
       showBaimo: false,
       showMenu: false,
       showLvdao: false,
@@ -93,15 +93,18 @@ export default {
   created() {
     this.eventRegsiter()
   },
+  mounted() {
+    this.$refs.tree.setCheckedKeys(['绿道断点', '十二景']);
+  },
   methods: {
     ...mapActions("map", ["setProjectList", "setSightList"]),
     eventRegsiter() {
-      this.$bus.$off("cesium-targetChange");
-      this.$bus.$on("cesium-targetChange", ({target}) => {
-        console.log("target", target);
-        // this.currentTarget = target
-        this.targetChange(target)
-      });
+      // this.$bus.$off("cesium-targetChange");
+      // this.$bus.$on("cesium-targetChange", ({target}) => {
+      //   console.log("target", target);
+      //   // this.currentTarget = target
+      //   this.targetChange(target)
+      // });
     },
     /**
      * POI fetch
@@ -187,23 +190,23 @@ export default {
           this.$bus.$emit(node.componentEvent, { value: null });
       }
     },
-    targetChange(target) {
-      if (target === '绿道断点') {
-        this.$bus.$emit("cesium-lvdao-switch", { value: !this.showLvdao });
-      }
-      this.TARGET_SOURCE.forEach((item) => {
-        if (item.id == target) {
-          console.log(666)
-          if (item.id && this.entityMap[item.id]) {
-            console.log(777)
-            this.entityMap[item.id].show = !this.entityMap[item.id].show;
-          } else {
-            console.log(888)
-            this.getPOIPickedFeature(item);
-          }
-        }
-      })
-    }
+    // targetChange(target) {
+    //   if (target === '绿道断点') {
+    //     this.$bus.$emit("cesium-lvdao-switch", { value: !this.showLvdao });
+    //   }
+    //   this.TARGET_SOURCE.forEach((item) => {
+    //     if (item.id == target) {
+    //       console.log(666)
+    //       if (item.id && this.entityMap[item.id]) {
+    //         console.log(777)
+    //         this.entityMap[item.id].show = !this.entityMap[item.id].show;
+    //       } else {
+    //         console.log(888)
+    //         this.getPOIPickedFeature(item);
+    //       }
+    //     }
+    //   })
+    // }
   },
   watch: {
     currentLayer(val) {

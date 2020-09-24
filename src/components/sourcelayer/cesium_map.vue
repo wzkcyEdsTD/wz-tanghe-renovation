@@ -83,12 +83,18 @@ export default {
         console.log("pick", pick);
         if (!pick.id || typeof pick.id != "object") return;
         //  *****[detailPopup]  资源详情点*****
-        if (pick.id.extra_data) {
+        if (pick && pick.id.extra_data) {
           console.log("gogogo");
-          this.$bus.$emit("cesium-projectClick", {
-            extra_data: pick.id.extra_data,
-          });
-
+          if (~pick.id.id.indexOf("项目_")) {
+            this.$bus.$emit("cesium-projectClick", {
+              extra_data: pick.id.extra_data,
+            });
+          }
+          if (~pick.id.id.indexOf("绿道断点_")) {
+            this.$bus.$emit("cesium-kadianClick", {
+              extra_data: pick.id.extra_data,
+            });
+          }
           this.$refs.layerhub.showHub = false
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
@@ -108,8 +114,8 @@ export default {
                   url: ServiceUrl.SWImage,
                 })
               ));
-          this.lipai();
-          this.quan();
+          // this.lipai();
+          // this.quan();
         } else {
           this.removeAll();
           this.imagelayer.show = false;
@@ -123,21 +129,21 @@ export default {
         }
       });
       this.$bus.$off("cesium-lvdao-switch");
-      this.$bus.$on("cesium-lvdao-switch", ({ value }) => {
-        //  绿道切换
-        console.log("lvdao-switch");
-        if (value) {
-          this.lvdaolayer
-            ? (this.lvdaolayer.show = true)
-            : (this.lvdaolayer = window.earth.imageryLayers.addImageryProvider(
-                new Cesium.SuperMapImageryProvider({
-                  url: ServiceUrl.LVDAOImage,
-                })
-              ));
-        } else {
-          this.lvdaolayer ? this.lvdaolayer.show = false : null
-        }
-      });
+      // this.$bus.$on("cesium-lvdao-switch", ({ value }) => {
+      //   //  绿道切换
+      //   console.log("lvdao-switch");
+      //   if (value) {
+      //     this.lvdaolayer
+      //       ? (this.lvdaolayer.show = true)
+      //       : (this.lvdaolayer = window.earth.imageryLayers.addImageryProvider(
+      //           new Cesium.SuperMapImageryProvider({
+      //             url: ServiceUrl.LVDAOImage,
+      //           })
+      //         ));
+      //   } else {
+      //     this.lvdaolayer ? this.lvdaolayer.show = false : null
+      //   }
+      // });
       this.$bus.$off("cesium-3d-switch");
       this.$bus.$on("cesium-3d-switch", ({ value }) => {
         console.log('gogogogo', value)
@@ -209,22 +215,35 @@ export default {
         })
       );
 
-      const mapMvt = viewer.scene.addVectorTilesMap({
-        url: ServiceUrl.YJMVT,
-        name: "mapMvt",
-        viewer,
-      });
+      // const mapMvt = viewer.scene.addVectorTilesMap({
+      //   url: ServiceUrl.YJMVT,
+      //   name: "mapMvt",
+      //   viewer,
+      // });
 
-      const tanghePromise = viewer.scene.addS3MTilesLayerByScp(
-        ServiceUrl.TANGHE3D,
-        {
-          name: "tanghe3d",
-        }
-      );
-      Cesium.when(tanghePromise, () => {
-        const LAYER = viewer.scene.layers.find("tanghe3d");
-        // LAYER.visibleDistanceMax = 5000;
-      });
+      // const tanghePromise = viewer.scene.addS3MTilesLayerByScp(
+      //   ServiceUrl.TANGHE3D,
+      //   {
+      //     name: "tanghe3d",
+      //   }
+      // );
+      // Cesium.when(tanghePromise, () => {
+      //   const LAYER = viewer.scene.layers.find("tanghe3d");
+      //   // LAYER.visibleDistanceMax = 5000;
+      // });
+
+      window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.TANGHE2D,
+        })
+      )
+
+      window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.LVDAOImage,
+        })
+      )
+
       this.lipai();
       this.quan();
 
@@ -238,8 +257,8 @@ export default {
       window.earth.scene.camera.setView({
         destination: Cesium.Cartesian3.fromDegrees(
           120.66625660935506,
-          27.981332018707733,
-          1000.0
+          27.641332018707733,
+          16000.0
         ),
         orientation: {
           heading: 0.0033168860454315663,

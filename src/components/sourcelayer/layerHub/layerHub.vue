@@ -27,13 +27,13 @@
             <img v-else src="./images/menu-unsel.png">
           </div>
         </div>
-        <div class="yxyear-container" v-show="currentLayer=='yx'">
+        <!-- <div class="yxyear-container" v-show="currentLayer=='yx'">
           <div class="year" :class="{selected: currentYear==item}" 
           v-for="(item, index) in yearList" :key="index"
           @click="currentYear = item">
             {{item}}
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="left-menu-wrapper" v-show="showMenu">
@@ -84,13 +84,13 @@ export default {
       currentTarget: '',
       showBaimo: false,
       showMenu: false,
+      showLvdao: false,
       data: CESIUM_TREE_OPTION,
     };
   },
   computed: {
   },
   created() {
-    console.log(666)
     this.eventRegsiter()
   },
   methods: {
@@ -99,7 +99,8 @@ export default {
       this.$bus.$off("cesium-targetChange");
       this.$bus.$on("cesium-targetChange", ({target}) => {
         console.log("target", target);
-        this.currentTarget = target
+        // this.currentTarget = target
+        this.targetChange(target)
       });
     },
     /**
@@ -108,7 +109,6 @@ export default {
      */
     getPOIPickedFeature(node, fn) {
       const { newdataset, url } = node;
-      console.log(888, newdataset, url)
       var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
       getFeatureParam = new SuperMap.REST.FilterParameter({
         attributeFilter: `SMID <= 1000`,
@@ -187,6 +187,23 @@ export default {
           this.$bus.$emit(node.componentEvent, { value: null });
       }
     },
+    targetChange(target) {
+      if (target === '绿道断点') {
+        this.$bus.$emit("cesium-lvdao-switch", { value: !this.showLvdao });
+      }
+      this.TARGET_SOURCE.forEach((item) => {
+        if (item.id == target) {
+          console.log(666)
+          if (item.id && this.entityMap[item.id]) {
+            console.log(777)
+            this.entityMap[item.id].show = !this.entityMap[item.id].show;
+          } else {
+            console.log(888)
+            this.getPOIPickedFeature(item);
+          }
+        }
+      })
+    }
   },
   watch: {
     currentLayer(val) {
@@ -197,39 +214,29 @@ export default {
         this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
       }
     },
-    currentTarget(val) {
-      console.log('newval', val)
-      if (val === '绿道断点') {
-        this.$bus.$emit("cesium-lvdao-switch", { value: true });
-      } else {
-        this.$bus.$emit("cesium-lvdao-switch", { value: false });
-      }
-      this.TARGET_SOURCE.forEach((item) => {
-        if (item.id == val) {
-          console.log(666)
-          if (item.id && this.entityMap[item.id]) {
-            this.entityMap[item.id].show = true;
-          } else {
-            console.log(777)
-            this.getPOIPickedFeature(item);
-          }
-        } else {
-          if (item.id && this.entityMap[item.id]) {
-            this.entityMap[item.id].show = false;
-          }
-        }
-      })
-
-      // 临时代码
-      // if (val == '项目') {
-      //   this.$parent.isProjectSummary = true;
-      //   this.$parent.isSightSummary = false;
-      // }
-      // if (val == '十二景') {
-      //   this.$parent.isSightSummary = true;
-      //   this.$parent.isProjectSummary = false;
-      // }
-    }
+    // currentTarget(val) {
+    //   console.log('newval', val)
+    //   if (val === '绿道断点') {
+    //     this.$bus.$emit("cesium-lvdao-switch", { value: true });
+    //   } else {
+    //     this.$bus.$emit("cesium-lvdao-switch", { value: false });
+    //   }
+    //   this.TARGET_SOURCE.forEach((item) => {
+    //     if (item.id == val) {
+    //       console.log(666)
+    //       if (item.id && this.entityMap[item.id]) {
+    //         this.entityMap[item.id].show = true;
+    //       } else {
+    //         console.log(777)
+    //         this.getPOIPickedFeature(item);
+    //       }
+    //     } else {
+    //       if (item.id && this.entityMap[item.id]) {
+    //         this.entityMap[item.id].show = false;
+    //       }
+    //     }
+    //   })
+    // }
     // currentYear(val) {
     //   this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
     // }

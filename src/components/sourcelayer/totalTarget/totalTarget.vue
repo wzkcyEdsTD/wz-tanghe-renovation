@@ -1,7 +1,7 @@
 <template>
   <div class="target-wrapper">
     <ul class="content">
-      <li class="item" :class="{selected: item.type==currentTarget}" :style="{cursor: (item.click ? 'pointer' : 'default')}"
+      <li class="item" :class="{selected: ~currentTarget.indexOf(item.type)}" :style="{cursor: (item.click ? 'pointer' : 'default')}"
         v-for="(item, i) in targetList" :key="i" @click="changeTarget(item)">
         <div class="left">
           <img class="icon" :src="require('./images/'+item.icon+'.png')" />
@@ -85,7 +85,7 @@ export default {
         icon: 'item5',
         click: false
       }],
-      currentTarget: '项目'
+      currentTarget: []
     }
   },
   async mounted() {
@@ -102,9 +102,14 @@ export default {
     // },
     changeTarget(item) {
       if (item.click) {
-        this.currentTarget = item.type
+        let index = this.currentTarget.indexOf(item.type)
+        if (index >= 0) {
+          this.currentTarget.splice(index, 1)
+        } else {
+          this.currentTarget.push(item.type)
+        }
         this.$bus.$emit("cesium-targetChange", {
-          target: this.currentTarget
+          target: item.type
         });
       }
     }

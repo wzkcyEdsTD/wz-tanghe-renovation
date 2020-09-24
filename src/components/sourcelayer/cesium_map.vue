@@ -43,7 +43,8 @@ export default {
       handler: undefined,
       isTotalTarget: true,
       isProjectSummary: false,
-      isSightSummary: false
+      isSightSummary: false,
+      biaoshi:true
     };
   },
   computed: {
@@ -282,6 +283,11 @@ export default {
     },
     texiao(lon,lat,id,img){
       const viewer = window.earth;
+      const entitys = viewer.entities.getById(id);
+      if (!!entitys){
+        this.removeAll();
+        return;
+      }
       var rr1 = 0;
       var rr =0;
       var ss1 = 0;
@@ -355,6 +361,11 @@ export default {
     },
     lp(lon,lat,id,img,width,height,high){
       const viewer = window.earth;
+      const entity = viewer.entities.getById(id);
+      if (!!entity){
+        this.removeAll();
+        return;
+      }
       viewer.entities.add({
         id: id,
         position: Cesium.Cartesian3.fromDegrees(lon,lat, high||100),
@@ -369,16 +380,21 @@ export default {
     },
     removeAll() {
       const viewer = window.earth;
+      const id = ["ruian","tangxia","liao","chshan","wenzhoushiqu","xianyan"];
+      const idOther = ["wrth","oj","fyj"];
+      const temp = !this.biaoshi;
+      console.log(temp);
       try {
-        viewer.entities.removeById("wrth");
-        viewer.entities.removeById("oj");
-        viewer.entities.removeById("fyj");
-        viewer.entities.removeById("ruian");
-        viewer.entities.removeById("tangxia");
-        viewer.entities.removeById("xianyan");
-        viewer.entities.removeById("liao");
-        viewer.entities.removeById("chshan");
-        viewer.entities.removeById("wenzhoushiqu");
+        id.forEach(function (element) {
+          viewer.entities.getById(element).show = temp;
+          viewer.entities.getById(`${element}1`).show=temp;
+          viewer.entities.getById(`${element}p`).show=temp;
+        });
+        idOther.forEach(function (element) {
+          viewer.entities.getById(element).show=temp;
+        });
+        this.biaoshi = temp;
+        console.log(this.biaoshi);
       } catch (e) {
         console.log(e);
       }

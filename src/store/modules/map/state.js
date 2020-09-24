@@ -21,8 +21,9 @@ const state = {
   // hospitalList: [],
   // //  总体概览
   // WzAllData: {}
-
   // 项目
   projectList: [],
+  // 景点
+  sightList: []
 };
 export default state;

@@ -17,3 +17,4 @@ export const currentMapType = state => state.currentMapType;
 // export const hospitalList = state => state.hospitalList;
 // export const WzAllData = state => state.WzAllData;
 export const projectList = state => state.projectList;
+export const sightList = state => state.sightList;

@@ -2,8 +2,8 @@
 <template>
   <div class="layerhub-wrapper">
     <div class="bottom-wrapper">
-      <div class="show-btn" v-show="!showHub" @click="showHub = true">
-        <img src="./images/show-btn2.png">
+      <div class="show-btn" v-show="!showHub">
+        <img src="./images/show-btn2.png" @click="showHub = true">
       </div>
       <div class="hub-container" v-show="showHub">
         <div class="hide-btn" @click="showHub = false">
@@ -52,7 +52,7 @@
         />
       </div>
     </div>
-    <div class="sign-wrapper">
+    <div class="sign-wrapper" v-if="currentTarget=='项目'">
       <img src="/static/images/common/sign@2x.png">
     </div>
   </div>
@@ -94,7 +94,7 @@ export default {
     this.eventRegsiter()
   },
   methods: {
-    ...mapActions("map", ["setProject"]),
+    ...mapActions("map", ["setProjectList", "setSightList"]),
     eventRegsiter() {
       this.$bus.$off("cesium-targetChange");
       this.$bus.$on("cesium-targetChange", ({target}) => {
@@ -219,6 +219,16 @@ export default {
           }
         }
       })
+
+      // 临时代码
+      // if (val == '项目') {
+      //   this.$parent.isProjectSummary = true;
+      //   this.$parent.isSightSummary = false;
+      // }
+      // if (val == '十二景') {
+      //   this.$parent.isSightSummary = true;
+      //   this.$parent.isProjectSummary = false;
+      // }
     }
     // currentYear(val) {
     //   this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });

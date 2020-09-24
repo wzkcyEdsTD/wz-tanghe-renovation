@@ -11,12 +11,13 @@ export const ServiceUrl = {
   WZBaimo:
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-BaiMoLuCheng/rest/realspace/datas/BaiMo_LuCheng/config",
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb/rest/realspace/datas/RES_LC_Model@baimo/config",
-    "http://10.36.234.83:8090/iserver/services/3D-RES_PY_LC_Z1-SW_BM/rest/realspace/datas/RES_PY_SQ@Baimo/config",
-    // "http://10.36.234.83:8098/iserver/services/3D-SW_RA/rest/realspace/datas/RES_RA_Z_EraseMax_Model@Baimo/config",
+    // "http://10.36.234.83:8090/iserver/services/3D-RES_PY_LC_Z1-SW_BM/rest/realspace/datas/RES_PY_SQ@Baimo/config",
+    "http://172.168.3.183:8090/iserver/services/3D-bm_repair/rest/realspace/datas/thbm@bm_repair/config",
   //  影像底图
   SWImage:
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-YX2019SW/rest/realspace/datas/YX_2019_SW",
-    "http://172.20.83.223:8098/iserver/services/3D-YX_2019_SW/rest/realspace/datas/YX_2019_SW",
+    // "http://172.20.83.223:8098/iserver/services/3D-YX_2019_SW/rest/realspace/datas/YX_2019_SW",
+    "http://172.168.3.183:8090/iserver/services/3D-yx2019/rest/realspace/datas/YX_2019_SW",
   //  大数据底图
   DataImage:
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DSJCGS2000SW/rest/realspace/datas/DSJ_CGS2000_SW",
@@ -38,9 +39,13 @@ export const ServiceUrl = {
       "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012QT/config"
   },
   // 三维塘河
-  TANGHE3D: "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
+  TANGHE3D: 
+    // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
+    "http://172.168.3.183:8090/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
   // 绿道
-  LVDAOImage: "http://172.20.83.223:8098/iserver/services/3D-ld/rest/realspace/datas/ld",
+  LVDAOImage: 
+    // "http://172.20.83.223:8098/iserver/services/3D-ld/rest/realspace/datas/ld",
+    "http://172.168.3.183:8090/iserver/services/3D-ld/rest/realspace/datas/ld"
 };
 
 export const BimSourceURL = {

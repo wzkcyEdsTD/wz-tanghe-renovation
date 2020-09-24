@@ -1,5 +1,5 @@
 <template>
-  <div class="summary">
+  <div class="projectSummary">
     <div class="search-container">
       <div class="title-wrapper">
         <span class="pre"></span>
@@ -25,41 +25,16 @@
       </div>
       <div class="result-wrapper">
         <ul class="result-list">
-          <li class="result-item header" v-for="(item,index) in projectList" :key="index">
+          <li class="result-item header">
             <span class="index">序号</span>
             <span class="name">名称</span>
             <span class="speed">进度</span>
           </li>
-          <!-- <li class="result-item">
-            <span class="index">01</span>
-            <span class="name">葡萄8-5地块</span>
-            <span class="speed">完工</span>
+          <li class="result-item" v-for="(item,index) in projectList" :key="index">
+            <span class="index">{{index}}</span>
+            <span class="name" :title="item.attributes.NAME">{{item.attributes.NAME}}</span>
+            <span class="speed">{{item.attributes.REMARK}}</span>
           </li>
-          <li class="result-item">
-            <span class="index">01</span>
-            <span class="name">葡萄8-5地块</span>
-            <span class="speed">完工</span>
-          </li>
-          <li class="result-item">
-            <span class="index">01</span>
-            <span class="name">葡萄8-5地块</span>
-            <span class="speed">完工</span>
-          </li>
-          <li class="result-item">
-            <span class="index">01</span>
-            <span class="name">葡萄8-5地块</span>
-            <span class="speed">完工</span>
-          </li>
-          <li class="result-item">
-            <span class="index">01</span>
-            <span class="name">葡萄8-5地块</span>
-            <span class="speed">完工</span>
-          </li>
-          <li class="result-item">
-            <span class="index">01</span>
-            <span class="name">葡萄8-5地块</span>
-            <span class="speed">完工</span>
-          </li> -->
         </ul>
       </div>
     </div>
@@ -390,5 +365,5 @@ export default {
 </script>
 
 <style lang="less">
-@import url("./summary.less");
+@import url("./projectSummary.less");
 </style>

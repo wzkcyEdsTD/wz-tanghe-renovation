@@ -350,16 +350,13 @@ export default {
     },
     removeAll() {
       const viewer = window.earth;
+      const id = ["wrth","oj","fyj","ruian","tangxia","liao","chshan","wenzhoushiqu","xianyan"]
       try {
-        viewer.entities.removeById("wrth");
-        viewer.entities.removeById("oj");
-        viewer.entities.removeById("fyj");
-        viewer.entities.removeById("ruian");
-        viewer.entities.removeById("tangxia");
-        viewer.entities.removeById("xianyan");
-        viewer.entities.removeById("liao");
-        viewer.entities.removeById("chshan");
-        viewer.entities.removeById("wenzhoushiqu");
+        id.forEach(function (element) {
+          viewer.entities.removeById(element);
+          viewer.entities.removeById(`${element}1`);
+          viewer.entities.removeById(`${element}p`);
+        })
       } catch (e) {
         console.log(e);
       }

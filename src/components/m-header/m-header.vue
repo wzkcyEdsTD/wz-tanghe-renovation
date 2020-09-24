@@ -5,29 +5,35 @@
       <img class="shadow" src="./images/shadow.png" alt="">
     </div>
     <div class="info">
-      <span class="time">2020年8月26日 12:43:22</span>
+      <span class="time">{{date}}</span>
     </div>
   </div>
 </template>
 
 <script>
-
+import { getDate } from 'common/js/util'
 export default {
   name: "MHeader",
   data() {
     return {
+      date: ''
     };
   },
   mounted() {
+    this.date = getDate()
+    setInterval(() => {
+      this.date = getDate()
+    }, 1000)
   },
-  methods: {},
-  watch: {
-    $route(to) {
-      this.$nextTick(() => {
-        this.routerUrl = to.fullPath;
-      });
-    },
+  methods: {
   },
+  // watch: {
+  //   $route(to) {
+  //     this.$nextTick(() => {
+  //       this.routerUrl = to.fullPath;
+  //     });
+  //   },
+  // },
 };
 </script>
 

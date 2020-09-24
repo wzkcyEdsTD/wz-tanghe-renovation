@@ -1,4 +1,4 @@
-.summary {
+.projectSummary {
   position: fixed;
   box-sizing: border-box;
   top: 6vh;
@@ -89,9 +89,15 @@
           }
           .name {
             flex: 3;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
           }
           .speed {
-            flex: 1;
+            flex: 2;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
           }
           &.header {
             font-size: 16px;

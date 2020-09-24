@@ -53,6 +53,14 @@ export default {
         icon: 'item2',
         click: true
       }, {
+        title: '十二景',
+        type: '十二景',
+        year: '2020',
+        number: '12',
+        unit: '个',
+        icon: 'item6',
+        click: true
+      }, {
         title: '资源数量',
         type: '资源',
         year: '2020',

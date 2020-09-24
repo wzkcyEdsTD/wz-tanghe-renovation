@@ -65,7 +65,7 @@ export const fixTreeWithExtra = (gArr, eObj, node, context) => {
       ? extraFeatures.push({ ...item, extra_data: eObj[attributes.SHORTNAME] })
       : drawFeatures.push(item);
   });
-  context[node.saveExtraDataByGeometry](extraFeatures);
+  context[node.saveData](extraFeatures);
   // context.searchFilter();
   return { drawFeatures };
 };
@@ -85,17 +85,15 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
   });
   context.featureMap[node.id] = result.features;
   let forceDrawFeatures = [];
-  if (node.withExtraData) {
-    const { drawFeatures } = fixTreeWithExtra(
-      result.features,
-      context[node.withExtraData],
-      node,
-      context
-    );
-    forceDrawFeatures = [...drawFeatures];
-  } else {
+  if (node.saveData) {
+    // const { drawFeatures } = fixTreeWithExtra(
+    //   result.features,
+    //   context[node.withExtraData],
+    //   node,
+    //   context
+    // );
+    // forceDrawFeatures = [...drawFeatures];
     if (node.id === '项目') {
-      console.log('node', node)
       result.features.forEach(item => {
         if (item.attributes.XMJZQK) {
           forceDrawFeatures.push(item)
@@ -103,8 +101,21 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
       })
       context[node.saveData](forceDrawFeatures);
     } else {
-      forceDrawFeatures = result.features;
+      forceDrawFeatures = result.features
+      context[node.saveData](result.features);
     }
+  } else {
+    // if (node.id === '项目') {
+    //   result.features.forEach(item => {
+    //     if (item.attributes.XMJZQK) {
+    //       forceDrawFeatures.push(item)
+    //     }
+    //   })
+    //   context[node.saveData](forceDrawFeatures);
+    // } else {
+    //   forceDrawFeatures = result.features;
+    // }
+    forceDrawFeatures = result.features;
   }
 
   forceDrawFeatures.map(item => {
@@ -163,6 +174,7 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
           image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.XMJZQK.trim()}.png`,
           width: 43,
           height: 74,
+          // sizeInMeters: true,
           disableDepthTestDistance: Number.POSITIVE_INFINITY
         }
       };

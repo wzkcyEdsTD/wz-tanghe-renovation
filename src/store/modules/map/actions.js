@@ -65,7 +65,11 @@ import * as types from "./mutation-types";
 //   commit(types.SET_IS_INFO_FRAME, data);
 // };
 
-export const setProject = ({ commit }, data) => {
-  console.log(111, data)
+// 设置项目
+export const setProjectList = ({ commit }, data) => {
   commit(types.SET_PROJECT_LIST, data);
+};
+// 设置景点
+export const setSightList = ({ commit }, data) => {
+  commit(types.SET_SIGHT_LIST, data);
 };

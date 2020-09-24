@@ -38,8 +38,12 @@ const mutations = {
   //   state.forceMapTypeBase = data;
   // }
   [types.SET_PROJECT_LIST](state, data) {
-    console.log(222)
+    console.log(222, data)
     state.projectList = data;
+  },
+  [types.SET_SIGHT_LIST](state, data) {
+    console.log(222, data)
+    state.sightList = data;
   },
 };
 

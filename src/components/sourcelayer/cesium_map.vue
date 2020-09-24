@@ -3,9 +3,11 @@
     <div id="cesiumContainer" />
     <div v-if="mapLoaded">
       <TotalTarget ref="totalTarget" v-show="isTotalTarget" />
-      <Summary />
+      <ProjectSummary />
+      <!-- <ProjectSummary v-show="isProjectSummary" /> -->
+      <!-- <SightSummary v-show="isSightSummary" /> -->
       <!-- <RoadLine ref="roadline" /> -->
-      <LayerHub />
+      <LayerHub ref="layerhub" />
       <DetailPopup ref="detailPopup" />
     </div>
   </div>
@@ -14,7 +16,8 @@
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
 import TotalTarget from "./totalTarget/totalTarget";
-import Summary from "./summary/summary";
+import ProjectSummary from "./projectSummary/projectSummary";
+import SightSummary from "./sightSummary/sightSummary";
 import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import LayerHub from "./layerHub/layerHub";
 import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
@@ -25,7 +28,8 @@ const Cesium = window.Cesium;
 export default {
   components: {
     TotalTarget,
-    Summary,
+    ProjectSummary,
+    SightSummary,
     RoadLine,
     LayerHub,
     DetailPopup,
@@ -37,7 +41,9 @@ export default {
       datalayer: undefined,
       lvdaolayer: undefined,
       handler: undefined,
-      isTotalTarget: true
+      isTotalTarget: true,
+      isProjectSummary: false,
+      isSightSummary: false
     };
   },
   computed: {
@@ -82,6 +88,8 @@ export default {
           this.$bus.$emit("cesium-projectClick", {
             extra_data: pick.id.extra_data,
           });
+
+          this.$refs.layerhub.showHub = false
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     },
@@ -91,7 +99,7 @@ export default {
         //  底图切换
         console.log("layer-switch");
         if (value == "yx") {
-          console.log("yx", year);
+          console.log("yx", year, ServiceUrl.SWImage);
           this.datalayer.show = false;
           this.imagelayer
             ? (this.imagelayer.show = true)
@@ -212,7 +220,7 @@ export default {
       );
       Cesium.when(tanghePromise, () => {
         const LAYER = viewer.scene.layers.find("tanghe3d");
-        LAYER.visibleDistanceMax = 5000;
+        // LAYER.visibleDistanceMax = 5000;
       });
 
       // 移除缓冲圈

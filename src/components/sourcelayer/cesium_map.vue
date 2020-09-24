@@ -108,7 +108,10 @@ export default {
                   url: ServiceUrl.SWImage,
                 })
               ));
+          this.lipai();
+          this.quan();
         } else {
+          this.removeAll();
           this.imagelayer.show = false;
           this.datalayer
             ? (this.datalayer.show = true)
@@ -222,6 +225,8 @@ export default {
         const LAYER = viewer.scene.layers.find("tanghe3d");
         // LAYER.visibleDistanceMax = 5000;
       });
+      this.lipai();
+      this.quan();
 
       // 移除缓冲圈
       $(".cesium-widget-credits").hide();
@@ -243,6 +248,124 @@ export default {
         },
       });
     },
+    lipai() {
+      this.lp(120.727729,28.010275,"oj",'static/images/oj.png',65,65);
+      this.lp(120.599327,27.789995,"fyj",'static/images/fyj.png',75,75);
+      this.lp(120.726, 27.899,"wrth",'static/images/温瑞塘河.png',130,130);
+    },
+    quan() {
+      this.texiao(120.649,27.786,"ruian","static/images/瑞安.png");
+      this.texiao(120.720,27.822,"tangxia","static/images/塘下.png");
+      this.texiao(120.684,27.880,"xianyan","static/images/仙岩.png");
+      this.texiao(120.646,27.921,"liao","static/images/丽岙.png");
+      this.texiao(120.700,27.942,"chshan","static/images/茶山.png");
+      this.texiao(120.649,27.972,"wenzhoushiqu","static/images/温州市区.png");
+    },
+    texiao(lon,lat,id,img){
+      const viewer = window.earth;
+      var rr1 = 0;
+      var rr =0;
+      var ss1 = 0;
+      var ss = 0;
+      var deviationR = 20;
+      var MaxR = 3000;
+      let entity=viewer.entities.add({
+        id:id,
+        position:Cesium.Cartesian3.fromDegrees(lon,lat,50),
+        ellipse:{
+          semiMinorAxis:new Cesium.CallbackProperty(function () {
+            var r1 = rr;  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+            r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+            if (r1 >= MaxR) {
+              r1 = 0;
+            }
+            rr = r1;
+            return r1;
+          },false),
+          semiMajorAxis:new Cesium.CallbackProperty(function () {
+            var r1=rr1  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+            r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+            if (r1 >= MaxR) {
+              r1 = 0;
+            }
+            rr1 = r1;
+            return r1;
+          },false),
+          height:10,
+          material: new Cesium.ImageMaterialProperty({
+            image:"static/images/1.png",
+            transparent:true,
+          }),
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,50000000),
+        },
+      });
+      setTimeout(function () {
+        viewer.entities.add({
+          id: `${id}1`,
+          position:Cesium.Cartesian3.fromDegrees(lon,lat,10),
+          ellipse : {
+            semiMinorAxis :new Cesium.CallbackProperty(function () {
+              var r1 =ss  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+              r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+              if (r1 >= MaxR) {
+                r1 = 0;
+              }
+              ss = r1;
+              return r1;
+            },false),
+            semiMajorAxis :new Cesium.CallbackProperty(function () {
+              var r1=ss1  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+              r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+              if (r1 >= MaxR) {
+                r1 = 0;
+              }
+              ss1 = r1;
+              return r1;
+            },false),
+            height:10,
+            material:new Cesium.ImageMaterialProperty({
+              image:"static/images/1.png",
+              transparent:true,
+            }),
+            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,50000000),
+          }
+        });
+      },5000);
+
+      this.lp(lon,lat,`${id}p`,img,60,60,600);
+    },
+    lp(lon,lat,id,img,width,height,high){
+      const viewer = window.earth;
+      viewer.entities.add({
+        id: id,
+        position: Cesium.Cartesian3.fromDegrees(lon,lat, high||100),
+        billboard: {
+          image: img,
+          width: width,
+          height: height,
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          translucencyByDistance: new Cesium.NearFarScalar(7000, 0, 8000, 1)
+        },
+      });
+    },
+    removeAll() {
+      const viewer = window.earth;
+      try {
+        viewer.entities.removeById("wrth");
+        viewer.entities.removeById("oj");
+        viewer.entities.removeById("fyj");
+        viewer.entities.removeById("ruian");
+        viewer.entities.removeById("tangxia");
+        viewer.entities.removeById("xianyan");
+        viewer.entities.removeById("liao");
+        viewer.entities.removeById("chshan");
+        viewer.entities.removeById("wenzhoushiqu");
+      } catch (e) {
+        console.log(e);
+      }
+
+    },
+
   },
 };
 </script>

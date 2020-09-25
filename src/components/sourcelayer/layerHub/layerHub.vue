@@ -36,6 +36,13 @@
         </div> -->
       </div>
     </div>
+    <div class="switch-menu-wrapper">
+      <div class="switch-menu-container">
+        <span :class="{active: !showMenu}" @click="switchMenu(false)">专题</span>
+        <span :class="{active: showMenu}" @click="switchMenu(true)">资源目录</span>
+      </div>
+      <div class="switch-menu-decorate"></div>
+    </div>
     <div class="left-menu-wrapper" v-show="showMenu">
       <div class="title-wrapper">
         <span class="pre"></span>
@@ -48,6 +55,7 @@
           show-checkbox
           node-key="id"
           :filter-node-method="filterNode"
+          :default-checked-keys="['乡镇名称']"
           @check-change="nodeCheckChange"
         />
       </div>
@@ -141,6 +149,10 @@ export default {
       this.showBaimo = !this.showBaimo
       this.$bus.$emit("cesium-3d-switch", { value: this.showBaimo });
     },
+    switchMenu(bol) {
+      this.showMenu = bol
+      this.$parent.isTotalTarget = !this.showMenu;
+    },
     toggleMenu() {
       this.showMenu = !this.showMenu
       this.$parent.isTotalTarget = !this.showMenu;
@@ -170,6 +182,9 @@ export default {
               name: node.id,
             })
           );
+        } else if (node.type == "cesium_town") {
+          console.log('cesium_town_on')
+          this.$parent.removeAll(true);
         }
         //  有相机视角配置 -> 跳视角
         node.camera && window.earth.scene.camera.setView(node.camera);
@@ -188,6 +203,10 @@ export default {
         }
         node.componentEvent &&
           this.$bus.$emit(node.componentEvent, { value: null });
+        if (node.type == "cesium_town") {
+          console.log('cesium_town_off')
+          this.$parent.removeAll(false);
+        }
       }
     },
     // targetChange(target) {

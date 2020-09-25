@@ -118,7 +118,7 @@ export default {
           // this.lipai();
           // this.quan();
         } else {
-          this.removeAll();
+          // this.removeAll();
           this.imagelayer.show = false;
           this.datalayer
             ? (this.datalayer.show = true)
@@ -245,6 +245,10 @@ export default {
         })
       )
 
+      // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
+      // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace/scenes');
+      // promise.then(function(layers){});
+
       this.lipai();
       this.quan();
 
@@ -285,7 +289,7 @@ export default {
       const viewer = window.earth;
       const entitys = viewer.entities.getById(id);
       if (!!entitys){
-        this.removeAll();
+        // this.removeAll();
         return;
       }
       var rr1 = 0;
@@ -363,7 +367,7 @@ export default {
       const viewer = window.earth;
       const entity = viewer.entities.getById(id);
       if (!!entity){
-        this.removeAll();
+        // this.removeAll();
         return;
       }
       viewer.entities.add({
@@ -378,23 +382,23 @@ export default {
         },
       });
     },
-    removeAll() {
+    removeAll(isShow) {
       const viewer = window.earth;
       const id = ["ruian","tangxia","liao","chshan","wenzhoushiqu","xianyan"];
       const idOther = ["wrth","oj","fyj"];
-      const temp = !this.biaoshi;
-      console.log(temp);
+      // const temp = !this.biaoshi;
+      // console.log(temp);
       try {
         id.forEach(function (element) {
-          viewer.entities.getById(element).show = temp;
-          viewer.entities.getById(`${element}1`).show=temp;
-          viewer.entities.getById(`${element}p`).show=temp;
+          viewer.entities.getById(element).show = isShow;
+          viewer.entities.getById(`${element}1`).show=isShow;
+          viewer.entities.getById(`${element}p`).show=isShow;
         });
         idOther.forEach(function (element) {
-          viewer.entities.getById(element).show=temp;
+          viewer.entities.getById(element).show=isShow;
         });
-        this.biaoshi = temp;
-        console.log(this.biaoshi);
+        // this.biaoshi = temp;
+        // console.log(this.biaoshi);
       } catch (e) {
         console.log(e);
       }

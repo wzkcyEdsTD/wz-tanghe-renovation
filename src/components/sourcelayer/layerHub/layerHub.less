@@ -75,10 +75,43 @@
     }
   }
 
+  .switch-menu-wrapper {
+    z-index   : 999;
+    position  : absolute;
+    top       : 80px;
+    left      : 0px;
+    text-align: center;
+    .switch-menu-container {
+      margin-left: 10px;
+      width: 287px;
+      height: 35px;
+      cursor: pointer;
+      .bg-image('./images/switch-bg');
+      display: flex;
+      >span {
+        flex: 1;
+        line-height: 37px;
+        font-family: YouSheBiaoTiHei;
+        font-size: 26px;
+        color: #fff;
+        opacity: .5;
+        &.active {
+          opacity: 1;
+        }
+      }
+    }
+    .switch-menu-decorate {
+      margin-top: 15px;
+      width: 350px;
+      height: 7px;
+      .bg-image('./images/switch-decorate');
+    }
+  }
+
   .left-menu-wrapper {
     z-index   : 999;
     position  : absolute;
-    top       : 100px;
+    top       : 150px;
     left      : 20px;
     text-align: center;
     .title-wrapper {

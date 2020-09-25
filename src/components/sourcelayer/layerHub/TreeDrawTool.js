@@ -172,8 +172,8 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
         ),
         billboard: {
           image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.XMJZQK.trim()}.png`,
-          width: 32,
-          height: 32,
+          width: 16,
+          height: 16,
           // sizeInMeters: true,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
           // translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)

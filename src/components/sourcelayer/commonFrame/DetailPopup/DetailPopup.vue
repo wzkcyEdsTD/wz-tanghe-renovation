@@ -8,23 +8,6 @@
             <div class="name-wrapper">
               <span class="name">{{forceEntity.NAME}}</span>
             </div>
-            <div class="img-wrapper" v-show="type == 'duandian'">
-              <div class="flex-container">
-                <div class="swiper-buttons swiper-button-left"></div>
-                <swiper ref="mySwiper" class="swiper-wrapper" :options="swiperOptions">
-                  <!-- <swiper-slide v-for="(item,i) in imgs" :key="i" class="swiper-item"> -->
-                  <swiper-slide class="swiper-item">
-                    <!-- <img :src="`/static/images/${item}.png`" /> -->
-                    <viewer>
-                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
-                    </viewer>
-                  </swiper-slide>
-                  <div class="swiper-pagination" slot="pagination"></div>
-                </swiper>
-                <div class="swiper-buttons swiper-button-right"></div>
-              </div>
-              <div class="decorate-line"></div>
-            </div>
             <div class="desc-wrapper" v-show="type == 'project'">
               <div class="desc-item">
                 <div class="title">
@@ -115,6 +98,44 @@
               <div class="btn-item cant">全景</div>
               <div class="btn-item cant">效果</div>
             </div>
+            <div class="img-wrapper" v-show="type == 'duandian'">
+              <div class="decorate-line"></div>
+              <div class="name-wrapper">
+                <span class="name">现场记录</span>
+              </div>
+              <div class="flex-container">
+                <div class="swiper-buttons swiper-button-left"></div>
+                <swiper ref="mySwiper" class="swiper-wrapper" :options="swiperOptions">
+                  <!-- <swiper-slide v-for="(item,i) in imgs" :key="i" class="swiper-item"> -->
+                  <swiper-slide class="swiper-item">
+                    <!-- <img :src="`/static/images/${item}.png`" /> -->
+                    <viewer>
+                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
+                    </viewer>
+                  </swiper-slide>
+                  <swiper-slide class="swiper-item">
+                    <!-- <img :src="`/static/images/${item}.png`" /> -->
+                    <viewer>
+                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
+                    </viewer>
+                  </swiper-slide>
+                  <swiper-slide class="swiper-item">
+                    <!-- <img :src="`/static/images/${item}.png`" /> -->
+                    <viewer>
+                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
+                    </viewer>
+                  </swiper-slide>
+                  <swiper-slide class="swiper-item">
+                    <!-- <img :src="`/static/images/${item}.png`" /> -->
+                    <viewer>
+                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
+                    </viewer>
+                  </swiper-slide>
+                  <div class="swiper-pagination" slot="pagination"></div>
+                </swiper>
+                <div class="swiper-buttons swiper-button-right"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -129,11 +150,11 @@ export default {
       showPopUp: false,
       forceEntity: {},
       swiperOptions: {
-        slidesPerView: 1,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
+        slidesPerView: 3,
+        // pagination: {
+        //   el: ".swiper-pagination",
+        //   clickable: true,
+        // },
         navigation: {
           nextEl: ".swiper-button-right",
           prevEl: ".swiper-button-left",
@@ -183,11 +204,13 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    z-index: 1000;
   }
   .name-wrapper {
-    display: flex;
-    align-items: flex-end;
-    margin-top: 30px;
+    // display: flex;
+    // align-items: flex-end;
+    margin-top: 20px;
+    text-align: left;
     .name {
       display: block;
       height: 25px;
@@ -228,10 +251,11 @@ export default {
   .leaflet-popup-content-wrapper {
     .bg-image("./images/detail");
     text-align: center;
-    // height: 782px;
-    width: 780px;
+    height: 684px;
+    width: 800px;
     box-sizing: border-box;
     padding: 14px;
+    padding-top: 30px;
   }
 
   .leaflet-popup-content {
@@ -261,17 +285,18 @@ export default {
     }
     .img-wrapper {
       position: relative;
-      margin-top: 10px;      
+      margin-top: 20px;      
       .flex-container {
+        margin-top: 30px;
         display: flex;
         align-items: top;
         justify-content: center;
-        height: 218px;
+        // height: 218px;
       }
       .swiper-buttons {
         cursor: pointer;
-        width: 28px;
-        height: 180px;
+        width: 18px;
+        height: 114px;
         .bg-image("./images/swiper-btn");
       }
       .swiper-button-left {
@@ -284,6 +309,12 @@ export default {
       .swiper-wrapper {
         margin: 0;
         width: 333px;
+        .swiper-item {
+          img {
+            width: 160px;
+            height: 114px;
+          }
+        }
         .swiper-pagination {
           position: absolute;
           bottom: 5px;
@@ -301,10 +332,11 @@ export default {
         }
       }
       .decorate-line {
-        position: absolute;
-        bottom: 0;
+        // position: absolute;
+        // bottom: 0;
+        margin: 0 auto;
         width: 766px;
-        height: 25px;
+        height: 7px;
         .bg-image("./images/decorate-line");
       }
     }

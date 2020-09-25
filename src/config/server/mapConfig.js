@@ -54,7 +54,7 @@ export const ServiceUrl = {
     "http://172.168.3.183:8090/iserver/services/3D-ldplus/rest/realspace/datas/ldplus",
   // 绿道场景
   // LVDAOScene:
-  //   "http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace/scenes"
+  //   "http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace"
 };
 
 export const BimSourceURL = {

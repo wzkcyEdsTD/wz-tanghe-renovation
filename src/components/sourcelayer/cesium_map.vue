@@ -91,7 +91,7 @@ export default {
               extra_data: pick.id.extra_data,
             });
           }
-          if (~pick.id.id.indexOf("绿道断点_")) {
+          if (~pick.id.id.indexOf("断点_")) {
             this.$bus.$emit("cesium-kadianClick", {
               extra_data: pick.id.extra_data,
             });
@@ -129,7 +129,7 @@ export default {
               ));
         }
       });
-      this.$bus.$off("cesium-lvdao-switch");
+      // this.$bus.$off("cesium-lvdao-switch");
       // this.$bus.$on("cesium-lvdao-switch", ({ value }) => {
       //   //  绿道切换
       //   console.log("lvdao-switch");
@@ -239,14 +239,14 @@ export default {
         })
       )
 
-      window.earth.imageryLayers.addImageryProvider(
+      this.lvdaolayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.LVDAOImage,
         })
       )
 
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
-      // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace/scenes');
+      // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace');
       // promise.then(function(layers){});
 
       this.lipai();
@@ -404,7 +404,9 @@ export default {
       }
 
     },
-
+    switchLvdao(value) {
+      this.lvdaolayer.show = value
+    }
   },
 };
 </script>

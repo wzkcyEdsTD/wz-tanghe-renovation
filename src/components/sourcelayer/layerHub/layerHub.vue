@@ -55,7 +55,7 @@
           show-checkbox
           node-key="id"
           :filter-node-method="filterNode"
-          :default-checked-keys="['乡镇名称']"
+          default-expand-all
           @check-change="nodeCheckChange"
         />
       </div>
@@ -102,7 +102,7 @@ export default {
     this.eventRegsiter()
   },
   mounted() {
-    this.$refs.tree.setCheckedKeys(['绿道断点', '十二景']);
+    this.$refs.tree.setCheckedKeys(['断点', '十二景', '乡镇名称', '绿道']);
   },
   methods: {
     ...mapActions("map", ["setProjectList", "setSightList"]),
@@ -185,6 +185,9 @@ export default {
         } else if (node.type == "cesium_town") {
           console.log('cesium_town_on')
           this.$parent.removeAll(true);
+        } else if (node.type == "cesium_lvdao") {
+          console.log('cesium_lvdao_on')
+          this.$parent.switchLvdao(true);
         }
         //  有相机视角配置 -> 跳视角
         node.camera && window.earth.scene.camera.setView(node.camera);
@@ -206,6 +209,10 @@ export default {
         if (node.type == "cesium_town") {
           console.log('cesium_town_off')
           this.$parent.removeAll(false);
+        }
+        if (node.type == "cesium_lvdao") {
+          console.log('cesium_lvdao_off')
+          this.$parent.switchLvdao(false);
         }
       }
     },

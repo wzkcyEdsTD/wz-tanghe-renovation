@@ -126,7 +126,7 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
         color: Cesium.Color.fromCssColorString("#fff"),
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
         font: "10px",
-        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 2000),
+        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
         pixelOffset: new Cesium.Cartesian2(0, -40),
         disableDepthTestDistance: Number.POSITIVE_INFINITY
       },
@@ -170,12 +170,19 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
           item.geometry.y,
           4
         ),
+        ellipse: {
+          semiMinorAxis: 100.0,
+          semiMajorAxis: 100.0,
+          material: Cesium.Color.WHITE,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(6000, 10000000),
+        },
         billboard: {
-          image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.XMJZQK.trim()}.png`,
-          width: 16,
-          height: 16,
+          image: node.icon ? `/static/images/map-ico/正常建设.png` : `/static/images/map-ico/${item.attributes.XMJZQK.trim()}.png`,
+          width: node.iconSize == 'small' ? 32 : 43,
+          height: node.iconSize == 'small' ? 32 : 45,
           // sizeInMeters: true,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
           // translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)
         }
       };

@@ -69,11 +69,12 @@ export const CESIUM_TREE_OPTION = [
     saveData: "setProjectList"
   },
   {
-    id: "绿道断点",
-    label: "绿道断点",
+    id: "断点",
+    label: "断点",
     url: SERVER_DEFAULT_DATA,
     newdataset: `${SW_DATA_NAME}绿道断点`,
     icon: '断点',
+    iconSize: 'small',
     type: "mvt",
   },
   {
@@ -89,6 +90,11 @@ export const CESIUM_TREE_OPTION = [
     id: "乡镇名称",
     label: "乡镇名称",
     type: "cesium_town",
+  },
+  {
+    id: "绿道",
+    label: "绿道",
+    type: "cesium_lvdao",
   },
   {
     id: "基础数据",

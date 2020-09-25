@@ -18,6 +18,7 @@ import { ServiceUrl } from "config/server/mapConfig";
 import TotalTarget from "./totalTarget/totalTarget";
 import ProjectSummary from "./projectSummary/projectSummary";
 import SightSummary from "./sightSummary/sightSummary";
+import RightSummary from "./rightSummary/rightSummary"
 import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import LayerHub from "./layerHub/layerHub";
 import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
@@ -33,6 +34,7 @@ export default {
     RoadLine,
     LayerHub,
     DetailPopup,
+    RightSummary
   },
   data() {
     return {
@@ -44,7 +46,6 @@ export default {
       isTotalTarget: true,
       isProjectSummary: false,
       isSightSummary: false,
-      biaoshi:true
     };
   },
   computed: {
@@ -273,8 +274,8 @@ export default {
       });
     },
     lipai() {
-      this.lp(120.727729,28.010275,"oj",'static/images/oj.png',65,65);
-      this.lp(120.599327,27.789995,"fyj",'static/images/fyj.png',75,75);
+      this.lp(120.727729,28.010275,"oj",'static/images/瓯江.png',65,65);
+      this.lp(120.599327,27.789995,"fyj",'static/images/飞云江.png',75,75);
       this.lp(120.726, 27.899,"wrth",'static/images/温瑞塘河.png',130,130);
     },
     quan() {
@@ -289,7 +290,6 @@ export default {
       const viewer = window.earth;
       const entitys = viewer.entities.getById(id);
       if (!!entitys){
-        // this.removeAll();
         return;
       }
       var rr1 = 0;
@@ -298,76 +298,78 @@ export default {
       var ss = 0;
       var deviationR = 20;
       var MaxR = 3000;
-      let entity=viewer.entities.add({
-        id:id,
-        position:Cesium.Cartesian3.fromDegrees(lon,lat,50),
-        ellipse:{
-          semiMinorAxis:new Cesium.CallbackProperty(function () {
-            var r1 = rr;  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-            r1 = r1 + deviationR;//deviationR为每次圆增加的大小
-            if (r1 >= MaxR) {
-              r1 = 0;
-            }
-            rr = r1;
-            return r1;
-          },false),
-          semiMajorAxis:new Cesium.CallbackProperty(function () {
-            var r1=rr1  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-            r1 = r1 + deviationR;//deviationR为每次圆增加的大小
-            if (r1 >= MaxR) {
-              r1 = 0;
-            }
-            rr1 = r1;
-            return r1;
-          },false),
-          height:10,
-          material: new Cesium.ImageMaterialProperty({
-            image:"static/images/1.png",
-            transparent:true,
-          }),
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,50000000),
-        },
-      });
-      setTimeout(function () {
+      // debugger;
+      this.$nextTick(()=>{
         viewer.entities.add({
-          id: `${id}1`,
-          position:Cesium.Cartesian3.fromDegrees(lon,lat,10),
-          ellipse : {
-            semiMinorAxis :new Cesium.CallbackProperty(function () {
-              var r1 =ss  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+          id:id,
+          position:Cesium.Cartesian3.fromDegrees(lon,lat,50),
+          ellipse:{
+            semiMinorAxis:new Cesium.CallbackProperty(function () {
+              var r1 = rr;  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
               r1 = r1 + deviationR;//deviationR为每次圆增加的大小
               if (r1 >= MaxR) {
                 r1 = 0;
               }
-              ss = r1;
+              rr = r1;
               return r1;
             },false),
-            semiMajorAxis :new Cesium.CallbackProperty(function () {
-              var r1=ss1  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+            semiMajorAxis:new Cesium.CallbackProperty(function () {
+              var r1=rr1  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
               r1 = r1 + deviationR;//deviationR为每次圆增加的大小
               if (r1 >= MaxR) {
                 r1 = 0;
               }
-              ss1 = r1;
+              rr1 = r1;
               return r1;
             },false),
             height:10,
-            material:new Cesium.ImageMaterialProperty({
+            material: new Cesium.ImageMaterialProperty({
               image:"static/images/1.png",
               transparent:true,
             }),
             distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,50000000),
-          }
+          },
         });
-      },5000);
-
+        setTimeout(function () {
+          viewer.entities.add({
+            id: `${id}1`,
+            position:Cesium.Cartesian3.fromDegrees(lon,lat,10),
+            ellipse : {
+              semiMinorAxis :new Cesium.CallbackProperty(function () {
+                var r1 =ss  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+                r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+                if (r1 >= MaxR) {
+                  r1 = 0;
+                }
+                ss = r1;
+                return r1;
+              },false),
+              semiMajorAxis :new Cesium.CallbackProperty(function () {
+                var r1=ss1  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+                r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+                if (r1 >= MaxR) {
+                  r1 = 0;
+                }
+                ss1 = r1;
+                return r1;
+              },false),
+              height:10,
+              material:new Cesium.ImageMaterialProperty({
+                image:"static/images/1.png",
+                transparent:true,
+              }),
+              distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,50000000),
+            },
+          });
+        },5000);
+      });
       this.lp(lon,lat,`${id}p`,img,60,60,600);
+
     },
     lp(lon,lat,id,img,width,height,high){
       const viewer = window.earth;
       const entity = viewer.entities.getById(id);
       if (!!entity){
-        // this.removeAll();
         return;
       }
       viewer.entities.add({

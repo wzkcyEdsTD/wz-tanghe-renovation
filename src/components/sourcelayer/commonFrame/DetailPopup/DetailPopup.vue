@@ -2,6 +2,7 @@
   <div id="forcePopUp" v-if="showPopUp">
     <div id="forcePopUpContent" class="leaflet-popup">
       <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
+      <div class="header">详情</div>
       <div class="leaflet-popup-content-wrapper">
         <div id="forcePopUpLink" class="leaflet-popup-content">
           <div class="leaflet-popup-content">
@@ -84,7 +85,15 @@
                 <div class="content">{{forceEntity.ZRDW}}</div>
               </div>
             </div>
-            <div class="plan-wrapper">
+            <div class="plan-wrapper" v-show="type == 'project'">
+              <div class="title">
+                <span class="title-pre"></span>建设内容和规模
+              </div>
+              <div class="question">
+                {{forceEntity.CONTENTGM}}
+              </div>
+            </div>
+            <div class="plan-wrapper" v-show="type == 'duandian'">
               <div class="title">
                 <span class="title-pre"></span>存在问题
               </div>
@@ -213,7 +222,8 @@ export default {
     text-align: left;
     .name {
       display: block;
-      height: 25px;
+      // height: 25px;
+      width: 620px;
       line-height: 25px;
       font-family: YouSheBiaoTiHei;
       font-size: 26px;
@@ -235,6 +245,16 @@ export default {
       background-image: linear-gradient(90deg, #16EAEA 0%, transparent 100%);
       transform: skewX(-30deg);
     }
+  }
+
+  .header {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: YouSheBiaoTiHei;
+    font-size: 26px;
+    color: #fff;
   }
 
   .leaflet-popup-close-button {
@@ -308,7 +328,7 @@ export default {
       }
       .swiper-wrapper {
         margin: 0;
-        width: 333px;
+        width: 670px;
         .swiper-item {
           img {
             width: 160px;

@@ -51,10 +51,10 @@
           <p class="lab" style="padding-top: 5px;text-indent: 2em;">{{ temp || "暂无简介" }}</p>
           <video
             muted
-            src=""
+            src="static/images/温瑞塘河/温瑞塘河.mp4"
             controls
             loop
-            style="width: 100%;padding-top: 5px"
+            style="width: 330px;height:180px"
           />
         <div style="position:relative;">
           <span class="summary" style="position:absolute;bottom:4px">流域</span>

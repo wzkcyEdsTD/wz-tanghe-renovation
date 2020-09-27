@@ -7,8 +7,8 @@
         <div style="padding-right:15%">
             <div style="position:relative;">
               <img src="./img/组合.png" alt="" style="position:absolute;">
-              <span style="position:absolute;left:13%;top:7px;">总览</span>   
-              
+              <span style="position:absolute;left:11%;top:5px;font-size: 20px;">总览</span>
+
           </div>
 
         </div>
@@ -17,7 +17,7 @@
           <div >
             <div style="position:relative;">
               <img src="./img/button.png" alt="">
-              <span style="position:absolute;top:20%; left:23%;">项目</span>
+              <span style="position:absolute;top:18%; left:20%;font-size: 20px;">项目</span>
             </div>
           </div>
 
@@ -25,7 +25,7 @@
         <div class = "cellDiv">
           <div style="position:relative" >
             <img src="./img/button.png" alt="">
-            <span style="position:absolute;top:20%; left:23%;">卡点</span>
+            <span style="position:absolute;top:18%; left:20%;font-size: 20px;">卡点</span>
           </div>
         </div>
         </div>
@@ -34,7 +34,7 @@
       <div style="padding-top:2%">
         <img src="./img/装饰.png" alt="" >
       </div>
-        
+
       </div>
     <div class="_bimframe_">
       <div>
@@ -46,15 +46,16 @@
           <span class="summary" style="position:absolute;left:3%">简介</span>
           <img src="./img/装饰.png" alt="" style="padding-left:25%;width:350px;height:40 px;" >
         </div>
-          
+
         <div style="padding-left:3%">
           <p class="lab" style="padding-top: 5px;text-indent: 2em;">{{ temp || "暂无简介" }}</p>
           <video
-            muted
             src="static/images/温瑞塘河/温瑞塘河.mp4"
             controls
+            autoplay
+            muted
             loop
-            style="width: 330px;height:180px"
+            style="width: 100%;padding-right: 10px"
           />
         <div style="position:relative;">
           <span class="summary" style="position:absolute;bottom:4px">流域</span>
@@ -65,26 +66,35 @@
           <div class="parent">
             <div class="left">
               <div style="padding-bottom:5px;">
-                <div style="padding-bottom:7px;">流域面积</div>
-                <span style="font-size: 20px;color: #26BCE5;">{{`${lable.lymj}`}}</span>
-                <span style="color: #26BCE5;"> 平方千米</span>
+                <div style="padding-bottom:7px;">塘河长度</div>
+                <span style="font-size: 18px;color: #2ACBFE;font-family:DIN-Bold;">1178.4</span>
+                <span style="color: #26BCE5;"> 千米</span>
+              </div>
+              <div style="padding-bottom:5px;">
+                <div style="padding-bottom:7px">蓄水量</div>
+                <span style="font-size: 18px;color: #2ACBFE;font-family:DIN-Bold;">{{`${lable.xsl}`}}</span>
+                <span style="color: #26BCE5;"> 万立方米</span>
               </div>
               <div>
-                <div style="padding-bottom:7px">蓄水量</div>
-                <span style="font-size: 20px;color: #26BCE5;">{{`${lable.xsl}`}}</span>
-                <span style="color: #26BCE5;"> 万立方米</span>
+                <div style="padding-bottom:7px">灌溉面积</div>
+                <span style="font-size: 18px;color: #2ACBFE;font-family:DIN-Bold;">48.2</span>
+                <span style="color: #26BCE5;"> 万亩</span>
               </div>
             </div>
             <div class="right">
               <div style="padding-bottom:7px;">
-                <div style="padding-bottom:5px">塘河长度</div>
-                <span style="font-size: 20px;color: #26BCE5;">{{`${lable.thcd}`}}</span>
-                <span style="color: #26BCE5;"> 千米</span>
+                <div style="padding-bottom:5px">流域面积</div>
+                <span style="font-size: 20px;color: #26BCE5;">740</span>
+                <span style="color: #26BCE5;"> 平方千米</span>
               </div>
-              <div>
+              <div style="padding-bottom:5px">
                 <div style="padding-bottom:7px">平均流量</div>
                 <span style="font-size: 20px;color: #26BCE5;">{{`${lable.pjll}`}}</span>
                 <span style="color: #26BCE5;"> 亿立方米</span>
+              </div>
+              <div>
+                <div style="padding-bottom:7px">源头</div>
+                <span style="font-size: 20px;color: #26BCE5;">瞿溪、雄溪、郭溪</span>
               </div>
             </div>
           </div>
@@ -124,7 +134,7 @@
           <span class="title">卡点</span>
         </div>
         <div>
-        <div class="parent" style="padding-top:8%;padding-bottom:10%">
+        <div class="parent" style="padding-top:5%;padding-bottom:5%">
           <div style="text-align:center;padding-left:15%;float:left;margin-right:10%;">
             <div>
               <span style="font-size: 28px;font-family:YouSheBiaoTiHei">40</span>
@@ -143,31 +153,31 @@
         </div>
       </div>
 
-      <div style="padding-left:3%">
-        <div class = "cellDiv">
-          <img src="./img/联合 11.png" alt="" style="padding-bottom:5%;padding-right:25%">
+      <div style="padding-left:5%">
+        <div class = "cellDiv" style="padding-right:30px">
+          <img src="./img/联合 11.png" alt="" style="padding-bottom:5%;">
         </div>
         <div class = "cellDiv">
           <div style="position:relative">
             <img src="./img/数字选中.png" alt="">
-            <span style="position:absolute;top:15%; left:20%;">1</span>
+            <span style="position:absolute;top:15%; left:18%;">1</span>
           </div>
         </div>
         <div class = "cellDiv">
           <div style="position:relative">
             <img src="./img/椭圆 5.png" alt="">
-            <span style="position:absolute;top:15%; left:20%;color:#215DDE ">2</span>
+            <span style="position:absolute;top:15%; left:18%;color:#215DDE ">2</span>
           </div>
         </div>
         <div class = "cellDiv">
           <div style="position:relative">
             <img src="./img/椭圆 5.png" alt="">
-            <span style="position:absolute;top:15%; left:20%;color:#215DDE">3</span>
+            <span style="position:absolute;top:15%; left:18%;color:#215DDE">3</span>
           </div>
 
         </div>
-        <div class = "cellDiv">
-          <img src="./img/联合 10.png" alt="" style="padding-bottom:5%;padding-left:20%">
+        <div class = "cellDiv" style="padding-left:15px">
+          <img src="./img/联合 10.png" alt="" style="padding-bottom:5%;">
         </div>
       </div>
 
@@ -215,7 +225,7 @@ width: 100%;
   .right {
     overflow: hidden;
     zoom: 1;
-    
+
   }
 }
 .cellDiv
@@ -224,6 +234,6 @@ width: 100%;
     height:40 px;
     display:table-cell;
 
-} 
+}
 
 </style>

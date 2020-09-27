@@ -13,7 +13,10 @@
               <!-- /{{item.year}}年</span> -->
           </div>
           <div class="info">
-            <div class="number">{{item.number}}<span class="tiny" v-show="item.unit">({{item.unit}})</span></div>
+            <div class="number" :style="{fontSize: item.unit ? '27px' : '20px'}">
+              {{item.number}}
+              <span class="tiny" v-show="item.unit">({{item.unit}})</span>
+            </div>
             <!-- <div class="desc">
               <span class="text">同比去年增加投资</span>
               <div class="content">
@@ -42,7 +45,7 @@ export default {
         title: '项目',
         type: '项目',
         year: '2020',
-        number: '31242',
+        number: '132',
         unit: '个',
         icon: 'item1',
         click: true
@@ -50,7 +53,7 @@ export default {
         title: '卡点断点',
         type: '绿道断点',
         year: '2020',
-        number: '6623',
+        number: '37',
         unit: '个',
         icon: 'item2',
         click: true

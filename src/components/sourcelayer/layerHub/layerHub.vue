@@ -27,13 +27,20 @@
             <img v-else src="./images/menu-unsel.png">
           </div>
         </div>
-        <!-- <div class="yxyear-container" v-show="currentLayer=='yx'">
-          <div class="year" :class="{selected: currentYear==item}" 
+        <div class="sub-container" v-show="currentLayer=='yx'">
+          <div class="sub-item" :class="{selected: currentYear==item}"
           v-for="(item, index) in yearList" :key="index"
           @click="currentYear = item">
             {{item}}
           </div>
-        </div> -->
+        </div>
+        <div class="sub-container" v-show="currentLayer=='vector'">
+          <div class="sub-item" :class="{selected: currentVector==item}"
+          v-for="(item, index) in vectorList" :key="index"
+          @click="currentVector = item">
+            {{item}}
+          </div>
+        </div>
       </div>
     </div>
     <div class="switch-menu-wrapper">
@@ -87,8 +94,10 @@ export default {
       featureMap: {}, //  源数据,量小
       showHub: false,
       currentLayer: 'yx',
-      yearList: [2016, 2017, 2018, 2019],
+      yearList: [2018, 2019],
       currentYear: 2019,
+      vectorList: ['白色', '黑色'],
+      currentVector: '白色',
       // currentTarget: '',
       showBaimo: false,
       showMenu: false,
@@ -141,10 +150,10 @@ export default {
       getFeatureBySQLService.processAsync(getFeatureBySQLParams);
     },
 
-    toggleLayer(type) {
-      console.log('toggleLayer', type)
-      this.currentLayer = type
-    },
+    // toggleLayer(type) {
+    //   console.log('toggleLayer', type)
+    //   this.currentLayer = type
+    // },
     toggleBaimo() {
       this.showBaimo = !this.showBaimo
       this.$bus.$emit("cesium-3d-switch", { value: this.showBaimo });
@@ -253,9 +262,10 @@ export default {
       console.log('newval', val)
       if (val === 'vector') {
         this.$bus.$emit("cesium-layer-switch", { value: 'vector' });
-      } else {
-        this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
       }
+      // else {
+      //   this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
+      // }
     },
     // currentTarget(val) {
     //   console.log('newval', val)
@@ -280,9 +290,9 @@ export default {
     //     }
     //   })
     // }
-    // currentYear(val) {
-    //   this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
-    // }
+    currentYear(val) {
+      this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
+    }
   },
 };
 </script>

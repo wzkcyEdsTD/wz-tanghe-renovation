@@ -14,11 +14,12 @@ export const ServiceUrl = {
     // "http://10.36.234.83:8090/iserver/services/3D-RES_PY_LC_Z1-SW_BM/rest/realspace/datas/RES_PY_SQ@Baimo/config",
     "http://172.168.3.183:8090/iserver/services/3D-bm_repair/rest/realspace/datas/thbm@bm_repair/config",
   //  影像底图
-  SWImage:
+  SWImage: {
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-YX2019SW/rest/realspace/datas/YX_2019_SW",
     // "http://172.20.83.223:8098/iserver/services/3D-YX_2019_SW/rest/realspace/datas/YX_2019_SW",
-    // "http://172.168.3.183:8090/iserver/services/3D-yx2019/rest/realspace/datas/YX_2019_SW",
-    "http://172.168.3.183:8090/iserver/services/map-agscachev2-Layers/rest/maps/Layers",
+    2018: "http://172.168.3.183:8090/iserver/services/map-agscachev2-Layers/rest/maps/Layers",
+    2019: "http://172.168.3.183:8090/iserver/services/3D-yx2019/rest/realspace/datas/YX_2019_SW",
+  },
   //  大数据底图
   DataImage:
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DSJCGS2000SW/rest/realspace/datas/DSJ_CGS2000_SW",

@@ -95,7 +95,7 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
     // forceDrawFeatures = [...drawFeatures];
     if (node.id === '项目') {
       result.features.forEach(item => {
-        if (item.attributes.XMJZQK) {
+        if (item.attributes.CURRENT_STATE) {
           forceDrawFeatures.push(item)
         }
       })
@@ -179,7 +179,7 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
         //   distanceDisplayCondition: new Cesium.DistanceDisplayCondition(6000, 10000000),
         // },
         billboard: {
-          image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.XMJZQK.trim()}.png`,
+          image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
           width: node.iconSize == 'small' ? 24 : 24,
           height: node.iconSize == 'small' ? 24 : 25,
           // sizeInMeters: true,

@@ -3,7 +3,8 @@
     <div id="cesiumContainer" />
     <div v-if="mapLoaded">
       <TotalTarget ref="totalTarget" v-show="isTotalTarget" />
-      <RightSummary />
+<!--      <ProjectSummary></ProjectSummary>-->
+<!--            <RightSummary />-->
       <!-- <ProjectSummary v-show="isProjectSummary" /> -->
       <!-- <SightSummary v-show="isSightSummary" /> -->
       <!-- <RoadLine ref="roadline" /> -->
@@ -70,6 +71,7 @@ export default {
       this.initHandler();
     });
     this.eventRegsiter();
+    this.hide(this);
   },
   methods: {
     initPostRender() {
@@ -379,7 +381,7 @@ export default {
               image:"static/images/1.png",
               transparent:true,
             }),
-            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,50000000),
+            // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,Number.MAX_VALUE),
           },
         });
         setTimeout(function () {
@@ -410,7 +412,7 @@ export default {
                 image:"static/images/1.png",
                 transparent:true,
               }),
-              distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,50000000),
+              // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(20000,Number.MAX_VALUE),
             },
           });
         },5000);
@@ -456,6 +458,18 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    hide(self){
+      const viewer = window.earth;
+      var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+      handler.setInputAction(function(wheelment) {
+        var height=viewer.camera.positionCartographic.height;
+        if (height<10000){
+          self.removeAll(false)
+        }else {
+          self.removeAll(true);
+        }
+      }, Cesium.ScreenSpaceEventType.WHEEL);
     },
     switchLvdao(value) {
       this.lvdaolayer.show = value

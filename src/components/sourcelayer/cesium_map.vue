@@ -24,6 +24,18 @@ import LayerHub from "./layerHub/layerHub";
 import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
+const LAYERS = ServiceUrl.SCENE_WZMODEL;
+const LAYER_NAME = [
+  "十二景@th_zy#1_1",
+  "nt_map",
+  "ldplus_xi",
+  "xmfwm",
+  "thzl",
+  "ldplus",
+  "gyld",
+  "hd",
+  "thmplus",
+];
 const Cesium = window.Cesium;
 
 export default {
@@ -42,6 +54,7 @@ export default {
       imagelayer: undefined,
       datalayer: undefined,
       lvdaolayer: undefined,
+      thfwmlayer: undefined,
       handler: undefined,
       isTotalTarget: true,
       isProjectSummary: false,
@@ -97,6 +110,9 @@ export default {
               extra_data: pick.id.extra_data,
             });
           }
+          this.$bus.$emit("cesium-kadianClick", {
+              extra_data: pick.id.extra_data,
+            });
           this.$refs.layerhub.showHub = false
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
@@ -246,9 +262,31 @@ export default {
         })
       )
 
+      this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.TANGHEFWM,
+        })
+      )
+      this.thfwmlayer.alpha = 0.5;
+
+      // const PROMISES = LAYERS.map((v) => {
+      //   return window.earth.scene.addS3MTilesLayerByScp(v.url, {
+      //     name: v.key,
+      //   });
+      // });
+      // //  精模服务暂有问题，先用setTimeout代替promise处理可见
+      // setTimeout(() => {
+      //   LAYERS.map((v) => {
+      //     const V_LAYER = window.earth.scene.layers.find(v.key);
+      //     V_LAYER.visibleDistanceMax = v.d || 1400;
+      //   });
+      // }, 4000);
+
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
-      // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace');
-      // promise.then(function(layers){});
+      var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
+      promise.then(function(layers){
+      });
+
 
       this.lipai();
       this.quan();
@@ -408,6 +446,13 @@ export default {
     },
     switchLvdao(value) {
       this.lvdaolayer.show = value
+    },
+    switchThfwmlayer(value) {
+      this.thfwmlayer.show = value
+    },
+    switchThyx(value) {
+      console.log('switchThyx')
+      LAYER_NAME.map((d) => (window.earth.scene.layers.find(d).visible = value));
     }
   },
 };

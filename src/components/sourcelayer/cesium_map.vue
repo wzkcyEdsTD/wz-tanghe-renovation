@@ -284,7 +284,8 @@ export default {
 
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
       var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
-      promise.then(function(layers){
+      Cesium.when(promise, async (layers) => {
+        console.log('123', layers)
       });
 
 
@@ -452,7 +453,10 @@ export default {
     },
     switchThyx(value) {
       console.log('switchThyx')
-      LAYER_NAME.map((d) => (window.earth.scene.layers.find(d).visible = value));
+      LAYER_NAME.forEach((d) => {
+        console.log('')
+        (window.earth.scene.layers.find(d).visible = value);
+      })
     }
   },
 };

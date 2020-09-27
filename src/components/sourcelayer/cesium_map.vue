@@ -8,7 +8,8 @@
       <!-- <SightSummary v-show="isSightSummary" /> -->
       <!-- <RoadLine ref="roadline" /> -->
       <LayerHub ref="layerhub" />
-      <DetailPopup ref="detailPopup" />
+      <!-- <DetailPopup ref="detailPopup" /> -->
+      <DetailPopup2 ref="detailPopup" />
     </div>
   </div>
 </template>
@@ -22,6 +23,7 @@ import RightSummary from "./rightSummary/rightSummary"
 import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import LayerHub from "./layerHub/layerHub";
 import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
+import DetailPopup2 from "./commonFrame/DetailPopup2/DetailPopup2";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
@@ -35,6 +37,7 @@ export default {
     RoadLine,
     LayerHub,
     DetailPopup,
+    DetailPopup2,
     RightSummary
   },
   data() {
@@ -63,7 +66,7 @@ export default {
   async mounted() {
     this.init3DMap(() => {
       this.mapLoaded = true;
-      // this.initPostRender();
+      this.initPostRender();
       this.initHandler();
     });
     this.eventRegsiter();
@@ -96,19 +99,26 @@ export default {
         //  *****[detailPopup]  资源详情点*****
         if (pick && pick.id.extra_data) {
           console.log("gogogo");
-          if (~pick.id.id.indexOf("项目_")) {
-            this.$bus.$emit("cesium-projectClick", {
+          // if (~pick.id.id.indexOf("项目_")) {
+          //   this.$bus.$emit("cesium-projectClick", {
+          //     extra_data: pick.id.extra_data,
+          //   });
+          // }
+          // if (~pick.id.id.indexOf("断点_")) {
+          //   this.$bus.$emit("cesium-kadianClick", {
+          //     extra_data: pick.id.extra_data,
+          //   });
+          // }
+          // this.$bus.$emit("cesium-kadianClick", {
+          //     extra_data: pick.id.extra_data,
+          //   });
+          if (pick.id.extra_data) {
+            this.$refs.detailPopup.getForceEntity({
               extra_data: pick.id.extra_data,
+              fix_data: pick.id.fix_data,
+              position: pick.id._position._value,
             });
           }
-          if (~pick.id.id.indexOf("断点_")) {
-            this.$bus.$emit("cesium-kadianClick", {
-              extra_data: pick.id.extra_data,
-            });
-          }
-          this.$bus.$emit("cesium-kadianClick", {
-              extra_data: pick.id.extra_data,
-            });
           this.$refs.layerhub.showHub = false
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);

@@ -1,130 +1,145 @@
 <template>
   <div class="rightSummary">
-    <div style="padding-bottom:7px">
-      <div style="padding-top: 5%">
-
-      <div style="padding-left:3%">
-        <div style="padding-right:15%">
-            <div style="position:relative;">
-              <img src="./img/组合.png" alt="" style="position:absolute;">
-              <span style="position:absolute;left:11%;top:5px;font-size: 20px;">总览</span>
-
+    <div class="ding">
+      <div class="box">
+        <div class="buttonpd1" >
+          <div class="tp">
+            <img src="./img/组合.png" alt="" >
+            <span class="button1">总览</span>
           </div>
 
         </div>
-        <div style="padding-left:35%">
-          <div class = "cellDiv" style="padding-buttom:15%">
-          <div >
-            <div style="position:relative;">
-              <img src="./img/button.png" alt="">
-              <span style="position:absolute;top:18%; left:20%;font-size: 20px;">项目</span>
-            </div>
-          </div>
-
-        </div>
-        <div class = "cellDiv">
-          <div style="position:relative" >
+        <div class="buttonpd">
+          <div class="tp">
             <img src="./img/button.png" alt="">
-            <span style="position:absolute;top:18%; left:20%;font-size: 20px;">卡点</span>
+            <span class="button">项目</span>
           </div>
         </div>
+        <div >
+          <div class="tp" >
+            <img src="./img/button.png" alt="">
+            <span class="button">卡点</span>
+          </div>
         </div>
       </div>
-      </div>
-      <div style="padding-top:2%">
+
+      <div >
         <img src="./img/装饰.png" alt="" >
       </div>
 
       </div>
-    <div class="_bimframe_">
+    <div class="frame_">
       <div>
         <div class="title-wrapper">
           <span class="pre"></span>
           <span class="title">温瑞塘河</span>
         </div>
-        <div style="position:relative;">
-          <span class="summary" style="position:absolute;left:3%">简介</span>
-          <img src="./img/装饰.png" alt="" style="padding-left:25%;width:350px;height:40 px;" >
-        </div>
-
-        <div style="padding-left:3%">
-          <p class="lab" style="padding-top: 5px;text-indent: 2em;">{{ temp || "暂无简介" }}</p>
+        <div class="wenzi">
+          <div class="jianju">
+            <span class="xbt">简介</span>
+            <img src="./img/装饰.png" alt=""  class="zs">
+          </div>
+          <p class="lab" >{{ temp || "暂无简介" }}</p>
           <video
             src="static/images/温瑞塘河/温瑞塘河.mp4"
             controls
             autoplay
             muted
             loop
-            style="width: 100%;padding-right: 10px"
+            class="sp"
           />
-        <div style="position:relative;">
-          <span class="summary" style="position:absolute;bottom:4px">流域</span>
-          <img src="./img/装饰.png" alt="" style="padding-left:25%;width:350px;padding-bottom:7px" >
+        <div >
+          <span class="xbt" >流域</span>
+          <img src="./img/装饰.png" alt="" class="zs" >
         </div>
-          <!-- <span class="summary" style="padding-bottom:4px">流域</span>
-          <img src="./img/装饰.png" alt=""> -->
-          <div class="parent">
-            <div class="left">
-              <div style="padding-bottom:5px;">
-                <div style="padding-bottom:7px;">塘河长度</div>
-                <span style="font-size: 18px;color: #2ACBFE;font-family:DIN-Bold;">1178.4</span>
-                <span style="color: #26BCE5;"> 千米</span>
+          <div class="box">
+            <div  class="left1" >
+              <div >
+                <div class="lywz">塘河长度</div>
+                <div class="deh">
+                  <span class="lybq">1178.4</span>
+                  <span class="lydw"> 千米</span>
+                </div>
               </div>
-              <div style="padding-bottom:5px;">
-                <div style="padding-bottom:7px">蓄水量</div>
-                <span style="font-size: 18px;color: #2ACBFE;font-family:DIN-Bold;">{{`${lable.xsl}`}}</span>
-                <span style="color: #26BCE5;"> 万立方米</span>
+              <div  >
+                <div class="lywz">蓄水量</div>
+                <div class="deh">
+                  <span class="lybq">{{`${lable.xsl}`}}</span>
+                  <span class="lydw"> 万立方米</span>
+                </div>
+
               </div>
-              <div>
-                <div style="padding-bottom:7px">灌溉面积</div>
-                <span style="font-size: 18px;color: #2ACBFE;font-family:DIN-Bold;">48.2</span>
-                <span style="color: #26BCE5;"> 万亩</span>
+              <div >
+                <div class="lywz">灌溉面积</div>
+                <div class="deh">
+                  <span class="lybq">48.2</span>
+                  <span class="lydw"> 万亩</span>
+                </div>
               </div>
             </div>
-            <div class="right">
-              <div style="padding-bottom:7px;">
-                <div style="padding-bottom:5px">流域面积</div>
-                <span style="font-size: 20px;color: #26BCE5;">740</span>
-                <span style="color: #26BCE5;"> 平方千米</span>
+            <div class="right1" >
+              <div >
+                <div class="lywz">流域面积</div>
+                <div class="deh">
+                  <span class="lybq">740</span>
+                  <span class="lydw"> 平方千米</span>
+                </div>
               </div>
-              <div style="padding-bottom:5px">
-                <div style="padding-bottom:7px">平均流量</div>
-                <span style="font-size: 20px;color: #26BCE5;">{{`${lable.pjll}`}}</span>
-                <span style="color: #26BCE5;"> 亿立方米</span>
+              <div >
+                <div class="lywz">平均流量</div>
+                <div class="deh">
+                  <span class="lybq">{{`${lable.pjll}`}}</span>
+                  <span class="lydw"> 亿立方米</span>
+                </div>
               </div>
-              <div>
-                <div style="padding-bottom:7px">源头</div>
-                <span style="font-size: 20px;color: #26BCE5;">瞿溪、雄溪、郭溪</span>
+              <div >
+                <div class="lywz">源头</div>
+                <div class="deh">
+                  <span class="ly">瞿溪、雄溪、郭溪</span>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
       <div>
-        <div class="title-wrapper" style="padding-bottom:15px;padding-top:10px">
+        <div class="title-wrapper">
           <span class="pre"></span>
           <span class="title" >沿线项目</span>
         </div>
-        <div class="parent" style="padding-left:8%;padding-bottom:10px;text-align:center">
-          <div class="left" style="text-align:center">
-            <div style="padding-bottom:15%;">
-              <div style="position:relative">
-                <img src="./img/zuo.png" alt="">
-                <span style="font-size: 20px;position:absolute;top:37%; left:33%;font-family:YouSheBiaoTiHei">105</span>
+        <div class="zsj">
+          <div class="ssj">
+            <div class="box">
+              <div class="left">
+                <div>
+                  <div class="tp">
+                    <img src="./img/zuo.png" alt="">
+                    <span class="xmzs">105</span>
+                  </div>
+                </div>
               </div>
-
-            </div>
-            <span style="">项目总数(个)</span>
-          </div>
-          <div class="right" style="text-align:center">
-            <div style="padding-bottom:10%">
-              <div style="position:relative" >
-                <img src="./img/you.png" alt="">
-                <span style="font-size: 20px;position:absolute;top:37%; left:32%;font-family:YouSheBiaoTiHei;color:#26BCE5">5600</span>
+              <div class="right">
+                <div>
+                  <div class="tp" >
+                    <img src="./img/you.png" alt="">
+                    <span class="xmzje">5600</span>
+                  </div>
+                </div>
               </div>
-
             </div>
-            <span>项目总金额(万元)</span>
+            <div class="box">
+              <div class="left">
+                <div class="yxxm">
+                  <span class="yxwz">项目总数(个)</span>
+                </div>
+              </div>
+              <div class="right">
+                <div class="yxxm">
+                  <span class="yxwz">项目总金额(万元)</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -134,57 +149,65 @@
           <span class="title">卡点</span>
         </div>
         <div>
-        <div class="parent" style="padding-top:5%;padding-bottom:5%">
-          <div style="text-align:center;padding-left:15%;float:left;margin-right:10%;">
-            <div>
-              <span style="font-size: 28px;font-family:YouSheBiaoTiHei">40</span>
-              <span style="font-size: 20px;font-family:YouSheBiaoTiHei">/个</span>
+          <div class="kdjj">
+            <div class="zsj">
+              <div class="box" >
+                <div class="left">
+                  <div >
+                    <span class="kdsz">40</span>
+                    <span class="kddw">/个</span>
+                  </div>
+                  <div class="kdwzleft">卡点总数</div>
+                </div>
+<!--                <div >-->
+<!--                  <img src="./img/直线.png" alt="">-->
+<!--                </div>-->
+                <div class="right" >
+                  <div >
+                    <span class="kdsz">19352</span>
+                    <span class="kddw">/米</span>
+                  </div>
+                  <div class="kdwzright">卡点总长度</div>
+                </div>
+              </div>
             </div>
-            <div style="font-size: 14px;font-family:PingFang SC;color:#16EAEA;">卡点总数</div>
+
           </div>
-          <div class="right" style="text-align:center">
-            <div style="">
-              <span style="font-size: 28px;font-family:YouSheBiaoTiHei">19352</span>
-              <span style="font-size: 20px;font-family:YouSheBiaoTiHei">/米</span>
+          </div>
+
+      </div>
+      <div class="zsj">
+        <div class="d1">
+          <div class="box" >
+            <div class="dbz" >
+              <img src="./img/联合 11.png" alt="" >
             </div>
-            <div style="font-size: 14px;font-family:PingFang SC;color:#16EAEA;">卡点总长度</div>
+            <div class="tpjg">
+              <div class="tp">
+                <img src="./img/数字选中.png" alt="" >
+                <span class="tpwz">1</span>
+              </div>
+            </div>
+            <div class="tpjg">
+              <div class="tp">
+                <img src="./img/椭圆 5.png" alt="">
+                <span class="tpwzls">2</span>
+              </div>
+            </div>
+            <div class="tpjg">
+              <div class="tp">
+                <img src="./img/椭圆 5.png" alt="">
+                <span class="tpwzls">3</span>
+              </div>
+            </div>
+            <div class="dby">
+              <img src="./img/联合 10.png" alt="" >
+            </div>
           </div>
         </div>
-        </div>
+
+
       </div>
-
-      <div style="padding-left:5%">
-        <div class = "cellDiv" style="padding-right:30px">
-          <img src="./img/联合 11.png" alt="" style="padding-bottom:5%;">
-        </div>
-        <div class = "cellDiv">
-          <div style="position:relative">
-            <img src="./img/数字选中.png" alt="">
-            <span style="position:absolute;top:15%; left:18%;">1</span>
-          </div>
-        </div>
-        <div class = "cellDiv">
-          <div style="position:relative">
-            <img src="./img/椭圆 5.png" alt="">
-            <span style="position:absolute;top:15%; left:18%;color:#215DDE ">2</span>
-          </div>
-        </div>
-        <div class = "cellDiv">
-          <div style="position:relative">
-            <img src="./img/椭圆 5.png" alt="">
-            <span style="position:absolute;top:15%; left:18%;color:#215DDE">3</span>
-          </div>
-
-        </div>
-        <div class = "cellDiv" style="padding-left:15px">
-          <img src="./img/联合 10.png" alt="" style="padding-bottom:5%;">
-        </div>
-      </div>
-
-
-
-
-
     </div>
 
   </div>
@@ -214,20 +237,32 @@
 
 <style lang="less">
   @import url("./rightSummary.less");
-.parent {
-overflow: hidden;
-zoom: 1;
-width: 100%;
   .left {
-    float: left;
-    margin-right: 15%;
+    margin-top: 3%;
+    margin-right: 25%;
+    height: 100%;
+    /*flex-grow:0;*/
   }
   .right {
-    overflow: hidden;
-    zoom: 1;
-
+    flex-shrink:0;
+    margin-top: 3%;
+    height: 100%;
+    /*flex-grow:0;*/
   }
-}
+  .left1 {
+    margin-top: 3%;
+    margin-right: 20%;
+    height: 100%;
+    flex:1;
+    /*flex-grow:0;*/
+  }
+  .right1 {
+    flex-shrink:0;
+    margin-top: 3%;
+    height: 100%;
+    flex:1;
+    /*flex-grow:0;*/
+  }
 .cellDiv
 {
     width:350px;
@@ -235,5 +270,169 @@ width: 100%;
     display:table-cell;
 
 }
+.lybq{
+  font-size: 18px;
+  color: #2ACBFE;
+  font-family: DIN-Bold;
+  line-height: 18px;
+
+}
+.deh{
+  padding-bottom: 15%;
+}
+  .lydw{
+    font-size: 10px;
+    color: #2ACBFE;
+    font-family:DIN-Bold;
+    line-height: 18px;
+
+  }
+  .ly{
+    font-size: 13px;
+    color: #2ACBFE;
+    font-family:DIN;
+    line-height: 18px;
+    opacity: 1;
+  }
+  .lywz{
+    font-size: 14px;
+    font-family:PingFang SC;
+    line-height: 20px;
+    color: #FFFFFF;
+    margin-bottom: 5%;
+  }
+
+  .xmzs{
+    font-size: 20px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:YouSheBiaoTiHei
+  }
+  .xmzje{
+    font-size: 20px;position:absolute;top:50%;left:47%;transform:translate(-50%,-50%);font-family:YouSheBiaoTiHei;color:#26BCE5
+  }
+  .button{
+    position:absolute;top:50%; left:50%;transform:translate(-50%,-50%);font-size: 20px;
+  }
+  .button1{
+    position:absolute;top:40%; left:50%;transform:translate(-50%,-50%);font-size: 20px;
+  }
+
+
+  .lab {
+    font-family: PingFang SC;
+    font-size: 14px;
+    //line-height: 18px;
+    //max-height: 140px;
+    width: 100%;
+    color: #DEDEDE;
+    line-height: 21px;
+    padding-top: 5px;
+    text-indent: 2em;
+  }
+  .yxwz{
+    font-family: PingFang SC;
+    font-size: 11px;
+    //line-height: 18px;
+    //max-height: 140px;
+    color: #FFFFFF;
+    line-height: 10px;
+    width: 100%;
+    padding-left: 8px;
+    display: flex;align-items: center;
+  }
+  .kddw{
+    font-size: 20px;
+    font-family:YouSheBiaoTiHei;
+    line-height: 26px;
+  }
+  .kdsz{
+    font-size: 28px;
+    font-family:YouSheBiaoTiHei;
+    line-height: 26px;
+  }
+  .kdwzleft{
+    font-size: 14px;
+    font-family:PingFang SC;
+    line-height: 20px;
+    color: #16EAEA;
+    padding-left: 7px;
+  }
+  .kdwzright{
+    font-size: 14px;
+    font-family:PingFang SC;
+    line-height: 20px;
+    color: #00FFD4;
+    padding-left: 25px;
+  }
+  .xbt{
+    font-size: 18px;
+    font-family:YouSheBiaoTiHei;
+    line-height: 16px;
+    color: #FFFFFF;
+    overflow-y: auto;
+    letter-spacing:15px;
+
+  }
+  .zs{
+    width: 70%
+  }
+  .wenzi{
+    padding-left: 3%;
+  }
+  .jianju{
+    padding-top: 2%;
+  }
+  .kdjj{
+    padding-top: 7%;
+    padding-bottom: 7%;
+  }
+  .box {
+    display: flex;
+    flex-direction: row;
+  }
+  .yxxm{
+    padding-top: 15%;
+    padding-bottom: 10%;
+  }
+  .zsj{
+    padding-left: 3%;
+  }
+  .tp{
+    position:relative;
+  }
+  .ssj{
+    padding-top: 3%;
+  }
+.tpwz{
+  position:absolute;top:50%; left:50%;transform:translate(-50%,-50%);
+}
+  .tpwzls{
+    position:absolute;top:50%; left:50%;transform:translate(-50%,-50%);color:#215DDE
+  }
+  .tpjg{
+    padding-right: 15px;
+  }
+  .buttonpd{
+    padding-right: 30px;
+  }
+  .buttonpd1{
+    padding-right: 20px;
+  }
+  .ding{
+    padding-bottom:7px;padding-top: 5%
+  }
+  .sp{
+    width: 100%;padding-right: 10px
+  }
+  .dbz{
+    display: flex;align-items: center;
+    padding-right: 30px;
+  }
+  .dby{
+    display: flex;align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .d1{
+    padding-top: 5%
+  }
 
 </style>

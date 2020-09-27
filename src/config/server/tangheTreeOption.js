@@ -58,6 +58,33 @@ const PUBLIC_INFO = [
   { label: "交通设施", dataset: "jiaotong" },
 ];
 
+const CITY_INFO = [
+  { label: "商业设施", dataset: "shangye" },
+  { label: "交通设施", dataset: "jiaotong" },
+]
+
+const ST_INFO = [
+  { label: "公厕", dataset: "toilet" },
+  { label: "医疗设施", dataset: "yiliao" },
+  { label: "养老设施", dataset: "yanglao" },
+  { label: "桥梁", dataset: "bridge" },
+  { label: "码头", dataset: "wharf" },
+]
+
+const JG_INFO = [
+  { label: "公园", dataset: "park" },
+  { label: "景点", dataset: "scenic_spot" },
+  { label: "古树名木", dataset: "tree" },
+  { label: "公园配套设施", dataset: "park_facilities" },
+]
+
+const WH_INFO = [
+  { label: "场馆", dataset: "venues" },
+  { label: "文化设施", dataset: "wenhua" },
+  { label: "体育设施", dataset: "tiyu" },
+  { label: "教育设施", dataset: "jiaoyu" },
+]
+
 export const CESIUM_TREE_OPTION = [
   {
     id: "项目",
@@ -97,9 +124,75 @@ export const CESIUM_TREE_OPTION = [
     type: "cesium_lvdao",
   },
   {
-    id: "基础数据",
-    label: "基础数据",
-    children: PUBLIC_INFO.map(v => {
+    id: "塘河范围面",
+    label: "塘河范围面",
+    type: "cesium_thfwm",
+  },
+  {
+    id: "塘河沿线",
+    label: "塘河沿线",
+    type: "cesium_thyx",
+  },
+  // {
+  //   id: "基础数据",
+  //   label: "基础数据",
+  //   children: PUBLIC_INFO.map(v => {
+  //     return {
+  //       ...v,
+  //       id: v.label,
+  //       icon: v.label,
+  //       url: SERVER_DEFAULT_DATA2,
+  //       newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+  //       type: "mvt"
+  //     };
+  //   })
+  // }
+  {
+    id: "城市塘河",
+    label: "城市塘河",
+    children: CITY_INFO.map(v => {
+      return {
+        ...v,
+        id: v.label,
+        icon: v.label,
+        url: SERVER_DEFAULT_DATA2,
+        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        type: "mvt"
+      };
+    })
+  },
+  {
+    id: "生态塘河",
+    label: "生态塘河",
+    children: ST_INFO.map(v => {
+      return {
+        ...v,
+        id: v.label,
+        icon: v.label,
+        url: SERVER_DEFAULT_DATA2,
+        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        type: "mvt"
+      };
+    })
+  },
+  {
+    id: "景观塘河",
+    label: "景观塘河",
+    children: JG_INFO.map(v => {
+      return {
+        ...v,
+        id: v.label,
+        icon: v.label,
+        url: SERVER_DEFAULT_DATA2,
+        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        type: "mvt"
+      };
+    })
+  },
+  {
+    id: "文化塘河",
+    label: "文化塘河",
+    children: WH_INFO.map(v => {
       return {
         ...v,
         id: v.label,

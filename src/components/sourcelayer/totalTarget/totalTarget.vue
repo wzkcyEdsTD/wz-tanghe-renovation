@@ -9,10 +9,11 @@
         </div>
         <div class="right">
           <div class="title">
-            {{item.title}}<span class="small">/{{item.year}}年</span>
+            {{item.title}}<span class="small"></span>
+              <!-- /{{item.year}}年</span> -->
           </div>
           <div class="info">
-            <div class="number">{{item.number}}<span class="tiny">({{item.unit}})</span></div>
+            <div class="number">{{item.number}}<span class="tiny" v-show="item.unit">({{item.unit}})</span></div>
             <!-- <div class="desc">
               <span class="text">同比去年增加投资</span>
               <div class="content">
@@ -38,7 +39,7 @@ export default {
   data() {
     return {
       targetList: [{
-        title: '项目总数',
+        title: '项目',
         type: '项目',
         year: '2020',
         number: '31242',
@@ -46,7 +47,7 @@ export default {
         icon: 'item1',
         click: true
       }, {
-        title: '卡点断点数',
+        title: '卡点断点',
         type: '绿道断点',
         year: '2020',
         number: '6623',
@@ -62,30 +63,33 @@ export default {
         icon: 'item6',
         click: true
       }, {
-        title: '资源数量',
+        title: '县市区',
         type: '资源',
         year: '2020',
-        number: '99732',
-        unit: '个',
+        number: '三区一市',
+        unit: undefined,
         icon: 'item3',
         click: false
-      }, {
-        title: '未来规划',
-        type: '规划',
-        year: '2020',
-        number: '98821',
-        unit: '个',
-        icon: 'item4',
-        click: false
-      }, {
-        title: '项目分析',
-        type: '分析',
-        year: '2020',
-        number: '2882',
-        unit: '个',
-        icon: 'item5',
-        click: false
-      }],
+      }, 
+      // {
+      //   title: '三区一市',
+      //   type: '规划',
+      //   year: '2020',
+      //   number: '98821',
+      //   unit: '个',
+      //   icon: 'item4',
+      //   click: false
+      // }, 
+      // {
+      //   title: '项目分析',
+      //   type: '分析',
+      //   year: '2020',
+      //   number: '2882',
+      //   unit: '个',
+      //   icon: 'item5',
+      //   click: false
+      // }
+      ],
       currentTarget: []
     }
   },

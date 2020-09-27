@@ -102,7 +102,7 @@ export default {
     this.eventRegsiter()
   },
   mounted() {
-    this.$refs.tree.setCheckedKeys(['断点', '十二景', '乡镇名称', '绿道']);
+    this.$refs.tree.setCheckedKeys(['断点', '十二景', '乡镇名称', '绿道', '塘河范围面', '塘河沿线']);
   },
   methods: {
     ...mapActions("map", ["setProjectList", "setSightList"]),
@@ -188,6 +188,12 @@ export default {
         } else if (node.type == "cesium_lvdao") {
           console.log('cesium_lvdao_on')
           this.$parent.switchLvdao(true);
+        } else if (node.type == "cesium_thfwm") {
+          console.log('cesium_thfwm_on')
+          this.$parent.switchThfwmlayer(true);
+        } else if (node.type == "cesium_thyx") {
+          console.log('cesium_thyx_on')
+          this.$parent.switchThyx(true);
         }
         //  有相机视角配置 -> 跳视角
         node.camera && window.earth.scene.camera.setView(node.camera);
@@ -198,7 +204,7 @@ export default {
             : this.tileLayers[node.id];
         LAYER && (LAYER.show = false);
         if (
-          node.icon &&
+          // node.icon &&
           this.entityMap[node.id] &&
           window.earth.dataSources.length
         ) {
@@ -213,6 +219,14 @@ export default {
         if (node.type == "cesium_lvdao") {
           console.log('cesium_lvdao_off')
           this.$parent.switchLvdao(false);
+        }
+        if (node.type == "cesium_thfwm") {
+          console.log('cesium_thfwm_off')
+          this.$parent.switchThfwmlayer(false);
+        }
+        if (node.type == "cesium_thyx") {
+          console.log('cesium_thyx_off')
+          this.$parent.switchThyx(false);
         }
       }
     },

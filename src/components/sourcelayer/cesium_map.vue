@@ -25,17 +25,6 @@ import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
-const LAYER_NAME = [
-  "十二景@th_zy#1_1",
-  "nt_map",
-  "ldplus_xi",
-  "xmfwm",
-  "thzl",
-  "ldplus",
-  "gyld",
-  "hd",
-  "thmplus",
-];
 const Cesium = window.Cesium;
 
 export default {
@@ -51,7 +40,10 @@ export default {
   data() {
     return {
       mapLoaded: false,
-      imagelayer: undefined,
+      imagelayer: {
+        2018: undefined,
+        2019: undefined
+      },
       datalayer: undefined,
       lvdaolayer: undefined,
       thfwmlayer: undefined,
@@ -59,6 +51,7 @@ export default {
       isTotalTarget: true,
       isProjectSummary: false,
       isSightSummary: false,
+      sceneLayers: []
     };
   },
   computed: {
@@ -124,19 +117,22 @@ export default {
         console.log("layer-switch");
         if (value == "yx") {
           console.log("yx", year, ServiceUrl.SWImage);
-          this.datalayer.show = false;
-          this.imagelayer
-            ? (this.imagelayer.show = true)
-            : (this.imagelayer = window.earth.imageryLayers.addImageryProvider(
+          this.imagelayer[2018] && (this.imagelayer[2018].show = false);
+          this.imagelayer[2019] && (this.imagelayer[2019].show = false);
+          this.datalayer && (this.datalayer.show = false);
+          this.imagelayer[year]
+            ? (this.imagelayer[year].show = true)
+            : (this.imagelayer[year] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
-                  url: ServiceUrl.SWImage,
+                  url: ServiceUrl.SWImage[year],
                 })
               ));
           // this.lipai();
           // this.quan();
         } else {
           // this.removeAll();
-          this.imagelayer.show = false;
+          this.imagelayer[2018] && (this.imagelayer[2018].show = false);
+          this.imagelayer[2019] && (this.imagelayer[2019].show = false);
           this.datalayer
             ? (this.datalayer.show = true)
             : (this.datalayer = window.earth.imageryLayers.addImageryProvider(
@@ -176,35 +172,35 @@ export default {
               name: "baimo",
             }
           );
-          Cesium.when(baimoPromise, async ([forceLayer, ...oLayer]) => {
-            const LAYER = window.earth.scene.layers.find("baimo");
-            LAYER.style3D.fillForeColor = new Cesium.Color.fromCssColorString(
-              "rgba(137,137,137, 1)"
-            );
-            const hyp = new Cesium.HypsometricSetting();
-            const colorTable = new Cesium.ColorTable();
-            hyp.MaxVisibleValue = 300;
-            hyp.MinVisibleValue = 0;
-            colorTable.insert(300, new Cesium.Color(1, 1, 1));
-            colorTable.insert(160, new Cesium.Color(0.95, 0.95, 0.95));
-            colorTable.insert(76, new Cesium.Color(0.7, 0.7, 0.7));
-            colorTable.insert(
-              0,
-              new Cesium.Color(13 / 255, 24 / 255, 45 / 255)
-            );
-            hyp.ColorTable = colorTable;
-            hyp.DisplayMode = Cesium.HypsometricSettingEnum.DisplayMode.FACE;
-            hyp.Opacity = 1;
-            //  贴图纹理
-            hyp.emissionTextureUrl = "/static/images/area/speedline.png";
-            hyp.emissionTexCoordUSpeed = 0.2;
-            LAYER.hypsometricSetting = {
-              hypsometricSetting: hyp,
-              analysisMode:
-                Cesium.HypsometricSettingEnum.AnalysisRegionMode.ARM_ALL,
-            };
-            // LAYER.visibleDistanceMax = 5000;
-          });
+          // Cesium.when(baimoPromise, async ([forceLayer, ...oLayer]) => {
+          //   const LAYER = window.earth.scene.layers.find("baimo");
+          //   LAYER.style3D.fillForeColor = new Cesium.Color.fromCssColorString(
+          //     "rgba(137,137,137, 1)"
+          //   );
+          //   const hyp = new Cesium.HypsometricSetting();
+          //   const colorTable = new Cesium.ColorTable();
+          //   hyp.MaxVisibleValue = 300;
+          //   hyp.MinVisibleValue = 0;
+          //   colorTable.insert(300, new Cesium.Color(1, 1, 1));
+          //   colorTable.insert(160, new Cesium.Color(0.95, 0.95, 0.95));
+          //   colorTable.insert(76, new Cesium.Color(0.7, 0.7, 0.7));
+          //   colorTable.insert(
+          //     0,
+          //     new Cesium.Color(13 / 255, 24 / 255, 45 / 255)
+          //   );
+          //   hyp.ColorTable = colorTable;
+          //   hyp.DisplayMode = Cesium.HypsometricSettingEnum.DisplayMode.FACE;
+          //   hyp.Opacity = 1;
+          //   //  贴图纹理
+          //   hyp.emissionTextureUrl = "/static/images/area/speedline.png";
+          //   hyp.emissionTexCoordUSpeed = 0.2;
+          //   LAYER.hypsometricSetting = {
+          //     hypsometricSetting: hyp,
+          //     analysisMode:
+          //       Cesium.HypsometricSettingEnum.AnalysisRegionMode.ARM_ALL,
+          //   };
+          //   // LAYER.visibleDistanceMax = 5000;
+          // });
         }
       });
     },
@@ -227,9 +223,9 @@ export default {
       //   })
       // );
 
-      this.imagelayer = window.earth.imageryLayers.addImageryProvider(
+      this.imagelayer[2019] = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.SWImage,
+          url: ServiceUrl.SWImage[2019],
         })
       );
 
@@ -285,7 +281,7 @@ export default {
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
       var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
       Cesium.when(promise, async (layers) => {
-        console.log('123', layers)
+        this.sceneLayers = layers.slice(1)
       });
 
 
@@ -423,7 +419,7 @@ export default {
         },
       });
     },
-    removeAll(isShow) {
+    removeAll(value) {
       const viewer = window.earth;
       const id = ["ruian","tangxia","liao","chshan","wenzhoushiqu","xianyan"];
       const idOther = ["wrth","oj","fyj"];
@@ -431,19 +427,18 @@ export default {
       // console.log(temp);
       try {
         id.forEach(function (element) {
-          viewer.entities.getById(element).show = isShow;
-          viewer.entities.getById(`${element}1`).show=isShow;
-          viewer.entities.getById(`${element}p`).show=isShow;
+          viewer.entities.getById(element).show = value;
+          viewer.entities.getById(`${element}1`).show=value;
+          viewer.entities.getById(`${element}p`).show=value;
         });
         idOther.forEach(function (element) {
-          viewer.entities.getById(element).show=isShow;
+          viewer.entities.getById(element).show=value;
         });
         // this.biaoshi = temp;
         // console.log(this.biaoshi);
       } catch (e) {
         console.log(e);
       }
-
     },
     switchLvdao(value) {
       this.lvdaolayer.show = value
@@ -453,9 +448,10 @@ export default {
     },
     switchThyx(value) {
       console.log('switchThyx')
-      LAYER_NAME.forEach((d) => {
-        console.log('')
-        (window.earth.scene.layers.find(d).visible = value);
+      var layer = window.earth.scene.layers.find('十二景@th_zy#1_1')
+      layer && (layer.visible = value)
+      this.sceneLayers.forEach(item => {
+        item.show = value
       })
     }
   },

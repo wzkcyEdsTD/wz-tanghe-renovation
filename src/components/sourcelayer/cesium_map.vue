@@ -3,7 +3,7 @@
     <div id="cesiumContainer" />
     <div v-if="mapLoaded">
       <TotalTarget ref="totalTarget" v-show="isTotalTarget" />
-      <ProjectSummary />
+      <RightSummary />
       <!-- <ProjectSummary v-show="isProjectSummary" /> -->
       <!-- <SightSummary v-show="isSightSummary" /> -->
       <!-- <RoadLine ref="roadline" /> -->
@@ -44,7 +44,10 @@ export default {
         2018: undefined,
         2019: undefined
       },
-      datalayer: undefined,
+      datalayer: {
+        white: undefined,
+        black: undefined
+      },
       lvdaolayer: undefined,
       thfwmlayer: undefined,
       handler: undefined,
@@ -112,32 +115,36 @@ export default {
     },
     eventRegsiter() {
       this.$bus.$off("cesium-layer-switch");
-      this.$bus.$on("cesium-layer-switch", ({ value, year }) => {
+      this.$bus.$on("cesium-layer-switch", ({ type, value }) => {
         //  底图切换
         console.log("layer-switch");
-        if (value == "yx") {
-          console.log("yx", year, ServiceUrl.SWImage);
+        if (type == "yx") {
+          console.log("yx", value, ServiceUrl.SWImage);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
-          this.datalayer && (this.datalayer.show = false);
-          this.imagelayer[year]
-            ? (this.imagelayer[year].show = true)
-            : (this.imagelayer[year] = window.earth.imageryLayers.addImageryProvider(
+          this.datalayer.white && (this.datalayer.white.show = false);
+          this.datalayer.black && (this.datalayer.black.show = false);
+          this.imagelayer[value]
+            ? (this.imagelayer[value].show = true)
+            : (this.imagelayer[value] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
-                  url: ServiceUrl.SWImage[year],
+                  url: ServiceUrl.SWImage[value],
                 })
               ));
           // this.lipai();
           // this.quan();
         } else {
           // this.removeAll();
+          console.log("vector", value, ServiceUrl.DataImage);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
-          this.datalayer
-            ? (this.datalayer.show = true)
-            : (this.datalayer = window.earth.imageryLayers.addImageryProvider(
+          this.datalayer.white && (this.datalayer.white.show = false);
+          this.datalayer.black && (this.datalayer.black.show = false);
+          this.datalayer[value]
+            ? (this.datalayer[value].show = true)
+            : (this.datalayer[value] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
-                  url: ServiceUrl.DataImage,
+                  url: ServiceUrl.DataImage[value],
                 })
               ));
         }

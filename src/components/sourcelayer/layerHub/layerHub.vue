@@ -35,10 +35,10 @@
           </div>
         </div>
         <div class="sub-container" v-show="currentLayer=='vector'">
-          <div class="sub-item" :class="{selected: currentVector==item}"
+          <div class="sub-item" :class="{selected: currentVector==item.value}"
           v-for="(item, index) in vectorList" :key="index"
-          @click="currentVector = item">
-            {{item}}
+          @click="currentVector = item.value">
+            {{item.label}}
           </div>
         </div>
       </div>
@@ -96,8 +96,15 @@ export default {
       currentLayer: 'yx',
       yearList: [2018, 2019],
       currentYear: 2019,
-      vectorList: ['白色', '黑色'],
-      currentVector: '白色',
+      // vectorList: ['白色', '黑色'],
+      vectorList: [{
+        label: '白色',
+        value: 'white'
+      }, {
+        label: '黑色',
+        value: 'black'
+      }],
+      currentVector: 'white',
       // currentTarget: '',
       showBaimo: false,
       showMenu: false,
@@ -261,11 +268,11 @@ export default {
     currentLayer(val) {
       console.log('newval', val)
       if (val === 'vector') {
-        this.$bus.$emit("cesium-layer-switch", { value: 'vector' });
+        this.$bus.$emit("cesium-layer-switch", { type: 'vector', value: this.currentVector });
       }
-      // else {
-      //   this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
-      // }
+      else {
+        this.$bus.$emit("cesium-layer-switch", { type: 'yx', value: this.currentYear });
+      }
     },
     // currentTarget(val) {
     //   console.log('newval', val)
@@ -291,7 +298,10 @@ export default {
     //   })
     // }
     currentYear(val) {
-      this.$bus.$emit("cesium-layer-switch", { value: 'yx', year: this.currentYear });
+      this.$bus.$emit("cesium-layer-switch", { layer: 'yx', value: val });
+    },
+    currentVector(val) {
+      this.$bus.$emit("cesium-layer-switch", { layer: 'vector', value: val });
     }
   },
 };

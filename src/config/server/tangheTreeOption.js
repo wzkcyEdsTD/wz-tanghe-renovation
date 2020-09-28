@@ -61,6 +61,7 @@ const PUBLIC_INFO = [
 const CITY_INFO = [
   { label: "商业设施", dataset: "shangye" },
   { label: "交通设施", dataset: "jiaotong" },
+  { label: "停车场", dataset: "car_park" },
 ]
 
 const ST_INFO = [

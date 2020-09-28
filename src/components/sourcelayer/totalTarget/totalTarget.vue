@@ -130,7 +130,7 @@ export default {
   position: absolute;
   top: 15vh;
   left: 2vw;
-  z-index: 200000;
+  z-index: 999;
 
   .content {
     .item {

@@ -108,6 +108,7 @@ export default {
               extra_data: pick.id.extra_data,
               fix_data: pick.id.fix_data,
               position: pick.id._position._value,
+              type: pick.id.type
             });
           }
           this.$refs.layerhub.showHub = false

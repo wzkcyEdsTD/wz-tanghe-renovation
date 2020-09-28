@@ -35,7 +35,7 @@ export default {
   position: absolute;
   top: 0.1rem;
   left: 55px;
-  z-index: 200000;
+  z-index: 999;
   display: flex;
 
   .area-item {

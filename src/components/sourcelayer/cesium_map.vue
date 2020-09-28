@@ -427,7 +427,7 @@ export default {
           width: width,
           height: height,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
-          translucencyByDistance: new Cesium.NearFarScalar(7000, 0, 8000, 1)
+          // translucencyByDistance: new Cesium.NearFarScalar(7000, 0, 8000, 1)
         },
       });
     },
@@ -463,6 +463,15 @@ export default {
           self.removeAll(true);
         }
       }, Cesium.ScreenSpaceEventType.WHEEL);
+      // 鼠标右键抬起事件
+      handler.setInputAction(function(event) {
+        var height=viewer.camera.positionCartographic.height;
+        if (height<10000){
+          self.removeAll(false)
+        }else {
+          self.removeAll(true);
+        }
+      }, Cesium.ScreenSpaceEventType.RIGHT_UP);
     },
     switchLvdao(value) {
       this.lvdaolayer.show = value

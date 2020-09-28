@@ -31,6 +31,7 @@ const fixFieldsByArr = fields => {
     const reg = new RegExp("[\\u4E00-\\u9FFF]+", "g");
     reg.test(caption) ? (fieldHash[name] = caption) : undefined;
   });
+  console.log('fixFieldsByArr', fieldHash)
   return fieldHash;
 };
 
@@ -45,6 +46,7 @@ const fixAttributesByOrigin = (attributes, fields) => {
     const V = v.toLowerCase();
     fields[V] ? (fixAttributes[fields[V]] = attributes[v]) : undefined;
   }
+  console.log('fixAttributesByOrigin', fixAttributes)
   return fixAttributes;
 };
 

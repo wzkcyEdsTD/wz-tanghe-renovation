@@ -3,14 +3,10 @@
     <div id="cesiumContainer" />
     <div v-if="mapLoaded">
       <TotalTarget ref="totalTarget" v-show="isTotalTarget" />
-<!--      <ProjectSummary></ProjectSummary>-->
-<!--            <RightSummary />-->
-      <!-- <ProjectSummary v-show="isProjectSummary" /> -->
-      <!-- <SightSummary v-show="isSightSummary" /> -->
       <!-- <RoadLine ref="roadline" /> -->
+      <Summary />
       <LayerHub ref="layerhub" />
-      <!-- <DetailPopup ref="detailPopup" /> -->
-      <DetailPopup2 ref="detailPopup" />
+      <DetailPopup ref="detailPopup" />
     </div>
   </div>
 </template>
@@ -18,13 +14,10 @@
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
 import TotalTarget from "./totalTarget/totalTarget";
-import ProjectSummary from "./projectSummary/projectSummary";
-import SightSummary from "./sightSummary/sightSummary";
-import RightSummary from "./rightSummary/rightSummary"
+import Summary from "./summary/summary"
 import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import LayerHub from "./layerHub/layerHub";
 import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
-import DetailPopup2 from "./commonFrame/DetailPopup2/DetailPopup2";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
@@ -33,13 +26,10 @@ const Cesium = window.Cesium;
 export default {
   components: {
     TotalTarget,
-    ProjectSummary,
-    SightSummary,
     RoadLine,
     LayerHub,
     DetailPopup,
-    DetailPopup2,
-    RightSummary
+    Summary
   },
   data() {
     return {
@@ -56,8 +46,7 @@ export default {
       thfwmlayer: undefined,
       handler: undefined,
       isTotalTarget: true,
-      isProjectSummary: false,
-      isSightSummary: false,
+      showSummary: 'total',
       sceneLayers: []
     };
   },
@@ -222,6 +211,10 @@ export default {
           // });
         }
       });
+      // this.$bus.$off("change-summay");
+      // this.$bus.$on("change-summay", ({ value }) => {
+      //   this.showSummary = value
+      // })
     },
     init3DMap(fn) {
       const that = this;

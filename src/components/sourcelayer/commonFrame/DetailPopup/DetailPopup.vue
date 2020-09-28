@@ -1,154 +1,85 @@
+
 <template>
-  <div id="forcePopUp" v-if="showPopUp">
-    <div id="forcePopUpContent" class="leaflet-popup">
-      <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
-      <div class="header">详情</div>
-      <div class="leaflet-popup-content-wrapper">
-        <div id="forcePopUpLink" class="leaflet-popup-content">
-          <div class="leaflet-popup-content">
-            <div class="name-wrapper">
-              <span class="name">{{forceEntity.NAME}}</span>
-            </div>
-            <div class="desc-wrapper" v-show="type == 'project'">
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>投资类型
-                </div>
-                <div class="content">{{forceEntity.FUNDTYPE}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>建设类型
-                </div>
-                <div class="content">{{forceEntity.CONSTYPE_1}}{{forceEntity.CONSTYPE2?`-${forceEntity.CONSTYPE2}`:''}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>建设性质
-                </div>
-                <div class="content">{{forceEntity.STATE}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>建设地点
-                </div>
-                <div class="content">{{forceEntity.ADDR_SCOPE}}{{forceEntity.ADDR_STREET?`-${forceEntity.ADDR_STREET}`: ''}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>计划建设期限
-                </div>
-                <div class="content">{{forceEntity.CONSYEARB2}}-{{forceEntity.CONSYEARE2}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>总投资
-                </div>
-                <div class="content">{{forceEntity.TOTALAMOUNT}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>责任单位
-                </div>
-                <div class="content">{{forceEntity.ZR_DEPTID}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>组织实施单位
-                </div>
-                <div class="content">{{forceEntity.SS_DEPTID}}</div>
-              </div>
-            </div>
-            <div class="desc-wrapper" v-show="type == 'duandian'">
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>断点位置
-                </div>
-                <div class="content">{{forceEntity.NAME}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>断点长度
-                </div>
-                <div class="content">{{forceEntity.LENGTH}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>计划贯通时间
-                </div>
-                <div class="content">{{forceEntity.JHGTSJ}}</div>
-              </div>
-              <div class="desc-item">
-                <div class="title">
-                  <span class="title-pre"></span>责任单位
-                </div>
-                <div class="content">{{forceEntity.ZRDW}}</div>
-              </div>
-            </div>
-            <div class="plan-wrapper" v-show="type == 'project'">
-              <div class="title">
-                <span class="title-pre"></span>建设内容和规模
-              </div>
-              <div class="question">
-                {{forceEntity.CONTENTGM}}
-              </div>
-            </div>
-            <div class="plan-wrapper" v-show="type == 'duandian'">
-              <div class="title">
-                <span class="title-pre"></span>存在问题
-              </div>
-              <div class="question">
-                {{forceEntity.CZWT}}
-              </div>
-            </div>
-            <div class="btn-wrapper">
-              <div class="btn-item can">视频</div>
-              <div class="btn-item can">无人机</div>
-              <div class="btn-item cant">全景</div>
-              <div class="btn-item cant">效果</div>
-            </div>
-            <div class="img-wrapper" v-show="type == 'duandian'">
-              <div class="decorate-line"></div>
-              <div class="name-wrapper">
-                <span class="name">现场记录</span>
-              </div>
-              <div class="flex-container">
-                <div class="swiper-buttons swiper-button-left"></div>
-                <swiper ref="mySwiper" class="swiper-wrapper" :options="swiperOptions">
-                  <!-- <swiper-slide v-for="(item,i) in imgs" :key="i" class="swiper-item"> -->
-                  <swiper-slide class="swiper-item">
-                    <!-- <img :src="`/static/images/${item}.png`" /> -->
-                    <viewer>
-                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
-                    </viewer>
-                  </swiper-slide>
-                  <swiper-slide class="swiper-item">
-                    <!-- <img :src="`/static/images/${item}.png`" /> -->
-                    <viewer>
-                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
-                    </viewer>
-                  </swiper-slide>
-                  <swiper-slide class="swiper-item">
-                    <!-- <img :src="`/static/images/${item}.png`" /> -->
-                    <viewer>
-                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
-                    </viewer>
-                  </swiper-slide>
-                  <swiper-slide class="swiper-item">
-                    <!-- <img :src="`/static/images/${item}.png`" /> -->
-                    <viewer>
-                        <img :src="`/static/images/断点/${forceEntity.PHOTO}`">
-                    </viewer>
-                  </swiper-slide>
-                  <div class="swiper-pagination" slot="pagination"></div>
-                </swiper>
-                <div class="swiper-buttons swiper-button-right"></div>
-              </div>
+  <div class="detail-popup">
+    <div id="forcePopUp" v-if="forcePosition.x && forcePosition.y">
+      <div
+        id="forcePopUpContent"
+        class="leaflet-popup"
+        :style="{transform:`translate3d(${forcePosition.x}px,${forcePosition.y}px, 0)`}"
+      >
+        <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
+        <div class="leaflet-popup-content-wrapper">
+          <div id="forcePopUpLink" class="leaflet-popup-content">
+            <div class="leaflet-popup-content">
+              <header>{{forceEntity.extra_data.SHORTNAME || forceEntity.extra_data.NAME}}</header>
+              <ul class="content-body">
+                <li>
+                  <span>所属区县:</span>
+                  <span>{{forceEntity.extra_data.DISTRICT}}</span>
+                </li>
+                <li>
+                  <span>所属街道:</span>
+                  <span>{{forceEntity.extra_data.STREET}}</span>
+                </li>
+                <!-- <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
+                  <span>{{key}}</span>
+                  <span>{{item}}</span>
+                </li> -->
+              </ul>
+              <div class="detail" @click="isShow = true">查看详情 >></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <transition name="slide">
+      <div class="info-container" v-show="isShow">
+        <span class="close-btn" @click="isShow = false"></span>
+        <div class="header-wrapper">
+          <div class="title-wrapper">
+            <span class="pre"></span>
+            <span class="title">信息详情</span>
+          </div>
+          <ul class="header-list">
+            <li v-for="(item,index) in nameList" :key="index"
+              class="header-item" :class="{active: activeName==item.value}"
+              @click="activeName = item.value">
+              {{item.label}}
+            </li>
+            <!-- <li class="header-item">现场记录</li>
+            <li class="header-item">视频</li>
+            <li class="header-item">全景</li> -->
+          </ul>
+        </div>
+        <div class="basic-wrapper" v-show="activeName == 'basic'">
+           <!-- <div class="sub-title">基本信息</div> -->
+           <ul>
+             <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
+                <div class="info-item" v-if="item.length">
+                  <span class="key">{{key}}</span>
+                  <span class="value">{{item}}</span>
+                </div>
+              </li>
+           </ul>
+        </div>
+        <div class="spot-wrapper" v-show="activeName == 'spot'">
+          <img src="/static/images/img.png" alt="">
+          <img src="/static/images/img.png" alt="">
+          <img src="/static/images/img.png" alt="">
+          <img src="/static/images/img.png" alt="">
+        </div>
+        <div class="video-wrapper" v-show="activeName == 'video'">
+          <img src="/static/images/video.png" alt="">
+          <img src="/static/images/video.png" alt="">
+          <img src="/static/images/video.png" alt="">
+          <img src="/static/images/video.png" alt="">
+        </div>
+        <div class="overall-wrapper" v-show="activeName == 'overall'">
+          <img src="/static/images/overall.png" alt="">
+        </div>
+      </div>
+      <!-- <div class="mask-right"></div> -->
+    </transition>
   </div>
 </template>
 
@@ -156,49 +87,59 @@
 export default {
   data() {
     return {
-      showPopUp: false,
       forceEntity: {},
-      swiperOptions: {
-        slidesPerView: 3,
-        // pagination: {
-        //   el: ".swiper-pagination",
-        //   clickable: true,
-        // },
-        navigation: {
-          nextEl: ".swiper-button-right",
-          prevEl: ".swiper-button-left",
-        },
-      },
-      // imgs: ["img", "img", "img", "img"],
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      srcList: [
-        'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-        'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
-      ]
+      forcePosition: {},
+      isShow: false,
+      nameList: [{
+        label: '基本信息',
+        value: 'basic'
+      }, {
+        label: '现场记录',
+        value: 'spot'
+      }, {
+        label: '视频',
+        value: 'video'
+      }, {
+        label: '全景',
+        value: 'overall'
+      }],
+      activeName: 'basic'
     };
   },
   async mounted() {
     this.eventRegsiter();
   },
   methods: {
-    eventRegsiter() {
-      this.$bus.$off("cesium-projectClick");
-      this.$bus.$on("cesium-projectClick", (item) => {
-        console.log("extra_data", item.extra_data);
-        this.forceEntity = item.extra_data;
-        this.showPopUp = true;
-        this.type = 'project'
-      });
-      this.$bus.$off("cesium-kadianClick");
-      this.$bus.$on("cesium-kadianClick", (item) => {
-        console.log("extra_data", item.extra_data);
-        this.forceEntity = item.extra_data;
-        this.showPopUp = true;
-        this.type = 'duandian'
-      });
+    eventRegsiter() {},
+    /**
+     *  详情点赋值
+     *  @param {object} forceEntity 详情点信息
+     */
+    getForceEntity(forceEntity) {
+      this.forceEntity = forceEntity;
+      console.log('aaa', forceEntity)
+    },
+    /**
+     *  框体移动
+     *  @param {object} position
+     */
+    renderForceEntity() {
+      const forceEntity = this.forceEntity;
+      if (forceEntity.extra_data) {
+        const pointToWindow = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
+          window.earth.scene,
+          forceEntity.position
+        );
+        if (
+          this.forcePosition.x !== pointToWindow.x ||
+          this.forcePosition.y !== pointToWindow.y
+        ) {
+          this.forcePosition = pointToWindow;
+        }
+      }
     },
     closePopup() {
-      this.showPopUp = false;
+      this.forcePosition = {};
       this.forceEntity = {};
     },
   },
@@ -208,237 +149,205 @@ export default {
 <style lang="less">
 #forcePopUp {
   .leaflet-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 1000;
+    top: -80px;
+    left: 30px;
+    position: absolute;
   }
-  .name-wrapper {
-    // display: flex;
-    // align-items: flex-end;
-    margin-top: 20px;
-    text-align: left;
-    .name {
-      display: block;
-      // height: 25px;
-      width: 620px;
-      line-height: 25px;
+
+  .leaflet-popup-close-button {
+    .bg-image("./images/close");
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 32px;
+    height: 32px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .leaflet-popup-content-wrapper {
+    .bg-image("./images/bg");
+    text-align: center;
+    height: 132px;
+    width: 240px;
+    box-sizing: border-box;
+    padding: 15px 20px 5px 20px;
+  }
+
+  .leaflet-popup-content {
+    position: relative;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    > header {
+      line-height: 20px;
+      box-sizing: border-box;
+      padding-right: 5px;
+      font-size: 18px;
       font-family: YouSheBiaoTiHei;
-      font-size: 26px;
+      text-align: left;
+      text-shadow: 0px 2px 2px rgba(0, 0, 0, 1);
+      // overflow: hidden;
+      // white-space: nowrap;
+      // text-overflow: ellipsis;
+    }
+    .content-body {
+      // flex: 1;
+      // overflow-y: auto;
+      margin-top: 8px;
+      text-align: left;
+      >li {
+        font-size: 14px;
+        height: 22px;
+        line-height: 22px;
+      }
+    }
+    .detail {
+      position: absolute;
+      bottom: 5px;
+      right: 0;
+      color: #2ACBFE;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+.info-container {
+  width: 4.5rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0px;
+  z-index: 999999;
+  padding: 80px 10px 0 10px;
+  // background: linear-gradient(271deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+  background-color: #040D33;
+  color: #fff;
+  overflow-y: auto;
+  .close-btn {
+    position: absolute;
+    right: 30px;
+    width: 15px;
+    height: 15px;
+    .bg-image("./images/close-info");
+    cursor: pointer;
+  }
+  .header-list {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    .header-item {
+      margin-right: 20px;
+      padding-bottom: 3px;
+      font-family: PingFang;
+      font-size: 18px;
+      font-weight: bold;
+      color: #165CE2;
+      &.active {
+        color: #61F5F5;
+        border-bottom: 2px solid #00FFD4;
+      }
+    }
+  }
+  .basic-wrapper {
+    margin-top: 20px;
+    ul {
+      // border: 1px solid #000C22;
+      padding: 15px;
+      .info-item {
+        display: flex;
+        // margin-top: 8px;
+        font-family: PingFang;
+        background-color: rgba(0, 12, 34, 0.69);
+        .key {
+          // margin-right: 20px;
+          padding: 15px 10px;
+          width: 120px;
+          background-color: rgba(10,36,86,0.5);
+          text-align: center;
+        }
+        .value {
+          padding: 15px 10px;
+          flex: 1;
+          word-break: break-all;
+        }
+      }
+      // li:nth-child(even) {
+      //   background-color: rgba(22, 95, 234, 0.24);
+      // }
+    }
+  }
+  .spot-wrapper, .video-wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    >img {
+      width: 160px;
+      margin-right: 10px;
+      margin-bottom: 25px;
+    }
+  }
+  .overall-wrapper {
+    margin-top: 20px;
+  }
+  .title-wrapper {
+    display: flex;
+    align-items: flex-end;
+    .pre {
+      display: block;
+      width: 10px;
+      height: 24px;
+      background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
+      transform: skewX(-30deg);
+    }
+    .title {
+      display: block;
+      height: 35px;
+      line-height: 35px;
+      font-family: YouSheBiaoTiHei;
+      font-size: 27px;
       letter-spacing: 0px;
       color: #ffffff;
       text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
       position: relative;
       padding-left: 12px;
-      z-index: 2;
     }
-    .name::before {
+    .title::before {
       content: "";
       position: absolute;
-      bottom: -3px;
-      left: 5px;
-      width: 200px;
+      bottom: 0;
+      left: 2px;
+      width: 300px;
       height: 15px;
       z-index: -1;
-      background-image: linear-gradient(90deg, #16EAEA 0%, transparent 100%);
+      background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
       transform: skewX(-30deg);
     }
   }
-
-  .header {
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: YouSheBiaoTiHei;
-    font-size: 26px;
-    color: #fff;
-  }
-
-  .leaflet-popup-close-button {
-    position: absolute;
-    top: -15px;
-    right: -30px;
-    width: 51px;
-    height: 51px;
-    cursor: pointer;
-    .bg-image("./images/detail_close");
-    z-index: 999;
-  }
-
-  .leaflet-popup-content-wrapper {
-    .bg-image("./images/detail");
-    text-align: center;
-    height: 684px;
-    width: 800px;
-    box-sizing: border-box;
-    padding: 14px;
-    padding-top: 30px;
-  }
-
-  .leaflet-popup-content {
-    color: #fff;
-    overflow: hidden;
-    height: 100%;
-    .desc-wrapper {
-      display: flex;
-      flex-wrap:wrap;
-      .desc-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 15px 0;
-        width: 25%;
-        border-right: 1px solid #16EAEA;
-        .content {
-          margin: 10px 0;
-          padding: 0 15px;
-          font-family: PingFang;
-          font-size: 16px;
-        }
-        &:nth-child(4n) {
-           border-right: none;
-       }
-      }
-    }
-    .img-wrapper {
-      position: relative;
-      margin-top: 20px;      
-      .flex-container {
-        margin-top: 30px;
-        display: flex;
-        align-items: top;
-        justify-content: center;
-        // height: 218px;
-      }
-      .swiper-buttons {
-        cursor: pointer;
-        width: 18px;
-        height: 114px;
-        .bg-image("./images/swiper-btn");
-      }
-      .swiper-button-left {
-        margin-right: 20px;
-      }
-      .swiper-button-right {
-        margin-left: 20px;
-        transform: rotate(180deg);
-      }
-      .swiper-wrapper {
-        margin: 0;
-        width: 670px;
-        .swiper-item {
-          img {
-            width: 160px;
-            height: 114px;
-          }
-        }
-        .swiper-pagination {
-          position: absolute;
-          bottom: 5px;
-        }
-        .swiper-pagination-bullet {
-          background: #16EAEA;
-          opacity: 0.38;
-          width: 6px;
-          height: 6px;
-          border-radius: 0%;
-        }
-        .swiper-pagination-bullet-active {
-          background-color: #16EAEA;
-          opacity: 1;
-        }
-      }
-      .decorate-line {
-        // position: absolute;
-        // bottom: 0;
-        margin: 0 auto;
-        width: 766px;
-        height: 7px;
-        .bg-image("./images/decorate-line");
-      }
-    }
-    .plan-wrapper {
-      margin-top: 15px;
-      font-family: PingFang;
-      .title {
-        padding: 0 35px;
-        margin-bottom: 15px;
-      }
-      .question {
-        padding: 0 35px;
-        text-align: left;
-      }
-      .plan-flex {
-        display: flex;
-        justify-content: space-between;
-      }
-      .plan-item {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .icon {
-          width: 94px;
-          height: 120px;
-        }
-        .icon1 {
-          .bg-image("./images/icon1");
-        }
-        .icon2 {
-          .bg-image("./images/icon2");
-        }
-        .icon3 {
-          .bg-image("./images/icon3");
-        }
-        .icon4 {
-          .bg-image("./images/icon4");
-        }
-        .label {
-          font-size: 14px;
-        }
-        .state {
-          margin-top: 3px;
-          font-size: 18px;
-          color: #16eaea;
-        }
-      }
-    }
-    .btn-wrapper {
-      display: flex;
-      justify-content: center;
-      margin-top: 35px;
-      .btn-item {
-        width: 81px;
-        height: 34px;
-        line-height: 34px;
-        margin: 0 10px;
-        font-size: 14px;
-      }
-      .can {
-        .bg-image("./images/btn-can");
-      }
-      .cant {
-        .bg-image("./images/btn-cant");
-      }
-    }
-  }
-  .title {
-    // padding: 0 50px;
-    // margin-bottom: 15px;
-    display: flex;
-    align-items: center;
+  .sub-title {
+    display: block;
+    height: 35px;
+    line-height: 35px;
     font-family: YouSheBiaoTiHei;
     font-size: 20px;
-    color: #00CBFF;
-    .title-pre {
-      margin-right: 5px;
-      width: 7px;
-      height: 16px;
-      .bg-image("./images/title-bg");
-    }
+    letter-spacing: 0px;
+    color: #ffffff;
+    text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+    position: relative;
+  }
+  .sub-title::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    height: 15px;
+    z-index: -1;
+    background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+    transform: skewX(-30deg);
   }
 }
 </style>

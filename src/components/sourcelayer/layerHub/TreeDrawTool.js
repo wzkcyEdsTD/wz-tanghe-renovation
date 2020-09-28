@@ -95,6 +95,9 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
     // forceDrawFeatures = [...drawFeatures];
     if (node.id === '项目') {
       result.features.forEach(item => {
+        if (item.attributes.ZBQJ.length) {
+          console.log('ZBQJ!!!', item)
+        }
         if (item.attributes.CURRENT_STATE) {
           forceDrawFeatures.push(item)
         }
@@ -136,7 +139,8 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
       fieldHash,
       extra_data: item.attributes,
       fix_data: fixAttributesByOrigin(item.attributes, fieldHash),
-      geometry: item.geometry
+      geometry: item.geometry,
+      type: node.id
     };
     const polygonGeometry = node.polygon
       ? [].concat.apply(

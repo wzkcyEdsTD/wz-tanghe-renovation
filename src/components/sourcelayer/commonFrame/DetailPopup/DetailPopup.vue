@@ -54,19 +54,18 @@
         <div class="basic-wrapper" v-show="activeName == 'basic'">
            <!-- <div class="sub-title">基本信息</div> -->
            <ul>
-             <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
-                <div class="info-item" v-if="item.length">
-                  <span class="key">{{key}}</span>
-                  <span class="value">{{item}}</span>
-                </div>
+             <li v-for="(item,key,index) in fixData" :key="index" class="info-item">
+                <span class="key">{{key}}</span>
+                <span class="value">{{item}}</span>
               </li>
            </ul>
         </div>
         <div class="spot-wrapper" v-show="activeName == 'spot'">
-          <img src="/static/images/img.png" alt="">
-          <img src="/static/images/img.png" alt="">
-          <img src="/static/images/img.png" alt="">
-          <img src="/static/images/img.png" alt="">
+          <viewer class="img-wrapper" :images="photoList">
+            <img v-for="(item,index) in photoList" :key="index" 
+              :src="`/static/images/${forceEntity.type}/${item}`" alt=""
+            >
+          </viewer>
         </div>
         <div class="video-wrapper" v-show="activeName == 'video'">
           <img src="/static/images/video.png" alt="">
@@ -75,15 +74,21 @@
           <img src="/static/images/video.png" alt="">
         </div>
         <div class="overall-wrapper" v-show="activeName == 'overall'">
-          <img src="/static/images/overall.png" alt="">
+          <img v-for="(item,index) in overallList" :key="index"
+            :src="`/static/images/VRPic/${item.FEATUREGUID}.png`" @click="openQJ(item)"
+          >
         </div>
       </div>
-      <!-- <div class="mask-right"></div> -->
     </transition>
+    <div class="QJFrame" v-show="showQJ">
+      <i class="close" @click="showQJ = false"></i>
+      <iframe id="content" :src="QJURL"></iframe>
+    </div>
   </div>
 </template>
 
 <script>
+import {ZBQJList} from "config/ZBQJConfig";
 export default {
   data() {
     return {
@@ -103,8 +108,59 @@ export default {
         label: '全景',
         value: 'overall'
       }],
-      activeName: 'basic'
+      activeName: 'basic',
+      showQJ: false,
+      QJURL: ''
     };
+  },
+  computed: {
+    fixData() {
+      let fixData = {}
+      let currentData = this.forceEntity.fix_data
+      if (currentData) {
+        for (var i in currentData) {
+          if (currentData[i].length) {
+            fixData[i] = currentData[i]
+          }
+        }
+        return fixData
+      }
+    },
+    photoList() {
+      if (this.forceEntity.extra_data && this.forceEntity.extra_data.PHOTO) {
+        let photoStr = this.forceEntity.extra_data.PHOTO
+        if (photoStr.length) {
+          if (~photoStr.indexOf(';')) {
+            return photoStr.split(';')
+          } else {
+            return [photoStr]
+          }
+        }
+      }
+    },
+    overallList() {
+      let overallList = []
+      let currentZBQJ = []
+      console.log('ZBQJList', ZBQJList)
+      if (this.forceEntity.extra_data && this.forceEntity.extra_data.ZBQJ) {
+        let ZBQJStr = this.forceEntity.extra_data.ZBQJ
+        if (ZBQJStr.length) {
+          if (~ZBQJStr.indexOf(',')) {
+            currentZBQJ = ZBQJStr.split(',')
+          } else {
+            currentZBQJ = [ZBQJStr]
+          }
+          currentZBQJ.forEach(i => {
+            ZBQJList.forEach(j => {
+              if (i === j.NAME) {
+                overallList.push(j)
+              }
+            })
+          })
+        }
+        return overallList
+      }
+    }
   },
   async mounted() {
     this.eventRegsiter();
@@ -137,6 +193,10 @@ export default {
           this.forcePosition = pointToWindow;
         }
       }
+    },
+    openQJ(qj) {
+      this.QJURL = qj.VR
+      this.showQJ = true
     },
     closePopup() {
       this.forcePosition = {};
@@ -186,7 +246,7 @@ export default {
     > header {
       line-height: 20px;
       box-sizing: border-box;
-      padding-right: 5px;
+      // padding-right: 5px;
       font-size: 18px;
       font-family: YouSheBiaoTiHei;
       text-align: left;
@@ -222,8 +282,8 @@ export default {
   right: 0;
   bottom: 0;
   top: 0px;
-  z-index: 999999;
-  padding: 80px 10px 0 10px;
+  z-index: 1999;
+  padding: 5vw 10px 0 10px;
   // background: linear-gradient(271deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   background-color: #040D33;
   color: #fff;
@@ -263,6 +323,7 @@ export default {
         // margin-top: 8px;
         font-family: PingFang;
         background-color: rgba(0, 12, 34, 0.69);
+        border-bottom: 1px solid rgba(22, 95, 234, 0.4);
         .key {
           // margin-right: 20px;
           padding: 15px 10px;
@@ -283,9 +344,12 @@ export default {
   }
   .spot-wrapper, .video-wrapper {
     margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    >img {
+    .img-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    img {
       width: 160px;
       margin-right: 10px;
       margin-bottom: 25px;
@@ -348,6 +412,37 @@ export default {
     z-index: -1;
     background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
     transform: skewX(-30deg);
+  }
+}
+.QJFrame {
+  position: absolute;
+  z-index: 9999;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 1s;
+  background: rgba(19,45,85,.9);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  box-sizing: border-box;
+  bottom: 0;
+  #content {
+    width: 100%;
+    height: 800px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  .close {
+    .bg-image("./images/close");
+    position: absolute;
+    top: 8%;
+    right: 3%;
+    width: 32px;
+    height: 32px;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 99;
   }
 }
 </style>

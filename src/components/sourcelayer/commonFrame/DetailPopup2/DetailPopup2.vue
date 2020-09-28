@@ -1,35 +1,85 @@
 
 <template>
-  <div id="forcePopUp" v-if="forcePosition.x && forcePosition.y">
-    <div
-      id="forcePopUpContent"
-      class="leaflet-popup"
-      :style="{transform:`translate3d(${forcePosition.x}px,${forcePosition.y}px, 0)`}"
-    >
-      <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
-      <div class="leaflet-popup-content-wrapper">
-        <div id="forcePopUpLink" class="leaflet-popup-content">
-          <div class="leaflet-popup-content">
-            <header>{{forceEntity.extra_data.SHORTNAME || forceEntity.extra_data.NAME}}</header>
-            <ul class="content-body">
-              <li>
-                <span>所属区县:</span>
-                <span>{{forceEntity.extra_data.DISTRICT}}</span>
-              </li>
-              <li>
-                <span>所属街道:</span>
-                <span>{{forceEntity.extra_data.STREET}}</span>
-              </li>
-              <!-- <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
-                <span>{{key}}</span>
-                <span>{{item}}</span>
-              </li> -->
-            </ul>
-            <div class="detail">查看详情 >></div>
+  <div class="detail-popup">
+    <div id="forcePopUp" v-if="forcePosition.x && forcePosition.y">
+      <div
+        id="forcePopUpContent"
+        class="leaflet-popup"
+        :style="{transform:`translate3d(${forcePosition.x}px,${forcePosition.y}px, 0)`}"
+      >
+        <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
+        <div class="leaflet-popup-content-wrapper">
+          <div id="forcePopUpLink" class="leaflet-popup-content">
+            <div class="leaflet-popup-content">
+              <header>{{forceEntity.extra_data.SHORTNAME || forceEntity.extra_data.NAME}}</header>
+              <ul class="content-body">
+                <li>
+                  <span>所属区县:</span>
+                  <span>{{forceEntity.extra_data.DISTRICT}}</span>
+                </li>
+                <li>
+                  <span>所属街道:</span>
+                  <span>{{forceEntity.extra_data.STREET}}</span>
+                </li>
+                <!-- <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
+                  <span>{{key}}</span>
+                  <span>{{item}}</span>
+                </li> -->
+              </ul>
+              <div class="detail" @click="isShow = true">查看详情 >></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <transition name="slide">
+      <div class="info-container" v-show="isShow">
+        <span class="close-btn" @click="isShow = false"></span>
+        <div class="header-wrapper">
+          <div class="title-wrapper">
+            <span class="pre"></span>
+            <span class="title">信息详情</span>
+          </div>
+          <ul class="header-list">
+            <li v-for="(item,index) in nameList" :key="index"
+              class="header-item" :class="{active: activeName==item.value}"
+              @click="activeName = item.value">
+              {{item.label}}
+            </li>
+            <!-- <li class="header-item">现场记录</li>
+            <li class="header-item">视频</li>
+            <li class="header-item">全景</li> -->
+          </ul>
+        </div>
+        <div class="basic-wrapper" v-show="activeName == 'basic'">
+           <!-- <div class="sub-title">基本信息</div> -->
+           <ul>
+             <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
+                <div class="info-item" v-if="item.length">
+                  <span class="key">{{key}}</span>
+                  <span class="value">{{item}}</span>
+                </div>
+              </li>
+           </ul>
+        </div>
+        <div class="spot-wrapper" v-show="activeName == 'spot'">
+          <img src="/static/images/img.png" alt="">
+          <img src="/static/images/img.png" alt="">
+          <img src="/static/images/img.png" alt="">
+          <img src="/static/images/img.png" alt="">
+        </div>
+        <div class="video-wrapper" v-show="activeName == 'video'">
+          <img src="/static/images/video.png" alt="">
+          <img src="/static/images/video.png" alt="">
+          <img src="/static/images/video.png" alt="">
+          <img src="/static/images/video.png" alt="">
+        </div>
+        <div class="overall-wrapper" v-show="activeName == 'overall'">
+          <img src="/static/images/overall.png" alt="">
+        </div>
+      </div>
+      <!-- <div class="mask-right"></div> -->
+    </transition>
   </div>
 </template>
 
@@ -39,6 +89,21 @@ export default {
     return {
       forceEntity: {},
       forcePosition: {},
+      isShow: false,
+      nameList: [{
+        label: '基本信息',
+        value: 'basic'
+      }, {
+        label: '现场记录',
+        value: 'spot'
+      }, {
+        label: '视频',
+        value: 'video'
+      }, {
+        label: '全景',
+        value: 'overall'
+      }],
+      activeName: 'basic'
     };
   },
   async mounted() {
@@ -81,7 +146,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 #forcePopUp {
   .leaflet-popup {
     top: -80px;
@@ -119,8 +184,7 @@ export default {
     width: 100%;
     height: 100%;
     > header {
-      height: 24px;
-      line-height: 24px;
+      line-height: 20px;
       box-sizing: border-box;
       padding-right: 20px;
       font-size: 18px;
@@ -150,6 +214,126 @@ export default {
       text-decoration: underline;
       cursor: pointer;
     }
+  }
+}
+.info-container {
+  width: 4rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0px;
+  z-index: 999999;
+  padding: 100px 10px 0 10px;
+  background: linear-gradient(271deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+  color: #fff;
+  .close-btn {
+    position: absolute;
+    right: 30px;
+    width: 15px;
+    height: 15px;
+    .bg-image("./images/close-info");
+    cursor: pointer;
+  }
+  .header-list {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    .header-item {
+      margin-right: 20px;
+      padding-bottom: 3px;
+      font-family: PingFang;
+      font-size: 18px;
+      font-weight: bold;
+      color: #165CE2;
+      &.active {
+        color: #61F5F5;
+        border-bottom: 2px solid #00FFD4;
+      }
+    }
+  }
+  .basic-wrapper {
+    margin-top: 20px;
+    >ul {
+      // border: 1px solid #000C22;
+      padding: 15px;
+      .info-item {
+        display: flex;
+        margin-top: 8px;
+        font-family: PingFang;
+        .key {
+          margin-right: 20px;
+          width: 100px;
+        }
+      }
+    }
+  }
+  .spot-wrapper, .video-wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    >img {
+      width: 160px;
+      margin-right: 10px;
+      margin-bottom: 25px;
+    }
+  }
+  .overall-wrapper {
+    margin-top: 20px;
+  }
+  .title-wrapper {
+    display: flex;
+    align-items: flex-end;
+    .pre {
+      display: block;
+      width: 10px;
+      height: 24px;
+      background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
+      transform: skewX(-30deg);
+    }
+    .title {
+      display: block;
+      height: 35px;
+      line-height: 35px;
+      font-family: YouSheBiaoTiHei;
+      font-size: 27px;
+      letter-spacing: 0px;
+      color: #ffffff;
+      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+      position: relative;
+      padding-left: 12px;
+    }
+    .title::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 2px;
+      width: 300px;
+      height: 15px;
+      z-index: -1;
+      background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+      transform: skewX(-30deg);
+    }
+  }
+  .sub-title {
+    display: block;
+    height: 35px;
+    line-height: 35px;
+    font-family: YouSheBiaoTiHei;
+    font-size: 20px;
+    letter-spacing: 0px;
+    color: #ffffff;
+    text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+    position: relative;
+  }
+  .sub-title::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    height: 15px;
+    z-index: -1;
+    background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+    transform: skewX(-30deg);
   }
 }
 </style>

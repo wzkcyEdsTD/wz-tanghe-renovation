@@ -76,6 +76,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "./TreeDrawTool";
+import { getIserverFields } from "api/iServerAPI";
 import {
   // TARGET_SOURCE,
   CESIUM_TREE_OPTION,
@@ -149,7 +150,9 @@ export default {
         eventListeners: {
           processCompleted: async (res) => {
             console.log(999, res)
-            treeDrawTool(this, res, node);
+            const fields = await getIserverFields(url, newdataset);
+            console.log(119, fields)
+            treeDrawTool(this, res, node, fields);
           },
           processFailed: (msg) => console.log(msg),
         },

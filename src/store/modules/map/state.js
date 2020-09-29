@@ -22,8 +22,13 @@ const state = {
   // //  总体概览
   // WzAllData: {}
   // 项目
-  projectList: [],
+  // projectList: [],
   // 景点
-  sightList: []
+  // sightList: [],
+
+  // 所有资源
+  sourceMap: {},
+  // 当前资源
+  currentSource: '断点'
 };
 export default state;

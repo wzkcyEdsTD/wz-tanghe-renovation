@@ -94,7 +94,7 @@ export const CESIUM_TREE_OPTION = [
     newdataset: `${SW_DATA_NAME}项目`,
     icon: false,
     type: "mvt",
-    saveData: "setProjectList"
+    // saveData: "setProjectList"
   },
   {
     id: "断点",
@@ -112,7 +112,7 @@ export const CESIUM_TREE_OPTION = [
     newdataset: `${SW_DATA_NAME}十二景`,
     icon: '十二景',
     type: "mvt",
-    saveData: "setSightList"
+    // saveData: "setSightList"
   },
   {
     id: "乡镇名称",

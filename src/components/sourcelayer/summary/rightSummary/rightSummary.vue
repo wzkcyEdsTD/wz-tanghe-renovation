@@ -42,9 +42,6 @@
           <video
             src="static/images/温瑞塘河/温瑞塘河.mp4"
             controls
-            autoplay
-            muted
-            loop
             class="sp"
           />
           <div class="jianju">

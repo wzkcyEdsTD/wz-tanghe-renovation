@@ -37,13 +37,23 @@ const mutations = {
   // [types.SET_FORCE_MAP_TYPE](state, data) {
   //   state.forceMapTypeBase = data;
   // }
-  [types.SET_PROJECT_LIST](state, data) {
+
+  // [types.SET_PROJECT_LIST](state, data) {
+  //   console.log(222, data)
+  //   state.projectList = data;
+  // },
+  // [types.SET_SIGHT_LIST](state, data) {
+  //   console.log(222, data)
+  //   state.sightList = data;
+  // },
+
+  [types.SET_SOURCE_MAP](state, data) {
     console.log(222, data)
-    state.projectList = data;
+    state.sourceMap = {...state.sourceMap, ...data};
   },
-  [types.SET_SIGHT_LIST](state, data) {
+  [types.SET_CURRENT_SOURCE](state, data) {
     console.log(222, data)
-    state.sightList = data;
+    state.currentSource = data;
   },
 };
 

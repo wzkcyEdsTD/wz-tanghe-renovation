@@ -66,10 +66,18 @@ import * as types from "./mutation-types";
 // };
 
 // 设置项目
-export const setProjectList = ({ commit }, data) => {
-  commit(types.SET_PROJECT_LIST, data);
+// export const setProjectList = ({ commit }, data) => {
+//   commit(types.SET_PROJECT_LIST, data);
+// };
+// // 设置景点
+// export const setSightList = ({ commit }, data) => {
+//   commit(types.SET_SIGHT_LIST, data);
+// };
+
+export const setSourceMap = ({ commit }, data) => {
+  commit(types.SET_SOURCE_MAP, data);
 };
-// 设置景点
-export const setSightList = ({ commit }, data) => {
-  commit(types.SET_SIGHT_LIST, data);
+
+export const setCurrentource = ({ commit }, data) => {
+  commit(types.SET_CURRENT_SOURCE, data);
 };

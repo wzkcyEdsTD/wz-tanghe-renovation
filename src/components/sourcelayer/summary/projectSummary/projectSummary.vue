@@ -1,10 +1,27 @@
 <template>
   <div class="projectSummary">
+    <div class="composition-container">
+      <div class="title-wrapper">
+        <span class="pre"></span>
+        <span class="title">资源区县</span>
+        <!-- <span class="desc">截至2020年5月15日</span> -->
+      </div>
+      <div style="height:180px;" class="echart" ref="pieEchart"></div>
+    </div>
+    <div class="composition-container">
+      <div class="title-wrapper">
+        <span class="pre"></span>
+        <span class="title">资源街道</span>
+        <!-- <span class="desc">截至2020年5月15日</span> -->
+      </div>
+      <span class="small">单位：个</span>
+      <div  style="height:180px;" class="echart" ref="barEchart"></div>
+    </div>
     <div class="search-container">
       <div class="title-wrapper">
         <span class="pre"></span>
-        <span class="title">项目进程</span>
-        <span class="desc">截至2020年5月15日</span>
+        <span class="title">资源列表</span>
+        <!-- <span class="desc">截至2020年5月15日</span> -->
       </div>
       <div class="search-header">
         <el-input
@@ -28,32 +45,15 @@
           <li class="result-item header">
             <span class="index">序号</span>
             <span class="name">名称</span>
-            <span class="speed">进度</span>
+            <!-- <span class="speed">进度</span> -->
           </li>
-          <li class="result-item" v-for="(item,index) in projectList" :key="index">
-            <span class="index">{{index}}</span>
+          <li class="result-item" v-for="(item,index) in searchList" :key="index">
+            <span class="index">{{index+1}}</span>
             <span class="name" :title="item.attributes.NAME">{{item.attributes.NAME}}</span>
-            <span class="speed">{{item.attributes.REMARK}}</span>
+            <!-- <span class="speed">{{item.attributes.REMARK}}</span> -->
           </li>
         </ul>
       </div>
-    </div>
-    <div class="composition-container">
-      <div class="title-wrapper">
-        <span class="pre"></span>
-        <span class="title">项目构成</span>
-        <span class="desc">截至2020年5月15日</span>
-      </div>
-      <div style="height:180px;" class="echart" ref="pieEchart"></div>
-    </div>
-    <div class="composition-container">
-      <div class="title-wrapper">
-        <span class="pre"></span>
-        <span class="title">项目分布</span>
-        <span class="desc">截至2020年5月15日</span>
-      </div>
-      <span class="small">单位：个</span>
-      <div  style="height:180px;" class="echart" ref="barEchart"></div>
     </div>
     <!-- <div class="composition-container">
       <div class="title-wrapper">
@@ -74,18 +74,22 @@ export default {
   data() {
     return {
       searchText: "",
+      searchList: [],
+      // currentSource: '断点',
       pieEchart: null, // 饼状图
       barEchart: null, // 树状图
       lineEchart: null, // 折线图
     };
   },
   computed: {
-    ...mapGetters("map", ["projectList"]),
+    ...mapGetters("map", ["sourceMap", "currentSource"]),
   },
   mounted() {
-    this.drawPie();
-    this.drawBar();
+    this.eventRegsiter()
+    this.drawPie()
+    this.drawBar()
     // this.drawLine();
+    this.searchFilter()
   },
   // watch:{
   //   '$store.state.projectList':function(newFlag, oldFlag){
@@ -93,6 +97,14 @@ export default {
   //   }
   // },
   methods: {
+    eventRegsiter() {
+      this.$bus.$off("source-change");
+      this.$bus.$on("source-change", ({value}) => {
+        console.log("nmd", value);
+        // this.currentSource = value
+        this.searchFilter()
+      });
+    },
     drawPie() {
       const pieData = [
         { value: 2.3, name: "卫生项目", itemStyle: { color: "#FB0062" } },
@@ -357,8 +369,20 @@ export default {
         ],
       });
     },
-    searchClear() {},
-    searchFilter() {},
+    searchClear() {
+      this.searchText = "";
+      this.searchList = [];
+      this.searchFilter();
+    },
+    searchFilter() {
+      let allSearchList = this.sourceMap[this.currentSource]
+      this.searchList = this.searchText
+        ? allSearchList.filter((item) => {
+            return item.attributes.NAME.indexOf(this.searchText) >= 0;
+          })
+        : allSearchList;
+      console.log('wtf???', this.searchList)
+    },
   },
 };
 </script>

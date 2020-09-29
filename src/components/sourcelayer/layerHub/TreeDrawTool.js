@@ -85,41 +85,52 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
   });
   context.featureMap[node.id] = result.features;
   let forceDrawFeatures = [];
-  if (node.saveData) {
-    // const { drawFeatures } = fixTreeWithExtra(
-    //   result.features,
-    //   context[node.withExtraData],
-    //   node,
-    //   context
-    // );
-    // forceDrawFeatures = [...drawFeatures];
-    if (node.id === '项目') {
-      result.features.forEach(item => {
-        if (item.attributes.ZBQJ.length) {
-          console.log('ZBQJ!!!', item)
-        }
-        if (item.attributes.CURRENT_STATE) {
-          forceDrawFeatures.push(item)
-        }
-      })
-      context[node.saveData](forceDrawFeatures);
-    } else {
-      forceDrawFeatures = result.features
-      context[node.saveData](result.features);
-    }
+  // if (node.saveData) {
+  //   // const { drawFeatures } = fixTreeWithExtra(
+  //   //   result.features,
+  //   //   context[node.withExtraData],
+  //   //   node,
+  //   //   context
+  //   // );
+  //   // forceDrawFeatures = [...drawFeatures];
+  //   if (node.id === '项目') {
+  //     result.features.forEach(item => {
+  //       if (item.attributes.ZBQJ.length) {
+  //         console.log('ZBQJ!!!', item)
+  //       }
+  //       if (item.attributes.CURRENT_STATE) {
+  //         forceDrawFeatures.push(item)
+  //       }
+  //     })
+  //     context[node.saveData](forceDrawFeatures);
+  //   } else {
+  //     forceDrawFeatures = result.features
+  //     context[node.saveData](result.features);
+  //   }
+  // } else {
+  //   // if (node.id === '项目') {
+  //   //   result.features.forEach(item => {
+  //   //     if (item.attributes.XMJZQK) {
+  //   //       forceDrawFeatures.push(item)
+  //   //     }
+  //   //   })
+  //   //   context[node.saveData](forceDrawFeatures);
+  //   // } else {
+  //   //   forceDrawFeatures = result.features;
+  //   // }
+  //   forceDrawFeatures = result.features;
+  // }
+
+  if (node.id === '项目') {
+    result.features.forEach(item => {
+      if (item.attributes.CURRENT_STATE) {
+        forceDrawFeatures.push(item)
+      }
+    })
   } else {
-    // if (node.id === '项目') {
-    //   result.features.forEach(item => {
-    //     if (item.attributes.XMJZQK) {
-    //       forceDrawFeatures.push(item)
-    //     }
-    //   })
-    //   context[node.saveData](forceDrawFeatures);
-    // } else {
-    //   forceDrawFeatures = result.features;
-    // }
     forceDrawFeatures = result.features;
   }
+  context.setSourceMap({[node.id]: forceDrawFeatures});
 
   forceDrawFeatures.map(item => {
     const entityOption = {

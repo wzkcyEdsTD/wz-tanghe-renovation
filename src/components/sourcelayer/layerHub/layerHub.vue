@@ -122,7 +122,7 @@ export default {
     this.$refs.tree.setCheckedKeys(['断点', '十二景', '乡镇名称', '绿道', '塘河范围面', '塘河沿线']);
   },
   methods: {
-    ...mapActions("map", ["setProjectList", "setSightList"]),
+    ...mapActions("map", ["setSourceMap", "setCurrentource"]),
     eventRegsiter() {
       // this.$bus.$off("cesium-targetChange");
       // this.$bus.$on("cesium-targetChange", ({target}) => {
@@ -153,6 +153,7 @@ export default {
             const fields = await getIserverFields(url, newdataset);
             console.log(119, fields)
             treeDrawTool(this, res, node, fields);
+            fn && fn();
           },
           processFailed: (msg) => console.log(msg),
         },
@@ -182,10 +183,14 @@ export default {
     nodeCheckChange(node, checked) {
       if (checked) {
         if (node.type == "mvt" && node.id) {
+          this.setCurrentource(node.id)
           if (node.id && this.entityMap[node.id]) {
+            this.$bus.$emit('source-change', { value: node.id });
             this.entityMap[node.id].show = true;
           } else {
-            this.getPOIPickedFeature(node);
+            this.getPOIPickedFeature(node, () => {
+              this.$bus.$emit('source-change', { value: node.id });
+            });
           }
         } else if (node.type == "model") {
           node.componentEvent &&

@@ -51,8 +51,8 @@
             <li class="header-item">全景</li> -->
           </ul>
         </div>
-        <div class="basic-wrapper" v-show="activeName == 'basic'">
-           <!-- <div class="sub-title">基本信息</div> -->
+        <div class="basic-wrapper">
+           <div class="sub-title">基本信息</div>
            <ul>
              <li v-for="(item,key,index) in fixData" :key="index" class="info-item">
                 <span class="key">{{key}}</span>
@@ -60,20 +60,25 @@
               </li>
            </ul>
         </div>
-        <div class="spot-wrapper" v-show="activeName == 'spot'">
+        <div class="spot-wrapper">
+          <div class="sub-title">现场记录</div>
           <viewer class="img-wrapper" :images="photoList">
             <img v-for="(item,index) in photoList" :key="index" 
               :src="`/static/images/${forceEntity.type}/${item}`" alt=""
             >
           </viewer>
         </div>
-        <div class="video-wrapper" v-show="activeName == 'video'">
-          <img src="/static/images/video.png" alt="">
-          <img src="/static/images/video.png" alt="">
-          <img src="/static/images/video.png" alt="">
-          <img src="/static/images/video.png" alt="">
+        <div class="video-wrapper">
+          <div class="sub-title">视频</div>
+          <div class="content-wrapper">
+            <img src="/static/images/video.png" alt="">
+            <img src="/static/images/video.png" alt="">
+            <img src="/static/images/video.png" alt="">
+            <img src="/static/images/video.png" alt="">
+          </div>
         </div>
-        <div class="overall-wrapper" v-show="activeName == 'overall'">
+        <div class="overall-wrapper">
+          <div class="sub-title">全景</div>
           <img v-for="(item,index) in overallList" :key="index"
             :src="`/static/images/VRPic/${item.FEATUREGUID}.png`" @click="openQJ(item)"
           >
@@ -297,7 +302,7 @@ export default {
     cursor: pointer;
   }
   .header-list {
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     .header-item {
@@ -314,7 +319,7 @@ export default {
     }
   }
   .basic-wrapper {
-    margin-top: 20px;
+    margin-top: 10px;
     ul {
       // border: 1px solid #000C22;
       padding: 15px;
@@ -348,11 +353,12 @@ export default {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      padding: 10px 15px;
     }
     img {
       width: 160px;
       margin-right: 10px;
-      margin-bottom: 25px;
+      margin-top: 10px;
     }
   }
   .overall-wrapper {
@@ -394,6 +400,7 @@ export default {
   }
   .sub-title {
     display: block;
+    margin-left: 20px;
     height: 35px;
     line-height: 35px;
     font-family: YouSheBiaoTiHei;
@@ -407,11 +414,14 @@ export default {
     content: "";
     position: absolute;
     bottom: 0;
-    width: 100px;
+    width: 200px;
     height: 15px;
     z-index: -1;
     background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
     transform: skewX(-30deg);
+  }
+  .content-wrapper {
+    padding: 0 15px;
   }
 }
 .QJFrame {

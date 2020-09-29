@@ -457,22 +457,16 @@ export default {
       const viewer = window.earth;
       var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
       handler.setInputAction(function(wheelment) {
-        var height=viewer.camera.positionCartographic.height;
-        if (height<10000){
-          self.removeAll(false)
-        }else {
-          self.removeAll(true);
-        }
+        self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.WHEEL);
-      // 鼠标右键抬起事件
       handler.setInputAction(function(event) {
-        var height=viewer.camera.positionCartographic.height;
-        if (height<10000){
-          self.removeAll(false)
-        }else {
-          self.removeAll(true);
-        }
-      }, Cesium.ScreenSpaceEventType.RIGHT_UP);
+
+        self.removeAll(false);
+      }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
+      handler.setInputAction(function(event) {
+
+        self.removeAll(false);
+      }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
     },
     switchLvdao(value) {
       this.lvdaolayer.show = value

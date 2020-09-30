@@ -123,7 +123,7 @@ export default {
     this.$refs.tree.setCheckedKeys(['断点', '十二景', '乡镇名称', '绿道', '塘河范围面', '塘河沿线']);
   },
   methods: {
-    ...mapActions("map", ["setSourceMap", "setCurrentource"]),
+    ...mapActions("map", ["setSourceMap", "setCurrentource", "setSejList"]),
     eventRegsiter() {
       // this.$bus.$off("cesium-targetChange");
       // this.$bus.$on("cesium-targetChange", ({target}) => {
@@ -197,6 +197,7 @@ export default {
                 ));
           }
           if (node.id && this.entityMap[node.id]) {
+            node.saveData ? this[node.saveData](this.featureMap[node.id]) : null
             this.$bus.$emit('source-change', { value: node.id });
             this.entityMap[node.id].show = true;
           } else {
@@ -246,6 +247,9 @@ export default {
           window.earth.dataSources.length
         ) {
           this.entityMap[node.id].show = false;
+          if (node.saveData) {
+            this[node.saveData]([]);
+          }
         }
         node.componentEvent &&
           this.$bus.$emit(node.componentEvent, { value: null });

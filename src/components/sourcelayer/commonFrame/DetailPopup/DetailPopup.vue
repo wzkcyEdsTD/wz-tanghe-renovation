@@ -63,6 +63,7 @@
                 :src="`/static/images/${forceEntity.type}/${item}`" alt=""
               >
             </viewer>
+            <div class="no-tip" v-show="!havePhoto">暂无数据</div>
           </div>
           <div class="content-item video-wrapper" id="video">
             <div class="sub-title">视频</div>
@@ -71,6 +72,7 @@
               <img src="/static/images/video.png" alt="">
               <img src="/static/images/video.png" alt="">
               <img src="/static/images/video.png" alt=""> -->
+              <div class="no-tip">暂无数据</div>
             </div>
           </div>
           <div class="content-item overall-wrapper" id="overall">
@@ -79,7 +81,7 @@
               <img v-for="(item,index) in overallList" :key="index"
                 :src="`/static/images/VRPic/${item.FEATUREGUID}.png`" @click="openQJ(item)"
               >
-              <!-- <div v-if="!overallList.length">暂无数据</div> -->
+              <div class="no-tip" v-show="!haveOverall">暂无数据</div>
             </div>
           </div>
         </div>
@@ -113,6 +115,8 @@ export default {
         label: '全景',
         value: 'overall'
       }],
+      havePhoto: false,
+      haveOverall: false,
       // activeName: 'basic',
       activeStep: 0,
       showQJ: false,
@@ -136,21 +140,24 @@ export default {
       if (this.forceEntity.extra_data && this.forceEntity.extra_data.PHOTO) {
         let photoStr = this.forceEntity.extra_data.PHOTO
         if (photoStr.length) {
+          this.havePhoto = true
           if (~photoStr.indexOf(';')) {
             return photoStr.split(';')
           } else {
             return [photoStr]
           }
         }
+      } else {
+        this.havePhoto = false
       }
     },
     overallList() {
       let overallList = []
       let currentZBQJ = []
-      console.log('ZBQJList', ZBQJList)
       if (this.forceEntity.extra_data && this.forceEntity.extra_data.ZBQJ) {
         let ZBQJStr = this.forceEntity.extra_data.ZBQJ
         if (ZBQJStr.length) {
+          this.haveOverall = true
           if (~ZBQJStr.indexOf(',')) {
             currentZBQJ = ZBQJStr.split(',')
           } else {
@@ -165,6 +172,8 @@ export default {
           })
         }
         return overallList
+      } else {
+        this.haveOverall = false
       }
     }
   },
@@ -238,6 +247,7 @@ export default {
     closePopup() {
       this.forcePosition = {};
       this.forceEntity = {};
+      this.closeInfo()
     },
   },
 };
@@ -357,6 +367,7 @@ export default {
     position: absolute;
     top: 180px;
     bottom: 0;
+    width: 100%;
     overflow-y: scroll;
   }
   .basic-wrapper {
@@ -468,6 +479,9 @@ export default {
   }
   .video-content, .overall-content {
     padding: 0 15px;
+  }
+  .no-tip {
+    padding: 15px;
   }
 }
 .QJFrame {

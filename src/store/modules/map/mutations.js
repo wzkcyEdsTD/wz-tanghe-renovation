@@ -55,6 +55,10 @@ const mutations = {
     console.log(222, data)
     state.currentSource = data;
   },
+  [types.SET_SEJ_LIST](state, data) {
+    console.log(222, data)
+    state.sejList = data;
+  },
 };
 
 export default mutations;

@@ -121,9 +121,13 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
   //   forceDrawFeatures = result.features;
   // }
 
+  if (node.saveData) {
+    forceDrawFeatures = result.features
+    context[node.saveData](forceDrawFeatures);
+  }
   if (node.id === '项目') {
     result.features.forEach(item => {
-      if (item.attributes.CURRENT_STATE) {
+      if (item.attributes.sffsy67) {
         forceDrawFeatures.push(item)
       }
     })

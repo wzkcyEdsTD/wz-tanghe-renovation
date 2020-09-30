@@ -81,3 +81,7 @@ export const setSourceMap = ({ commit }, data) => {
 export const setCurrentource = ({ commit }, data) => {
   commit(types.SET_CURRENT_SOURCE, data);
 };
+
+export const setSejList = ({ commit }, data) => {
+  commit(types.SET_SEJ_LIST, data);
+};

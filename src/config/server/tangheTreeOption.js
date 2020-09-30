@@ -112,8 +112,8 @@ export const CESIUM_TREE_OPTION = [
     newdataset: `${SW_DATA_NAME}十二景`,
     icon: '十二景',
     type: "mvt",
+    saveData: "setSejList",
     // withImage: "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz"
-    // saveData: "setSightList"
   },
   {
     id: "乡镇名称",

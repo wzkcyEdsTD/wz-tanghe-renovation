@@ -10,31 +10,29 @@
         <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
         <div class="leaflet-popup-content-wrapper">
           <div id="forcePopUpLink" class="leaflet-popup-content">
-            <div class="leaflet-popup-content">
-              <header>{{forceEntity.extra_data.SHORTNAME || forceEntity.extra_data.NAME}}</header>
-              <ul class="content-body">
-                <li>
-                  <span>所属区县:</span>
-                  <span>{{forceEntity.extra_data.DISTRICT}}</span>
-                </li>
-                <li>
-                  <span>所属街道:</span>
-                  <span>{{forceEntity.extra_data.STREET}}</span>
-                </li>
-                <!-- <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
-                  <span>{{key}}</span>
-                  <span>{{item}}</span>
-                </li> -->
-              </ul>
-              <div class="detail" @click="isShow = true">查看详情 >></div>
-            </div>
+            <header>{{forceEntity.extra_data.SHORTNAME || forceEntity.extra_data.NAME}}</header>
+            <ul class="content-body">
+              <li>
+                <span>所属区县:</span>
+                <span>{{forceEntity.extra_data.DISTRICT}}</span>
+              </li>
+              <li>
+                <span>所属街道:</span>
+                <span>{{forceEntity.extra_data.STREET}}</span>
+              </li>
+              <!-- <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
+                <span>{{key}}</span>
+                <span>{{item}}</span>
+              </li> -->
+            </ul>
+            <div class="detail" @click="isShow = true">查看详情 >></div>
           </div>
         </div>
       </div>
     </div>
     <transition name="slide">
       <div class="info-container" v-show="isShow">
-        <span class="close-btn" @click="isShow = false"></span>
+        <span class="close-btn" @click="closeInfo"></span>
         <div class="header-wrapper">
           <div class="title-wrapper">
             <span class="pre"></span>
@@ -42,46 +40,48 @@
           </div>
           <ul class="header-list">
             <li v-for="(item,index) in nameList" :key="index"
-              class="header-item" :class="{active: activeName==item.value}"
-              @click="activeName = item.value">
+              class="header-item" :class="{active: activeStep==index}"
+              @click="headClick(item.value, index)">
               {{item.label}}
             </li>
-            <!-- <li class="header-item">现场记录</li>
-            <li class="header-item">视频</li>
-            <li class="header-item">全景</li> -->
           </ul>
         </div>
-        <div class="basic-wrapper">
-           <div class="sub-title">基本信息</div>
-           <ul>
-             <li v-for="(item,key,index) in fixData" :key="index" class="info-item">
-                <span class="key">{{key}}</span>
-                <span class="value">{{item}}</span>
-              </li>
-           </ul>
-        </div>
-        <div class="spot-wrapper">
-          <div class="sub-title">现场记录</div>
-          <viewer class="img-wrapper" :images="photoList">
-            <img v-for="(item,index) in photoList" :key="index" 
-              :src="`/static/images/${forceEntity.type}/${item}`" alt=""
-            >
-          </viewer>
-        </div>
-        <div class="video-wrapper">
-          <div class="sub-title">视频</div>
-          <div class="content-wrapper">
-            <img src="/static/images/video.png" alt="">
-            <img src="/static/images/video.png" alt="">
-            <img src="/static/images/video.png" alt="">
-            <img src="/static/images/video.png" alt="">
+        <div id="content-wrapper" class="content-wrapper" @scroll="onScroll">
+          <div class="content-item basic-wrapper" id="basic">
+            <div class="sub-title">基本信息</div>
+            <ul>
+              <li v-for="(item,key,index) in fixData" :key="index" class="info-item">
+                  <span class="key">{{key}}</span>
+                  <span class="value">{{item}}</span>
+                </li>
+            </ul>
           </div>
-        </div>
-        <div class="overall-wrapper">
-          <div class="sub-title">全景</div>
-          <img v-for="(item,index) in overallList" :key="index"
-            :src="`/static/images/VRPic/${item.FEATUREGUID}.png`" @click="openQJ(item)"
-          >
+          <div class="content-item spot-wrapper" id="spot">
+            <div class="sub-title">现场记录</div>
+            <viewer class="img-wrapper" :images="photoList">
+              <img v-for="(item,index) in photoList" :key="index" 
+                :src="`/static/images/${forceEntity.type}/${item}`" alt=""
+              >
+            </viewer>
+          </div>
+          <div class="content-item video-wrapper" id="video">
+            <div class="sub-title">视频</div>
+            <div class="video-content">
+              <!-- <img src="/static/images/video.png" alt="">
+              <img src="/static/images/video.png" alt="">
+              <img src="/static/images/video.png" alt="">
+              <img src="/static/images/video.png" alt=""> -->
+            </div>
+          </div>
+          <div class="content-item overall-wrapper" id="overall">
+            <div class="sub-title">全景</div>
+            <div class="overall-content">
+              <img v-for="(item,index) in overallList" :key="index"
+                :src="`/static/images/VRPic/${item.FEATUREGUID}.png`" @click="openQJ(item)"
+              >
+              <!-- <div v-if="!overallList.length">暂无数据</div> -->
+            </div>
+          </div>
         </div>
       </div>
     </transition>
@@ -113,7 +113,8 @@ export default {
         label: '全景',
         value: 'overall'
       }],
-      activeName: 'basic',
+      // activeName: 'basic',
+      activeStep: 0,
       showQJ: false,
       QJURL: ''
     };
@@ -199,9 +200,40 @@ export default {
         }
       }
     },
+    headClick(value, index) {
+      // this.activeName = value
+      this.activeStep = index
+      this.$nextTick(() => {
+        document.querySelector(`#${value}`).scrollIntoView({
+          behavior: "auto", // 平滑过渡
+          block: "start" // 上边框与视窗顶部平齐。默认值
+        });
+      });
+    },
+    onScroll(e) {
+      let activeIndex
+      let scrollItems = document.querySelectorAll(".content-item");
+      for (let i = scrollItems.length - 1; i >= 0; i--) {
+        // 判断滚动条滚动距离是否大于当前滚动项可滚动距离
+        let judge =
+          e.target.scrollTop >=
+          scrollItems[i].offsetTop - scrollItems[0].offsetTop;
+        if (judge) {
+          activeIndex = i;
+          break;
+        }
+      }
+      this.activeStep = activeIndex;
+    },
     openQJ(qj) {
       this.QJURL = qj.VR
       this.showQJ = true
+    },
+    closeInfo() {
+      this.isShow = false
+      document.getElementById('content-wrapper').scrollTop = 0;
+      // this.activeName = 'basic'
+      this.activeStep = 0
     },
     closePopup() {
       this.forcePosition = {};
@@ -233,7 +265,7 @@ export default {
   .leaflet-popup-content-wrapper {
     .bg-image("./images/bg");
     text-align: center;
-    height: 132px;
+    min-height: 132px;
     width: 240px;
     box-sizing: border-box;
     padding: 15px 20px 5px 20px;
@@ -247,7 +279,7 @@ export default {
     align-items: flex-start;
     overflow: hidden;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     > header {
       line-height: 20px;
       box-sizing: border-box;
@@ -272,9 +304,11 @@ export default {
       }
     }
     .detail {
-      position: absolute;
-      bottom: 5px;
-      right: 0;
+      // position: absolute;
+      // bottom: 5px;
+      // right: 0;
+      margin-top: 10px;
+      margin-left: 100px;
       color: #2ACBFE;
       text-decoration: underline;
       cursor: pointer;
@@ -292,7 +326,7 @@ export default {
   // background: linear-gradient(271deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   background-color: #040D33;
   color: #fff;
-  overflow-y: auto;
+  // overflow-y: auto;
   .close-btn {
     position: absolute;
     right: 30px;
@@ -302,6 +336,7 @@ export default {
     cursor: pointer;
   }
   .header-list {
+    z-index: 99999;
     margin-top: 20px;
     display: flex;
     align-items: center;
@@ -318,8 +353,13 @@ export default {
       }
     }
   }
+  .content-wrapper {
+    position: absolute;
+    top: 180px;
+    bottom: 0;
+    overflow-y: scroll;
+  }
   .basic-wrapper {
-    margin-top: 10px;
     ul {
       // border: 1px solid #000C22;
       padding: 15px;
@@ -363,6 +403,12 @@ export default {
   }
   .overall-wrapper {
     margin-top: 20px;
+    margin-bottom: 20px;
+    img {
+      width: 160px;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
   }
   .title-wrapper {
     display: flex;
@@ -420,7 +466,7 @@ export default {
     background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
     transform: skewX(-30deg);
   }
-  .content-wrapper {
+  .video-content, .overall-content {
     padding: 0 15px;
   }
 }
@@ -446,7 +492,7 @@ export default {
   .close {
     .bg-image("./images/close");
     position: absolute;
-    top: 8%;
+    top: 12%;
     right: 3%;
     width: 32px;
     height: 32px;

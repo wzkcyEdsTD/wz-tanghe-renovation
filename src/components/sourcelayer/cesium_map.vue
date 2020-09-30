@@ -242,6 +242,12 @@ export default {
         })
       );
 
+      // window.earth.imageryLayers.addImageryProvider(
+      //   new Cesium.SuperMapImageryProvider({
+      //     url: ServiceUrl.SEJBZ,
+      //   })
+      // );
+
       // const mapMvt = viewer.scene.addVectorTilesMap({
       //   url: ServiceUrl.YJMVT,
       //   name: "mapMvt",
@@ -292,10 +298,10 @@ export default {
       // }, 4000);
 
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
-      var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
-      Cesium.when(promise, async (layers) => {
-        this.sceneLayers = layers.slice(1)
-      });
+      // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
+      // Cesium.when(promise, async (layers) => {
+      //   this.sceneLayers = layers.slice(1)
+      // });
 
 
       this.lipai();
@@ -310,12 +316,12 @@ export default {
     cameraMove() {
       window.earth.scene.camera.setView({
         destination: Cesium.Cartesian3.fromDegrees(
-          120.66625660935506,
-          27.641332018707733,
-          16000.0
+          120.67625660935506,
+          27.841332018707733,
+          10000.0
         ),
         orientation: {
-          heading: 0.0033168860454315663,
+          heading: 0.01768860454315663,
           pitch: -0.5808830390057396,
           roll: 0,
         },

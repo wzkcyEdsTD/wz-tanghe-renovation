@@ -59,14 +59,15 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 22vw;
+    width: 20vw;
     height: 100%;
-    background-image: linear-gradient(
-      90deg,
-      rgba(0, 13, 26, 0.84) 0%,
-      rgba(0, 17, 34, 0.55) 70%,
-      rgba(0, 19, 38, 0) 100%
-    );
+    // background-image: linear-gradient(
+    //   90deg,
+    //   rgba(0, 13, 26, 0.84) 0%,
+    //   rgba(0, 17, 34, 0.55) 70%,
+    //   rgba(0, 19, 38, 0) 100%
+    // );
+    background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }
   .bottom {
     position: fixed;

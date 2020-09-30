@@ -103,38 +103,68 @@ export default {
         console.log("nmd", value);
         // this.currentSource = value
         this.searchFilter()
+        this.drawPie()
+        this.drawBar()
       });
     },
     drawPie() {
-      const pieData = [
-        { value: 2.3, name: "卫生项目", itemStyle: { color: "#FB0062" } },
-        { value: 3.3, name: "教育项目", itemStyle: { color: "#0B11FF" } },
-        { value: 4.2, name: "农林水电项目", itemStyle: { color: "#1DA358" } },
-        { value: 5.2, name: "园林绿化项目", itemStyle: { color: "#D8FF00" } },
-        { value: 7.3, name: "环境保护项目", itemStyle: { color: "#2BCFFF" } },
-        { value: 8.3, name: "公共服务项目", itemStyle: { color: "#D810FF" } },
-        { value: 11.3, name: "产业类项目", itemStyle: { color: "#782FED" } },
-        {
-          value: 22.9,
-          name: "保障性安居工程项目",
-          itemStyle: { color: "#FEEC00" },
-        },
-        {
-          value: 12.3,
-          name: "公园、滨水绿道及景观绿化项目",
-          itemStyle: { color: "#34FF84" },
-        },
-        {
-          value: 42.3,
-          name: "市政道路及配套设施",
-          itemStyle: { color: "#ED8E2F" },
-        },
-      ];
+      // const pieData = [
+      //   { value: 2.3, name: "卫生项目", itemStyle: { color: "#FB0062" } },
+      //   { value: 3.3, name: "教育项目", itemStyle: { color: "#0B11FF" } },
+      //   { value: 4.2, name: "农林水电项目", itemStyle: { color: "#1DA358" } },
+      //   { value: 5.2, name: "园林绿化项目", itemStyle: { color: "#D8FF00" } },
+      //   { value: 7.3, name: "环境保护项目", itemStyle: { color: "#2BCFFF" } },
+      //   { value: 8.3, name: "公共服务项目", itemStyle: { color: "#D810FF" } },
+      //   { value: 11.3, name: "产业类项目", itemStyle: { color: "#782FED" } },
+      //   {
+      //     value: 22.9,
+      //     name: "保障性安居工程项目",
+      //     itemStyle: { color: "#FEEC00" },
+      //   },
+      //   {
+      //     value: 12.3,
+      //     name: "公园、滨水绿道及景观绿化项目",
+      //     itemStyle: { color: "#34FF84" },
+      //   },
+      //   {
+      //     value: 42.3,
+      //     name: "市政道路及配套设施",
+      //     itemStyle: { color: "#ED8E2F" },
+      //   },
+      // ];
+      let data = {}
+      let legendData = []
+      let resultList = []
+      let colorList = ["#FB0062", "#0B11FF", "#1DA358", "#D8FF00", "#2BCFFF", "#D810FF", "#782FED"]
+      let list = this.sourceMap[this.currentSource]
+      list.forEach((item, index) => {
+        let district = item.attributes.DISTRICT
+        if(data[district]) {
+          data[district].number++
+        } else {
+          data[district] = {
+            name: district,
+            number: 1,
+            itemStyle: {color: colorList[index]}
+          }
+        }
+      })
+      for (let key in data) {
+        legendData.push(key)
+        resultList.push({
+          ...data[key],
+          value: (data[key].number/list.length*100).toFixed(2),
+        })
+      }
+      console.log('resultList~~~', resultList)
+      console.log('legendData~~~', legendData)
+
+
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
       this.pieEchart.setOption({
         legend: {
           orient: "horizontal",
-          top: "5%",
+          top: "25%",
           left: "34%",
           icon: "rect",
           itemWidth: 6,
@@ -143,23 +173,24 @@ export default {
             color: "#fff",
             fontSize: 11,
           },
-          data: [
-            "卫生项目",
-            "教育项目",
-            "农林水电项目",
-            "园林绿化项目",
-            "环境保护项目",
-            "公共服务项目",
-            "产业类项目",
-            "保障性安居工程项目",
-            "公园、滨水绿道及景观绿化项目",
-            "市政道路及配套设施",
-          ],
+          data: legendData,
+          // [
+          //   "卫生项目",
+          //   "教育项目",
+          //   "农林水电项目",
+          //   "园林绿化项目",
+          //   "环境保护项目",
+          //   "公共服务项目",
+          //   "产业类项目",
+          //   "保障性安居工程项目",
+          //   "公园、滨水绿道及景观绿化项目",
+          //   "市政道路及配套设施",
+          // ],
           formatter: function (name) {
             let target;
-            for (let i = 0; i < pieData.length; i++) {
-              if (pieData[i].name === name) {
-                target = pieData[i].value;
+            for (let i = 0; i < resultList.length; i++) {
+              if (resultList[i].name === name) {
+                target = resultList[i].value;
               }
             }
             return name + target + "%";
@@ -183,29 +214,51 @@ export default {
             labelLine: {
               show: false,
             },
-            data: pieData,
+            data: resultList,
             hoverAnimation: false,
           },
         ],
       });
     },
     drawBar() {
-      var dataAxis = [
-        "南郊街道",
-        "广化街道",
-        "南汇街道",
-        "松台街道",
-        "滨江街道",
-        "蒲鞋市街道",
-        "大南街道",
-        "永中街道",
-        "海滨街道",
-        "南白象街道",
-        "梧田街道",
-        "新桥街道",
-        "景山街道",
-      ];
-      var data = [20, 82, 91, 34, 90, 30, 10, 23, 42, 21, 90, 49, 10];
+      // var dataAxis = [
+      //   "南郊街道",
+      //   "广化街道",
+      //   "南汇街道",
+      //   "松台街道",
+      //   "滨江街道",
+      //   "蒲鞋市街道",
+      //   "大南街道",
+      //   "永中街道",
+      //   "海滨街道",
+      //   "南白象街道",
+      //   "梧田街道",
+      //   "新桥街道",
+      //   "景山街道",
+      // ];
+      // var data = [20, 82, 91, 34, 90, 30, 10, 23, 42, 21, 90, 49, 10];
+
+      let list = this.sourceMap[this.currentSource]
+      let tempobj = {}
+      let dataAxis = []
+      var data = []
+
+      list.forEach((item, index) => {
+        let street = item.attributes.STREET
+        if(tempobj[street]) {
+          tempobj[street]++
+        } else {
+          tempobj[street] = 1
+        }
+      })
+      console.log('tempobj~~', tempobj)
+      for (let key in tempobj) {
+        dataAxis.push(key)
+        data.push(tempobj[key])
+      }
+      console.log('dataAxis~~~', dataAxis)
+      console.log('data~~~', data)
+
       this.barEchart = this.$echarts.init(this.$refs.barEchart);
       this.barEchart.setOption({
         grid: {

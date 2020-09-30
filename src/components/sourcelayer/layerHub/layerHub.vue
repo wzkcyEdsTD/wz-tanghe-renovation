@@ -67,9 +67,9 @@
         />
       </div>
     </div>
-    <!-- <div class="sign-wrapper" v-if="currentTarget=='项目'">
+    <div class="sign-wrapper" v-show="showSign">
       <img src="/static/images/common/sign@2x.png">
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -107,6 +107,7 @@ export default {
       }],
       currentVector: 'white',
       // currentTarget: '',
+      showSign: false,
       showBaimo: false,
       showMenu: false,
       showLvdao: false,
@@ -184,6 +185,17 @@ export default {
       if (checked) {
         if (node.type == "mvt" && node.id) {
           this.setCurrentource(node.id)
+          if (node.id == '项目') this.showSign = true
+          if (node.withImage) {
+            const LAYER = this.tileLayers[node.id];
+            LAYER 
+              ? (LAYER.show = true)
+              : (this.tileLayers[node.id] = window.earth.imageryLayers.addImageryProvider(
+                  new Cesium.SuperMapImageryProvider({
+                    url: node.withImage,
+                  })
+                ));
+          }
           if (node.id && this.entityMap[node.id]) {
             this.$bus.$emit('source-change', { value: node.id });
             this.entityMap[node.id].show = true;
@@ -198,14 +210,14 @@ export default {
             this.$bus.$emit(node.componentEvent, { value: node.componentKey });
         } else if (node.type == "image") {
           const LAYER = this.tileLayers[node.id];
-          this.tileLayers[
-            node.id
-          ] = window.earth.imageryLayers.addImageryProvider(
-            new Cesium.SuperMapImageryProvider({
-              url: node.url,
-              name: node.id,
-            })
-          );
+          LAYER 
+            ? (LAYER.show = true)
+            : (this.tileLayers[node.id] = window.earth.imageryLayers.addImageryProvider(
+                new Cesium.SuperMapImageryProvider({
+                  url: node.url,
+                  name: node.id,
+                })
+              ));
         } else if (node.type == "cesium_town") {
           console.log('cesium_town_on')
           this.$parent.removeAll(true);
@@ -215,10 +227,11 @@ export default {
         } else if (node.type == "cesium_thfwm") {
           console.log('cesium_thfwm_on')
           this.$parent.switchThfwmlayer(true);
-        } else if (node.type == "cesium_thyx") {
-          console.log('cesium_thyx_on')
-          this.$parent.switchThyx(true);
-        }
+        } 
+        // else if (node.type == "cesium_thyx") {
+        //   console.log('cesium_thyx_on')
+        //   this.$parent.switchThyx(true);
+        // }
         //  有相机视角配置 -> 跳视角
         node.camera && window.earth.scene.camera.setView(node.camera);
       } else {
@@ -248,10 +261,11 @@ export default {
           console.log('cesium_thfwm_off')
           this.$parent.switchThfwmlayer(false);
         }
-        if (node.type == "cesium_thyx") {
-          console.log('cesium_thyx_off')
-          this.$parent.switchThyx(false);
-        }
+        // if (node.type == "cesium_thyx") {
+        //   console.log('cesium_thyx_off')
+        //   this.$parent.switchThyx(false);
+        // }
+        if (node.id == '项目') this.showSign = false
       }
     },
     // targetChange(target) {

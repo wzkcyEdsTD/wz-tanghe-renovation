@@ -112,6 +112,7 @@ export const CESIUM_TREE_OPTION = [
     newdataset: `${SW_DATA_NAME}十二景`,
     icon: '十二景',
     type: "mvt",
+    // withImage: "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz"
     // saveData: "setSightList"
   },
   {
@@ -129,11 +130,11 @@ export const CESIUM_TREE_OPTION = [
     label: "塘河范围面",
     type: "cesium_thfwm",
   },
-  {
-    id: "塘河沿线",
-    label: "塘河沿线",
-    type: "cesium_thyx",
-  },
+  // {
+  //   id: "塘河沿线",
+  //   label: "塘河沿线",
+  //   type: "cesium_thyx",
+  // },
   // {
   //   id: "基础数据",
   //   label: "基础数据",

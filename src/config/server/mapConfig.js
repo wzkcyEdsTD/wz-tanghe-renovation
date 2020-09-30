@@ -28,6 +28,9 @@ export const ServiceUrl = {
     white: "http://172.168.3.183:8090/iserver/services/map-agscachev2-TuCeng/rest/maps/图层",
     black: "http://172.168.3.183:8090/iserver/services/3D-dsj/rest/realspace/datas/DSJ_CGCS2000_SW",
   },
+  // 十二景标注
+  // SEJBZ: 
+  //   "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz",
   // 全市域地形
   YJDem:
     "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DEMLC/rest/realspace/datas/DEM_LC",

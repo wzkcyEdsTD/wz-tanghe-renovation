@@ -21,3 +21,4 @@ export const currentMapType = state => state.currentMapType;
 
 export const sourceMap = state => state.sourceMap;
 export const currentSource = state => state.currentSource;
+export const sejList = state => state.sejList;

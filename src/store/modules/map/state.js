@@ -29,6 +29,8 @@ const state = {
   // 所有资源
   sourceMap: {},
   // 当前资源
-  currentSource: '断点'
+  currentSource: '断点',
+  // 十二景
+  sejList: [],
 };
 export default state;

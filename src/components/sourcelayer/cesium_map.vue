@@ -7,6 +7,7 @@
       <Summary />
       <LayerHub ref="layerhub" />
       <DetailPopup ref="detailPopup" />
+      <SejPopup ref="SejPopup" />
     </div>
   </div>
 </template>
@@ -18,6 +19,7 @@ import Summary from "./summary/summary"
 import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import LayerHub from "./layerHub/layerHub";
 import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
+import SejPopup from "./commonFrame/SejPopup/SejPopup";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
@@ -29,6 +31,7 @@ export default {
     RoadLine,
     LayerHub,
     DetailPopup,
+    SejPopup,
     Summary
   },
   data() {
@@ -68,13 +71,12 @@ export default {
         if (!window.earth || !this.mapLoaded || !Object.keys(this.$refs).length)
           return;
         //  *****[detailPopup]  详情查看点位*****
-        const forceEntity = this.$refs.detailPopup.forceEntity;
-        if (forceEntity.extra_data) {
-          const pointToWindow = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
-            window.earth.scene,
-            forceEntity.position
-          );
-          this.$refs.detailPopup.renderForceEntity(pointToWindow);
+        if (this.$refs.detailPopup) {
+          this.$refs.detailPopup.renderForceEntity();
+        }
+        //  *****[bayonetList] 十二景名称点位*****
+        if (this.$refs.SejPopup) {
+          this.$refs.SejPopup.fixPopup();
         }
       });
     },

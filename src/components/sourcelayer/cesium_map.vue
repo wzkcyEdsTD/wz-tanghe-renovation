@@ -330,7 +330,7 @@ export default {
       });
     },
     lipai() {
-      this.lp(120.727729,28.010275,"oj",'static/images/瓯江.png',65,65);
+      this.lp(120.707729,28.010275,"oj",'static/images/瓯江.png',65,65);
       this.lp(120.599327,27.789995,"fyj",'static/images/飞云江.png',75,75);
       this.lp(120.726, 27.899,"wrth",'static/images/温瑞塘河.png',130,130);
     },
@@ -352,8 +352,8 @@ export default {
       var rr =0;
       var ss1 = 0;
       var ss = 0;
-      var deviationR = 20;
-      var MaxR = 3000;
+      var deviationR = 4;
+      var MaxR = 1000;
       // debugger;
       this.$nextTick(()=>{
         viewer.entities.add({
@@ -417,7 +417,7 @@ export default {
               // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(20000,Number.MAX_VALUE),
             },
           });
-        },5000);
+        },4000);
       });
       this.lp(lon,lat,`${id}p`,img,60,60,600);
 

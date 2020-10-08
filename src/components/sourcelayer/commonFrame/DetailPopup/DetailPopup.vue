@@ -58,12 +58,14 @@
           </div>
           <div class="content-item spot-wrapper" id="spot">
             <div class="sub-title">现场记录</div>
-            <viewer class="img-wrapper" :images="photoList">
-              <img v-for="(item,index) in photoList" :key="index" 
-                :src="`/static/images/${forceEntity.type}/${item}`" alt=""
-              >
-            </viewer>
-            <div class="no-tip" v-show="!havePhoto">暂无数据</div>
+            <div class="img-content">
+              <viewer class="img-wrapper" :images="photoList">
+                <img v-for="(item,index) in photoList" :key="index" 
+                  :src="`/static/images/${forceEntity.type}/${item.photo}`" alt=""
+                >
+              </viewer>
+              <div class="no-tip" v-show="!havePhoto">暂无数据</div>
+            </div>
           </div>
           <div class="content-item video-wrapper" id="video">
             <div class="sub-title">视频</div>
@@ -120,7 +122,8 @@ export default {
       // activeName: 'basic',
       activeStep: 0,
       showQJ: false,
-      QJURL: ''
+      QJURL: '',
+      hideField: ["名称", "标签", "备注", "形象进度", "目录分类", "数据来源", "经度", "纬度", "建设地点1", "建设地点2", "建设地点3", "是否属于67个里面的", "类型", "统计", "唯一码", "更新参考数据源", "照片编号", "类型1", "类型2", "类型3", "显示级别", "类型编码", "马克", "照片", "颜色"]
     };
   },
   computed: {
@@ -128,8 +131,8 @@ export default {
       let fixData = {}
       let currentData = this.forceEntity.fix_data
       if (currentData) {
-        for (var i in currentData) {
-          if (currentData[i].length) {
+        for (let i in currentData) {
+          if (currentData[i].length && !~this.hideField.indexOf(i)) {
             fixData[i] = currentData[i]
           }
         }
@@ -137,14 +140,29 @@ export default {
       }
     },
     photoList() {
+      let tempArr = []
+      let result = []
       if (this.forceEntity.extra_data && this.forceEntity.extra_data.PHOTO) {
         let photoStr = this.forceEntity.extra_data.PHOTO
         if (photoStr.length) {
           this.havePhoto = true
           if (~photoStr.indexOf(';')) {
-            return photoStr.split(';')
+            // return photoStr.split(';')
+            tempArr = photoStr.split(';')
+            tempArr.forEach(item => {
+              result.push({
+                photo: item,
+                time: item.split('_')[1],
+              })
+            })
+            console.log('result!!!!', result)
+            return result
           } else {
-            return [photoStr]
+            // return [photoStr]
+            return [{
+              photo: photoStr,
+              time: photoStr.split('_')[1],
+            }]
           }
         }
       } else {
@@ -259,6 +277,7 @@ export default {
     top: -80px;
     left: 30px;
     position: absolute;
+    z-index: 2;
   }
 
   .leaflet-popup-close-button {
@@ -404,7 +423,7 @@ export default {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      padding: 10px 15px;
+      // padding: 10px 15px;
     }
     img {
       width: 160px;
@@ -477,7 +496,7 @@ export default {
     background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
     transform: skewX(-30deg);
   }
-  .video-content, .overall-content {
+  .img-content, .video-content, .overall-content {
     padding: 0 15px;
   }
   .no-tip {

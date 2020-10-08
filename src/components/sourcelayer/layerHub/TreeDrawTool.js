@@ -127,7 +127,7 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
   }
   if (node.id === '项目') {
     result.features.forEach(item => {
-      if (item.attributes.sffsy67) {
+      if (item.attributes.SFFSY67) {
         forceDrawFeatures.push(item)
       }
     })
@@ -140,7 +140,7 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
     const entityOption = {
       id: `${node.id}_${item.attributes.SMID}@${node.icon}`,
       label: {
-        text: item.attributes.NAME,
+        text: node.id == '项目' ? item.attributes.SHORTNAME : item.attributes.NAME,
         // color: new Cesium.Color.fromCssColorString("#000"),
         fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#eee"),
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,

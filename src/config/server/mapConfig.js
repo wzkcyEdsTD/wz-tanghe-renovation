@@ -55,10 +55,20 @@ export const ServiceUrl = {
     // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
     "http://172.168.3.183:8090/iserver/services/3D-thmplus/rest/realspace/datas/thmplus",
   // 绿道
-  LVDAOImage: 
+  LVDAOImage: {
     // "http://172.20.83.223:8098/iserver/services/3D-ld/rest/realspace/datas/ld",
     // "http://172.168.3.183:8090/iserver/services/3D-ld/rest/realspace/datas/ld"
-    "http://172.168.3.183:8090/iserver/services/3D-ldplus/rest/realspace/datas/ldplus",
+    BOLD: "http://172.168.3.183:8090/iserver/services/3D-ld/rest/realspace/datas/ld",
+    THIN: "http://172.168.3.183:8090/iserver/services/3D-ld_xi0-5_1t19/rest/realspace/datas/ld_xi0.5_1t19",
+  },
+  // 行政区县
+  XZJXQX:
+    "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/qx",
+  // 行政街道
+  XZJXJD:
+    "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/jd",
+  HANDDRAWN: 
+    "http://172.168.3.183:8090/iserver/services/3D-nt_map/rest/realspace/datas/nt_map",
   // 绿道场景
   // LVDAOScene:
   //   "http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace"

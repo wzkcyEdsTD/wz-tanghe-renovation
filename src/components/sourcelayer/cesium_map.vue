@@ -45,12 +45,18 @@ export default {
         white: undefined,
         black: undefined
       },
-      lvdaolayer: undefined,
+      lvdaoShow: true,
+      lvdaolayerThin: undefined,
+      lvdaolayerBold: undefined,
       thfwmlayer: undefined,
+      xzjxqxlayer: undefined,
+      xzjxjdlayer: undefined,
+      handdrawnlayer: undefined,
       handler: undefined,
       isTotalTarget: true,
       showSummary: 'total',
-      sceneLayers: []
+      sceneLayers: [],
+      cameraHeight: 3000
     };
   },
   computed: {
@@ -135,6 +141,7 @@ export default {
                   url: ServiceUrl.SWImage[value],
                 })
               ));
+          window.earth.imageryLayers.lowerToBottom(this.imagelayer[value])
           // this.lipai();
           // this.quan();
         } else {
@@ -151,6 +158,7 @@ export default {
                   url: ServiceUrl.DataImage[value],
                 })
               ));
+          window.earth.imageryLayers.lowerToBottom(this.datalayer[value])
         }
       });
       // this.$bus.$off("cesium-lvdao-switch");
@@ -170,48 +178,43 @@ export default {
       //   }
       // });
       this.$bus.$off("cesium-3d-switch");
-      this.$bus.$on("cesium-3d-switch", ({ value }) => {
-        console.log('gogogogo', value)
+      this.$bus.$on("cesium-3d-switch", ({ type, value }) => {
+        console.log('gogogogo', type, value)
         // 白模切换
-        const _LAYER_ = window.earth.scene.layers.find("baimo");
-        if (_LAYER_) {
-          _LAYER_.visible = value;
-        } else {
-          const baimoPromise = window.earth.scene.addS3MTilesLayerByScp(
-            ServiceUrl.WZBaimo,
-            {
-              name: "baimo",
-            }
-          );
-          // Cesium.when(baimoPromise, async ([forceLayer, ...oLayer]) => {
-          //   const LAYER = window.earth.scene.layers.find("baimo");
-          //   LAYER.style3D.fillForeColor = new Cesium.Color.fromCssColorString(
-          //     "rgba(137,137,137, 1)"
-          //   );
-          //   const hyp = new Cesium.HypsometricSetting();
-          //   const colorTable = new Cesium.ColorTable();
-          //   hyp.MaxVisibleValue = 300;
-          //   hyp.MinVisibleValue = 0;
-          //   colorTable.insert(300, new Cesium.Color(1, 1, 1));
-          //   colorTable.insert(160, new Cesium.Color(0.95, 0.95, 0.95));
-          //   colorTable.insert(76, new Cesium.Color(0.7, 0.7, 0.7));
-          //   colorTable.insert(
-          //     0,
-          //     new Cesium.Color(13 / 255, 24 / 255, 45 / 255)
-          //   );
-          //   hyp.ColorTable = colorTable;
-          //   hyp.DisplayMode = Cesium.HypsometricSettingEnum.DisplayMode.FACE;
-          //   hyp.Opacity = 1;
-          //   //  贴图纹理
-          //   hyp.emissionTextureUrl = "/static/images/area/speedline.png";
-          //   hyp.emissionTexCoordUSpeed = 0.2;
-          //   LAYER.hypsometricSetting = {
-          //     hypsometricSetting: hyp,
-          //     analysisMode:
-          //       Cesium.HypsometricSettingEnum.AnalysisRegionMode.ARM_ALL,
-          //   };
-          //   // LAYER.visibleDistanceMax = 5000;
-          // });
+        if (type === 'baimo') {
+          const _LAYER_ = window.earth.scene.layers.find("baimo");
+          if (_LAYER_) {
+            _LAYER_.visible = value;
+          } else {
+            const baimoPromise = window.earth.scene.addS3MTilesLayerByScp(
+              ServiceUrl.WZBaimo,
+              {
+                name: "baimo",
+              }
+            );
+          }
+        }
+        if (type === 'jingmo') {
+          const _LAYER_ = window.earth.scene.layers.find(LAYERS[0].key);
+          if (_LAYER_) {
+            LAYERS.map((v) => {
+              const V_LAYER = window.earth.scene.layers.find(v.key);
+              V_LAYER.visible = value;
+            });
+          } else {
+            const PROMISES = LAYERS.map((v) => {
+              return window.earth.scene.addS3MTilesLayerByScp(v.url, {
+                name: v.key,
+              });
+            });
+            //  精模服务暂有问题，先用setTimeout代替promise处理可见
+            setTimeout(() => {
+              LAYERS.map((v) => {
+                const V_LAYER = window.earth.scene.layers.find(v.key);
+                V_LAYER.visibleDistanceMax = v.d || 1400;
+              });
+            }, 4000);
+          }
         }
       });
       // this.$bus.$off("change-summay");
@@ -267,17 +270,13 @@ export default {
       //   // LAYER.visibleDistanceMax = 5000;
       // });
 
-      window.earth.imageryLayers.addImageryProvider(
+      this.xzjxjdlayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.TANGHE2D,
+          url: ServiceUrl.XZJXJD,
         })
       )
-
-      this.lvdaolayer = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.LVDAOImage,
-        })
-      )
+      this.xzjxjdlayer.alpha = 0.5;
+      this.xzjxjdlayer.show = false
 
       this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
@@ -286,18 +285,31 @@ export default {
       )
       this.thfwmlayer.alpha = 0.5;
 
-      // const PROMISES = LAYERS.map((v) => {
-      //   return window.earth.scene.addS3MTilesLayerByScp(v.url, {
-      //     name: v.key,
-      //   });
-      // });
-      // //  精模服务暂有问题，先用setTimeout代替promise处理可见
-      // setTimeout(() => {
-      //   LAYERS.map((v) => {
-      //     const V_LAYER = window.earth.scene.layers.find(v.key);
-      //     V_LAYER.visibleDistanceMax = v.d || 1400;
-      //   });
-      // }, 4000);
+      this.xzjxqxlayer = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.XZJXQX,
+        })
+      )
+      this.xzjxqxlayer.show = false
+
+      window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.TANGHE2D,
+        })
+      )
+
+      this.lvdaolayerBold = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.LVDAOImage.BOLD,
+        })
+      )
+      this.lvdaolayerBold.show = false  // 粗绿道默认隐藏
+
+      this.lvdaolayerThin = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.LVDAOImage.THIN,
+        })
+      )
 
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
       // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
@@ -464,7 +476,18 @@ export default {
     hide(self){
       const viewer = window.earth;
       var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-      handler.setInputAction(function(wheelment) {
+      handler.setInputAction((wheelment) => {
+        this.cameraHeight = viewer.camera.positionCartographic.height;
+        console.log('cameraHeight~!~!~!~!~', this.cameraHeight)
+        if (this.lvdaoShow) {
+          if (this.cameraHeight >= 3000) {
+            this.lvdaolayerThin.show = true
+            this.lvdaolayerBold.show = false
+          } else {
+            this.lvdaolayerThin.show = false
+            this.lvdaolayerBold.show = true
+          }
+        }
         self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.WHEEL);
       handler.setInputAction(function(event) {
@@ -477,7 +500,19 @@ export default {
       }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
     },
     switchLvdao(value) {
-      this.lvdaolayer.show = value
+      this.lvdaoShow = value
+      if (value) {
+        if (this.cameraHeight >= 3000) {
+          this.lvdaolayerThin.show = true
+          this.lvdaolayerBold.show = false
+        } else {
+          this.lvdaolayerThin.show = false
+          this.lvdaolayerBold.show = true
+        }
+      } else {
+        this.lvdaolayerThin.show = false
+        this.lvdaolayerBold.show = false
+      }
     },
     switchThfwmlayer(value) {
       this.thfwmlayer.show = value
@@ -489,6 +524,25 @@ export default {
       this.sceneLayers.forEach(item => {
         item.show = value
       })
+    },
+    switchXzjxqxlayer(value) {
+      this.xzjxqxlayer.show = value
+    },
+    switchXzjxjdlayer(value) {
+      this.xzjxjdlayer.show = value
+    },
+    switchHanddrawn(value) {
+      if (value) {
+        this.handdrawnlayer
+          ? (this.handdrawnlayer.show = true)
+          : (this.handdrawnlayer = window.earth.imageryLayers.addImageryProvider(
+              new Cesium.SuperMapImageryProvider({
+                url: ServiceUrl.HANDDRAWN,
+              })
+            ));
+      } else {
+        this.handdrawnlayer.show = false
+      }
     }
   },
 };

@@ -150,6 +150,22 @@ export const CESIUM_TREE_OPTION = [
   //   })
   // }
   {
+    id: "行政界线",
+    label: "行政界线",
+    children: [
+      {
+        id: "区县",
+        label: "区县",
+        type: "cesium_xzqx",
+      },
+      {
+        id: "街道",
+        label: "街道",
+        type: "cesium_xzjd",
+      },
+    ]
+  },
+  {
     id: "城市塘河",
     label: "城市塘河",
     children: CITY_INFO.map(v => {

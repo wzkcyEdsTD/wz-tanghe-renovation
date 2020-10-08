@@ -18,8 +18,8 @@
             <img v-if="currentLayer=='yx'" src="./images/yx-sel.png">
             <img v-else src="./images/yx-unsel.png">
           </div>
-          <div class="layer" @click="toggleBaimo">
-            <img v-if="showBaimo" src="./images/3d-sel.png">
+          <div class="layer" @click="currentLayer = '3d'">
+            <img v-if="currentLayer=='3d'" src="./images/3d-sel.png">
             <img v-else src="./images/3d-unsel.png">
           </div>
           <div class="layer" @click="toggleMenu">
@@ -35,9 +35,16 @@
           </div>
         </div>
         <div class="sub-container" v-show="currentLayer=='vector'">
-          <div class="sub-item" :class="{selected: currentVector==item.value}"
+          <div class="sub-item" :class="{selected: currentVector==item.value || item.selected}"
           v-for="(item, index) in vectorList" :key="index"
-          @click="currentVector = item.value">
+          @click="changeVector(item)">
+            {{item.label}}
+          </div>
+        </div>
+        <div class="sub-container" v-show="currentLayer=='3d'">
+          <div class="sub-item" :class="{selected: current3d==item.value}"
+          v-for="(item, index) in threeDList" :key="index"
+          @click="change3d(item)">
             {{item.label}}
           </div>
         </div>
@@ -104,11 +111,25 @@ export default {
       }, {
         label: '黑色',
         value: 'black'
+      }, {
+        label: '手绘',
+        value: 'handdrawn',
+        selected: false
       }],
       currentVector: 'white',
+      threeDList: [{
+        label: '粗模',
+        value: 'baimo',
+        selected: false
+      }, {
+        label: '精模',
+        value: 'jingmo',
+        selected: false
+      }],
+      current3d: '',
       // currentTarget: '',
       showSign: false,
-      showBaimo: false,
+      // showBaimo: false,
       showMenu: false,
       showLvdao: false,
       data: CESIUM_TREE_OPTION,
@@ -166,10 +187,10 @@ export default {
     //   console.log('toggleLayer', type)
     //   this.currentLayer = type
     // },
-    toggleBaimo() {
-      this.showBaimo = !this.showBaimo
-      this.$bus.$emit("cesium-3d-switch", { value: this.showBaimo });
-    },
+    // toggleBaimo() {
+    //   this.showBaimo = !this.showBaimo
+    //   this.$bus.$emit("cesium-3d-switch", { value: this.showBaimo });
+    // },
     switchMenu(bol) {
       this.showMenu = bol
       this.$parent.isTotalTarget = !this.showMenu;
@@ -177,6 +198,18 @@ export default {
     toggleMenu() {
       this.showMenu = !this.showMenu
       this.$parent.isTotalTarget = !this.showMenu;
+    },
+    changeVector(item) {
+      if (item.value == 'handdrawn') {
+        item.selected = !item.selected
+        this.$parent.switchHanddrawn(item.selected);
+      } else {
+        this.currentVector = item.value
+      }
+    },
+    change3d(item) {
+      item.selected = !item.selected
+      this.$bus.$emit("cesium-3d-switch", { type: item.value , value: item.selected });
     },
     filterNode(value, data) {
       return !value ? true : data.label.indexOf(value) !== -1;
@@ -228,6 +261,12 @@ export default {
         } else if (node.type == "cesium_thfwm") {
           console.log('cesium_thfwm_on')
           this.$parent.switchThfwmlayer(true);
+        } else if (node.type == "cesium_xzqx") {
+          console.log('cesium_xzqx_on')
+          this.$parent.switchXzjxqxlayer(true);
+        } else if (node.type == "cesium_xzjd") {
+          console.log('cesium_xzjd_on')
+          this.$parent.switchXzjxjdlayer(true);
         } 
         // else if (node.type == "cesium_thyx") {
         //   console.log('cesium_thyx_on')
@@ -265,6 +304,14 @@ export default {
           console.log('cesium_thfwm_off')
           this.$parent.switchThfwmlayer(false);
         }
+        if (node.type == "cesium_xzqx") {
+          console.log('cesium_xzqx_off')
+          this.$parent.switchXzjxqxlayer(false);
+        }
+        if (node.type == "cesium_xzjd") {
+          console.log('cesium_xzjd_off')
+          this.$parent.switchXzjxjdlayer(false);
+        }
         // if (node.type == "cesium_thyx") {
         //   console.log('cesium_thyx_off')
         //   this.$parent.switchThyx(false);
@@ -296,7 +343,7 @@ export default {
       if (val === 'vector') {
         this.$bus.$emit("cesium-layer-switch", { type: 'vector', value: this.currentVector });
       }
-      else {
+      if (val === 'yx') {
         this.$bus.$emit("cesium-layer-switch", { type: 'yx', value: this.currentYear });
       }
     },
@@ -324,11 +371,11 @@ export default {
     //   })
     // }
     currentYear(val) {
-      this.$bus.$emit("cesium-layer-switch", { layer: 'yx', value: val });
+      this.$bus.$emit("cesium-layer-switch", { type: 'yx', value: val });
     },
     currentVector(val) {
-      this.$bus.$emit("cesium-layer-switch", { layer: 'vector', value: val });
-    }
+      this.$bus.$emit("cesium-layer-switch", { type: 'vector', value: val });
+    },
   },
 };
 </script>

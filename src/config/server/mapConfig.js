@@ -40,12 +40,12 @@ export const ServiceUrl = {
   //  全市区精模
   WZMODEL:
     "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-JMLC20121/rest/realspace/datas/JM_LC_2012_1/config",
-  SCENE_WZMODEL: {
-    BUILDING:
-      "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012JZ/config",
-    OTHERS:
-      "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012QT/config"
-  },
+  // SCENE_WZMODEL: {
+  //   BUILDING:
+  //     "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012JZ/config",
+  //   OTHERS:
+  //     "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012QT/config"
+  // },
   // 三维塘河
   TANGHE3D: 
     // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
@@ -53,13 +53,12 @@ export const ServiceUrl = {
   // 二维塘河
   TANGHE2D: 
     // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
-    "http://172.168.3.183:8090/iserver/services/3D-thmplus/rest/realspace/datas/thmplus",
+    // "http://172.168.3.183:8090/iserver/services/3D-thmplus/rest/realspace/datas/thmplus",
+    "http://172.168.3.183:8090/iserver/services/3D-th/rest/realspace/datas/th",
   // 绿道
   LVDAOImage: {
-    // "http://172.20.83.223:8098/iserver/services/3D-ld/rest/realspace/datas/ld",
-    // "http://172.168.3.183:8090/iserver/services/3D-ld/rest/realspace/datas/ld"
-    BOLD: "http://172.168.3.183:8090/iserver/services/3D-ld/rest/realspace/datas/ld",
-    THIN: "http://172.168.3.183:8090/iserver/services/3D-ld_xi0-5_1t19/rest/realspace/datas/ld_xi0.5_1t19",
+    BOLD: "http://172.168.3.183:8090/iserver/services/3D-ld_1-19t19/rest/realspace/datas/ld_1.19t19",
+    THIN: "http://172.168.3.183:8090/iserver/services/3D-ld_0-55t19/rest/realspace/datas/ld_0.55t19",
   },
   // 行政区县
   XZJXQX:
@@ -74,7 +73,7 @@ export const ServiceUrl = {
   //   "http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace"
   // 塘河范围面
   TANGHEFWM:
-    "http://172.168.3.183:8090/iserver/services/3D-fwm/rest/realspace/datas/thfwm",
+    "http://172.168.3.183:8090/iserver/services/3D-thfwm/rest/realspace/datas/thfwm",
   SCENE_WZMODEL: [
     { key: "ZGDYP_ZB", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_ZB/config" },
     { key: "ZGDYP_DL", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_DL/config" },
@@ -83,7 +82,7 @@ export const ServiceUrl = {
     { key: "ZGDYP_JZ", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_JZ/config" },
     { key: "ZGDYP_DX", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_DX/config" },
     { key: "MaxShijuJZ", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/MaxShijuJZ/config" },
-    { key: "MaxShijuQT", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-MaxShijuQT/rest/realspace/datas/MAXShiQu2012QT/config" },
+    { key: "MaxShijuQT", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/MaxShijuQT/config" },
   ]
 };
 

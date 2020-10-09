@@ -142,8 +142,8 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
       label: {
         text: node.id == '项目' ? item.attributes.SHORTNAME : item.attributes.NAME,
         // color: new Cesium.Color.fromCssColorString("#000"),
-        fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#eee"),
-        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
+        // style: Cesium.LabelStyle.FILL_AND_OUTLINE,
         // outlineColor: new Cesium.Color.fromCssColorString("#fff"),
         font: "8px",
         distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),

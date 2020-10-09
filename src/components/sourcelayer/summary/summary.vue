@@ -22,7 +22,7 @@
           <img src="./img/装饰.png" alt=""/>
         </div>
       </div>
-      <div v-show="showHub">
+      <div v-if="showHub">
         <div class="uls" >
           <div class="lefts1">
             <Right/>
@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-      <div v-show="!showHub" class="gdkd">
+      <div v-if="!showHub" class="gdkd">
         <Right v-show="currentType == 'total'" />
         <ProjectSummary v-if="currentType == 'source'" />
       </div>

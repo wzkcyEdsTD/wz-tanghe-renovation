@@ -88,18 +88,19 @@ export default {
     }
   },
   mounted() {
+    console.log('mounted???')
     this.eventRegsiter()
     this.drawPie()
     this.drawBar()
     this.searchFilter()
   },
-  // watch:{
-  //   'drawData'(val) {
-  //     this.drawPie()
-  //     this.drawBar()
-  //     this.searchFilter()
-  //   }
-  // },
+  watch:{
+    'drawData'(val) {
+      this.drawPie()
+      this.drawBar()
+      this.searchFilter()
+    }
+  },
   methods: {
     eventRegsiter() {
       this.$bus.$off("source-change");

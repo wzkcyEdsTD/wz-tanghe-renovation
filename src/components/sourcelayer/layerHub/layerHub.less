@@ -202,6 +202,100 @@
       }
     }
   }
+  .left-menu-wrapper1 {
+    z-index   : 999;
+    position  : absolute;
+    top       : 150px;
+    left      : 20px;
+    text-align: center;
+    .title-wrapper {
+      display: flex;
+      align-items: flex-end;
+      .pre {
+        display: block;
+        width: 10px;
+        height: 24px;
+        background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
+        transform: skewX(-30deg);
+      }
+      .title {
+        display: block;
+        height: 35px;
+        line-height: 35px;
+        font-family: YouSheBiaoTiHei;
+        font-size: 27px;
+        letter-spacing: 0px;
+        color: #ffffff;
+        text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+        position: relative;
+        padding-left: 12px;
+      }
+      .title::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 2px;
+        width: 200px;
+        height: 15px;
+        z-index: -1;
+        background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+        transform: skewX(-30deg);
+      }
+    }
+
+    .tree-container {
+      // height  : 200px;
+      // overflow: hidden auto;
+
+      .el-tree {
+        background: none;
+      }
+
+      .el-tree-node__expand-icon {
+        color    : #fff;
+        font-size: 18px;
+      }
+
+      .el-tree-node__expand-icon.is-leaf {
+        color: transparent;
+      }
+
+      .el-tree-node__label {
+        color: white;
+        text-shadow: #449bf6 1px 0 0, #449bf6 0 1px 0, #449bf6 -1px 0 0,
+        #449bf6 0 -1px 0;
+      }
+
+      .el-tree-node:focus>.el-tree-node__content {
+        background: none;
+      }
+
+      .el-tree-node__content:hover {
+        background: none;
+      }
+
+      .el-checkbox__inner {
+        background-color: transparent;
+        border: 1px solid #16E7E8;
+      }
+
+      .el-checkbox__input.is-checked .el-checkbox__inner,
+      .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+        background-color: #0adffa;
+        border-color    : #0adffa;
+      }
+
+      .el-checkbox__inner::after {
+        border     : 1px solid black;
+        border-left: 0;
+        border-top : 0;
+      }
+
+      .el-checkbox__inner::before {
+        background-color: black !important;
+      }
+    }
+  }
   .sign-wrapper {
     position: absolute;
     right: 420px;

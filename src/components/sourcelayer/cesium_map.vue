@@ -2,21 +2,10 @@
   <div class="cesiumContainer">
     <div id="cesiumContainer" />
     <div v-if="mapLoaded">
-      <!-- <RoadLine ref="roadline" /> -->
-      <div v-show="getKuanGao">
-        <Summary />
-        <LayerHub ref="layerhub" />
-        <DetailPopup ref="detailPopup" />
-        <SejPopup ref="SejPopup" />
-      </div>
-      <div v-show="!getKuanGao">
-        <!--        <TotalTarget ref="totalTarget" v-show="isTotalTarget" />-->
-        <!-- <RoadLine ref="roadline" /> -->
-        <Summary />
-        <LayerHub ref="layerhub" />
-        <DetailPopup ref="detailPopup" />
-        <SejPopup ref="SejPopup" />
-      </div>
+      <Summary />
+      <LayerHub ref="layerhub" />
+      <DetailPopup ref="detailPopup" />
+      <SejPopup ref="SejPopup" />
     </div>
   </div>
 </template>
@@ -45,9 +34,6 @@ export default {
   },
   data() {
     return {
-      screenWidth: document.body.clientWidth,
-      screeHeight: document.body.clientHeight,
-      isdp:false,
       mapLoaded: false,
       imagelayer: {
         2018: undefined,
@@ -82,18 +68,8 @@ export default {
     });
     this.eventRegsiter();
     this.hide(this);
-    this.getKuanGao();
   },
   methods: {
-    getKuanGao(){
-      //4320*1280
-      console.log(this.screenWidth);
-      if(this.screenWidth>4000&this.screeHeight>1000){
-        return true;
-      }else {
-        return false;
-      }
-    },
     initPostRender() {
       window.earth.scene.postRender.addEventListener(() => {
         if (!window.earth || !this.mapLoaded || !Object.keys(this.$refs).length)

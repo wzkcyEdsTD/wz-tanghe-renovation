@@ -38,7 +38,7 @@
                 </div>
               </div>
             </div>
-            <div class="uls">
+            <div class="uls1">
               <div>
                 <img src="./img/发光圈圈.png" alt="" class="jz1">
               </div>
@@ -66,7 +66,7 @@
                     <span class="smalls">单位：个(累计)</span>
                   </div>
                   <div  style="height:160px;padding-right: 3%;" class="echart" ref="lineEchart"></div>
-                  <div class="uls">
+                  <div class="uls1">
                     <div>
                       <img src="./img/发光圈圈.png" alt="" class="jz1">
                     </div>
@@ -159,7 +159,7 @@
         </div>
 
       </div>
-      <img src="./img/装饰1.svg" class="zxp1">
+      <img src="./img/装饰1.svg" class="zxp1" align="right">
     </div>
   </div>
 </template>
@@ -509,11 +509,9 @@
   }
   .zxp1{
     /*padding-top: 5%;*/
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top:10;
-    right: 0;
+    padding-top: 5%;
+    width: 35px;
+    height: 35px;
     /*align:"right";*/
     transform: rotate(-180deg);
   }
@@ -627,6 +625,17 @@
     // padding: 0 10px;
     align-items: center;
     justify-content: center;
+    /*flex-shrink:0;*/
+  }
+  .uls1 {
+    width: 100%;
+    // background: red;
+    display: flex;
+    // margin: auto;
+    // margin-top: 100px;
+    // padding: 0 10px;
+    align-items: center;
+    /*justify-content: center;*/
     /*flex-shrink:0;*/
   }
   .jdt{

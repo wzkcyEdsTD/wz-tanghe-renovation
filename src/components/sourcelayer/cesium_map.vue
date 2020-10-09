@@ -283,7 +283,7 @@ export default {
           url: ServiceUrl.TANGHEFWM,
         })
       )
-      this.thfwmlayer.alpha = 0.5;
+      this.thfwmlayer.alpha = 0.7;
 
       this.xzjxqxlayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
@@ -317,9 +317,9 @@ export default {
       //   this.sceneLayers = layers.slice(1)
       // });
 
-
-      this.lipai();
-      this.quan();
+      // 范围圈效果
+      // this.lipai();
+      // this.quan();
 
       // 移除缓冲圈
       $(".cesium-widget-credits").hide();

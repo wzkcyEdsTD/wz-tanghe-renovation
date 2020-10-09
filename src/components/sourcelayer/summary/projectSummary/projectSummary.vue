@@ -135,7 +135,7 @@ export default {
       let data = {}
       let legendData = []
       let resultList = []
-      let colorList = ["#FB0062", "#0B11FF", "#1DA358", "#D8FF00", "#2BCFFF", "#D810FF", "#782FED"]
+      let colorList = ["#52D1FE", "#047DF6", "#8FEF8B", "#6852FE"]
       let list = this.sourceMap[this.currentSource]
       list.forEach((item, index) => {
         let district = item.attributes.DISTRICT

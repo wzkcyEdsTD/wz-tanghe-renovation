@@ -51,27 +51,34 @@
       </div>
     </div>
     <div class="switch-menu-wrapper">
-      <div class="switch-menu-container">
-        <span :class="{active: !showMenu}" @click="switchMenu(false)">专题</span>
-        <span :class="{active: showMenu}" @click="switchMenu(true)">资源目录</span>
-      </div>
+<!--      <div class="switch-menu-container">-->
+<!--        <span :class="{active: !showMenu}" @click="switchMenu(false)">专题</span>-->
+<!--        <span :class="{active: showMenu}" @click="switchMenu(true)">资源目录</span>-->
+<!--      </div>-->
       <div class="switch-menu-decorate"></div>
     </div>
-    <div class="left-menu-wrapper" v-show="showMenu">
-      <div class="title-wrapper">
-        <span class="pre"></span>
-        <span class="title">资源目录</span>
-      </div>
-      <div class="tree-container">
-        <el-tree
-          ref="tree"
-          :data="data"
-          show-checkbox
-          node-key="id"
-          :filter-node-method="filterNode"
-          default-expand-all
-          @check-change="nodeCheckChange"
-        />
+    <div class="left-menu-wrapper" >
+      <div class="uls">
+        <div style="width: 300px;">
+          <RightSummary></RightSummary>
+        </div>
+        <div style="flex:1;padding-left: 3%">
+          <div class="title-wrapper">
+            <span class="pre"></span>
+            <span class="title">资源目录</span>
+          </div>
+          <div class="tree-container">
+            <el-tree
+              ref="tree"
+              :data="data"
+              show-checkbox
+              node-key="id"
+              :filter-node-method="filterNode"
+              default-expand-all
+              @check-change="nodeCheckChange"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <div class="sign-wrapper" v-show="showSign">
@@ -84,6 +91,7 @@
 import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "./TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
+import RightSummary from"../summary/rightSummary/rightSummary";
 import {
   // TARGET_SOURCE,
   CESIUM_TREE_OPTION,
@@ -92,6 +100,9 @@ const Cesium = window.Cesium;
 
 export default {
   name: "layerHub",
+  components:{
+    RightSummary,
+  },
   data() {
     return {
       // TARGET_SOURCE,
@@ -221,7 +232,7 @@ export default {
           if (node.id == '项目') this.showSign = true
           if (node.withImage) {
             const LAYER = this.tileLayers[node.id];
-            LAYER 
+            LAYER
               ? (LAYER.show = true)
               : (this.tileLayers[node.id] = window.earth.imageryLayers.addImageryProvider(
                   new Cesium.SuperMapImageryProvider({
@@ -244,7 +255,7 @@ export default {
             this.$bus.$emit(node.componentEvent, { value: node.componentKey });
         } else if (node.type == "image") {
           const LAYER = this.tileLayers[node.id];
-          LAYER 
+          LAYER
             ? (LAYER.show = true)
             : (this.tileLayers[node.id] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
@@ -267,7 +278,7 @@ export default {
         } else if (node.type == "cesium_xzjd") {
           console.log('cesium_xzjd_on')
           this.$parent.switchXzjxjdlayer(true);
-        } 
+        }
         // else if (node.type == "cesium_thyx") {
         //   console.log('cesium_thyx_on')
         //   this.$parent.switchThyx(true);
@@ -382,4 +393,9 @@ export default {
 
 <style lang="less">
 @import url("./layerHub.less");
+.uls{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
 </style>

@@ -2,12 +2,21 @@
   <div class="cesiumContainer">
     <div id="cesiumContainer" />
     <div v-if="mapLoaded">
-      <TotalTarget ref="totalTarget" v-show="isTotalTarget" />
       <!-- <RoadLine ref="roadline" /> -->
-      <Summary />
-      <LayerHub ref="layerhub" />
-      <DetailPopup ref="detailPopup" />
-      <SejPopup ref="SejPopup" />
+      <div v-show="getKuanGao">
+        <Summary />
+        <LayerHub ref="layerhub" />
+        <DetailPopup ref="detailPopup" />
+        <SejPopup ref="SejPopup" />
+      </div>
+      <div v-show="!getKuanGao">
+        <!--        <TotalTarget ref="totalTarget" v-show="isTotalTarget" />-->
+        <!-- <RoadLine ref="roadline" /> -->
+        <Summary />
+        <LayerHub ref="layerhub" />
+        <DetailPopup ref="detailPopup" />
+        <SejPopup ref="SejPopup" />
+      </div>
     </div>
   </div>
 </template>
@@ -36,6 +45,9 @@ export default {
   },
   data() {
     return {
+      screenWidth: document.body.clientWidth,
+      screeHeight: document.body.clientHeight,
+      isdp:false,
       mapLoaded: false,
       imagelayer: {
         2018: undefined,
@@ -70,8 +82,18 @@ export default {
     });
     this.eventRegsiter();
     this.hide(this);
+    this.getKuanGao();
   },
   methods: {
+    getKuanGao(){
+      //4320*1280
+      console.log(this.screenWidth);
+      if(this.screenWidth>4000&this.screeHeight>1000){
+        return true;
+      }else {
+        return false;
+      }
+    },
     initPostRender() {
       window.earth.scene.postRender.addEventListener(() => {
         if (!window.earth || !this.mapLoaded || !Object.keys(this.$refs).length)
@@ -365,12 +387,13 @@ export default {
       var ss1 = 0;
       var ss = 0;
       var deviationR = 4;
-      var MaxR = 1000;
+      var MaxR = 900;
       // debugger;
       this.$nextTick(()=>{
         viewer.entities.add({
           id:id,
           position:Cesium.Cartesian3.fromDegrees(lon,lat,50),
+          show:false,
           ellipse:{
             semiMinorAxis:new Cesium.CallbackProperty(function () {
               var r1 = rr;  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
@@ -402,6 +425,7 @@ export default {
           viewer.entities.add({
             id: `${id}1`,
             position:Cesium.Cartesian3.fromDegrees(lon,lat,10),
+            show:false,
             ellipse : {
               semiMinorAxis :new Cesium.CallbackProperty(function () {
                 var r1 =ss  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
@@ -443,6 +467,7 @@ export default {
       viewer.entities.add({
         id: id,
         position: Cesium.Cartesian3.fromDegrees(lon,lat, high||100),
+        show:false,
         billboard: {
           image: img,
           width: width,

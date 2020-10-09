@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7" height="7" viewBox="0 0 7 7">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="矩形_901" data-name="矩形 901" width="7" height="7" transform="translate(20 33.027)" fill="#fff" opacity="0"/>
+    </clipPath>
+    <filter id="路径_1587" x="-1.137" y="-3.586" width="12.273" height="11.801" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feFlood flood-color="#fff"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="瞿溪溯源icon" transform="translate(-20 -33.027)" clip-path="url(#clip-path)">
+    <g id="组_1876" data-name="组 1876" transform="translate(-104.975 -124.267)">
+      <g transform="matrix(1, 0, 0, 1, 124.98, 157.29)" filter="url(#路径_1587)">
+        <path id="路径_1587-2" data-name="路径 1587" d="M483.55,158.651a1.328,1.328,0,0,1,1.15,1.992l.289.366a1.77,1.77,0,1,0-2.941-1.967l.3.378A1.326,1.326,0,0,1,483.55,158.651Z" transform="translate(-478.69 -157.29)" fill="#00ffd4"/>
+      </g>
+      <path id="路径_1588" data-name="路径 1588" d="M131.034,247.593l-.289-.366-.557-.708a.21.21,0,0,0-.363,0l-.515.653L128.391,246l-.3-.378-.144-.183a.324.324,0,0,0-.562,0l-2.009,2.551a.325.325,0,0,0,.281.487H131.3a.21.21,0,0,0,.182-.315Zm-.959,1.4a.184.184,0,0,0-.184-.184h-4.022a.184.184,0,0,0,0,.369h4.021A.184.184,0,0,0,130.075,249Zm.553.48h-4.28a.184.184,0,0,0,0,.369h4.28a.184.184,0,0,0,0-.369Zm.369-.664h-.516a.184.184,0,1,0,0,.369H131a.184.184,0,1,0,0-.369Z" transform="translate(0 -86.339)" fill="#00ffd4"/>
+    </g>
+  </g>
+</svg>

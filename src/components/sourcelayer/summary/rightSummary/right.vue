@@ -635,7 +635,7 @@
     line-height: 8px;
     font-family: PingFang SC;
     align-self:center;
-    width:75px;
+    width:86px;
     /*padding-right: 10px*/
   }
   .xmzje {

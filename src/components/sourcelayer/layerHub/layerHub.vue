@@ -226,7 +226,7 @@ export default {
     this.getKuanGao();
   },
   mounted() {
-    this.$refs.tree.setCheckedKeys(['断点', '十二景', '绿道', '塘河范围面']);
+    this.$refs.tree.setCheckedKeys(['十二景', '断点', '绿道', '塘河范围面']);
   },
   methods: {
     ...mapActions("map", ["setSourceMap", "setCurrentource", "setSejList"]),

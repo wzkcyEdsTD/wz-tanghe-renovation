@@ -99,32 +99,38 @@
       </div>
       <div class="switch-menu-decorate"></div>
     </div>
-    <div class="left-menu-wrapper" v-show="show">
-      <div class="uls">
-        <div class="lefts" v-show="show">
-          <RightSummary ></RightSummary>
-        </div>
-        <div class="rig">
-          <div class="title-wrapper">
-            <span class="pre"></span>
-            <span class="title">资源目录</span>
+    <div :class="show?'left-menu-wrapperda':''" >
+      <div class="ssjda2">
+        <div :class="!show?'uls':'ulsda'">
+          <div class="lefts" v-show="show">
+            <RightSummary ></RightSummary>
           </div>
-
-          <div class="tree-container">
-            <el-tree
-              ref="tree"
-              :data="data"
-              show-checkbox
-              node-key="id"
-              :filter-node-method="filterNode"
-              default-expand-all
-              @check-change="nodeCheckChange"
-            />
+          <div class="rig">
+            <div class="zsj">
+              <div class="title-wrapper">
+                <span class="pre"></span>
+                <span :class="!show?'title':'titleda'">资源目录</span>
+              </div>
+              <div class="ssjda">
+                <div class="tree-container">
+                  <el-tree
+                    ref="tree"
+                    :data="data"
+                    show-checkbox
+                    node-key="id"
+                    :filter-node-method="filterNode"
+                    default-expand-all
+                    @check-change="nodeCheckChange"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
-    <div class="left-menu-wrapper1" v-show="!show">
+    <div class="left-menu-wrapper" v-show="!show">
       <div v-show="!ms">
         <div class="title-wrapper">
           <span class="pre"></span>
@@ -497,10 +503,26 @@ export default {
   display: flex;
   align-items: flex-start;
 }
+.ulsda{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  height: 1280px;
+}
  .lefts{
    width: 300px;
  }
   .rig{
     flex:1;padding-left: 3%
+  }
+  .ssjda{
+    padding-top: 5%;
+  }
+.ssjda2{
+  padding-top: 10%;
+
+}
+  .zsj{
+    padding-left: 10%;
   }
 </style>

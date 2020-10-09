@@ -4,12 +4,12 @@
       <div>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span class="title">沿线项目</span>
+          <span :class="showHub?'titleda':'title'">沿线项目</span>
         </div>
         <div class="zsj">
-          <div class="ssj">
+          <div :class="[!showHub?'ssj':'ssjda']">
             <div class="box">
-              <div class="left">
+              <div :class="!showHub?'left':'leftda'">
                 <div>
                   <div class="tp">
                     <img src="./img/zuo.png" alt="" />
@@ -26,24 +26,27 @@
                 </div>
               </div>
             </div>
-            <div class="box">
-              <div class="left">
-                <div class="yxxm">
-                  <span class="yxwz">项目总数(个)</span>
+            <div :class="[!showHub?'':'ssjda1']">
+              <div class="box">
+                <div :class="!showHub?'left':'leftda'">
+                  <div class="yxxm">
+                    <span class="yxwz">项目总数(个)</span>
+                  </div>
                 </div>
-              </div>
-              <div class="right">
-                <div class="yxxm">
-                  <span class="yxwz">项目总金额(亿元)</span>
+                <div class="right">
+                  <div class="yxxm">
+                    <span class="yxwz">项目总金额(亿元)</span>
+                  </div>
                 </div>
               </div>
             </div>
+
             <div class="uls1">
               <div>
                 <img src="./img/发光圈圈.png" alt="" class="jz1">
               </div>
               <span class="jdt">完成率:12/66</span>
-              <div style="height:30px;width: 200px;" class="echart" ref="echartBar"></div>
+              <div style="height:30px;flex: 1" class="echart" ref="echartBar"></div>
             </div>
           </div>
         </div>
@@ -51,28 +54,31 @@
       <div >
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span class="title">卡点</span>
+          <span :class="showHub?'titleda':'title'">卡点</span>
         </div>
         <div>
           <div class="kdjj">
             <div class="zsj">
               <div class="jianju">
-                <div>
+                <div :class="[!showHub?'':'ssjda2']">
                   <span class="xbt">卡点预计完成情况</span>
 <!--                  <img src="./img/装饰.png" alt="" class="zs" />-->
                 </div>
                 <div >
-                  <div class="dw">
+                  <div :class="[!showHub?'dw':'dwda']">
                     <span class="smalls">单位：个(累计)</span>
                   </div>
                   <div  style="height:160px;padding-right: 3%;" class="echart" ref="lineEchart"></div>
-                  <div class="uls1">
-                    <div>
-                      <img src="./img/发光圈圈.png" alt="" class="jz1">
+                  <div :class="showHub?'dw':'dwad'">
+                    <div class="uls1">
+                      <div>
+                        <img src="./img/发光圈圈.png" alt="" class="jz1">
+                      </div>
+                      <span class="jdt">完工率:1/40</span>
+                      <div style="height:30px;flex: 1" class="echart" ref="echartBar1"></div>
                     </div>
-                    <span class="jdt">完工率:1/40</span>
-                    <div style="height:30px;width: 200px;" class="echart" ref="echartBar1"></div>
                   </div>
+
                 </div>
 
               </div>
@@ -83,45 +89,45 @@
       <div>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span class="title">十二景</span>
+          <span :class="showHub?'titleda':'title'">十二景</span>
         </div>
+        <div :class="!showHub?'':'ssjda2'"></div>
         <img src="./img/装饰1.svg" class="zxp">
         <div class="ssj1">
           <div class="uls">
             <div class="left2" >
               <span class="jz">东线</span>
-              <div class="xwz">
+              <div :class="[!showHub?'xwz':'xwzda']">
                 <img src="./img/世纪之光icon.svg" class="jz2">
                 <span class="sejdx">世纪之光</span>
               </div>
-              <div class="xwz">
+              <div :class="[!showHub?'xwz':'xwzda']">
                 <img src="./img/蒲州新韵icon.svg" class="jz2">
                 <span class="sejdx">蒲州新韵</span>
               </div>
             </div>
-            <img src="./img/直线12.svg" class="zx">
+            <img src="./img/直线12.svg" :class="[!showHub?'zx':'zxda']">
             <div class="left1">
               <span class="jz">西线</span>
               <div class="uls">
-                <div class="xwz">
+                <div :class="[!showHub?'xwz':'xwzda']">
                   <img src="./img/瞿溪溯源icon.svg" class="jz2">
                   <span class="sejxx">瞿溪溯源</span>
                 </div>
-                <div class="xwz">
+                <div :class="[!showHub?'xwz':'xwzda']">
                   <img src="./img/仙门烟柳icon.svg" class="jz2">
                   <span class="sejxx">仙门烟柳</span>
                 </div>
               </div>
               <div class="uls">
-                <div class="xwz">
+                <div :class="[!showHub?'xwz':'xwzda']">
                   <img src="./img/镜湖古岸icon.svg" class="jz2">
                   <span class="sejxx">镜湖古岸</span>
                 </div>
-                <div class="xwz">
+                <div :class="[!showHub?'xwz':'xwzda']">
                   <img src="./img/会昌竞渡icon.svg" class="jz2">
                   <span class="sejxx">会昌竞渡</span>
                 </div>
-
               </div>
             </div>
           </div>
@@ -171,6 +177,9 @@
           temp:
             "温瑞塘河位于瓯江以南、飞云江以北的温瑞平原，是温州市境内十分重要的河道水系，分属于鹿城、瓯海、龙湾、瑞安等“三区一市”管辖。",
           attributes: {},
+          showHub:false,
+          screenWidth: document.body.clientWidth,
+          screeHeight: document.body.clientHeight,
           lable: {
             lymj: 740,
             xsl: 6500,
@@ -184,10 +193,22 @@
         this.$nextTick(()=>{
           this.drawLine();
           this.initBar();
-
+          this.getKuanGao();
         });
       },
       methods:{
+        getKuanGao(){
+          //4320*1280
+          console.log(this.screenWidth);
+          //大屏返回true
+          if(this.screenWidth>4000&this.screeHeight>1000){
+            console.log(true);
+            this.showHub = true;
+          }else {
+            console.log(false);
+            this.showHub = false;
+          };
+        },
         drawLine() {
           this.lineEchart = this.$echarts.init(this.$refs.lineEchart);
           this.lineEchart.setOption({
@@ -239,14 +260,14 @@
                 },
               },
               axisLabel: {
-                rotate: 45,
+                rotate: 40,
                 interval: 0,
                 color: "#fff",
                 textStyle:{
-                  fontSize:7
+                  fontSize:12
                 }
               },
-              data: ["","2020年第四季度", "2021年第一季度", "2021年第二季度", "2021年第三季度", "2021年第四季度", "2022年第一季度", "2022年第二季度", "2022年第三季度", "2022年第四季度"],
+              data: ["","20年第四季度", "21年第一季度", "21年第二季度", "21年第三季度", "21年第四季度", "22年第一季度", "22年第二季度", "22年第三季度", "22年第四季度"],
             },
             yAxis: {
               splitNumber: 3,
@@ -262,7 +283,9 @@
               axisLabel: {
                 textStyle: {
                   color: "#fff",
+                  fontSize:12
                 },
+
               },
               splitLine: {
                 show: false,
@@ -447,9 +470,20 @@
 
 <style lang="less" scoped>
   @import url("./rightSummary.less");
+
+
+
   .left {
     /*padding-top: 5%;*/
     margin-right: 25%;
+    height: 100%;
+    padding-left: 3%;
+
+    /*flex-grow:0;*/
+  }
+  .leftda {
+    /*padding-top: 5%;*/
+    margin-right: 35%;
     height: 100%;
     padding-left: 3%;
 
@@ -498,8 +532,22 @@
     /*width: 30px;*/
     padding-right: 10px;
   }
+  .zxda{
+    padding-left: 14%;
+    height: 100px;
+    /*width: 30px;*/
+    padding-right: 8%;
+  }
   .xwz{
     width: 90px;
+    padding-top: 10px;
+  }
+  .xwzda{
+    width: 100px;
+    padding-top: 10px;
+  }
+  .xwzda{
+    width: 100px;
     padding-top: 10px;
   }
   .zxp{
@@ -507,17 +555,20 @@
     width: 35px;
     height: 35px;
   }
+  .zxpda{
+    padding-top: 10%;
+    width: 35px;
+    height: 35px;
+  }
   .zxp1{
-    /*padding-top: 5%;*/
     padding-top: 5%;
     width: 35px;
     height: 35px;
-    /*align:"right";*/
     transform: rotate(-180deg);
   }
   .xwz1{
-    width: 110px;
-    padding-top: 10px;
+    width: 140px;
+    padding-top: 4%;
   }
   .right1 {
     flex-shrink: 0;
@@ -529,6 +580,10 @@
   }
   .dw{
     padding-bottom:4%;
+    padding-top: 5%;
+  }
+  .dwda{
+    padding-bottom:5%;
     padding-top: 5%;
   }
   .cellDiv {
@@ -761,6 +816,18 @@
   }
   .ssj {
     padding-top: 5%;
+  }
+  .ssjda {
+    padding-top: 10%;
+    padding-bottom: 5%;
+  }
+  .ssjda1 {
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  .ssjda2 {
+    padding-top: 4%;
+    /*padding-bottom: 5%;*/
   }
   .ssj1 {
     /*padding-top: 1%;*/

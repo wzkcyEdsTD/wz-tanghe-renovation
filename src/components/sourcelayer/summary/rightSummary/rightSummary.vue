@@ -4,42 +4,42 @@
       <div>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span class="title">温瑞塘河</span>
+          <span :class="!showHub?'title':'titleda'">温瑞塘河</span>
         </div>
         <div class="wenzi">
-          <div class="jianju">
-            <span class="xbt">简介</span>
+          <div :class="!showHub?'jianju':'jianjuda'">
+            <span :class="!showHub?'xbt':'xbtda'">简介</span>
             <img src="./img/装饰.png" alt="" class="zs" />
           </div>
-          <p class="lab">{{ temp || "暂无简介" }}</p>
+          <p :class="!showHub?'lab':'labda'">{{ temp || "暂无简介" }}</p>
           <video
             src="static/images/温瑞塘河/温瑞塘河.mp4"
             controls
-            class="sp"
+            :class="!showHub?'sp':'spda'"
           />
-          <div class="jianju">
-            <span class="xbt">流域</span>
+          <div :class="!showHub?'jianju':'jianjuda1'">
+            <span :class="!showHub?'xbt':'xbtda'">流域</span>
             <img src="./img/装饰.png" alt="" class="zs" />
           </div>
           <div class="box">
             <div class="left1">
               <div>
-                <div class="lywz">塘河长度</div>
-                <div class="deh">
+                <div :class="!showHub?'lywz':'lywzda'">塘河长度</div>
+                <div :class="!showHub?'deh':'dehda'">
                   <span class="lybq">1178.4</span>
                   <span class="lydw"> 千米</span>
                 </div>
               </div>
               <div>
-                <div class="lywz">蓄水量</div>
-                <div class="deh">
+                <div :class="!showHub?'lywz':'lywzda'">蓄水量</div>
+                <div :class="!showHub?'deh':'dehda'">
                   <span class="lybq">{{ `${lable.xsl}` }}</span>
                   <span class="lydw"> 万立方米</span>
                 </div>
               </div>
               <div>
-                <div class="lywz">灌溉面积</div>
-                <div class="deh">
+                <div :class="!showHub?'lywz':'lywzda'">灌溉面积</div>
+                <div :class="!showHub?'deh':'dehda'">
                   <span class="lybq">48.2</span>
                   <span class="lydw"> 万亩</span>
                 </div>
@@ -47,22 +47,22 @@
             </div>
             <div class="right1">
               <div>
-                <div class="lywz">流域面积</div>
-                <div class="deh">
+                <div :class="!showHub?'lywz':'lywzda'">流域面积</div>
+                <div :class="!showHub?'deh':'dehda'">
                   <span class="lybq">740</span>
                   <span class="lydw"> 平方千米</span>
                 </div>
               </div>
               <div>
-                <div class="lywz">平均流量</div>
-                <div class="deh">
+                <div :class="!showHub?'lywz':'lywzda'">平均流量</div>
+                <div :class="!showHub?'deh':'dehda'">
                   <span class="lybq">{{ `${lable.pjll}` }}</span>
                   <span class="lydw"> 亿立方米</span>
                 </div>
               </div>
               <div>
-                <div class="lywz">源头</div>
-                <div class="deh">
+                <div :class="!showHub?'lywz':'lywzda'">源头</div>
+                <div :class="!showHub?'deh':'dehda'">
                   <span class="ly">瞿溪、雄溪、郭溪</span>
                 </div>
               </div>
@@ -71,45 +71,19 @@
         </div>
       </div>
       <div>
-        <div class="title-wrapper">
-          <span class="pre"></span>
-          <span class="title">温瑞塘河航道</span>
+        <div :class="!showHub?'ssj':'ssjda1'">
+          <div class="title-wrapper">
+            <span class="pre"></span>
+            <span :class="!showHub?'title':'titleda'">温瑞塘河航道</span>
+          </div>
         </div>
+
         <div class="zsj">
           <div class="ssj">
             <img src="./img/塘河航道(2).svg" style="width: 100%">
           </div>
         </div>
       </div>
-      <!--      <div>-->
-      <!--        <div class="title-wrapper">-->
-      <!--          <span class="pre"></span>-->
-      <!--          <span class="title">卡点</span>-->
-      <!--        </div>-->
-      <!--        <div>-->
-      <!--          <div class="kdjj">-->
-      <!--            <div class="zsj">-->
-      <!--              <div class="box">-->
-      <!--                <div class="left">-->
-      <!--                  <div>-->
-      <!--                    <span class="kdsz">40</span>-->
-      <!--                    <span class="kddw">/个</span>-->
-      <!--                  </div>-->
-      <!--                  <div class="kdwzleft">卡点总数</div>-->
-      <!--                </div>-->
-      <!--                <div class="right">-->
-      <!--                  <div>-->
-      <!--                    <span class="kdsz">19352</span>-->
-      <!--                    <span class="kddw">/米</span>-->
-      <!--                  </div>-->
-      <!--                  <div class="kdwzright">卡点总长度</div>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-
     </div>
   </div>
 </template>
@@ -119,6 +93,9 @@
   export default {
     data() {
       return {
+        showHub: false,
+        screenWidth: document.body.clientWidth,
+        screeHeight: document.body.clientHeight,
         temp:
           "温瑞塘河位于瓯江以南、飞云江以北的温瑞平原，是温州市境内十分重要的河道水系，分属于鹿城、瓯海、龙湾、瑞安等“三区一市”管辖。",
         attributes: {},
@@ -132,13 +109,25 @@
       };
     },
     computed: {
-      // ...mapGetters("map", ["projectList"]),
     },
-    // watch: {
-    //   currentType(val) {
-    //     this.$bus.$emit("change-summay", { value: val });
-    //   }
-    // }
+    methods:{
+      getKuanGao(){
+        //4320*1280
+        console.log(this.screenWidth);
+        //大屏返回true
+        if(this.screenWidth>4000&this.screeHeight>1000){
+          console.log(true);
+          this.showHub = true;
+        }else {
+          console.log(false);
+          this.showHub = false;
+        };
+      },
+    },
+    mounted() {
+      this.getKuanGao();
+    }
+
   };
 </script>
 
@@ -151,12 +140,17 @@
     padding-left: 3%;
     /*flex-grow:0;*/
   }
+  .ssjda1 {
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
   .right {
     flex-shrink: 0;
     // margin-top: 3%;
     height: 100%;
     /*flex-grow:0;*/
   }
+
   .left1 {
     margin-top: 3%;
     margin-right: 20%;
@@ -190,6 +184,10 @@
     // padding-bottom: 15%;
     padding-bottom: 10px;
   }
+  .dehda {
+    // padding-bottom: 15%;
+    padding-bottom: 15%;
+  }
   .lydw {
     font-size: 10px;
     color: #2acbfe;
@@ -210,6 +208,14 @@
     color: #ffffff;
     // margin-bottom: 5%;
     margin-bottom: 5px;
+  }
+  .lywzda {
+    font-size: 14px;
+    font-family: PingFang SC;
+    line-height: 20px;
+    color: #ffffff;
+    // margin-bottom: 5%;
+    margin-bottom: 15%;
   }
 
   .xmzs {
@@ -241,8 +247,6 @@
   .lab {
     font-family: PingFang SC;
     font-size: 14px;
-    //line-height: 18px;
-    //max-height: 140px;
     width: 100%;
     color: #dedede;
     line-height: 21px;
@@ -250,6 +254,18 @@
     text-indent: 2em;
     text-align:left;
     padding-left: 3%;
+  }
+  .labda {
+    font-family: PingFang SC;
+    font-size: 16px;
+    width: 100%;
+    color: #dedede;
+    line-height: 30px;
+    padding-top: 5px;
+    text-indent: 2em;
+    text-align:left;
+    padding-left: 3%;
+    padding-bottom: 5%;
   }
   .yxwz {
     font-family: PingFang SC;
@@ -297,6 +313,14 @@
     overflow-y: auto;
     letter-spacing: 15px;
   }
+  .xbtda {
+    font-size: 22px;
+    font-family: YouSheBiaoTiHei;
+    line-height: 22px;
+    color: #ffffff;
+    overflow-y: auto;
+    letter-spacing: 15px;
+  }
   .zs {
     width: 70%;
   }
@@ -305,6 +329,17 @@
   }
   .jianju {
     padding-top: 2%;
+  }
+  .jianju{
+    padding-top: 2%;
+  }
+  .jianjuda {
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  .jianjuda1 {
+    padding-top: 5%;
+    padding-bottom: 5%;
   }
   .kdjj {
     // padding-top: 7%;
@@ -363,6 +398,11 @@
   .sp {
     width: 100%;
     padding-right: 10px;
+  }
+  .spda {
+    width: 100%;
+    /*padding-right: 10px;*/
+    padding-bottom: 5%;
   }
   .dbz {
     display: flex;

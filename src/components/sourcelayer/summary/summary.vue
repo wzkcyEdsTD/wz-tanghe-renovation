@@ -22,15 +22,18 @@
           <img src="./img/装饰.png" alt=""/>
         </div>
       </div>
-      <div v-if="showHub">
-        <div class="uls" >
-          <div class="lefts1">
-            <Right/>
-          </div>
-          <div class="rig">
-            <ProjectSummary/>
+      <div v-show="showHub" >
+        <div style="padding-top: 5%">
+          <div class="uls" >
+            <div :class="[!showHub?'lefts1':'lefts1da']">
+              <Right/>
+            </div>
+            <div class="rig">
+              <ProjectSummary/>
+            </div>
           </div>
         </div>
+
       </div>
       <div v-if="!showHub" class="gdkd">
         <Right v-show="currentType == 'total'" />
@@ -90,7 +93,7 @@ export default {
     bottom: 40px;
     overflow: hidden;
     right: 0px;
-    width: 620px;
+    width: 1020px;
     height: 100%;
     color: white;
     -webkit-box-sizing: border-box;
@@ -173,7 +176,7 @@ export default {
     position: fixed;
     top: 0;
     right: 0;
-    width: 620px;
+    width: 1020px;
     height: 100%;
     background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
     // background-image: linear-gradient(270deg, rgba(0, 13, 26, 0.84) 0%, rgba(0, 17, 34, 0.55) 65%, rgba(0, 19, 38, 0) 100%);
@@ -190,9 +193,11 @@ export default {
   }
   .uls{
     width: 100%;
+    height: 100%;
     display: flex;
     align-items: flex-start;
   }
-  .lefts1{width: 310px;}
-  .rig{flex: 1;padding-left: 1%}
+  .lefts1{width: 450px;}
+  .lefts1da{width: 480px;height: 1280px}
+  .rig{flex: 1;padding-left: 5%}
 </style>

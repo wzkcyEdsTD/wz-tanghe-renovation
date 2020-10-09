@@ -89,19 +89,17 @@ export default {
   },
   mounted() {
     this.eventRegsiter()
-    // this.drawPie()
-    // this.drawBar()
-    // this.searchFilter()
+    this.drawPie()
+    this.drawBar()
+    this.searchFilter()
   },
-  watch:{
-    'drawData'(val) {
-      // 需要执行的代码
-      // console.log(666999)
-      this.drawPie()
-      this.drawBar()
-      this.searchFilter()
-    }
-  },
+  // watch:{
+  //   'drawData'(val) {
+  //     this.drawPie()
+  //     this.drawBar()
+  //     this.searchFilter()
+  //   }
+  // },
   methods: {
     eventRegsiter() {
       this.$bus.$off("source-change");
@@ -113,30 +111,6 @@ export default {
       });
     },
     drawPie() {
-      // const pieData = [
-      //   { value: 2.3, name: "卫生项目", itemStyle: { color: "#FB0062" } },
-      //   { value: 3.3, name: "教育项目", itemStyle: { color: "#0B11FF" } },
-      //   { value: 4.2, name: "农林水电项目", itemStyle: { color: "#1DA358" } },
-      //   { value: 5.2, name: "园林绿化项目", itemStyle: { color: "#D8FF00" } },
-      //   { value: 7.3, name: "环境保护项目", itemStyle: { color: "#2BCFFF" } },
-      //   { value: 8.3, name: "公共服务项目", itemStyle: { color: "#D810FF" } },
-      //   { value: 11.3, name: "产业类项目", itemStyle: { color: "#782FED" } },
-      //   {
-      //     value: 22.9,
-      //     name: "保障性安居工程项目",
-      //     itemStyle: { color: "#FEEC00" },
-      //   },
-      //   {
-      //     value: 12.3,
-      //     name: "公园、滨水绿道及景观绿化项目",
-      //     itemStyle: { color: "#34FF84" },
-      //   },
-      //   {
-      //     value: 42.3,
-      //     name: "市政道路及配套设施",
-      //     itemStyle: { color: "#ED8E2F" },
-      //   },
-      // ];
       let data = {}
       let legendData = []
       let resultList = []
@@ -162,9 +136,6 @@ export default {
           value: (data[key].number/list.length*100).toFixed(2),
         })
       }
-      console.log('resultList~~~', resultList)
-      console.log('legendData~~~', legendData)
-
 
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
       this.pieEchart.setOption({
@@ -180,18 +151,6 @@ export default {
             fontSize: 11,
           },
           data: legendData,
-          // [
-          //   "卫生项目",
-          //   "教育项目",
-          //   "农林水电项目",
-          //   "园林绿化项目",
-          //   "环境保护项目",
-          //   "公共服务项目",
-          //   "产业类项目",
-          //   "保障性安居工程项目",
-          //   "公园、滨水绿道及景观绿化项目",
-          //   "市政道路及配套设施",
-          // ],
           formatter: function (name) {
             let target;
             for (let i = 0; i < resultList.length; i++) {
@@ -227,23 +186,6 @@ export default {
       });
     },
     drawBar() {
-      // var dataAxis = [
-      //   "南郊街道",
-      //   "广化街道",
-      //   "南汇街道",
-      //   "松台街道",
-      //   "滨江街道",
-      //   "蒲鞋市街道",
-      //   "大南街道",
-      //   "永中街道",
-      //   "海滨街道",
-      //   "南白象街道",
-      //   "梧田街道",
-      //   "新桥街道",
-      //   "景山街道",
-      // ];
-      // var data = [20, 82, 91, 34, 90, 30, 10, 23, 42, 21, 90, 49, 10];
-
       let list = this.sourceMap[this.currentSource]
       let tempobj = {}
       let dataAxis = []
@@ -257,13 +199,10 @@ export default {
           tempobj[street] = 1
         }
       })
-      console.log('tempobj~~', tempobj)
       for (let key in tempobj) {
         dataAxis.push(key)
         data.push(tempobj[key])
       }
-      console.log('dataAxis~~~', dataAxis)
-      console.log('data~~~', data)
 
       this.barEchart = this.$echarts.init(this.$refs.barEchart);
       this.barEchart.setOption({
@@ -440,7 +379,6 @@ export default {
             return item.attributes.NAME.indexOf(this.searchText) >= 0;
           })
         : allSearchList;
-      console.log('wtf???', this.searchList)
     },
   },
 };

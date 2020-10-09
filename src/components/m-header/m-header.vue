@@ -55,10 +55,11 @@ export default {
     }
     .shadow {
       position: absolute;
-      top: -100px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1;
+      width: 300px;
+      height: 100px;
     }
   }
   .info {

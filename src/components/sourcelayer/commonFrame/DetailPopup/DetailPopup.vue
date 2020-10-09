@@ -474,10 +474,12 @@ export default {
     }
   }
   .content-wrapper {
-    position: absolute;
-    top: 180px;
-    bottom: 0;
-    width: 100%;
+    // position: absolute;
+    // top: 180px;
+    // bottom: 0;
+    // width: 100%;
+    margin-top: 10px;
+    height: calc(100% - 100px);
     overflow-y: scroll;
   }
   .basic-wrapper {

@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="uls">
-      <div class="lefts">
+      <div class="lefts1">
         <Right/>
       </div>
       <div class="rig">
@@ -109,6 +109,6 @@ export default {
     display: flex;
     align-items: flex-start;
   }
-  .lefts{width: 310px;}
-  .rig{flex: 1;padding-left: 2%}
+  .lefts1{width: 310px;}
+  .rig{flex: 1;padding-left: 1%}
 </style>

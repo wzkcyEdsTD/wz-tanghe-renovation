@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7" height="7" viewBox="0 0 7 7">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="矩形_910" data-name="矩形 910" width="7" height="7" transform="translate(20 33.027)" fill="#fff" opacity="0"/>
+    </clipPath>
+  </defs>
+  <g id="穗丰怀古icon" transform="translate(-20 -33.027)" clip-path="url(#clip-path)">
+    <path id="路径_1591" data-name="路径 1591" d="M5.206,128.481c-.131-.219.131-.263.131-.263V128H1.663v.219s.262.044.131.263A2.394,2.394,0,0,1,0,129.575a1.533,1.533,0,0,0,1.269.7v1.838h.919v-1.794H2.45v1.794h.525v-1.794h.963v1.794h.525v-1.794h.35v1.794h.963v-1.881A1.41,1.41,0,0,0,7,129.575,2.524,2.524,0,0,1,5.206,128.481ZM.963,132.9H5.994v-.7H.963Z" transform="translate(20 -94.024)" fill="#a2f6b6"/>
+  </g>
+</svg>

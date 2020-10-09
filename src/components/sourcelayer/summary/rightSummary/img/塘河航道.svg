@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="234" height="163.5" viewBox="0 0 234 163.5">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="矩形_898" data-name="矩形 898" width="234" height="163.5" transform="translate(20 456)" fill="#fff"/>
+    </clipPath>
+    <filter id="路径_1674" x="87.606" y="11.844" width="46.698" height="157.24" filterUnits="userSpaceOnUse">
+      <feOffset dy="6" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feFlood flood-color="#04301b" flood-opacity="0.8"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="塘河航道" transform="translate(-20 -456)" clip-path="url(#clip-path)">
+    <g id="示意图" transform="translate(0 6)">
+      <g id="地图线" transform="translate(-418.816 300.501)">
+        <g id="组_2094" data-name="组 2094" transform="translate(482.979 162.067)">
+          <g transform="matrix(1, 0, 0, 1, -44.16, -12.57)" filter="url(#路径_1674)">
+            <path id="路径_1674-2" data-name="路径 1674" d="M8622.111,1404.336c-1.706,1.626-.5,3.844.238,4.75,3.1,3.823,5.01,6.188,8.811,11.748s8,6.95,5.892,11.227-1.628,4.758-7.467,8-2.449,4.368-4.6,11.363-.3,11.689,0,19.687-3.534,16.178,6.176,26.454c3.03,3.206,5.941,9.188,6.1,13.081s5.145,19.416-12.277,34.465c-3.823,3.3-7.212,3.893-11.859,4.123s-11.8,0-11.8,0" transform="translate(-8509.18 -1391.77)" fill="none" stroke="#5286fe" stroke-width="2"/>
+          </g>
+          <path id="路径_1686" data-name="路径 1686" d="M8819.988,1414.031a90.875,90.875,0,0,0,11.393-1.562c4.147-1.021,15.138-2.858,17.209-2.96s4.665.153,4.043.612-1.761.919,0,1.174,6.395,1,7.533,2.736" transform="translate(-8749.79 -1408.266)" fill="none" stroke="#5286fe" stroke-width="2"/>
+          <path id="路径_1687" data-name="路径 1687" d="M8830.571,1428.262l20.57-3.422s7.4-.259,8.439-.6a37.229,37.229,0,0,1,7.682-1.121,13.108,13.108,0,0,0,4.456-.862,24.919,24.919,0,0,0,5.785.862,15.39,15.39,0,0,1,6.164.518c2.088.69,29.743.6,29.743.6" transform="translate(-8757.874 -1418.008)" fill="none" stroke="#5286fe" stroke-width="2"/>
+        </g>
+        <path id="路径_1682" data-name="路径 1682" d="M8529.706,1428.867s-3.9-1.869-6.311-1.936-4.16,1.062-4.963.266,2-4.265-4.713-3.867-13.517,5.537-14.613,5.537-2.161,1.731-9.465,1.9-6.592,3.6-12.377,2.912-9.289.681-9.1,2.062-8.917,3.708-13.469,3.277-7.869-2.845-11.51-2-7.089,1.444-9,2a7.6,7.6,0,0,0-2.9,1.5" transform="translate(-7973.085 -1256.686)" fill="none" stroke="#5286fe" stroke-width="2"/>
+        <path id="路径_1759" data-name="路径 1759" d="M232.217,467.8l-.258,2a37.313,37.313,0,0,0,6.278-.506c3.615-.58,10.834-1.723,16.943-1.5s12.218,1.061,12.218,1.061a91.027,91.027,0,0,0-21.381-2.019,74.068,74.068,0,0,0-8.77.629A41.887,41.887,0,0,1,232.217,467.8Z" transform="translate(405.44 -300.501)" fill="#5286fe"/>
+        <path id="路径_1760" data-name="路径 1760" d="M38.781,483.531l1.438,1.406s-3.3,3.191-10.216,5.739-9.113,1.134-9.113,1.134.811,1.212,7.623-2.229A74.13,74.13,0,0,0,38.781,483.531Z" transform="translate(418.816 -300.501)" fill="#5286fe"/>
+        <path id="路径_1761" data-name="路径 1761" d="M139.156,461.922l1.375,1.484a6.586,6.586,0,0,1,2.688-1.641c1.891-.687,7.3-2.286,9.748-5.13a42.877,42.877,0,0,0,3.7-4.855,17.644,17.644,0,0,1-5.144,4.855,23.363,23.363,0,0,1-8.3,3.333A8.294,8.294,0,0,0,139.156,461.922Z" transform="translate(411.901 -300.501)" fill="#5286fe"/>
+        <path id="路径_1762" data-name="路径 1762" d="M50.668,600.484v1.984s-1.9-.073-4.691-.375a70.057,70.057,0,0,0-8.228,0,45.27,45.27,0,0,1,8.075-1.609C48.517,600.428,50.668,600.484,50.668,600.484Z" transform="translate(480.399 -294.501)" fill="#5286fe"/>
+        <path id="路径_1763" data-name="路径 1763" d="M536.467,167.726l-17.922-1.871s-9.241,2.412-15.681,1.871c-5.778-.485-11.442-1.336-19.365-1.871-15.94-1.077-17.884-2.7-17.884-2.7" fill="none" stroke="#5286fe" stroke-width="2"/>
+        <path id="路径_1764" data-name="路径 1764" d="M465.16,164.046l1.859-1.344a36.737,36.737,0,0,1-6.106-3.415,48.626,48.626,0,0,1-3.9-3.88s2.519,3.555,3.7,5.1A21.411,21.411,0,0,0,465.16,164.046Z" fill="#5286fe"/>
+      </g>
+      <circle id="椭圆_371" data-name="椭圆 371" cx="1.5" cy="1.5" r="1.5" transform="translate(52 479)" fill="#edf503"/>
+      <text id="瞿溪" transform="translate(45 490)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">瞿溪</tspan></text>
+      <circle id="椭圆_372" data-name="椭圆 372" cx="1.5" cy="1.5" r="1.5" transform="translate(56 464)" fill="#edf503"/>
+      <text id="郭溪" transform="translate(49 475)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">郭溪</tspan></text>
+      <circle id="椭圆_373" data-name="椭圆 373" cx="1.5" cy="1.5" r="1.5" transform="translate(52 498)" fill="#edf503"/>
+      <text id="雄溪" transform="translate(45 509)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">雄溪</tspan></text>
+      <circle id="椭圆_374" data-name="椭圆 374" cx="1.5" cy="1.5" r="1.5" transform="translate(141 457)" fill="#edf503"/>
+      <text id="小南门码头" transform="translate(146 461)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">小南门码头</tspan></text>
+      <circle id="椭圆_375" data-name="椭圆 375" cx="1.5" cy="1.5" r="1.5" transform="translate(135 545)" fill="#edf503"/>
+      <text id="南湖" transform="translate(141 549)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">南湖</tspan></text>
+      <circle id="椭圆_376" data-name="椭圆 376" cx="1.5" cy="1.5" r="1.5" transform="translate(108 606)" fill="#edf503"/>
+      <text id="瑞安东门白岩桥码头" transform="translate(114 604)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="-66.24" y="0">瑞安东门白岩桥码头</tspan></text>
+      <circle id="椭圆_377" data-name="椭圆 377" cx="1.5" cy="1.5" r="1.5" transform="translate(145 561)" fill="#edf503"/>
+      <text id="丽岙" transform="translate(127 566)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">丽岙</tspan></text>
+      <circle id="椭圆_378" data-name="椭圆 378" cx="1.5" cy="1.5" r="1.5" transform="translate(147 573)" fill="#edf503"/>
+      <text id="仙岩" transform="translate(153 577)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">仙岩</tspan></text>
+      <circle id="椭圆_379" data-name="椭圆 379" cx="1.5" cy="1.5" r="1.5" transform="translate(136 471)" fill="#edf503"/>
+      <text id="南塘" transform="translate(120 481)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">南塘</tspan></text>
+      <path id="路径_1765" data-name="路径 1765" d="M93.2,160.462l3.4,2.822-3.4,2.831Zm-3.465,1.758H93.2V164.3H89.732Z" transform="matrix(0.951, -0.309, 0.309, 0.951, -73.454, 369.166)" fill="#16e8e8"/>
+      <path id="路径_1766" data-name="路径 1766" d="M93.2,160.462l3.4,2.822-3.4,2.831Zm-3.465,1.758H93.2V164.3H89.732Z" transform="matrix(1, 0.017, -0.017, 1, -26.691, 315.784)" fill="#16e8e8"/>
+      <path id="路径_1767" data-name="路径 1767" d="M93.2,160.462l3.4,2.822-3.4,2.831Zm-3.465,1.758H93.2V164.3H89.732Z" transform="matrix(0.966, 0.259, -0.259, 0.966, 16.882, 279.837)" fill="#16e8e8"/>
+      <path id="路径_1768" data-name="路径 1768" d="M93.2,160.462l3.4,2.822-3.4,2.831Zm-3.465,1.758H93.2V164.3H89.732Z" transform="matrix(0.309, 0.951, -0.951, 0.309, 265.116, 345.612)" fill="#16e8e8"/>
+      <path id="路径_1769" data-name="路径 1769" d="M93.2,160.462l3.4,2.822-3.4,2.831Zm-3.465,1.758H93.2V164.3H89.732Z" transform="translate(316.46 471.202) rotate(99)" fill="#16e8e8"/>
+      <path id="路径_1770" data-name="路径 1770" d="M93.2,160.462l3.4,2.822-3.4,2.831Zm-3.465,1.758H93.2V164.3H89.732Z" transform="matrix(0.087, 0.996, -0.996, 0.087, 299.156, 470.634)" fill="#16e8e8"/>
+      <path id="路径_1771" data-name="路径 1771" d="M93.2,160.462l3.4,2.822-3.4,2.831Zm-3.465,1.758H93.2V164.3H89.732Z" transform="translate(268.001 724.251) rotate(160)" fill="#16e8e8"/>
+      <circle id="椭圆_380" data-name="椭圆 380" cx="1.5" cy="1.5" r="1.5" transform="translate(241 466)" fill="#edf503"/>
+      <text id="瓯江" transform="translate(235 464)" fill="#fff" font-size="8" font-family="YouSheBiaoTiHei"><tspan x="0" y="0">瓯江</tspan></text>
+    </g>
+  </g>
+</svg>

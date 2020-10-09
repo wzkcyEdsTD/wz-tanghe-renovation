@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7" height="7" viewBox="0 0 7 7">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="矩形_906" data-name="矩形 906" width="7" height="7" transform="translate(20 33.027)" fill="#fff" opacity="0"/>
+    </clipPath>
+  </defs>
+  <g id="梧田老街icon" transform="translate(-20 -33.027)" clip-path="url(#clip-path)">
+    <path id="路径_1583" data-name="路径 1583" d="M6.369,196.109h-.76a2.462,2.462,0,0,0-4.643,0H.205A.194.194,0,0,1,0,195.9v-2.26a.412.412,0,0,1,.411-.411H.616v-.822H.205a.205.205,0,0,1,0-.411H6.369a.205.205,0,0,1,0,.411H5.958v.822h.205a.412.412,0,0,1,.411.411v2.26A.194.194,0,0,1,6.369,196.109Zm-4.52-3.7H1.027v.822h.822Zm1.233,0H2.26v.822h.822Zm1.233,0H3.493v.822h.822Zm1.233,0H4.726v.822h.822Z" transform="translate(20.237 -157.269)" fill="#a2f6b6"/>
+  </g>
+</svg>

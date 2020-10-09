@@ -51,22 +51,23 @@
       </div>
     </div>
     <div class="switch-menu-wrapper">
-<!--      <div class="switch-menu-container">-->
-<!--        <span :class="{active: !showMenu}" @click="switchMenu(false)">专题</span>-->
-<!--        <span :class="{active: showMenu}" @click="switchMenu(true)">资源目录</span>-->
-<!--      </div>-->
+      <div class="switch-menu-container" v-show="!show">
+        <span :class="{active: !showMenu}" @click="switchMenu(false)">资源目录</span>
+        <span :class="{active: showMenu}" @click="switchMenu(true)">塘河简介</span>
+      </div>
       <div class="switch-menu-decorate"></div>
     </div>
-    <div class="left-menu-wrapper" >
+    <div class="left-menu-wrapper" v-show="show">
       <div class="uls">
-        <div class="lefts">
-          <RightSummary></RightSummary>
+        <div class="lefts" v-show="show">
+          <RightSummary ></RightSummary>
         </div>
         <div class="rig">
           <div class="title-wrapper">
             <span class="pre"></span>
             <span class="title">资源目录</span>
           </div>
+
           <div class="tree-container">
             <el-tree
               ref="tree"
@@ -80,6 +81,31 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="left-menu-wrapper1" v-show="!show">
+      <div v-show="!ms">
+        <div class="title-wrapper">
+          <span class="pre"></span>
+          <span class="title">资源目录</span>
+        </div>
+        <div class="tree-container">
+          <el-tree
+            ref="tree"
+            :data="data"
+            show-checkbox
+            node-key="id"
+            :filter-node-method="filterNode"
+            default-expand-all
+            @check-change="nodeCheckChange"
+          />
+        </div>
+      </div>
+      <div v-show="ms">
+        <div class="gdkd">
+          <RightSummary ></RightSummary>
+        </div>
+      </div>
+
     </div>
     <div class="sign-wrapper" v-show="showSign">
       <img src="/static/images/common/sign@2x.png">
@@ -105,6 +131,10 @@ export default {
   },
   data() {
     return {
+      ms:false,
+      screenWidth: document.body.clientWidth,
+      screeHeight: document.body.clientHeight,
+      show:false,
       // TARGET_SOURCE,
       //  tile layers
       tileLayers: {},
@@ -150,6 +180,7 @@ export default {
   },
   created() {
     this.eventRegsiter()
+    this.getKuanGao();
   },
   mounted() {
     this.$refs.tree.setCheckedKeys(['断点', '十二景', '乡镇名称', '绿道', '塘河范围面', '塘河沿线']);
@@ -163,6 +194,15 @@ export default {
       //   // this.currentTarget = target
       //   this.targetChange(target)
       // });
+    },
+    getKuanGao(){
+      //4320*1280
+      console.log(this.screenWidth);
+      if(this.screenWidth>4000&this.screeHeight>1000){
+        this.show = true;
+      }else {
+        this.show = false;
+      }
     },
     /**
      * POI fetch
@@ -203,6 +243,7 @@ export default {
     //   this.$bus.$emit("cesium-3d-switch", { value: this.showBaimo });
     // },
     switchMenu(bol) {
+      this.ms = bol;
       this.showMenu = bol
       this.$parent.isTotalTarget = !this.showMenu;
     },
@@ -393,6 +434,9 @@ export default {
 
 <style lang="less">
 @import url("./layerHub.less");
+.gdkd{
+  width: 350px;
+}
 .uls{
   width: 100%;
   display: flex;

@@ -83,24 +83,29 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["sourceMap", "currentSource"]),
+    drawData() {
+      return this.$store.state.map.sourceMap
+    }
   },
   mounted() {
     this.eventRegsiter()
-    this.drawPie()
-    this.drawBar()
-    // this.drawLine();
-    this.searchFilter()
+    // this.drawPie()
+    // this.drawBar()
+    // this.searchFilter()
   },
-  // watch:{
-  //   '$store.state.projectList':function(newFlag, oldFlag){
-  //     // 需要执行的代码
-  //   }
-  // },
+  watch:{
+    'drawData'(val) {
+      // 需要执行的代码
+      // console.log(666999)
+      this.drawPie()
+      this.drawBar()
+      this.searchFilter()
+    }
+  },
   methods: {
     eventRegsiter() {
       this.$bus.$off("source-change");
       this.$bus.$on("source-change", ({value}) => {
-        console.log("nmd", value);
         // this.currentSource = value
         this.searchFilter()
         this.drawPie()
@@ -137,6 +142,7 @@ export default {
       let resultList = []
       let colorList = ["#52D1FE", "#047DF6", "#8FEF8B", "#6852FE"]
       let list = this.sourceMap[this.currentSource]
+      console.log('drawPie', this.currentSource, this.sourceMap, list)
       list.forEach((item, index) => {
         let district = item.attributes.DISTRICT
         if(data[district]) {

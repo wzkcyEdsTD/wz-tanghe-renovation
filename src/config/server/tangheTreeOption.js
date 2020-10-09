@@ -87,49 +87,83 @@ const WH_INFO = [
 ]
 
 export const CESIUM_TREE_OPTION = [
+  // {
+  //   id: "项目",
+  //   label: "项目",
+  //   url: SERVER_DEFAULT_DATA,
+  //   newdataset: `${SW_DATA_NAME}项目`,
+  //   icon: false,
+  //   type: "mvt",
+  //   // saveData: "setProjectList"
+  // },
+  // {
+  //   id: "断点",
+  //   label: "断点",
+  //   url: SERVER_DEFAULT_DATA,
+  //   newdataset: `${SW_DATA_NAME}绿道断点`,
+  //   icon: '断点',
+  //   iconSize: 'small',
+  //   type: "mvt",
+  // },
+  // {
+  //   id: "十二景",
+  //   label: "十二景",
+  //   url: SERVER_DEFAULT_DATA,
+  //   newdataset: `${SW_DATA_NAME}十二景`,
+  //   icon: '十二景',
+  //   type: "mvt",
+  //   saveData: "setSejList",
+  //   // withImage: "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz"
+  // },
   {
-    id: "项目",
-    label: "项目",
-    url: SERVER_DEFAULT_DATA,
-    newdataset: `${SW_DATA_NAME}项目`,
-    icon: false,
-    type: "mvt",
-    // saveData: "setProjectList"
+    id: "塘河沿线",
+    label: "塘河沿线",
+    children: [
+      {
+        id: "项目",
+        label: "项目",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}项目`,
+        icon: false,
+        type: "mvt",
+        // saveData: "setProjectList"
+      },
+      {
+        id: "断点",
+        label: "断点",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}绿道断点`,
+        icon: '断点',
+        iconSize: 'small',
+        type: "mvt",
+      },
+      {
+        id: "十二景",
+        label: "十二景",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}十二景`,
+        icon: '十二景',
+        type: "mvt",
+        saveData: "setSejList",
+        // withImage: "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz"
+      },
+      {
+        id: "绿道",
+        label: "绿道",
+        type: "cesium_lvdao",
+      },
+      {
+        id: "塘河范围面",
+        label: "塘河范围面",
+        type: "cesium_thfwm",
+      },
+    ]
   },
-  {
-    id: "断点",
-    label: "断点",
-    url: SERVER_DEFAULT_DATA,
-    newdataset: `${SW_DATA_NAME}绿道断点`,
-    icon: '断点',
-    iconSize: 'small',
-    type: "mvt",
-  },
-  {
-    id: "十二景",
-    label: "十二景",
-    url: SERVER_DEFAULT_DATA,
-    newdataset: `${SW_DATA_NAME}十二景`,
-    icon: '十二景',
-    type: "mvt",
-    saveData: "setSejList",
-    // withImage: "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz"
-  },
-  {
-    id: "乡镇名称",
-    label: "乡镇名称",
-    type: "cesium_town",
-  },
-  {
-    id: "绿道",
-    label: "绿道",
-    type: "cesium_lvdao",
-  },
-  {
-    id: "塘河范围面",
-    label: "塘河范围面",
-    type: "cesium_thfwm",
-  },
+  // {
+  //   id: "乡镇名称",
+  //   label: "乡镇名称",
+  //   type: "cesium_town",
+  // },
   // {
   //   id: "塘河沿线",
   //   label: "塘河沿线",

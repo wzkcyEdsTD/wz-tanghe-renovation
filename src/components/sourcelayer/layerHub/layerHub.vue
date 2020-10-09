@@ -59,10 +59,10 @@
     </div>
     <div class="left-menu-wrapper" >
       <div class="uls">
-        <div style="width: 300px;">
+        <div class="lefts">
           <RightSummary></RightSummary>
         </div>
-        <div style="flex:1;padding-left: 3%">
+        <div class="rig">
           <div class="title-wrapper">
             <span class="pre"></span>
             <span class="title">资源目录</span>
@@ -398,4 +398,10 @@ export default {
   display: flex;
   align-items: flex-start;
 }
+ .lefts{
+   width: 300px;
+ }
+  .rig{
+    flex:1;padding-left: 3%
+  }
 </style>

@@ -162,8 +162,8 @@ export default {
           top: "25%",
           left: "34%",
           icon: "rect",
-          itemWidth: 6,
-          itemHeight: 6,
+          itemWidth: 14,
+          itemHeight: 14,
           textStyle: {
             color: "#fff",
             fontSize: 18,

@@ -93,15 +93,15 @@
       </div>
     </div>
     <div class="switch-menu-wrapper">
-      <div class="switch-menu-container" v-show="!show">
+      <div class="switch-menu-container" v-if="!showLarge">
         <span :class="{active: !showMenu}" @click="switchMenu(false)">资源目录</span>
         <span :class="{active: showMenu}" @click="switchMenu(true)">塘河简介</span>
       </div>
       <div class="switch-menu-decorate"></div>
     </div>
-    <div :class="show?'left-menu-wrapperda':'left-menu-wrapper'" >
-      <div :class="show?'ssjda2':''">
-        <div class="ulsda" v-if="show">
+    <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" >
+      <div :class="showLarge?'ssjda2':''">
+        <div class="ulsda" v-if="showLarge">
           <div class="lefts">
             <RightSummary ></RightSummary>
           </div>
@@ -127,8 +127,8 @@
             </div>
           </div>
         </div>
-        <div v-show="!show">
-          <div v-show="!ms">
+        <div v-if="!showLarge">
+          <div v-if="!leftOrRight">
             <div class="title-wrapper">
               <span class="pre"></span>
               <span class="title">资源目录</span>
@@ -145,7 +145,7 @@
               />
             </div>
           </div>
-          <div v-show="ms">
+          <div v-if="leftOrRight">
             <div class="gdkd">
               <RightSummary ></RightSummary>
             </div>
@@ -153,7 +153,7 @@
         </div>
       </div>
     </div>
-    <div class="sign-wrapper" v-show="showSign">
+    <div class="sign-wrapper" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div>
   </div>
@@ -177,10 +177,10 @@ export default {
   },
   data() {
     return {
-      ms:false,
+      leftOrRight:false,
       screenWidth: document.body.clientWidth,
       screeHeight: document.body.clientHeight,
-      show:false,
+      showLarge:false,
       // TARGET_SOURCE,
       //  tile layers
       tileLayers: {},
@@ -246,9 +246,9 @@ export default {
       //4320*1280
       console.log(this.screenWidth);
       if(this.screenWidth>4000&this.screeHeight>1000){
-        this.show = true;
+        this.showLarge = true;
       }else {
-        this.show = false;
+        this.showLarge = false;
       }
     },
     /**
@@ -290,7 +290,7 @@ export default {
     //   this.$bus.$emit("cesium-3d-switch", { value: this.showBaimo });
     // },
     switchMenu(bol) {
-      this.ms = bol;
+      this.leftOrRight = bol;
       this.showMenu = bol
       this.$parent.isTotalTarget = !this.showMenu;
     },
@@ -508,7 +508,7 @@ export default {
   height: 1280px;
 }
  .lefts{
-   width: 300px;
+   width: 400px;
  }
   .rig{
     flex:1;

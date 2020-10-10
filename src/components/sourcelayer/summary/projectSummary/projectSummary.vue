@@ -3,30 +3,30 @@
     <div class="composition-container">
       <div class="title-wrapper">
         <span class="pre"></span>
-        <span :class="!showHub?'titleda':'title'">资源区县</span>
+        <span :class="showLarge?'titleda':'title'">资源区县</span>
         <!-- <span class="desc">截至2020年5月15日</span> -->
       </div>
       <div style="height:180px;" class="echart" ref="pieEchart"></div>
     </div>
     <div class="composition-container">
-      <div :class="showHub?'':'xsjda'">
+      <div :class="!showLarge?'':'xsjda'">
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="!showHub?'titleda':'title'">资源街道</span>
+          <span :class="showLarge?'titleda':'title'">资源街道</span>
           <!-- <span class="desc">截至2020年5月15日</span> -->
         </div>
       </div>
-      <div :class="showHub?'':'xsjda'">
+      <div :class="!showLarge?'':'xsjda'">
         <span class="small">单位：个</span>
       </div>
 
       <div  style="height:180px;" class="echart" ref="barEchart"></div>
     </div>
     <div class="search-container">
-      <div :class="showHub?'':'xsjda'">
+      <div :class="!showLarge?'':'xsjda'">
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="!showHub?'titleda':'title'">资源列表</span>
+          <span :class="showLarge?'titleda':'title'">资源列表</span>
           <!-- <span class="desc">截至2020年5月15日</span> -->
         </div>
       </div>
@@ -72,7 +72,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      showHub: false,
+      showLarge: false,
       screenWidth: document.body.clientWidth,
       screeHeight: document.body.clientHeight,
       searchText: "",
@@ -95,6 +95,8 @@ export default {
     this.drawPie()
     this.drawBar()
     this.searchFilter()
+  },
+  created() {
     this.getKuanGao();
   },
   watch:{
@@ -111,10 +113,10 @@ export default {
       //大屏返回true
       if(this.screenWidth>4000&this.screeHeight>1000){
         console.log(true);
-        this.showHub = true;
+        this.showLarge = true;
       }else {
         console.log(false);
-        this.showHub = false;
+        this.showLarge = false;
       };
     },
     eventRegsiter() {

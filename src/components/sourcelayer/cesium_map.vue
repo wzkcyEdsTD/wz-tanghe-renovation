@@ -479,7 +479,6 @@ export default {
       var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
       handler.setInputAction((wheelment) => {
         this.cameraHeight = viewer.camera.positionCartographic.height;
-        console.log('cameraHeight~!~!~!~!~', this.cameraHeight)
         if (this.lvdaoShow) {
           if (this.cameraHeight >= 3000) {
             this.lvdaolayerThin.show = true
@@ -489,15 +488,13 @@ export default {
             this.lvdaolayerBold.show = true
           }
         }
-        self.removeAll(false);
+        // self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.WHEEL);
       handler.setInputAction(function(event) {
-
-        self.removeAll(false);
+        // self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
       handler.setInputAction(function(event) {
-
-        self.removeAll(false);
+        // self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
     },
     switchLvdao(value) {

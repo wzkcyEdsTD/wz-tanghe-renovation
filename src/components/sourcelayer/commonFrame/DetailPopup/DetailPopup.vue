@@ -62,7 +62,7 @@
               <div class="sub-title">景观图</div>
               <div class="img-content">
                 <viewer class="img-wrapper" :images="spotList">
-                  <img v-for="(item,index) in spotList" :key="index" 
+                  <img v-for="(item,index) in spotList" :key="index"
                     :src="`/static/images/${forceEntity.type}/${item}`" alt=""
                   >
                 </viewer>
@@ -75,7 +75,7 @@
                 <span class="time">{{`${key.substring(0,4)}-${key.substring(4,6)}-${key.substring(6,8)}`}}</span>
                 <div class="spot-content">
                   <viewer class="img-wrapper" :images="value">
-                    <img v-for="(item,index) in value" :key="index" 
+                    <img v-for="(item,index) in value" :key="index"
                       :src="`/static/images/${forceEntity.type}/${item}`" alt=""
                     >
                   </viewer>
@@ -85,7 +85,7 @@
               <!-- <div class="time">{{photoList[0].time.substring(0,4)-photoList[0].time.substring(4,6)-photoList[0].time.substring(6,8)}}</div> -->
               <!-- <div class="img-content">
                 <viewer class="img-wrapper" :images="photoList">
-                  <img v-for="(item,index) in photoList" :key="index" 
+                  <img v-for="(item,index) in photoList" :key="index"
                     :src="`/static/images/${forceEntity.type}/${item.photo}`" alt=""
                   >
                 </viewer>
@@ -324,7 +324,7 @@ export default {
       this.$nextTick(() => {
         document.querySelector(`#${value}`).scrollIntoView({
           behavior: "auto", // 平滑过渡
-          block: "start" // 上边框与视窗顶部平齐。默认值
+          block: "end" // 上边框与视窗顶部平齐。默认值
         });
       });
     },

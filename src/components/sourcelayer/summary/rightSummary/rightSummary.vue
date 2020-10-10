@@ -4,42 +4,42 @@
       <div>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="!showHub?'title':'titleda'">温瑞塘河</span>
+          <span :class="!showLarge?'title':'titleda'">温瑞塘河</span>
         </div>
         <div class="wenzi">
-          <div :class="!showHub?'jianju':'jianjuda'">
-            <span :class="!showHub?'xbt':'xbtda'">简介</span>
+          <div :class="!showLarge?'jianju':'jianjuda'">
+            <span :class="!showLarge?'xbt':'xbtda'">简介</span>
             <img src="./img/装饰.png" alt="" class="zs" />
           </div>
-          <p :class="!showHub?'lab':'labda'">{{ temp || "暂无简介" }}</p>
+          <p :class="!showLarge?'lab':'labda'">{{ temp || "暂无简介" }}</p>
           <video
             src="static/images/温瑞塘河/温瑞塘河.mp4"
             controls
-            :class="!showHub?'sp':'spda'"
+            :class="!showLarge?'sp':'spda'"
           />
-          <div :class="!showHub?'jianju':'jianjuda1'">
+          <div :class="!showLarge?'jianju':'jianjuda'">
             <span :class="!showHub?'xbt':'xbtda'">流域</span>
             <img src="./img/装饰.png" alt="" class="zs" />
           </div>
           <div class="box">
             <div class="left1">
               <div>
-                <div :class="!showHub?'lywz':'lywzda'">塘河长度</div>
-                <div :class="!showHub?'deh':'dehda'">
+                <div :class="!showLarge?'lywz':'lywzda'">塘河长度</div>
+                <div :class="!showLarge?'deh':'dehda'">
                   <span class="lybq">1178.4</span>
                   <span class="lydw"> 千米</span>
                 </div>
               </div>
               <div>
-                <div :class="!showHub?'lywz':'lywzda'">蓄水量</div>
-                <div :class="!showHub?'deh':'dehda'">
+                <div :class="!showLarge?'lywz':'lywzda'">蓄水量</div>
+                <div :class="!showLarge?'deh':'dehda'">
                   <span class="lybq">{{ `${lable.xsl}` }}</span>
                   <span class="lydw"> 万立方米</span>
                 </div>
               </div>
               <div>
-                <div :class="!showHub?'lywz':'lywzda'">灌溉面积</div>
-                <div :class="!showHub?'deh':'dehda'">
+                <div :class="!showLarge?'lywz':'lywzda'">灌溉面积</div>
+                <div :class="!showLarge?'deh':'dehda'">
                   <span class="lybq">48.2</span>
                   <span class="lydw"> 万亩</span>
                 </div>
@@ -47,22 +47,22 @@
             </div>
             <div class="right1">
               <div>
-                <div :class="!showHub?'lywz':'lywzda'">流域面积</div>
-                <div :class="!showHub?'deh':'dehda'">
+                <div :class="!showLarge?'lywz':'lywzda'">流域面积</div>
+                <div :class="!showLarge?'deh':'dehda'">
                   <span class="lybq">740</span>
                   <span class="lydw"> 平方千米</span>
                 </div>
               </div>
               <div>
-                <div :class="!showHub?'lywz':'lywzda'">平均流量</div>
-                <div :class="!showHub?'deh':'dehda'">
+                <div :class="!showLarge?'lywz':'lywzda'">平均流量</div>
+                <div :class="!showLarge?'deh':'dehda'">
                   <span class="lybq">{{ `${lable.pjll}` }}</span>
                   <span class="lydw"> 亿立方米</span>
                 </div>
               </div>
               <div>
-                <div :class="!showHub?'lywz':'lywzda'">源头</div>
-                <div :class="!showHub?'deh':'dehda'">
+                <div :class="!showLarge?'lywz':'lywzda'">源头</div>
+                <div :class="!showLarge?'deh':'dehda'">
                   <span class="ly">瞿溪、雄溪、郭溪</span>
                 </div>
               </div>
@@ -71,13 +71,12 @@
         </div>
       </div>
       <div>
-        <div :class="!showHub?'ssj':'ssjda1'">
+        <div :class="!showLarge?'ssj':'ssjda1'">
           <div class="title-wrapper">
             <span class="pre"></span>
-            <span :class="!showHub?'title':'titleda'">温瑞塘河航道</span>
+            <span :class="!showLarge?'title':'titleda'">温瑞塘河航道</span>
           </div>
         </div>
-
         <div class="zsj">
           <div class="ssj">
             <img src="./img/塘河航道(2).svg" style="width: 100%">
@@ -93,7 +92,7 @@
   export default {
     data() {
       return {
-        showHub: false,
+        showLarge: false,
         screenWidth: document.body.clientWidth,
         screeHeight: document.body.clientHeight,
         temp:
@@ -117,10 +116,10 @@
         //大屏返回true
         if(this.screenWidth>4000&this.screeHeight>1000){
           console.log(true);
-          this.showHub = true;
+          this.showLarge = true;
         }else {
           console.log(false);
-          this.showHub = false;
+          this.showLarge = false;
         };
       },
     },
@@ -142,7 +141,7 @@
   }
   .ssjda1 {
     padding-top: 5%;
-    padding-bottom: 5%;
+    /*padding-bottom: 5%;*/
   }
   .right {
     flex-shrink: 0;
@@ -265,7 +264,7 @@
     text-indent: 2em;
     text-align:left;
     padding-left: 3%;
-    padding-bottom: 5%;
+    padding-bottom: 3%;
   }
   .yxwz {
     font-family: PingFang SC;
@@ -327,19 +326,22 @@
   .wenzi {
     padding-left: 3%;
   }
-  .jianju {
-    padding-top: 2%;
-  }
   .jianju{
     padding-top: 2%;
+    text-align: left;
+    padding-left: 3%;
   }
   .jianjuda {
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 3%;
+    text-align: left;
+    padding-left: 3%;
+    /*padding-bottom: 5%;*/
   }
   .jianjuda1 {
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 3%;
+    text-align: left;
+    padding-left: 3%;
+    /*padding-bottom: 5%;*/
   }
   .kdjj {
     // padding-top: 7%;
@@ -361,7 +363,7 @@
     position: relative;
   }
   .ssj {
-    padding-top: 8%;
+    padding-top: 5%;
   }
   .tpwz {
     position: absolute;
@@ -402,7 +404,7 @@
   .spda {
     width: 100%;
     /*padding-right: 10px;*/
-    padding-bottom: 5%;
+    /*padding-bottom: 5%;*/
   }
   .dbz {
     display: flex;

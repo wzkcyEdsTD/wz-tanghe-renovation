@@ -5,7 +5,8 @@
     </div>
     <div class="mask-wrapper">
       <div class="top"></div>
-      <div class="left"></div>
+      <div class="left" v-if="!showLarger"></div>
+      <div class="leftlarger" v-if="showLarger"></div>
       <!-- <div class="bottom"></div> -->
     </div>
   </div>
@@ -17,16 +18,31 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Map",
   data() {
-    return {};
+    return {
+      showLarger:false,
+      screenWidth: document.body.clientWidth,
+      screeHeight: document.body.clientHeight,
+
+    };
   },
   computed: {
     ...mapGetters("map", ["currentMapType"]),
   },
   mounted() {
     this.eventRegsiter();
+    this.getKuanGao();
   },
   methods: {
     eventRegsiter() {},
+    getKuanGao(){
+      //4320*1280
+      console.log(this.screenWidth);
+      if(this.screenWidth>4000&this.screeHeight>1000){
+        this.showLarger = true;
+      }else {
+        this.showLarger = false;
+      }
+    },
   },
   components: {
     CesiumMap,
@@ -56,6 +72,21 @@ export default {
     );
   }
   .left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 29vw;
+    height: 100%;
+    // background-image: linear-gradient(
+    //   90deg,
+    //   rgba(0, 13, 26, 0.84) 0%,
+    //   rgba(0, 17, 34, 0.55) 70%,
+    //   rgba(0, 19, 38, 0) 100%
+    // );
+    /*z-index:10;*/
+    background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+  }
+  .leftlarger {
     position: fixed;
     top: 0;
     left: 0;

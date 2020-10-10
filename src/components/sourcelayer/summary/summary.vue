@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div :class="[showHub?'summary':'summary1']">
+    <div :class="[showLarge?'summary':'summary1']">
       <div class="ding">
-        <div class="box" v-show="!showHub">
+        <div class="box" v-if="!showLarge">
           <div class="buttonpd" :class="{active: currentType=='total'}" @click="currentType='total'">
             <div class="tp">
-              <img src="./img/组合.png" alt="" v-show="currentType=='total'" />
-              <img src="./img/button.png" alt="" v-show="currentType=='source'" />
+              <img src="./img/组合.png" alt="" v-if="currentType=='total'" />
+              <img src="./img/button.png" alt="" v-if="currentType=='source'" />
               <span class="button">总览</span>
             </div>
           </div>
           <div class="buttonpd" :class="{active: currentType=='source'}" @click="currentType='source'">
             <div class="tp">
-              <img src="./img/组合.png" alt="" v-show="currentType=='source'" />
-              <img src="./img/button.png" alt="" v-show="currentType=='total'" />
+              <img src="./img/组合.png" alt="" v-if="currentType=='source'" />
+              <img src="./img/button.png" alt="" v-if="currentType=='total'" />
               <span class="button">资源</span>
             </div>
           </div>
@@ -22,10 +22,10 @@
           <img src="./img/装饰.png" alt=""/>
         </div>
       </div>
-      <div v-show="showHub" >
+      <div v-if="showLarge" >
         <div class="ssj">
           <div class="uls" >
-            <div :class="[!showHub?'lefts1':'lefts1da']">
+            <div :class="[!showLarge?'lefts1':'lefts1da']">
               <Right/>
             </div>
             <div class="rig">
@@ -33,14 +33,13 @@
             </div>
           </div>
         </div>
-
       </div>
-      <div v-if="!showHub" class="gdkd">
-        <Right v-show="currentType == 'total'" />
+      <div v-if="!showLarge" class="gdkd">
+        <Right v-if="currentType == 'total'" />
         <ProjectSummary v-if="currentType == 'source'" />
       </div>
-      <div class="mask-right" v-show="showHub"></div>
-      <div class="mask-right1" v-show="!showHub"></div>
+      <div class="mask-right" v-if="showLarge"></div>
+      <div class="mask-right1" v-if="!showLarge"></div>
     </div>
   </div>
 </template>
@@ -62,7 +61,7 @@ export default {
       currentType: 'total',
       screenWidth: document.body.clientWidth,
       screeHeight: document.body.clientHeight,
-      showHub: false,
+      showLarge: false,
     }
   },
   methods:{
@@ -72,10 +71,10 @@ export default {
       //大屏返回true
       if(this.screenWidth>4000&this.screeHeight>1000){
         console.log(true);
-        this.showHub = true;
+        this.showLarge = true;
       }else {
         console.log(false);
-        this.showHub = false;
+        this.showLarge = false;
       };
     },
   },

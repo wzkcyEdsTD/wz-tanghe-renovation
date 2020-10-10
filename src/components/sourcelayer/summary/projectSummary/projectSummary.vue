@@ -166,7 +166,7 @@ export default {
           itemHeight: 6,
           textStyle: {
             color: "#fff",
-            fontSize: 11,
+            fontSize: 18,
           },
           data: legendData,
           formatter: function (name) {

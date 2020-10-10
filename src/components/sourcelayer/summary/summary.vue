@@ -19,7 +19,7 @@
           </div>
         </div>
         <div>
-          <img src="./img/装饰.png" alt=""/>
+          <img src="./img/装饰.png" alt="" v-if="!showLarge"/>
         </div>
       </div>
       <div v-if="showLarge" >

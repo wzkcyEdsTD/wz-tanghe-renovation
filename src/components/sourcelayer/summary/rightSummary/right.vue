@@ -694,7 +694,7 @@
     /*flex-shrink:0;*/
   }
   .jdt{
-    font-size: 6px;
+    font-size: 11px;
     color: #FAFAFA;
     line-height: 8px;
     font-family: PingFang SC;

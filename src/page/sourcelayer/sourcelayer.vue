@@ -5,7 +5,7 @@
     </div>
     <div class="mask-wrapper">
       <div class="top"></div>
-<!--      <div class="left"></div>-->
+      <div class="left"></div>
       <!-- <div class="bottom"></div> -->
     </div>
   </div>
@@ -67,6 +67,7 @@ export default {
     //   rgba(0, 17, 34, 0.55) 70%,
     //   rgba(0, 19, 38, 0) 100%
     // );
+    /*z-index:10;*/
     background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }
   .bottom {

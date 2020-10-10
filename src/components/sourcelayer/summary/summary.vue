@@ -23,7 +23,7 @@
         </div>
       </div>
       <div v-show="showHub" >
-        <div style="padding-top: 5%">
+        <div class="ssj">
           <div class="uls" >
             <div :class="[!showHub?'lefts1':'lefts1da']">
               <Right/>
@@ -102,6 +102,9 @@ export default {
     z-index: 999;
     .ding {
       padding-top: 5%;
+    }
+    .ssj{
+      padding-top: 4%
     }
     .box {
       display: flex;

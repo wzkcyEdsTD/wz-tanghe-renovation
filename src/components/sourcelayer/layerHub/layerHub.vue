@@ -99,17 +99,17 @@
       </div>
       <div class="switch-menu-decorate"></div>
     </div>
-    <div :class="show?'left-menu-wrapperda':''" >
-      <div class="ssjda2">
-        <div :class="!show?'uls':'ulsda'">
-          <div class="lefts" v-show="show">
+    <div :class="show?'left-menu-wrapperda':'left-menu-wrapper'" >
+      <div :class="show?'ssjda2':''">
+        <div class="ulsda" v-if="show">
+          <div class="lefts">
             <RightSummary ></RightSummary>
           </div>
           <div class="rig">
             <div class="zsj">
               <div class="title-wrapper">
                 <span class="pre"></span>
-                <span :class="!show?'title':'titleda'">资源目录</span>
+                <span class="titleda">资源目录</span>
               </div>
               <div class="ssjda">
                 <div class="tree-container">
@@ -127,33 +127,31 @@
             </div>
           </div>
         </div>
-      </div>
-
-    </div>
-    <div class="left-menu-wrapper" v-show="!show">
-      <div v-show="!ms">
-        <div class="title-wrapper">
-          <span class="pre"></span>
-          <span class="title">资源目录</span>
+        <div v-show="!show">
+          <div v-show="!ms">
+            <div class="title-wrapper">
+              <span class="pre"></span>
+              <span class="title">资源目录</span>
+            </div>
+            <div class="tree-container">
+              <el-tree
+                ref="tree"
+                :data="data"
+                show-checkbox
+                node-key="id"
+                :filter-node-method="filterNode"
+                default-expand-all
+                @check-change="nodeCheckChange"
+              />
+            </div>
+          </div>
+          <div v-show="ms">
+            <div class="gdkd">
+              <RightSummary ></RightSummary>
+            </div>
+          </div>
         </div>
-        <div class="tree-container">
-          <el-tree
-            ref="tree"
-            :data="data"
-            show-checkbox
-            node-key="id"
-            :filter-node-method="filterNode"
-            default-expand-all
-            @check-change="nodeCheckChange"
-          />
-        </div>
       </div>
-      <div v-show="ms">
-        <div class="gdkd">
-          <RightSummary ></RightSummary>
-        </div>
-      </div>
-
     </div>
     <div class="sign-wrapper" v-show="showSign">
       <img src="/static/images/common/sign@2x.png">
@@ -513,7 +511,9 @@ export default {
    width: 300px;
  }
   .rig{
-    flex:1;padding-left: 3%
+    flex:1;
+    padding-left: 3%;
+    height: 1280px;
   }
   .ssjda{
     padding-top: 5%;

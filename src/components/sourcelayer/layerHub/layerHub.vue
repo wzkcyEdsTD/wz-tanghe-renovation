@@ -519,7 +519,7 @@ export default {
     padding-top: 5%;
   }
 .ssjda2{
-  padding-top: 10%;
+  padding-top: 8%;
 
 }
   .zsj{

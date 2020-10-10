@@ -18,7 +18,7 @@
             :class="!showLarge?'sp':'spda'"
           />
           <div :class="!showLarge?'jianju':'jianjuda'">
-            <span :class="!showHub?'xbt':'xbtda'">流域</span>
+            <span :class="!showLarge?'xbt':'xbtda'">流域</span>
             <img src="./img/装饰.png" alt="" class="zs" />
           </div>
           <div class="box">

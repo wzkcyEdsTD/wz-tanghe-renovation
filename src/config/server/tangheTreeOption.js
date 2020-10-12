@@ -2,13 +2,13 @@
 const SERVER_HOST = 
 "http://172.168.3.183:8090/iserver/services"
 // "http://172.20.83.223:8098/iserver/services";
-const SW_DATA = "/data-th_zy/rest/data";
-const SW_DATA_NAME = "th_zy:";
+const SW_DATA = "/data-alldata/rest/data";
+const SW_DATA_NAME = "172.168.3.181_thxm:";
 const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
 
-const SW_DATA2 = "/data-thzt/rest/data";
-const SW_DATA_NAME2 = "thzt:";
-const SERVER_DEFAULT_DATA2 = SERVER_HOST + SW_DATA2;
+// const SW_DATA2 = "/data-thzt/rest/data";
+// const SW_DATA_NAME2 = "thzt:";
+// const SERVER_DEFAULT_DATA2 = SERVER_HOST + SW_DATA2;
 
 // export const TARGET_SOURCE = [
 //   {
@@ -207,8 +207,8 @@ export const CESIUM_TREE_OPTION = [
         ...v,
         id: v.label,
         icon: v.label,
-        url: SERVER_DEFAULT_DATA2,
-        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}${v.dataset}`,
         type: "mvt"
       };
     })
@@ -221,8 +221,8 @@ export const CESIUM_TREE_OPTION = [
         ...v,
         id: v.label,
         icon: v.label,
-        url: SERVER_DEFAULT_DATA2,
-        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}${v.dataset}`,
         type: "mvt"
       };
     })
@@ -235,8 +235,8 @@ export const CESIUM_TREE_OPTION = [
         ...v,
         id: v.label,
         icon: v.label,
-        url: SERVER_DEFAULT_DATA2,
-        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}${v.dataset}`,
         type: "mvt"
       };
     })
@@ -249,8 +249,8 @@ export const CESIUM_TREE_OPTION = [
         ...v,
         id: v.label,
         icon: v.label,
-        url: SERVER_DEFAULT_DATA2,
-        newdataset: `${SW_DATA_NAME2}${v.dataset}`,
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}${v.dataset}`,
         type: "mvt"
       };
     })

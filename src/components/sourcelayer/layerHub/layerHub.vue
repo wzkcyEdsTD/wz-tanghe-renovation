@@ -50,7 +50,7 @@
         </div>
       </div>
     </div> -->
-    <div class="layer-wrapper">
+    <div :class="!showLarge?'layer-wrapper':'layer-wrapperda'">
       <div class="hub-list">
         <div class="hub-item" :class="{selected: currentLayer=='yx'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
           <img v-if="currentLayer=='yx'" src="./images/yx-sel2.png">

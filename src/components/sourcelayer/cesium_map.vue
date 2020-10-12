@@ -117,7 +117,7 @@ export default {
               type: pick.id.type
             });
           }
-          this.$refs.layerhub.showHub = false
+          // this.$refs.layerhub.showHub = false
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     },
@@ -177,7 +177,6 @@ export default {
       // });
       this.$bus.$off("cesium-3d-switch");
       this.$bus.$on("cesium-3d-switch", ({ type, value }) => {
-        console.log('gogogogo', type, value)
         // 白模切换
         if (type === 'baimo') {
           const _LAYER_ = window.earth.scene.layers.find("baimo");
@@ -190,6 +189,12 @@ export default {
                 name: "baimo",
               }
             );
+            Cesium.when(baimoPromise, async ([forceLayer, ...oLayer]) => {
+              const LAYER = window.earth.scene.layers.find("baimo");
+              LAYER.style3D.fillForeColor = new Cesium.Color.fromCssColorString(
+                "rgba(137,137,137, 1)"
+              );
+            })
           }
         }
         if (type === 'jingmo') {
@@ -322,7 +327,8 @@ export default {
       // 移除缓冲圈
       $(".cesium-widget-credits").hide();
       viewer.scene.globe.depthTestAgainstTerrain = false;
-      this.cameraMove();
+      // this.cameraMove();
+      this.fly();
       fn && fn();
     },
     cameraMove() {
@@ -337,6 +343,18 @@ export default {
           pitch: -0.5808830390057396,
           roll: 0,
         },
+      });
+    },
+    fly() {
+      const routes = new Cesium.RouteCollection(window.earth.entities);
+      routes.fromFile("./static/fpf/首页飞行.fpf");
+      //初始化飞行管理
+      const flyManager = new Cesium.FlyManager({
+        scene: window.earth.scene,
+        routes: routes
+      });
+      flyManager.readyPromise.then(function () { // 飞行路线就绪
+        flyManager.play();
       });
     },
     lipai() {

@@ -5,7 +5,7 @@
     </div>
     <div class="mask-wrapper">
       <div class="top"></div>
-      <!-- <div class="left"></div> -->
+      <div class="left"></div>
     </div>
   </div>
 </template>
@@ -58,7 +58,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 20vw;
+    width: 40vw;
     height: 100%;
     background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }

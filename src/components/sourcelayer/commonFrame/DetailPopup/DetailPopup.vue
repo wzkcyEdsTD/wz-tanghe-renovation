@@ -10,15 +10,15 @@
         <a class="leaflet-popup-close-button" href="#" @click="closePopup"></a>
         <div class="leaflet-popup-content-wrapper">
           <div id="forcePopUpLink" class="leaflet-popup-content">
-            <header>{{forceEntity.extra_data.NAME}}</header>
+            <header>{{forceEntity.attributes.NAME}}</header>
             <ul class="content-body">
               <li>
                 <span>所属区县:</span>
-                <span>{{forceEntity.extra_data.DISTRICT}}</span>
+                <span>{{forceEntity.attributes.DISTRICT}}</span>
               </li>
               <li>
                 <span>所属街道:</span>
-                <span>{{forceEntity.extra_data.STREET}}</span>
+                <span>{{forceEntity.attributes.STREET}}</span>
               </li>
               <!-- <li v-for="(item,key,index) in forceEntity.fix_data" :key="index">
                 <span>{{key}}</span>
@@ -95,26 +95,26 @@
           </div>
           <div class="content-item video-wrapper" id="video">
             <div class="sub-title">视频</div>
-            <div class="video-content" v-if="this.forceEntity.extra_data && this.forceEntity.extra_data.SP">
-              <video class="video" :src="`/static/video/${forceEntity.type}/${this.forceEntity.extra_data.SP}`" controls="controls"></video>
+            <div class="video-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.SP">
+              <video class="video" :src="`/static/video/${forceEntity.type}/${this.forceEntity.attributes.SP}`" controls="controls"></video>
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
           <div class="content-item video-wrapper" id="audio">
             <div class="sub-title">音频</div>
-            <div class="video-content" v-if="this.forceEntity.extra_data && this.forceEntity.extra_data.YY">
-              <audio class="audio" :src="`/static/audio/${forceEntity.type}/${this.forceEntity.extra_data.YY}`" controls="controls"></audio>
+            <div class="video-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.YY">
+              <audio class="audio" :src="`/static/audio/${forceEntity.type}/${this.forceEntity.attributes.YY}`" controls="controls"></audio>
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
           <div class="content-item overall-wrapper" id="overall">
             <div class="sub-title">全景</div>
-            <div class="overall-content" v-if="this.forceEntity.extra_data && this.forceEntity.extra_data.ZBQJ">
+            <div class="overall-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.ZBQJ">
               <img v-for="(item,index) in zbOverallList" :key="index"
                 :src="`/static/images/VRPic/${item.FEATUREGUID}.png`" @click="openQJ(item)"
               >
             </div>
-            <div class="overall-content" v-if="this.forceEntity.extra_data && this.forceEntity.extra_data.QJ">
+            <div class="overall-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.QJ">
               <img v-for="(item,index) in overallList" :key="index"
                 :src="`/static/images/${forceEntity.type}/${item.FEATUREGUID}.jpg`" @click="openQJ(item)"
               >
@@ -182,8 +182,8 @@ export default {
     photoList() {
       let tempArr = []
       let result = {}
-      if (this.forceEntity.extra_data && this.forceEntity.extra_data.PHOTO) {
-        let photoStr = this.forceEntity.extra_data.PHOTO
+      if (this.forceEntity.attributes && this.forceEntity.attributes.PHOTO) {
+        let photoStr = this.forceEntity.attributes.PHOTO
         if (photoStr.length) {
           this.havePhoto = true
           if (~photoStr.indexOf(';')) {
@@ -219,14 +219,12 @@ export default {
     },
     spotList() {
       let tempArr = []
-      let result = []
-      if (this.forceEntity.extra_data && this.forceEntity.extra_data.JGT) {
-        let photoStr = this.forceEntity.extra_data.JGT
+      if (this.forceEntity.attributes && this.forceEntity.attributes.JGT) {
+        let photoStr = this.forceEntity.attributes.JGT
         if (photoStr.length) {
           this.haveSpot = true
           if (~photoStr.indexOf(';')) {
             return photoStr.split(';')
-            return result
           } else {
             return [photoStr]
           }
@@ -238,8 +236,8 @@ export default {
     overallList() {
       let overallList = []
       let currentZBQJ = []
-      if (this.forceEntity.extra_data && this.forceEntity.extra_data.QJ) {
-        let ZBQJStr = this.forceEntity.extra_data.QJ
+      if (this.forceEntity.attributes && this.forceEntity.attributes.QJ) {
+        let ZBQJStr = this.forceEntity.attributes.QJ
         if (ZBQJStr.length) {
           this.haveOverall = true
           if (~ZBQJStr.indexOf(',')) {
@@ -263,8 +261,8 @@ export default {
     zbOverallList() {
       let overallList = []
       let currentZBQJ = []
-      if (this.forceEntity.extra_data && this.forceEntity.extra_data.ZBQJ) {
-        let ZBQJStr = this.forceEntity.extra_data.ZBQJ
+      if (this.forceEntity.attributes && this.forceEntity.attributes.ZBQJ) {
+        let ZBQJStr = this.forceEntity.attributes.ZBQJ
         if (ZBQJStr.length) {
           this.haveZbOverall = true
           if (~ZBQJStr.indexOf(',')) {
@@ -305,7 +303,7 @@ export default {
      */
     renderForceEntity() {
       const forceEntity = this.forceEntity;
-      if (forceEntity.extra_data) {
+      if (forceEntity.fix_data) {
         const pointToWindow = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
           window.earth.scene,
           forceEntity.position

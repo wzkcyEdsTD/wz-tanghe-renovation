@@ -77,54 +77,18 @@ export const fixTreeWithExtra = (gArr, eObj, node, context) => {
  * @param {*} node
  * @param {*} fields 别名数组
  */
-export const treeDrawTool = (context, { result }, node, fields = []) => {
+export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
   const fieldHash = fixFieldsByArr(fields);
-  const poiEntityCollection = new Cesium.CustomDataSource(node.id);
-  window.earth.dataSources.add(poiEntityCollection).then(datasource => {
-    context.entityMap[node.id] = datasource;
-  });
-  context.featureMap[node.id] = result.features;
-  let forceDrawFeatures = [];
-  // if (node.saveData) {
-  //   // const { drawFeatures } = fixTreeWithExtra(
-  //   //   result.features,
-  //   //   context[node.withExtraData],
-  //   //   node,
-  //   //   context
-  //   // );
-  //   // forceDrawFeatures = [...drawFeatures];
-  //   if (node.id === '项目') {
-  //     result.features.forEach(item => {
-  //       if (item.attributes.ZBQJ.length) {
-  //         console.log('ZBQJ!!!', item)
-  //       }
-  //       if (item.attributes.CURRENT_STATE) {
-  //         forceDrawFeatures.push(item)
-  //       }
-  //     })
-  //     context[node.saveData](forceDrawFeatures);
-  //   } else {
-  //     forceDrawFeatures = result.features
-  //     context[node.saveData](result.features);
-  //   }
-  // } else {
-  //   // if (node.id === '项目') {
-  //   //   result.features.forEach(item => {
-  //   //     if (item.attributes.XMJZQK) {
-  //   //       forceDrawFeatures.push(item)
-  //   //     }
-  //   //   })
-  //   //   context[node.saveData](forceDrawFeatures);
-  //   // } else {
-  //   //   forceDrawFeatures = result.features;
-  //   // }
-  //   forceDrawFeatures = result.features;
-  // }
+  // const poiEntityCollection = new Cesium.CustomDataSource(node.id);
+  // window.earth.dataSources.add(poiEntityCollection).then(datasource => {
+  //   context.entityMap[node.id] = datasource;
+  // });
+  //  hash赋值
+  window.billboardMap[node.id] = window.earth.scene.primitives.add(new Cesium.BillboardCollection());
+  window.labelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
 
-  if (node.saveData) {
-    forceDrawFeatures = result.features
-    context[node.saveData](forceDrawFeatures);
-  }
+  // context.featureMap[node.id] = result.features;
+  let forceDrawFeatures = [];
   if (node.id === '项目') {
     result.features.forEach(item => {
       if (item.attributes.SFFSY67) {
@@ -134,80 +98,90 @@ export const treeDrawTool = (context, { result }, node, fields = []) => {
   } else {
     forceDrawFeatures = result.features;
   }
+  if (node.saveData) {
+    context.saveDataMap[node.id] = result.features;
+    context[node.saveData](forceDrawFeatures)
+  }
   context.setSourceMap({[node.id]: forceDrawFeatures});
 
-  forceDrawFeatures.map(item => {
-    const entityOption = {
-      id: `${node.id}_${item.attributes.SMID}@${node.icon}`,
-      label: {
-        text: node.id == '项目' ? item.attributes.SHORTNAME : item.attributes.NAME,
-        // color: new Cesium.Color.fromCssColorString("#000"),
-        fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
-        // style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-        // outlineColor: new Cesium.Color.fromCssColorString("#fff"),
-        font: "8px",
-        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-        pixelOffset: new Cesium.Cartesian2(0, -20),
-        disableDepthTestDistance: Number.POSITIVE_INFINITY
-      },
-      name: node.id,
-      fieldHash,
-      extra_data: item.attributes,
-      fix_data: fixAttributesByOrigin(item.attributes, fieldHash),
-      geometry: item.geometry,
-      type: node.id
-    };
-    const polygonGeometry = node.polygon
-      ? [].concat.apply(
-        [],
-        item.geometry.components[0].components.map(v => [
-          parseFloat(v.x),
-          parseFloat(v.y)
-        ])
-      )
-      : [];
-    const entityInstance = node.polygon
-      ? {
-        ...entityOption,
-        position: Cesium.Cartesian3.fromDegrees(
-          ...getCenterOfPolygon(polygonGeometry, 30)
-        ),
-        polygon: {
-          hierarchy: Cesium.Cartesian3.fromDegreesArray(polygonGeometry),
-          outline: true,
-          outlineWidth: 4,
-          outlineColor: new Cesium.Color.fromCssColorString("#FFD700"),
-          material: new Cesium.Color.fromCssColorString("#7FFF00").withAlpha(
-            0.6
-          ),
-          perPositionHeight: true,
-          height: 2
-        }
-      }
-      : {
-        ...entityOption,
-        position: Cesium.Cartesian3.fromDegrees(
-          item.geometry.x,
-          item.geometry.y,
-          4
-        ),
-        // ellipse: {
-        //   semiMinorAxis: 100.0,
-        //   semiMajorAxis: 100.0,
-        //   material: Cesium.Color.WHITE,
-        //   distanceDisplayCondition: new Cesium.DistanceDisplayCondition(6000, 10000000),
-        // },
-        billboard: {
-          image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
-          width: node.iconSize == 'small' ? 24 : 24,
-          height: node.iconSize == 'small' ? 24 : 25,
-          // sizeInMeters: true,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY,
-          // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-          // translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)
-        }
-      };
+  // forceDrawFeatures.map(item => {
+  //   const entityOption = {
+  //     id: `${node.id}_${item.attributes.SMID}@${node.icon}`,
+  //     label: {
+  //       text: node.id == '项目' ? item.attributes.SHORTNAME : item.attributes.NAME,
+  //       // color: new Cesium.Color.fromCssColorString("#000"),
+  //       fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
+  //       // style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+  //       // outlineColor: new Cesium.Color.fromCssColorString("#fff"),
+  //       font: "8px",
+  //       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
+  //       pixelOffset: new Cesium.Cartesian2(0, -20),
+  //       disableDepthTestDistance: Number.POSITIVE_INFINITY
+  //     },
+  //     name: node.id,
+  //     fieldHash,
+  //     extra_data: item.attributes,
+  //     fix_data: fixAttributesByOrigin(item.attributes, fieldHash),
+  //     geometry: item.geometry,
+  //     type: node.id
+  //   };
+  //   const entityInstance = {
+  //       ...entityOption,
+  //       position: Cesium.Cartesian3.fromDegrees(
+  //         item.geometry.x,
+  //         item.geometry.y,
+  //         4
+  //       ),
+  //       billboard: {
+  //         image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
+  //         width: node.iconSize == 'small' ? 24 : 24,
+  //         height: node.iconSize == 'small' ? 24 : 25,
+  //         // sizeInMeters: true,
+  //         disableDepthTestDistance: Number.POSITIVE_INFINITY,
+  //         // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
+  //         // translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)
+  //       }
+  //     };
 
-    poiEntityCollection.entities.add(entityInstance);
+  //   poiEntityCollection.entities.add(entityInstance);
+  // });
+
+  //  属性赋值
+  forceDrawFeatures.map(v => {
+    !window.featureMap[node.id] && (window.featureMap[node.id] = {});
+    window.featureMap[node.id][v.attributes.SMID] = {
+      name: v.attributes.SHORTNAME || v.attributes.NAME || v.attributes.MC || v.attributes.JC || v.attributes[node.withExtraKey],
+      attributes: v.attributes,
+      geometry: v.geometry,
+      fix_data: fixAttributesByOrigin(v.attributes, fieldHash),
+      type: node.id
+    }
+  })
+  console.log('window.featureMap!!!', window.featureMap)
+  forceDrawFeatures.map(item => {
+    const position = Cesium.Cartesian3.fromDegrees(
+      item.geometry.x,
+      item.geometry.y,
+      4
+    );
+    window.labelMap[node.id].add({
+      id: `label@${item.attributes.SMID}@${node.id}`,
+      text: item.attributes.SHORTNAME || item.attributes.NAME,
+      fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
+      font: "8px",
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
+      pixelOffset: new Cesium.Cartesian2(0, -30),
+      disableDepthTestDistance: Number.POSITIVE_INFINITY,
+      position
+    });
+    window.billboardMap[node.id].add({
+      id: `billboard@${item.attributes.SMID}@${node.id}`,
+      image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
+      width: node.iconSize == 'small' ? 24 : 24,
+      height: node.iconSize == 'small' ? 24 : 25,
+      disableDepthTestDistance: Number.POSITIVE_INFINITY,
+      position
+    })
   });
+  fn && fn();
 };

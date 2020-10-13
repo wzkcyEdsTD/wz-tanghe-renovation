@@ -185,8 +185,9 @@ export default {
       //  tile layers
       tileLayers: {},
       //  cesium Object
-      entityMap: {},
-      featureMap: {}, //  源数据,量小
+      // entityMap: {},
+      // featureMap: {}, //  源数据,量小
+      saveDataMap: {},
       showHub: false,
       currentMouse: '',
       currentLayer: 'yx',
@@ -269,11 +270,9 @@ export default {
       getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(url, {
         eventListeners: {
           processCompleted: async (res) => {
-            console.log(999, res)
             const fields = await getIserverFields(url, newdataset);
             console.log(119, fields)
-            treeDrawTool(this, res, node, fields);
-            fn && fn();
+            treeDrawTool(this, res, node, fields, fn);
           },
           processFailed: (msg) => console.log(msg),
         },
@@ -336,10 +335,15 @@ export default {
                   })
                 ));
           }
-          if (node.id && this.entityMap[node.id]) {
-            node.saveData ? this[node.saveData](this.featureMap[node.id]) : null
+          // if (node.id && this.entityMap[node.id]) {
+          if (node.id && window.billboardMap[node.id]) {
+            node.saveData ? this[node.saveData](this.saveDataMap[node.id]) : null
             this.$bus.$emit('source-change', { value: node.id });
-            this.entityMap[node.id].show = true;
+            // this.entityMap[node.id].show = true;
+            window.billboardMap[node.id]._billboards.map(
+              (v) => (v.show = true)
+            );
+            window.labelMap[node.id].setAllLabelsVisible(true);
           } else {
             this.getPOIPickedFeature(node, () => {
               this.$bus.$emit('source-change', { value: node.id });
@@ -388,14 +392,17 @@ export default {
             : this.tileLayers[node.id];
         LAYER && (LAYER.show = false);
         if (
-          // node.icon &&
-          this.entityMap[node.id] &&
-          window.earth.dataSources.length
+          // this.entityMap[node.id] &&
+          // window.earth.dataSources.length
+          window.billboardMap[node.id]
         ) {
-          this.entityMap[node.id].show = false;
-          if (node.saveData) {
-            this[node.saveData]([]);
-          }
+          node.saveData && this[node.saveData]([]);
+          // this.entityMap[node.id].show = false;
+          // if (node.saveData) {
+          //   this[node.saveData]([]);
+          // }
+          window.billboardMap[node.id]._billboards.map((v) => (v.show = false));
+          window.labelMap[node.id].setAllLabelsVisible(false);
         }
         node.componentEvent &&
           this.$bus.$emit(node.componentEvent, { value: null });

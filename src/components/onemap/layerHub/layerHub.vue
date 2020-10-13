@@ -730,11 +730,11 @@ export default {
     this.drawShangLines();
     this.drawXiaLines();
   },
-  watch: {
-    drawData(val) {
-      console.log("drawData", val);
-    },
-  },
+  // watch: {
+  //   drawData(val) {
+  //     console.log("drawData", val);
+  //   },
+  // },
 };
 </script>
 

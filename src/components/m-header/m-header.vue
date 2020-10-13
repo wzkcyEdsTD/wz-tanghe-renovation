@@ -7,6 +7,10 @@
     <div class="info">
       <span class="time">{{date}}</span>
     </div>
+    <div class="route-wrapper">
+      <div class="route-item" :class="{active: currentPage=='sourcelayer'}" @click="goRoute('sourcelayer')">资源一张图</div>
+      <div class="route-item" :class="{active: currentPage=='onemap'}" @click="goRoute('onemap')">互学互比</div>
+    </div>
   </div>
 </template>
 
@@ -16,16 +20,24 @@ export default {
   name: "MHeader",
   data() {
     return {
-      date: ''
+      date: '',
+      currentPage: this.$route.name
     };
   },
   mounted() {
+    console.log('currentPage', this.currentPage)
     this.date = getDate()
     setInterval(() => {
       this.date = getDate()
     }, 1000)
   },
   methods: {
+    goRoute(name) {
+      if (this.currentPage != name) {
+        this.currentPage = name
+        this.$router.push({name})
+      }
+    }
   },
   // watch: {
   //   $route(to) {
@@ -71,6 +83,21 @@ export default {
     font-size: 12px;
     font-family: DIN;
     z-index: 3;
+  }
+  .route-wrapper {
+    z-index: 3;
+    position: absolute;
+    top: 20px;
+    right: 20%;
+    color: #fff;
+    display: flex;
+    .route-item {
+      cursor: pointer;
+      margin-right: 30px;
+      &.active {
+        color: #16EAEA;
+      }
+    }
   }
 }
 </style>

@@ -71,12 +71,22 @@
             </div>
             <div class="spot-wrapper">
               <div class="sub-title">现场记录</div>
-              <div class="spot-box" v-for="(value,key,index) in photoList" :key="index">
+              <!-- <div class="spot-box" v-for="(value,key,index) in photoList" :key="index">
                 <span class="time">{{`${key.substring(0,4)}-${key.substring(4,6)}-${key.substring(6,8)}`}}</span>
                 <div class="spot-content">
                   <viewer class="img-wrapper" :images="value">
                     <img v-for="(item,index) in value" :key="index"
                       :src="`/static/images/${forceEntity.type}/${item}`" alt=""
+                    >
+                  </viewer>
+                </div>
+              </div> -->
+              <div class="spot-box" v-for="(item,index) in photoList" :key="index">
+                <span class="time">{{`${item[0].split('_')[1].substring(0,4)}-${item[0].split('_')[1].substring(4,6)}-${item[0].split('_')[1].substring(6,8)}`}}</span>
+                <div class="spot-content">
+                  <viewer class="img-wrapper" :images="item">
+                    <img v-for="(img,j) in item" :key="j"
+                      :src="`/static/images/${forceEntity.type}/${img}`" alt=""
                     >
                   </viewer>
                 </div>
@@ -211,7 +221,9 @@ export default {
             result[time] = [photoStr]
           }
           console.log('result!!!!', result)
-          return result
+          let arr = Object.values(result).reverse()
+          console.log('arr!!!', arr);
+          return arr
         }
       } else {
         this.havePhoto = false
@@ -364,6 +376,6 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url("./DetailPopup.less");
 </style>

@@ -55,7 +55,7 @@
             <span class="name">名称</span>
             <!-- <span class="speed">进度</span> -->
           </li>
-          <li class="result-item" v-for="(item,index) in searchList" :key="index">
+          <li class="result-item" v-for="(item,index) in searchList" :key="index" @click="itemClick(item)">
             <span class="index">{{index+1}}</span>
             <span class="name" :title="item.attributes.NAME">{{item.attributes.NAME}}</span>
             <!-- <span class="speed">{{item.attributes.REMARK}}</span> -->
@@ -159,14 +159,14 @@ export default {
       this.pieEchart.setOption({
         legend: {
           orient: "horizontal",
-          top: "25%",
+          top: "20%",
           left: "34%",
           icon: "rect",
           itemWidth: 14,
           itemHeight: 14,
           textStyle: {
             color: "#fff",
-            fontSize: 18,
+            fontSize: 14,
           },
           data: legendData,
           formatter: function (name) {
@@ -392,12 +392,27 @@ export default {
     },
     searchFilter() {
       let allSearchList = this.sourceMap[this.currentSource]
+      allSearchList = allSearchList.filter(item => {
+        return item.attributes.NAME.length
+      })
       this.searchList = this.searchText
         ? allSearchList.filter((item) => {
             return item.attributes.NAME.indexOf(this.searchText) >= 0;
           })
         : allSearchList;
     },
+    itemClick(item) {
+      const { x, y } = item.geometry;
+      window.earth.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(x, y - 0.005, 450),
+        orientation: {
+          heading: 0.003336768850279448,
+          pitch: -0.5808830390057418,
+          roll: 0.0,
+        },
+        maximumHeight: 450,
+      });
+    }
   },
 };
 </script>

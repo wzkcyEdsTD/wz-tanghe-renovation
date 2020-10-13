@@ -124,6 +124,15 @@
             </ul>
           </div>
         </div>
+        <div class="jh-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">计划贯通时间轴</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="gif-wrapper">
+            <img src="./images/timegif.gif" alt="" />
+          </div>
+        </div>
       </div>
       <div class="xmtj-container">
         <div class="title-wrapper">
@@ -183,6 +192,22 @@
             </ul>
           </div>
         </div>
+        <div class="jd-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">建设进度</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="chart-wrapper">
+            <div class="rate-item">
+              <p>投资完成率</p>
+              <div style="height: 50px" class="echart" ref="shangEchart"></div>
+            </div>
+            <div class="rate-item">
+              <p>项目完成率</p>
+              <div style="height: 50px" class="echart" ref="xiaEchart"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -207,6 +232,28 @@ export default {
       ],
       pieEchart: null,
       barEchart: null,
+      shangEchart: null,
+      xiaEchart: null,
+      // sourceData: {
+      //   zhb: {
+      //     kdTotalNumber: 40,
+      //     kdTotalLength: 19074,
+      //     kdfb: {
+      //       east: [12, 2792],
+      //       south: [9, 7030],
+      //       inner: [6, 1652],
+      //       outer: [10, 5410],
+      //       west: [3, 2190]
+      //     },
+      //     xmTotalNumber: 67,
+      //     xmTotalamount: 275,
+      //     jsqk: {
+      //       qqyj: [2, 4],
+      //       zj: [23, 26],
+      //       wg: []
+      //     }
+      //   }
+      // }
     };
   },
   computed: {
@@ -440,6 +487,223 @@ export default {
         ],
       });
     },
+    drawXiaLines() {
+      this.xiaEchart = this.$echarts.init(this.$refs.xiaEchart);
+      this.xiaEchart.setOption({
+        grid: {
+          right: 100,
+        },
+        yAxis: {
+          data: [""],
+          axisTick: {
+            //x轴刻度线
+            show: false,
+          },
+          splitLine: {
+            //网格线
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+          axisLine: {
+            //坐标轴线
+            show: false,
+          },
+        },
+        xAxis: {
+          max: 50,
+          min: 0,
+          axisLabel: {
+            show: false,
+          },
+          axisLine: {
+            //坐标轴线
+            show: false,
+          },
+          axisLable: {
+            //坐标轴线
+            show: false,
+          },
+          splitLine: {
+            //网格线
+            show: false,
+          },
+          axisTick: {
+            //x轴刻度线
+            show: false,
+          },
+        },
+        series: [
+          {
+            name: "已完成",
+            type: "bar",
+            stack: "完成情况",
+            data: [16.5],
+            barWidth: 30, //柱图宽度
+            itemStyle: {
+              color: "#CE4142",
+              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+            },
+            label: {
+              formatter: "{a|33%}",
+              show: true,
+              textStyle: {
+                rich: {
+                  a: {
+                    fontSize: "16",
+                    fontFamily: "PingFang SC",
+                    color: "#ffffff",
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: "渐变",
+            type: "bar",
+            stack: "完成情况",
+            data: [1],
+            // barGap: '-100%',
+            itemStyle: {
+              color: "#FF2729",
+              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+            },
+          },
+          {
+            name: "未完成",
+            type: "bar",
+            stack: "完成情况",
+            data: [32.5],
+            label: {
+              formatter: "{a|67个}",
+              show: true,
+              position: "right",
+              textStyle: {
+                rich: {
+                  a: {
+                    fontSize: "16",
+                    fontFamily: "PingFang SC",
+                    color: "#ffffff",
+                  },
+                },
+              },
+            },
+            itemStyle: {
+              color: "#361B23",
+              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+            },
+          },
+        ],
+      });
+    },
+    drawShangLines() {
+      this.shangEchart = this.$echarts.init(this.$refs.shangEchart);
+      this.shangEchart.setOption({
+        grid: {
+          right: 100,
+          // containLabel: false,
+        },
+        textStyle: {
+          color: "#FAFAFA",
+          fontSize: 13,
+          fontFamily: "PingFang SC",
+        },
+        yAxis: {
+          data: [""],
+          axisTick: {
+            //x轴刻度线
+            show: false,
+          },
+          splitLine: {
+            //网格线
+            show: false,
+          },
+          axisLine: {
+            //坐标轴线
+            show: false,
+          },
+        },
+        xAxis: {
+          max: 50,
+          min: 0,
+          axisLine: {
+            //坐标轴线
+            show: false,
+          },
+          splitLine: {
+            //网格线
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+          axisTick: {
+            //x轴刻度线
+            show: false,
+          },
+        },
+        series: [
+          {
+            name: "已完成",
+            type: "bar",
+            stack: "完成情况",
+            data: [30],
+            barWidth: 30, //柱图宽度
+            itemStyle: {
+              color: "#1A56E2",
+              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+            },
+            label: {
+              formatter: "{a|60%}",
+              show: true,
+              textStyle: {
+                rich: {
+                  a: {
+                    fontSize: "16",
+                    fontFamily: "PingFang SC",
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: "渐变",
+            type: "bar",
+            stack: "完成情况",
+            data: [1],
+            // barGap: '-100%',
+            itemStyle: {
+              color: "#729CFF",
+              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+            },
+          },
+          {
+            name: "未完成",
+            type: "bar",
+            stack: "完成情况",
+            data: [28],
+            label: {
+              formatter: "{a|275亿元}",
+              show: true,
+              position: "right",
+              textStyle: {
+                rich: {
+                  a: {
+                    fontSize: "16",
+                    fontFamily: "PingFang SC",
+                  },
+                },
+              },
+            },
+            itemStyle: {
+              color: "#122F76",
+              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+            },
+          },
+        ],
+      });
+    },
   },
   mounted() {
     const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
@@ -463,6 +727,8 @@ export default {
     });
     this.drawPies();
     this.drawBars();
+    this.drawShangLines();
+    this.drawXiaLines();
   },
   watch: {
     drawData(val) {

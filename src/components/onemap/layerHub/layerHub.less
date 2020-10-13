@@ -31,7 +31,7 @@
     margin-left: 30px;
     .xm-list {
       margin-top: 10px;
-      height: 500px;
+      height: 700px;
       overflow-y: scroll;
       .xm-item {
         width: 220px;
@@ -87,7 +87,7 @@
     margin-left: 30px;
     .dd-list {
       margin-top: 10px;
-      height: 500px;
+      height: 700px;
       overflow-y: scroll;
       .dd-item {
         display: flex;
@@ -118,11 +118,13 @@
             display: flex;
             transform: scale(0.9);
             .key {
+              flex: 2;
               margin-top: 3px;
               font-size: 12px;
               color: #eee;
             }
             .value {
+              flex: 1;
               margin-top: 3px;
               font-size: 12px;
               color: #16EAEA;
@@ -174,11 +176,24 @@
         }
       }
     }
-    .kdfb-info {
+    .kdfb-info, .czwt-info, .jh-info, .jd-info {
       margin-top: 20px;
     }
-    .czwt-info {
-      margin-top: 20px;
+    .gif-wrapper {
+      margin-top: 5px;
+      >img {
+        width: 100%;
+      }
+    }
+    .chart-wrapper {
+      margin-top: 10px;
+      .rate-item {
+        font-size: 12px;
+        >p {
+          padding-left: 30px;
+          color: #eee;
+        }
+      }
     }
   }
   .xmtj-container {

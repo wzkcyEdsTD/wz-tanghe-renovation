@@ -3,20 +3,27 @@
     <!-- <div class="sign-wrapper">
       <img src="/static/images/common/sign@2x.png">
     </div> -->
+    <div class="switch-menu-wrapper">
+      <div class="switch-menu-container">
+        <span :class="{active: currentType=='xm'}" @click="currentType='xm'">项目</span>
+        <span :class="{active: currentType=='dd'}" @click="currentType='dd'">断点</span>
+      </div>
+      <div class="switch-menu-decorate"></div>
+    </div>
     <div class="left-content">
       <ul class="zrdw-list">
-        <li class="zrdw-item" v-for="(item, index) in zrdwList" :key="index">
+        <li class="zrdw-item" :class="{active: currentZrdw==item}" v-for="(item, index) in zrdwList" :key="index" @click="getData(item)">
           {{ item }}
         </li>
       </ul>
-      <div class="xm-container">
+      <div class="xm-container" v-show="currentType=='xm'">
         <div class="title-wrapper">
           <span class="pre"></span>
           <span class="title">项目</span>
         </div>
         <div class="xm-list">
-          <div v-for="(item, index) in sourceMap['项目']" :key="index">
-            <div class="xm-item">
+          <div v-for="(item, index) in currentXmList" :key="index">
+            <div class="xm-item" @click="itemClick(item)">
               <div class="name">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
               <div class="info-container">
                 <div class="info-item">
@@ -38,15 +45,16 @@
             <div class="split-line"></div>
           </div>
         </div>
+        <div class="no-tip" v-show="currentXmList && !currentXmList.length">暂无数据</div>
       </div>
-      <div class="dd-container">
+      <div class="dd-container" v-show="currentType=='dd'">
         <div class="title-wrapper">
           <span class="pre"></span>
           <span class="title">断点</span>
         </div>
         <div class="dd-list">
-          <div v-for="(item, index) in sourceMap['断点']" :key="index">
-            <div class="dd-item">
+          <div v-for="(item, index) in currentDdList" :key="index">
+            <div class="dd-item" @click="itemClick(item)">
               <img
                 :src="`/static/images/断点/${
                   item.attributes.PHOTO.split(';')[0]
@@ -69,24 +77,27 @@
             <div class="split-line"></div>
           </div>
         </div>
+        <div class="no-tip" v-show="currentDdList && !currentDdList.length">暂无数据</div>
       </div>
     </div>
     <div class="right-content">
-      <div class="kdtj-container">
+      <div class="kdtj-container" v-show="currentType=='dd'">
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span class="title">卡点统计</span>
+          <span class="title">断点统计</span>
         </div>
         <div class="base-info">
           <div class="base-item">
             <img src="./images/kd-number.png" alt="" />
             <div class="title" style="color: #2fc8e9">总数</div>
-            <div class="text">40<span class="unit">个</span></div>
+            <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum}}<span class="unit">个</span></div>
+            <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>
           </div>
           <div class="base-item">
             <img src="./images/kd-length.png" alt="" />
             <div class="title" style="color: #ff8b4f">总长度</div>
-            <div class="text">19352<span class="unit">米</span></div>
+            <div class="text" v-if="ret.pointStat.length">{{ret.pointStat.length}}<span class="unit">米</span></div>
+            <div class="text" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>
           </div>
         </div>
         <div class="kdfb-info">
@@ -94,7 +105,7 @@
             <div class="sub-title">卡点分布</div>
             <div class="decorate"></div>
           </div>
-          <div style="height: 150px" class="echart" ref="pieEchart"></div>
+          <div style="width: 300px;height: 150px" class="echart" ref="pieEchart"></div>
         </div>
         <div class="czwt-info">
           <div class="sub-title-wrapper">
@@ -112,14 +123,14 @@
               </li>
               <li
                 class="result-item"
-                v-for="(item, index) in sourceMap['断点']"
+                v-for="(item, index) in questionDdList"
                 :key="index"
               >
                 <span class="index">{{ index + 1 }}</span>
                 <span class="name" :title="item.attributes.NAME">{{
                   item.attributes.NAME
                 }}</span>
-                <span class="content">{{ item.attributes.CZWT }}</span>
+                <span class="content" :title="item.attributes.CZWT">{{ item.attributes.CZWT }}</span>
               </li>
             </ul>
           </div>
@@ -134,7 +145,7 @@
           </div>
         </div>
       </div>
-      <div class="xmtj-container">
+      <div class="xmtj-container" v-show="currentType=='xm'">
         <div class="title-wrapper">
           <span class="pre"></span>
           <span class="title">项目统计</span>
@@ -143,12 +154,12 @@
           <div class="base-item">
             <img src="./images/xm-nuber.png" alt="" />
             <div class="title" style="color: #2fc8e9">总数</div>
-            <div class="text">67<span class="unit">个</span></div>
+            <div class="text">{{ret.project.sum}}<span class="unit">个</span></div>
           </div>
           <div class="base-item">
             <img src="./images/xm-count.png" alt="" />
             <div class="title" style="color: #ff8b4f">投资计划</div>
-            <div class="text">275<span class="unit">亿元</span></div>
+            <div class="text">{{ret.project.plan}}<span class="unit">亿元</span></div>
           </div>
         </div>
         <div class="jsqk-info">
@@ -175,7 +186,7 @@
               </li>
               <li
                 class="result-item"
-                v-for="(item, index) in sourceMap['项目']"
+                v-for="(item, index) in delayXmList"
                 :key="index"
               >
                 <span class="index">{{ index + 1 }}</span>
@@ -220,46 +231,156 @@ import { getIserverFields } from "api/iServerAPI";
 export default {
   data() {
     return {
+      currentType: 'xm',
       zrdwList: [
         "指挥部",
         "鹿城区政府",
         "瓯海区政府",
         "龙湾区政府",
-        "瑞安区政府",
+        "瑞安市政府",
         "温州城发集团",
         "温州现代集团",
         "浙南产业区",
       ],
+      currentZrdw: '指挥部',
+      list:[
+            {   "name":"指挥部",
+                "project":{"sum":"67","plan":"275"},
+                "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
+                "speed":{"Completion":"2","finish":"18"},
+                "pointStat":{"sum":"40","length":"19074"},
+                "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
+            },
+            {   "name":"鹿城区政府",
+                "project":{"sum":"18","plan":"50.5"},
+                "situation":{"pre":"4","preLag":"2","finish":"3","build":"3","buildLag":"6"},
+                "speed":{"Completion":"1.3","finish":"16.7"},
+                "pointStat":{"sum":"21","length":"8752"},
+                "pointDist":{"east":{"number":"4","length":"1380"},"south":{"number":"","length":""},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"1","length":"310"},}
+            },
+            {   "name":"瓯海区政府",
+                "project":{"sum":"17","plan":"109"},
+                "situation":{"pre":"0","preLag":"0","finish":"4","build":"7","buildLag":"6"},
+                "speed":{"Completion":"1.5","finish":"23.5"},
+                "pointStat":{"sum":"11","length":"8910"},
+                "pointDist":{"east":{"number":"","length":""},"south":{"number":"9","length":"7030"},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"2","length":"1880"},}
+            },
+            {   "name":"龙湾区政府",
+                "project":{"sum":"8","plan":"45"},
+                "situation":{"pre":"0","preLag":"0","finish":"2","build":"4","buildLag":"2"},
+                "speed":{"Completion":"2.2","finish":"25"},
+                "pointStat":{"sum":"8","length":"1412"},
+                "pointDist":{"east":{"number":"8","length":"1412"},"south":{"number":"","length":""},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"","length":""},}
+            },
+            {   "name":"瑞安市政府",
+                "project":{"sum":"7","plan":"18.4"},
+                "situation":{"pre":"0","preLag":"0","finish":"0","build":"5","buildLag":"2"},
+                "speed":{"Completion":"0","finish":"0"},
+                "pointStat":{"sum":"","length":""},
+                "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
+            },
+            {   "name":"温州现代集团",
+                "project":{"sum":"4","plan":"6"},
+                "situation":{"pre":"0","preLag":"0","finish":"2","build":"2","buildLag":"0"},
+                "speed":{"Completion":"32.4","finish":"50"},
+                "pointStat":{"sum":"","length":""},
+                "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
+            },
+            {   "name":"温州城发集团",
+                "project":{"sum":"12","plan":"3.5"},
+                "situation":{"pre":"0","preLag":"0","finish":"1","build":"4","buildLag":"7"},
+                "speed":{"Completion":"0.03","finish":"8.3"},
+                "pointStat":{"sum":"","length":""},
+                "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
+            },
+            {   "name":"浙南产业区",
+                "project":{"sum":"1","plan":"11.5"},
+                "situation":{"pre":"0","preLag":"0","finish":"0","build":"1","buildLag":"0"},
+                "speed":{"Completion":"0","finish":"0"},
+                "pointStat":{"sum":"","length":""},
+                "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
+            },
+            // {   "name":"浙南产业区",
+            //     "项目统计":{"总数":"1","投资计划":"11.5"},
+            //     "建设情况":{"前期研究":"0","前期(滞后)":"0","完工":"0","在建":"1","在建(滞后)":"0"},
+            //     "建设进度":{"投资完成率":"0","项目完工率":"0"},
+            //     "卡点统计":{"总数":"","长度":""},
+            //     "卡点分布":{"东线":{"个数":"","长度":""},"南线":{"个数":"","长度":""},"内环":{"个数":"","长度":""},"外环":{"个数":"","长度":""},"西线":{"个数":"","长度":""},}
+            // }
+            ],
+      ret:  {   "name":"指挥部",
+                "project":{"sum":"67","plan":"275"},
+                "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
+                "speed":{"Completion":"2","finish":"18"},
+                "pointStat":{"sum":"40","length":"19074"},
+                "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
+            },
       pieEchart: null,
       barEchart: null,
       shangEchart: null,
       xiaEchart: null,
-      // sourceData: {
-      //   zhb: {
-      //     kdTotalNumber: 40,
-      //     kdTotalLength: 19074,
-      //     kdfb: {
-      //       east: [12, 2792],
-      //       south: [9, 7030],
-      //       inner: [6, 1652],
-      //       outer: [10, 5410],
-      //       west: [3, 2190]
-      //     },
-      //     xmTotalNumber: 67,
-      //     xmTotalamount: 275,
-      //     jsqk: {
-      //       qqyj: [2, 4],
-      //       zj: [23, 26],
-      //       wg: []
-      //     }
-      //   }
-      // }
     };
   },
   computed: {
     ...mapGetters("map", ["sourceMap"]),
     drawData() {
       return this.$store.state.map.sourceMap;
+    },
+    currentXmList() {
+      let result
+      let alldata = this.sourceMap['项目']
+      if (this.currentZrdw != '指挥部') {
+        result = alldata.filter(item => {
+          return item.attributes.ZR_DEPTID == this.currentZrdw
+        })
+      } else {
+        result = alldata
+      }
+      return result
+    },
+    currentDdList() {
+      let result = []
+      let alldata = this.sourceMap['断点']
+      if (this.currentZrdw != '指挥部') {
+        result = alldata.filter(item => {
+          return item.attributes.ZRDW == this.currentZrdw
+        })
+      } else {
+        result = alldata
+      }
+      return result
+    },
+    delayXmList() {
+      let result
+      let alldata = this.sourceMap['项目']
+      if (alldata) {
+        if (this.currentZrdw != '指挥部') {
+          result = alldata.filter(item => {
+            return item.attributes.ZR_DEPTID == this.currentZrdw && ~item.attributes.CURRENT_STATE.indexOf('滞后')
+          })
+        } else {
+          result = alldata.filter(item => {
+            return ~item.attributes.CURRENT_STATE.indexOf('滞后')
+          })
+        }
+        return result
+      }
+    },
+    questionDdList() {
+      let result
+      let alldata = this.sourceMap['断点']
+      if (alldata) {
+        if (this.currentZrdw != '指挥部') {
+          result = alldata.filter(item => {
+            return item.attributes.ZRDW == this.currentZrdw && item.attributes.CZWT != '无'
+          })
+        } else {
+          result = alldata.filter(item => {
+            return item.attributes.CZWT != '无'
+          })
+        }
+        return result
+      }
     },
   },
   methods: {
@@ -288,6 +409,19 @@ export default {
       getFeatureBySQLService.processAsync(getFeatureBySQLParams);
     },
     drawPies() {
+      let data1=[],data2=[],lab;
+      if(!!this.$data.ret){
+        data1.push(parseFloat(this.$data.ret.pointDist.east.number));//东线个数
+        data2.push(parseFloat(this.$data.ret.pointDist.east.length));//东线长度
+        data1.push(parseFloat(this.$data.ret.pointDist.south.number));//南线个数
+        data2.push(parseFloat(this.$data.ret.pointDist.south.length));//南线长度
+        data1.push(parseFloat(this.$data.ret.pointDist.west.number));//西线个数
+        data2.push(parseFloat(this.$data.ret.pointDist.west.length));//西线长度
+        data1.push(parseFloat(this.$data.ret.pointDist.outer.number));//外环个数
+        data2.push(parseFloat(this.$data.ret.pointDist.outer.length));//外环长度
+        data1.push(parseFloat(this.$data.ret.pointDist.inner.number));//内环个数
+        data2.push(parseFloat(this.$data.ret.pointDist.inner.length));//内环长度 
+      }
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
       this.pieEchart.setOption({
         series: [
@@ -333,11 +467,11 @@ export default {
             },
 
             data: [
-              { value: 12, name: "东线", itemStyle: { color: "#52D1FE" } },
-              { value: 2, name: "西环", itemStyle: { color: "#FF9E72" } },
-              { value: 10, name: "南线", itemStyle: { color: "#047DF6" } },
-              { value: 6, name: "外环", itemStyle: { color: "#8FEF8B" } },
-              { value: 10, name: "内环", itemStyle: { color: "#6852FE" } },
+              { value: data1[0], name: "东线", itemStyle: { color: "#52D1FE" } },
+              { value: data1[2], name: "西环", itemStyle: { color: "#FF9E72" } },
+              { value: data1[1], name: "南线", itemStyle: { color: "#047DF6" } },
+              { value: data1[3], name: "外环", itemStyle: { color: "#8FEF8B" } },
+              { value: data1[4], name: "内环", itemStyle: { color: "#6852FE" } },
             ],
           },
           {
@@ -360,17 +494,27 @@ export default {
               },
             },
             data: [
-              { value: 12, name: "2800米", itemStyle: { color: "#52D1FE" } },
-              { value: 2, name: "1652米", itemStyle: { color: "#FF9E72" } },
-              { value: 10, name: "8330米", itemStyle: { color: "#047DF6" } },
-              { value: 6, name: "5410米", itemStyle: { color: "#8FEF8B" } },
-              { value: 10, name: "1652米", itemStyle: { color: "#6852FE" } },
+              { value: data1[0], name: data2[0]+"米", itemStyle: { color: "#52D1FE" } },
+              { value: data1[2], name: data2[2]+"米", itemStyle: { color: "#FF9E72" } },
+              { value: data1[1], name: data2[1]+"米", itemStyle: { color: "#047DF6" } },
+              { value: data1[3], name: data2[3]+"米", itemStyle: { color: "#8FEF8B" } },
+              { value: data1[4], name: data2[4]+"米", itemStyle: { color: "#6852FE" } },
             ],
           },
         ],
       });
     },
     drawBars() {
+      let data1=[],data2=[],lab;
+      if(!!this.$data.ret){
+        data1.push(parseFloat(this.$data.ret.situation.build));//在建
+        data1.push(parseFloat(this.$data.ret.situation.pre));//前期研究
+
+        data2.push(parseFloat(this.$data.ret.situation.finish));//完工
+        data2.push(parseFloat(this.$data.ret.situation.buildLag));//在建滞后
+        data2.push(parseFloat(this.$data.ret.situation.preLag));//前期滞后
+        //lab = this.$data.ret.project.sum;
+      }
       this.barEchart = this.$echarts.init(this.$refs.barEchart);
       this.barEchart.setOption({
         grid: {
@@ -454,9 +598,9 @@ export default {
             },
             data: [
               { value: "", itemStyle: { color: "#00FF84" } },
-              { value: 20, itemStyle: { color: "#FF0059" } },
+              { value: data1[0], itemStyle: { color: "#FF0059" } },
               {
-                value: 2,
+                value: data1[1],
                 itemStyle: { color: "#FF21D4" },
               },
             ],
@@ -476,10 +620,10 @@ export default {
               },
             },
             data: [
-              { value: 7, itemStyle: { color: "#00FF84" } },
-              { value: 20, itemStyle: { color: "#FF765D" } },
+              { value: data2[0], itemStyle: { color: "#00FF84" } },
+              { value: data2[1], itemStyle: { color: "#FF765D" } },
               {
-                value: 18,
+                value: data2[2],
                 itemStyle: { color: "#4DAEF8" },
               },
             ],
@@ -488,6 +632,12 @@ export default {
       });
     },
     drawXiaLines() {
+      let data1,data2,lab;
+      if(!!this.$data.ret){
+        data1 = parseFloat(this.$data.ret.speed.finish);
+        data2 = 100 - 1 - data1;
+        lab = this.$data.ret.project.sum;
+      }
       this.xiaEchart = this.$echarts.init(this.$refs.xiaEchart);
       this.xiaEchart.setOption({
         grid: {
@@ -512,7 +662,7 @@ export default {
           },
         },
         xAxis: {
-          max: 50,
+          max: 100,
           min: 0,
           axisLabel: {
             show: false,
@@ -539,14 +689,14 @@ export default {
             name: "已完成",
             type: "bar",
             stack: "完成情况",
-            data: [16.5],
+            data: [data1],
             barWidth: 30, //柱图宽度
             itemStyle: {
               color: "#CE4142",
               barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
             },
             label: {
-              formatter: "{a|33%}",
+              formatter: "{a|{c}%}",
               show: true,
               textStyle: {
                 rich: {
@@ -574,9 +724,9 @@ export default {
             name: "未完成",
             type: "bar",
             stack: "完成情况",
-            data: [32.5],
+            data: [data2],
             label: {
-              formatter: "{a|67个}",
+              formatter: "{a|"+lab+"个}",
               show: true,
               position: "right",
               textStyle: {
@@ -598,6 +748,14 @@ export default {
       });
     },
     drawShangLines() {
+      let data1,data2,lab;
+      if(!!this.$data.ret){
+        data1 = parseFloat(this.$data.ret.speed.Completion);
+        data2 = 100 - 1 - data1;
+        console.log(data2);
+        lab = this.$data.ret.project.plan;
+      }
+      // console.log(data2);
       this.shangEchart = this.$echarts.init(this.$refs.shangEchart);
       this.shangEchart.setOption({
         grid: {
@@ -625,7 +783,7 @@ export default {
           },
         },
         xAxis: {
-          max: 50,
+          max: 100,
           min: 0,
           axisLine: {
             //坐标轴线
@@ -648,14 +806,15 @@ export default {
             name: "已完成",
             type: "bar",
             stack: "完成情况",
-            data: [30],
+            //"speed":{"Completion":"0","finish":"0"},
+            data: [data1],
             barWidth: 30, //柱图宽度
             itemStyle: {
               color: "#1A56E2",
               barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
             },
             label: {
-              formatter: "{a|60%}",
+              formatter: "{a|{c}%}",
               show: true,
               textStyle: {
                 rich: {
@@ -682,9 +841,9 @@ export default {
             name: "未完成",
             type: "bar",
             stack: "完成情况",
-            data: [28],
+            data: [data2],
             label: {
-              formatter: "{a|275亿元}",
+              formatter: "{a|"+lab+"亿元}",
               show: true,
               position: "right",
               textStyle: {
@@ -704,12 +863,41 @@ export default {
         ],
       });
     },
+    getData(name){
+      this.currentZrdw = name
+      let rets = [];
+      this.list.forEach(function (element) {
+        if(element.name==name){
+          rets.push(element);
+        }
+      });
+      if(rets.length>0){
+        this.ret = rets[0];
+      }
+      this.drawShangLines();
+      this.drawXiaLines();
+      this.drawBars();
+      this.drawPies();
+    },
+    itemClick(item) {
+      const { x, y } = item.geometry;
+      window.earth.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(x, y - 0.005, 450),
+        orientation: {
+          heading: 0.003336768850279448,
+          pitch: -0.5808830390057418,
+          roll: 0.0,
+        },
+        maximumHeight: 450,
+      });
+    }
   },
   mounted() {
     const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
     const SW_DATA = "/data-alldata/rest/data";
     const SW_DATA_NAME = "172.168.3.181_thxm:";
     const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
+    const that = this;
     this.getPOIPickedFeature({
       id: "项目",
       label: "项目",
@@ -730,11 +918,11 @@ export default {
     this.drawShangLines();
     this.drawXiaLines();
   },
-  // watch: {
-  //   drawData(val) {
-  //     console.log("drawData", val);
-  //   },
-  // },
+  watch: {
+    drawData(val) {
+      console.log("drawData", val);
+    },
+  },
 };
 </script>
 

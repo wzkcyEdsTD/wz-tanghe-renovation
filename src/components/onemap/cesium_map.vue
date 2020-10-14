@@ -11,7 +11,7 @@
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
 import LayerHub from "./layerHub/layerHub";
-import DetailPopup from "./DetailPopup/DetailPopup";
+import DetailPopup from "../sourcelayer/commonFrame/DetailPopup/DetailPopup";
 const Cesium = window.Cesium;
 
 export default {
@@ -94,6 +94,19 @@ export default {
           url: ServiceUrl.SWImage[2019],
         })
       );
+
+      this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.TANGHEFWM,
+        })
+      )
+      this.thfwmlayer.alpha = 0.7;
+
+      window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.TANGHE2D,
+        })
+      )
 
       // 移除缓冲圈
       $(".cesium-widget-credits").hide();

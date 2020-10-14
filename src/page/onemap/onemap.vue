@@ -59,7 +59,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 40vw;
+    width: 20vw;
     height: 100%;
     background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }
@@ -67,7 +67,7 @@ export default {
     position: fixed;
     top: 0;
     right: 0;
-    width: 40vw;
+    width: 20vw;
     height: 100%;
     background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }

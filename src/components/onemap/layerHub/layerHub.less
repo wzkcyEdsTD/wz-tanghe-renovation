@@ -1,17 +1,49 @@
-.sign-wrapper {
-  position: absolute;
-  right: 120px;
-  bottom: 58px;
-  >img {
-    width: 109px;
-    height: 117px;
+// .sign-wrapper {
+//   position: absolute;
+//   right: 120px;
+//   bottom: 58px;
+//   >img {
+//     width: 109px;
+//     height: 117px;
+//   }
+// }
+.switch-menu-wrapper {
+  z-index   : 999;
+  position  : absolute;
+  top       : 90px;
+  left      : 0px;
+  text-align: center;
+  .switch-menu-container {
+    margin-left: 10px;
+    width: 287px;
+    height: 35px;
+    cursor: pointer;
+    .bg-image('./images/switch-bg');
+    display: flex;
+    >span {
+      flex: 1;
+      line-height: 37px;
+      font-family: YouSheBiaoTiHei;
+      font-size: 26px;
+      color: #fff;
+      opacity: .5;
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+  .switch-menu-decorate {
+    margin-top: 15px;
+    width: 350px;
+    height: 7px;
+    .bg-image('./images/switch-decorate');
   }
 }
 .left-content {
   z-index: 1;
   position: fixed;
   left: 20px;
-  top: 100px;
+  top: 150px;
   display: flex;
   .zrdw-list {
     margin-top: 30px;
@@ -25,13 +57,17 @@
       line-height: 44px;
       text-align: center;
       .bg-image('./images/zrdw-bg');
+      cursor: pointer;
+      &.active {
+        .bg-image('./images/zrdw-active-bg');
+      }
     }
   }
   .xm-container {
     margin-left: 30px;
     .xm-list {
       margin-top: 10px;
-      height: 700px;
+      max-height: 800px;
       overflow-y: scroll;
       .xm-item {
         width: 220px;
@@ -87,7 +123,7 @@
     margin-left: 30px;
     .dd-list {
       margin-top: 10px;
-      height: 700px;
+      max-height: 800px;
       overflow-y: scroll;
       .dd-item {
         display: flex;
@@ -274,7 +310,7 @@
 .result-wrapper {
   margin-top: 5px;
   width  : 99%;
-  height : 20vh;
+  height : 30vh;
   font-family: PingFang;
   color: #fff;
   .result-list {
@@ -292,7 +328,7 @@
         flex: 1;
       }
       .name {
-        flex: 2;
+        flex: 3;
         white-space:nowrap;
         overflow:hidden;
         text-overflow:ellipsis;
@@ -314,6 +350,11 @@
       background: rgba(22, 95, 234, 0.24);
     }
   }
+}
+
+.no-tip {
+  padding: 5px;
+  color: #fff;
 }
 
 ::-webkit-scrollbar {

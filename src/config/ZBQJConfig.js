@@ -180,4 +180,7 @@ export const ZBQJList = [
   {"FEATUREGUID":"QL20201008067","NAME":"新蒲桥",},
   {"FEATUREGUID":"QL20201008068","NAME":"叶新桥",},
   {"FEATUREGUID":"QL20201008069","NAME":"蒲州桥",},
+  {"FEATUREGUID":"SEJ20201008001","NAME":"南塘月色","VR":"https://720yun.com/t/9cvksqibgrm?scene_id=48466649"},
+  {"FEATUREGUID":"DD20201008001","NAME":"华鸿万墅","VR":"https://720yun.com/t/9b2jt5swrm2?scene_id=13445110"},
+  {"FEATUREGUID":"DD20201008002","NAME":"鱼鳞浃村","VR":"https://720yun.com/t/9cvksqibgrm?scene_id=48466649"},
 ]

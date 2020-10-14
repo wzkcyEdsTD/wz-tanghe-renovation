@@ -129,7 +129,7 @@
                 :src="`/static/images/${forceEntity.type}/${item.FEATUREGUID}.jpg`" @click="openQJ(item)"
               >
             </div>
-            <div class="no-tip" v-show="!haveOverall || !haveZbOverall">暂无数据</div>
+            <div class="no-tip" v-show="!haveOverall && !haveZbOverall">暂无数据</div>
           </div>
         </div>
       </div>
@@ -259,7 +259,7 @@ export default {
           }
           currentZBQJ.forEach(i => {
             ZBQJList.forEach(j => {
-              if (i === j.NAME) {
+              if (i === j.NAME || i === j.FEATUREGUID) {
                 overallList.push(j)
               }
             })

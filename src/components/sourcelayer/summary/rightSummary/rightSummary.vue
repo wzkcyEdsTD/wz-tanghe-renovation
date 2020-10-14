@@ -13,10 +13,11 @@
           </div>
           <p :class="!showLarge?'lab':'labda'">{{ temp || "暂无简介" }}</p>
           <video
-            src="static/images/温瑞塘河/温瑞塘河.mp4"
             controls
             :class="!showLarge?'sp':'spda'"
-          />
+          >
+            <source src="static/video/温瑞塘河/温瑞塘河.mp4">
+          </video>
           <div :class="!showLarge?'jianju':'jianjuda'">
             <span :class="!showLarge?'xbt':'xbtda'">流域</span>
             <img src="./img/装饰.png" alt="" class="zs" />

@@ -73,7 +73,7 @@ const ST_INFO = [
 ]
 
 const JG_INFO = [
-  { label: "公园", dataset: "park" },
+  { label: "公园", dataset: "park", withImage: "http://172.168.3.183:8090/iserver/services/3D-gyfwm/rest/realspace/datas/gyfwm" },
   { label: "景点", dataset: "scenic_spot" },
   { label: "古树名木", dataset: "tree" },
   { label: "公园配套设施", dataset: "park_facilities" },

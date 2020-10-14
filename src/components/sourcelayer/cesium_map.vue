@@ -60,6 +60,14 @@ export default {
   computed: {
     ...mapGetters("map", ["medicalListWithGeometry"]),
   },
+  created() {
+    //  点位信息 hash
+    window.featureMap = {};
+    //  点位icon hash
+    window.billboardMap = {};
+    //  点位label hash
+    window.labelMap = {};
+  },
   async mounted() {
     this.init3DMap(() => {
       this.mapLoaded = true;
@@ -92,10 +100,7 @@ export default {
       this.handler.setInputAction((e) => {
         const pick = window.earth.scene.pick(e.position);
         console.log("pick", pick);
-        if (!pick.id || typeof pick.id != "object") return;
-        //  *****[detailPopup]  资源详情点*****
-        if (pick && pick.id.extra_data) {
-          console.log("gogogo");
+        if (!pick.id) return;
           // if (~pick.id.id.indexOf("项目_")) {
           //   this.$bus.$emit("cesium-projectClick", {
           //     extra_data: pick.id.extra_data,
@@ -109,16 +114,17 @@ export default {
           // this.$bus.$emit("cesium-kadianClick", {
           //     extra_data: pick.id.extra_data,
           //   });
-          if (pick.id.extra_data) {
+        if (typeof pick.id == "string") {
+          const [_TYPE_, _SMID_, _NODEID_] = pick.id.split("@");
+          // *****[detailPopup]  资源详情点*****
+          if (~["label", "billboard"].indexOf(_TYPE_)) {
             this.$refs.detailPopup.getForceEntity({
-              extra_data: pick.id.extra_data,
-              fix_data: pick.id.fix_data,
-              position: pick.id._position._value,
-              type: pick.id.type
+              ...window.featureMap[_NODEID_][_SMID_],
+              position: pick.primitive.position,
             });
           }
-          // this.$refs.layerhub.showHub = false
         }
+        // this.$refs.layerhub.showHub = false
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     },
     eventRegsiter() {

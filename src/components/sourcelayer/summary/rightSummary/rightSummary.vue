@@ -4,43 +4,43 @@
       <div>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="!showLarge?'title':'titleda'">温瑞塘河</span>
+          <span class="title">温瑞塘河</span>
         </div>
         <div class="wenzi">
-          <div :class="!showLarge?'jianju':'jianjuda'">
-            <span :class="!showLarge?'xbt':'xbtda'">简介</span>
+          <div class="jianju">
+            <span class="xbt">简介</span>
             <img src="./img/装饰.png" alt="" class="zs" />
           </div>
-          <p :class="!showLarge?'lab':'labda'">{{ temp || "暂无简介" }}</p>
+          <p class="lab">{{ temp || "暂无简介" }}</p>
           <video
             controls
-            :class="!showLarge?'sp':'spda'"
+            class="sp"
           >
             <source src="static/video/温瑞塘河/温瑞塘河.mp4">
           </video>
-          <div :class="!showLarge?'jianju':'jianjuda'">
-            <span :class="!showLarge?'xbt':'xbtda'">流域</span>
+          <div class="jianju">
+            <span class="xbt">流域</span>
             <img src="./img/装饰.png" alt="" class="zs" />
           </div>
           <div class="box">
             <div class="left1">
               <div>
-                <div :class="!showLarge?'lywz':'lywzda'">塘河长度</div>
-                <div :class="!showLarge?'deh':'dehda'">
+                <div class="lywz">塘河长度</div>
+                <div class="deh">
                   <span class="lybq">1178.4</span>
                   <span class="lydw"> 千米</span>
                 </div>
               </div>
               <div>
-                <div :class="!showLarge?'lywz':'lywzda'">蓄水量</div>
-                <div :class="!showLarge?'deh':'dehda'">
+                <div class="lywz">蓄水量</div>
+                <div class="deh">
                   <span class="lybq">{{ `${lable.xsl}` }}</span>
                   <span class="lydw"> 万立方米</span>
                 </div>
               </div>
               <div>
-                <div :class="!showLarge?'lywz':'lywzda'">灌溉面积</div>
-                <div :class="!showLarge?'deh':'dehda'">
+                <div class="lywz">灌溉面积</div>
+                <div class="deh">
                   <span class="lybq">48.2</span>
                   <span class="lydw"> 万亩</span>
                 </div>
@@ -48,22 +48,22 @@
             </div>
             <div class="right1">
               <div>
-                <div :class="!showLarge?'lywz':'lywzda'">流域面积</div>
-                <div :class="!showLarge?'deh':'dehda'">
+                <div class="lywz">流域面积</div>
+                <div class="deh">
                   <span class="lybq">740</span>
                   <span class="lydw"> 平方千米</span>
                 </div>
               </div>
               <div>
-                <div :class="!showLarge?'lywz':'lywzda'">平均流量</div>
-                <div :class="!showLarge?'deh':'dehda'">
+                <div class="lywz">平均流量</div>
+                <div class="deh">
                   <span class="lybq">{{ `${lable.pjll}` }}</span>
                   <span class="lydw"> 亿立方米</span>
                 </div>
               </div>
               <div>
-                <div :class="!showLarge?'lywz':'lywzda'">源头</div>
-                <div :class="!showLarge?'deh':'dehda'">
+                <div class="lywz">源头</div>
+                <div class="deh">
                   <span class="ly">瞿溪、雄溪、郭溪</span>
                 </div>
               </div>
@@ -72,15 +72,15 @@
         </div>
       </div>
       <div>
-        <div :class="!showLarge?'ssj':'ssjda1'">
+        <div >
           <div class="title-wrapper">
             <span class="pre"></span>
-            <span :class="!showLarge?'title':'titleda'">温瑞塘河航道</span>
+            <span class="title">温瑞塘河航道</span>
           </div>
         </div>
         <div class="zsj">
           <div class="ssj">
-            <img src="./img/塘河航道(2).svg" style="width: 100%">
+            <img src="./img/塘河航道(2).svg" class="hangdao"">
           </div>
         </div>
       </div>
@@ -152,18 +152,21 @@
   }
 
   .left1 {
-    margin-top: 3%;
-    margin-right: 20%;
-    height: 100%;
+    margin-top: 1vh;
+    margin-right: 10vh;
+    height: 18vh;
     flex: 1;
-    text-align:left;
-    padding-left: 3%;
-    /*flex-grow:0;*/
+    text-align: left;
+    padding-left: 1vh;
+  }
+  .hangdao{
+    width:35vh;
+    height: 25vh;
   }
   .right1 {
     flex-shrink: 0;
-    margin-top: 3%;
-    height: 100%;
+    margin-top: 1vh;
+    height: 18vh;
     flex: 1;
     text-align:left
     /*flex-grow:0;*/
@@ -174,40 +177,38 @@
     display: table-cell;
   }
   .lybq {
-    font-size: 18px;
+    font-size: 2vh;
     color: #2acbfe;
     font-family: DIN;
-    line-height: 18px;
-
+    line-height: 2vh;
   }
   .deh {
     // padding-bottom: 15%;
-    padding-bottom: 10px;
+    padding-bottom: 1.2vh;
   }
   .dehda {
     // padding-bottom: 15%;
     padding-bottom: 15%;
   }
   .lydw {
-    font-size: 10px;
+    font-size: 1.2vh;
     color: #2acbfe;
     font-family: DIN;
-    line-height: 18px;
+    line-height: 1.8vh;
   }
   .ly {
-    font-size: 13px;
+    font-size: 1.3vh;
     color: #2acbfe;
     font-family: DIN;
-    line-height: 18px;
+    line-height: 1.8vh;
     opacity: 1;
   }
   .lywz {
-    font-size: 14px;
+    font-size: 1.7vh;
     font-family: PingFang SC;
-    line-height: 20px;
+    line-height: 2vh;
     color: #ffffff;
-    // margin-bottom: 5%;
-    margin-bottom: 5px;
+    margin-bottom: 1vh;
   }
   .lywzda {
     font-size: 14px;
@@ -246,26 +247,25 @@
 
   .lab {
     font-family: PingFang SC;
-    font-size: 14px;
-    width: 100%;
+    font-size: 1.5vh;
+    width: 35vh;
     color: #dedede;
-    line-height: 21px;
-    padding-top: 5px;
+    line-height: 2vh;
+    padding-top: 0.5vh;
     text-indent: 2em;
     text-align:left;
-    padding-left: 3%;
+    padding-left: 1vh;
   }
   .labda {
     font-family: PingFang SC;
-    font-size: 16px;
-    width: 100%;
+    font-size: 1.6vh;
+    width: 35vh;
     color: #dedede;
-    line-height: 30px;
-    padding-top: 5px;
+    line-height: 2vh;
+    padding-top: 0.5vh;
     text-indent: 2em;
-    text-align:left;
-    padding-left: 3%;
-    padding-bottom: 3%;
+    text-align: left;
+    padding-left: 1vh;
   }
   .yxwz {
     font-family: PingFang SC;
@@ -306,12 +306,12 @@
     /*padding-left: 25px;*/
   }
   .xbt {
-    font-size: 18px;
+    font-size: 2vh;
     font-family: YouSheBiaoTiHei;
-    line-height: 16px;
+    line-height: 2vh;
     color: #ffffff;
     overflow-y: auto;
-    letter-spacing: 15px;
+    letter-spacing: 1.5vh;
   }
   .xbtda {
     font-size: 22px;
@@ -325,12 +325,12 @@
     width: 70%;
   }
   .wenzi {
-    padding-left: 3%;
+    padding-left: 1vh;
   }
   .jianju{
-    padding-top: 2%;
+    padding-top: 1vh;
     text-align: left;
-    padding-left: 3%;
+    padding-left: 1vh;
   }
   .jianjuda {
     padding-top: 3%;
@@ -358,13 +358,13 @@
     padding-bottom: 10%;
   }
   .zsj {
-    padding-left: 3%;
+    padding-left: 1vh;
   }
   .tp {
     position: relative;
   }
   .ssj {
-    padding-top: 5%;
+    padding-top: 1vh;
   }
   .tpwz {
     position: absolute;
@@ -399,8 +399,8 @@
     padding-top: 5%;
   }
   .sp {
-    width: 100%;
-    padding-right: 10px;
+    width: 35vh;
+    padding-right: 1vh;
   }
   .spda {
     width: 100%;

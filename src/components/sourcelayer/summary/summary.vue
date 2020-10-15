@@ -89,28 +89,28 @@ export default {
     position: fixed;
     box-sizing: border-box;
     top: 6vh;
-    bottom: 40px;
+    bottom: 4vh;
     overflow: hidden;
     right: 0px;
-    width: 1020px;
-    height: 100%;
+    width: 80vh;
+    height: 100vh;
     color: white;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 10px;
     z-index: 999;
     .ding {
-      padding-top: 5%;
+      padding-top: 1vh;
     }
     .ssj{
-      padding-top: 4%
+      padding-top: 1.4vh
     }
     .box {
       display: flex;
       flex-direction: row;
     }
     .buttonpd {
-      padding-right: 30px;
+      padding-right: 5vh;
       cursor: pointer;
       &.active {
         .button {
@@ -126,32 +126,32 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 20px;
+      font-size: 1vh;
     }
   }
   .summary1 {
     position: fixed;
     box-sizing: border-box;
     top: 6vh;
-    bottom: 40px;
+    bottom: 4vh;
     overflow: hidden;
     right: 0px;
-    width: 370px;
-    height: 100%;
+    width: 38vh;
+    height: 100vh;
     color: white;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 1vh;
     z-index: 999;
     .ding {
-      padding-top: 5%;
+      padding-top: 1vh;
     }
     .box {
       display: flex;
       flex-direction: row;
     }
     .buttonpd {
-      padding-right: 30px;
+      padding-right: 5vh;
       cursor: pointer;
       &.active {
         .button {
@@ -167,19 +167,19 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 20px;
+      font-size: 2vh;
     }
   }
   .gdkd{
-    width: 410px;
+    width: 40vh;
   }
   .mask-right {
     z-index: -2;
     position: fixed;
     top: 0;
     right: 0;
-    width: 1020px;
-    height: 100%;
+    width: 90vh;
+    height: 100vh;
     background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
     // background-image: linear-gradient(270deg, rgba(0, 13, 26, 0.84) 0%, rgba(0, 17, 34, 0.55) 65%, rgba(0, 19, 38, 0) 100%);
   }
@@ -188,18 +188,16 @@ export default {
     position: fixed;
     top: 0;
     right: 0;
-    width: 410px;
-    height: 100%;
+    width: 41vh;
+    height: 100vh;
     background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
     // background-image: linear-gradient(270deg, rgba(0, 13, 26, 0.84) 0%, rgba(0, 17, 34, 0.55) 65%, rgba(0, 19, 38, 0) 100%);
   }
   .uls{
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: flex-start;
   }
-  .lefts1{width: 450px;}
-  .lefts1da{width: 480px;height: 1280px}
-  .rig{flex: 1;padding-left: 5%}
+  .lefts1{width: 45vh;}
+  .lefts1da{width: 35vh;height: 100vh}
+  .rig{flex: 1;padding-left: 1vh}
 </style>

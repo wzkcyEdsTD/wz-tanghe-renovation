@@ -3,30 +3,32 @@
     <div class="composition-container">
       <div class="title-wrapper">
         <span class="pre"></span>
-        <span :class="showLarge?'titleda':'title'">资源区县</span>
+        <span class="title">资源区县</span>
         <!-- <span class="desc">截至2020年5月15日</span> -->
       </div>
-      <div style="height:180px;" class="echart" ref="pieEchart"></div>
+      <div style="height:18vh;" class="echart" ref="pieEchart"></div>
     </div>
     <div class="composition-container">
-      <div :class="!showLarge?'':'xsjda'">
+      <div>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="showLarge?'titleda':'title'">资源街道</span>
+          <span class="title">资源街道</span>
           <!-- <span class="desc">截至2020年5月15日</span> -->
         </div>
       </div>
-      <div :class="!showLarge?'':'xsjda'">
+      <div>
         <span class="small">单位：个</span>
       </div>
+      <div style="height: 18vh;width: 36vh">
+        <div  style="height:100%;width: 100%" ref="barEchart"></div>
+      </div>
 
-      <div  style="height:180px;" class="echart" ref="barEchart"></div>
     </div>
     <div class="search-container">
-      <div :class="!showLarge?'':'xsjda'">
+      <div >
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="showLarge?'titleda':'title'">资源列表</span>
+          <span class="title">资源列表</span>
           <!-- <span class="desc">截至2020年5月15日</span> -->
         </div>
       </div>
@@ -227,8 +229,9 @@ export default {
         grid: {
           left: "0%",
           top: "8%",
+          // bottom: "8%",
           width: "100%",
-          height: "75%",
+          height: "90%",
           containLabel: true,
         },
         xAxis: {
@@ -419,32 +422,6 @@ export default {
 
 <style lang="less">
 @import url("./projectSummary.less");
-  .xsjda{
-    padding-bottom: 5%;
-  }
 
-.titleda{
-  display: block;
-  height: 35px;
-  line-height: 35px;
-  font-family: YouSheBiaoTiHei;
-  font-size: 34px;
-  letter-spacing: 0px;
-  color: #ffffff;
-  text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
-  position: relative;
-  padding-left: 12px;
-}
-.titleda::before{
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 2px;
-  width: 300px;
-  height: 15px;
-  z-index: -1;
-  background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
-  transform: skewX(-30deg);
-}
 
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div class="header-wrapper">
     <div class="header-img">
-      <img class="bg-img" src="./images/top.png" alt="">
+      <img class="bg-img" src="./images/top1.png" alt="">
+      <img class="topLab" src="./images/topLab.png" alt="">
       <img class="shadow" src="./images/shadow.png" alt="">
     </div>
     <div class="info">
@@ -54,33 +55,37 @@ export default {
   position: relative;
   z-index: 999;
   width: 100%;
+  height: ;
   background-image: linear-gradient(#040D33 0%, rgba(4, 13, 51, 0.94) 50%, rgba(4, 13, 51, 0) 100%);
   text-align: center;
   .header-img {
     position: relative;
+    height: 0.9rem;
     .bg-img {
       position: absolute;
       left: 0;
       top: 0;
       width: 100%;
+      height: 1rem;
       z-index: 2;
     }
     .shadow {
       position: absolute;
-      left: 50%;
+       left: 50%;
       transform: translateX(-50%);
+      top: 4vh;
       z-index: 1;
-      width: 300px;
-      height: 100px;
+      width: 34vh;
+      height: 4vh;
     }
   }
   .info {
     position: absolute;
-    top: 70px;
+    top: 7.5vh;
     left: 50%;
     transform: translateX(-50%);
     color: #fff;
-    font-size: 12px;
+    font-size: 1.5vh;
     font-family: DIN;
     z-index: 3;
   }
@@ -99,5 +104,11 @@ export default {
       }
     }
   }
+}
+.topLab{
+  clear: both;
+  display: block;
+  margin:auto;
+  width: 23vh;
 }
 </style>

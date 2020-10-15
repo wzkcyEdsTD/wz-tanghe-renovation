@@ -50,7 +50,7 @@
         </div>
       </div>
     </div> -->
-    <div :class="!showLarge?'layer-wrapper':'layer-wrapperda'">
+    <div class="layer-wrapper">
       <div class="hub-list">
         <div class="hub-item" :class="{selected: currentLayer=='yx'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
           <img v-if="currentLayer=='yx'" src="./images/yx-sel2.png">
@@ -100,7 +100,7 @@
       <div class="switch-menu-decorate"></div>
     </div>
     <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" >
-      <div :class="showLarge?'ssjda2':''">
+      <div>
         <div class="ulsda" v-if="showLarge">
           <div class="lefts">
             <RightSummary ></RightSummary>
@@ -109,7 +109,7 @@
             <div class="zsj">
               <div class="title-wrapper">
                 <span class="pre"></span>
-                <span class="titleda">资源目录</span>
+                <span class="title">资源目录</span>
               </div>
               <div class="ssjda">
                 <div class="tree-container">
@@ -501,10 +501,10 @@ export default {
 <style lang="less">
 @import url("./layerHub.less");
 .gdkd{
-  width: 350px;
+  width: 41vh;
 }
 .uls{
-  width: 100%;
+  /*width: 100%;*/
   display: flex;
   align-items: flex-start;
 }
@@ -512,24 +512,25 @@ export default {
   width: 100%;
   display: flex;
   align-items: flex-start;
-  height: 1280px;
+  /*height: 1280px;*/
+  height: 100%;
 }
- .lefts{
-   width: 400px;
- }
-  .rig{
-    flex:1;
-    padding-left: 3%;
-    height: 1280px;
-  }
-  .ssjda{
-    padding-top: 5%;
-  }
+.lefts{
+width: 400px;
+}
+.rig{
+flex:1;
+padding-left: 3%;
+height: 1280px;
+}
+.ssjda{
+padding-top: 1vh;
+}
 .ssjda2{
-  padding-top: 8%;
+padding-top: 4.5vh;
 
 }
-  .zsj{
-    padding-left: 10%;
-  }
+.zsj{
+padding-left: 5vh;
+}
 </style>

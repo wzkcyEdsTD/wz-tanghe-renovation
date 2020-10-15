@@ -420,7 +420,7 @@ export default {
         data1.push(parseFloat(this.$data.ret.pointDist.outer.number));//外环个数
         data2.push(parseFloat(this.$data.ret.pointDist.outer.length));//外环长度
         data1.push(parseFloat(this.$data.ret.pointDist.inner.number));//内环个数
-        data2.push(parseFloat(this.$data.ret.pointDist.inner.length));//内环长度 
+        data2.push(parseFloat(this.$data.ret.pointDist.inner.length));//内环长度
       }
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
       this.pieEchart.setOption({

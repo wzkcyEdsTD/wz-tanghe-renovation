@@ -4,49 +4,51 @@
       <div>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="showHub?'titleda':'title'">沿线项目</span>
+          <span class="title">沿线项目</span>
         </div>
         <div class="zsj">
-          <div :class="[!showHub?'ssj':'ssjda']">
+          <div class="ssj">
             <div class="box">
-              <div :class="!showHub?'left':'leftda'">
+              <div class="left">
                 <div>
                   <div class="tp">
-                    <img src="./img/zuo.png" alt="" />
+                    <img src="./img/zuo.png" alt="" class="quanquan"/>
                     <span class="xmzs">66</span>
                   </div>
                 </div>
+                <div class="yxxm">
+                  <span class="yxwz">项目总数(个)</span>
+                </div>
               </div>
               <div class="right">
-                <div>
+                <div >
                   <div class="tp">
-                    <img src="./img/you.png" alt="" />
+                    <img src="./img/you.png" alt="" class="quanquan"/>
                     <span class="xmzje">275.11</span>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div :class="[!showHub?'':'ssjda1']">
-              <div class="box">
-                <div :class="!showHub?'left':'leftda'">
-                  <div class="yxxm">
-                    <span class="yxwz">项目总数(个)</span>
-                  </div>
-                </div>
-                <div class="right">
-                  <div class="yxxm">
-                    <span class="yxwz">项目总金额(亿元)</span>
-                  </div>
+                <div class="yxxm">
+                  <span class="yxwz">项目总金额(亿元)</span>
                 </div>
               </div>
             </div>
+<!--            <div>-->
+<!--              <div class="box">-->
+<!--                <div class="left">-->
+
+<!--                </div>-->
+<!--                <div class="right">-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
             <div class="uls1">
               <div>
                 <img src="./img/发光圈圈.png" alt="" class="jz1">
               </div>
               <span class="jdt">完成率:12/66</span>
-              <div style="height:30px;flex: 1" class="echart" ref="echartBar"></div>
+              <div style="height:3vh;flex: 1" class="echart" ref="echartBar"></div>
             </div>
           </div>
         </div>
@@ -54,28 +56,28 @@
       <div >
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="showHub?'titleda':'title'">卡点</span>
+          <span class="title">卡点</span>
         </div>
         <div>
           <div class="kdjj">
             <div class="zsj">
               <div class="jianju">
-                <div :class="[!showHub?'':'ssjda2']">
+                <div >
                   <span class="xbt">卡点预计完成情况</span>
 <!--                  <img src="./img/装饰.png" alt="" class="zs" />-->
                 </div>
                 <div >
-                  <div :class="[!showHub?'dw':'dwda']">
+                  <div class="dw">
                     <span class="smalls">单位：个(累计)</span>
                   </div>
-                  <div  style="height:160px;padding-right: 3%;" class="echart" ref="lineEchart"></div>
-                  <div :class="showHub?'dw':'dwad'">
+                  <div  style="height:17vh;width: 35vh;padding-right: 1vh;" class="echart" ref="lineEchart"></div>
+                  <div class="ssj">
                     <div class="uls1">
                       <div>
                         <img src="./img/发光圈圈.png" alt="" class="jz1">
                       </div>
                       <span class="jdt">完工率:1/40</span>
-                      <div style="height:30px;flex: 1" class="echart" ref="echartBar1"></div>
+                      <div style="height:3vh;flex: 1" class="echart" ref="echartBar1"></div>
                     </div>
                   </div>
 
@@ -89,42 +91,42 @@
       <div>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="showHub?'titleda':'title'">十二景</span>
+          <span class="title">十二景</span>
         </div>
-        <div :class="!showHub?'':'ssjda2'"></div>
+        <div></div>
         <img src="./img/装饰1.svg" class="zxp">
         <div class="ssj1">
           <div class="uls">
             <div class="left2" >
               <span class="jz">东线</span>
-              <div :class="[!showHub?'xwz':'xwzda']">
+              <div class="xwz">
                 <img src="./img/世纪之光icon.svg" class="jz2">
                 <span class="sejdx">世纪之光</span>
               </div>
-              <div :class="[!showHub?'xwz':'xwzda']">
+              <div class="xwz">
                 <img src="./img/蒲州新韵icon.svg" class="jz2">
                 <span class="sejdx">蒲州新韵</span>
               </div>
             </div>
-            <img src="./img/直线12.svg" :class="[!showHub?'zx':'zxda']">
+            <img src="./img/直线12.svg" class="zx">
             <div class="left1">
               <span class="jz">西线</span>
               <div class="uls">
-                <div :class="[!showHub?'xwz':'xwzda']">
+                <div class="xwz">
                   <img src="./img/瞿溪溯源icon.svg" class="jz2">
                   <span class="sejxx">瞿溪溯源</span>
                 </div>
-                <div :class="[!showHub?'xwz':'xwzda']">
+                <div class="xwz">
                   <img src="./img/仙门烟柳icon.svg" class="jz2">
                   <span class="sejxx">仙门烟柳</span>
                 </div>
               </div>
               <div class="uls">
-                <div :class="[!showHub?'xwz':'xwzda']">
+                <div class="xwz">
                   <img src="./img/镜湖古岸icon.svg" class="jz2">
                   <span class="sejxx">镜湖古岸</span>
                 </div>
-                <div :class="[!showHub?'xwz':'xwzda']">
+                <div class="xwz">
                   <img src="./img/会昌竞渡icon.svg" class="jz2">
                   <span class="sejxx">会昌竞渡</span>
                 </div>
@@ -163,9 +165,9 @@
             </div>
           </div>
         </div>
-
+        <img src="./img/装饰1.svg" class="zxp1">
       </div>
-      <img src="./img/装饰1.svg" class="zxp1" align="right">
+
     </div>
   </div>
 </template>
@@ -231,6 +233,7 @@
               left: "10%",
               top: "8%",
               width: '80%',
+
             },
             tooltip : {
               trigger: 'axis',
@@ -470,200 +473,98 @@
 
 <style lang="less" scoped>
   @import url("./rightSummary.less");
-
-
-
-  .left {
-    /*padding-top: 5%;*/
-    margin-right: 25%;
-    height: 100%;
-    padding-left: 3%;
-
-    /*flex-grow:0;*/
+  .quanquan{
+    width: 9vh;
+    height: 9vh;
   }
-  .leftda {
-    /*padding-top: 5%;*/
-    margin-right: 35%;
-    height: 100%;
-    padding-left: 3%;
-
-    /*flex-grow:0;*/
+  .left {
+    margin-right: 8vh;
+    padding-left: 0.5vh;
   }
   .right {
     flex-shrink: 0;
-    // margin-top: 3%;
-    height: 100%;
-    /*padding-top: 5%;*/
-    /*flex-grow:0;*/
+
   }
   .left1 {
-    /*margin-top: 3%;*/
-    /*margin-right: 20%;*/
-    /*height: 100%;*/
-    /*flex: 1;*/
     text-align:center;
-    /*padding-left: 3%;*/
-    /*flex-grow:0;*/
   }
   .left2 {
-    /*margin-top: 3%;*/
-    /*margin-right: 20%;*/
-    /*height: 100%;*/
-    /*flex: 1;*/
     text-align:right;
-    /*padding-left: 3%;*/
-    /*flex-grow:0;*/
   }
   .left3 {
-    margin-top: 4%;
-    margin-bottom: 4%;
-    margin-right: 2%;
-    /*margin-right: 20%;*/
-    /*height: 100%;*/
-    /*flex: 1;*/
-    width: 100%;
+    margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
     text-align:center;
-    /*padding-left: 3%;*/
-    /*flex-grow:0;*/
   }
   .zx{
-    padding-left: 25px;
-    height: 100px;
-    /*width: 30px;*/
-    padding-right: 10px;
-  }
-  .zxda{
-    padding-left: 14%;
-    height: 100px;
-    /*width: 30px;*/
-    padding-right: 8%;
+    padding-left: 4vh;
+    height: 11vh;
+    padding-right: 1vh;
   }
   .xwz{
-    width: 90px;
-    padding-top: 10px;
-  }
-  .xwzda{
-    width: 100px;
-    padding-top: 10px;
-  }
-  .xwzda{
-    width: 100px;
-    padding-top: 10px;
+    width: 10vh;
+    padding-top: 1vh;
   }
   .zxp{
-    padding-top: 5%;
-    width: 35px;
-    height: 35px;
-  }
-  .zxpda{
-    padding-top: 10%;
-    width: 35px;
-    height: 35px;
+    padding-top: 1vh;
+    width: 2vh;
   }
   .zxp1{
-    padding-top: 5%;
-    width: 35px;
-    height: 35px;
+    position: absolute;
+    /*top: 1vh;*/
+    right: 1vh;
+    width: 2vh;
     transform: rotate(-180deg);
   }
   .xwz1{
-    width: 140px;
-    padding-top: 4%;
-  }
-  .right1 {
-    flex-shrink: 0;
-    margin-top: 3%;
-    height: 100%;
-    flex: 1;
-    text-align:left
-    /*flex-grow:0;*/
+    width: 14vh;
+    padding-top: 1vh;
   }
   .dw{
-    padding-bottom:4%;
-    padding-top: 5%;
+    padding-bottom:1vh;
+    padding-top: 1vh;
   }
-  .dwda{
-    padding-bottom:5%;
-    padding-top: 5%;
-  }
-  .cellDiv {
-    width: 350px;
-    height: 40 px;
-    display: table-cell;
-  }
+
   .sejdx{
     color:#16EAEA;
-    font-size: 14px;
+    font-size: 1.6vh;
     font-family: PingFang SC;
     /*padding-left: 3%;*/
   }
   .sejxx{
-    font-size: 14px;
+    font-size: 1.6vh;
     font-family: PingFang SC;
     color:#00FFD4;
   }
   .sejnx{
-    font-size: 14px;
+    font-size: 1.6vh;
     font-family: PingFang SC;
     color:#A2F6B6;
-  }
-  .lybq {
-    font-size: 18px;
-    color: #2acbfe;
-    font-family: DIN;
-    line-height: 18px;
-
-  }
-  .deh {
-    // padding-bottom: 15%;
-    padding-bottom: 10px;
-  }
-  .lydw {
-    font-size: 10px;
-    color: #2acbfe;
-    font-family: DIN;
-    line-height: 18px;
-  }
-  .ly {
-    font-size: 13px;
-    color: #2acbfe;
-    font-family: DIN;
-    line-height: 18px;
-    opacity: 1;
   }
   .jz1{
     vertical-align:middle;
     /*flex: 1;*/
-    width: 30px;
-    height: 30px;
+    width: 3vh;
+    height: 3vh;
     /*width:50%;*/
   }
   .jz2{
     /*vertical-align:middle;*/
     /*flex: 1;*/
-    width: 20px;
-    height: 20px;
+    width: 2vh;
+    height: 2vh;
     /*padding-right: 5px;*/
     /*width:50%;*/
   }
   .jz{
     /*vertical-align:middle;*/
     text-align:center;
-    width: 100%;
     font-family: YouSheBiaoTiHei;
-    font-size: 24px;
-  }
-  .lywz {
-    font-size: 14px;
-    font-family: PingFang SC;
-    line-height: 20px;
-    color: #ffffff;
-    // margin-bottom: 5%;
-    margin-bottom: 5px;
+    font-size: 3vh;
   }
 
   .xmzs {
-    font-size: 20px;
+    font-size: 2vh;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -672,7 +573,7 @@
     color: #FFFFFF;
   }
   .uls {
-    width: 100%;
+    /*width: 100%;*/
     // background: red;
     display: flex;
     // margin: auto;
@@ -683,7 +584,7 @@
     /*flex-shrink:0;*/
   }
   .uls1 {
-    width: 100%;
+    /*width: 100%;*/
     // background: red;
     display: flex;
     // margin: auto;
@@ -694,16 +595,16 @@
     /*flex-shrink:0;*/
   }
   .jdt{
-    font-size: 11px;
+    font-size: 1vh;
     color: #FAFAFA;
-    line-height: 8px;
+    line-height: 1vh;
     font-family: PingFang SC;
     align-self:center;
-    width:86px;
+    width:9vh;
     /*padding-right: 10px*/
   }
   .xmzje {
-    font-size: 20px;
+    font-size: 2vh;
     position: absolute;
     top: 50%;
     left: 47%;
@@ -711,85 +612,33 @@
     font-family: YouSheBiaoTiHei;
     color: #26bce5;
   }
-  .button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-  }
-
-  .lab {
-    font-family: PingFang SC;
-    font-size: 14px;
-    //line-height: 18px;
-    //max-height: 140px;
-    width: 100%;
-    color: #dedede;
-    line-height: 21px;
-    padding-top: 5px;
-    text-indent: 2em;
-    text-align:left;
-    padding-left: 3%;
-  }
   .yxwz {
     font-family: PingFang SC;
-    font-size: 11px;
+    font-size: 1vh;
     //line-height: 18px;
     //max-height: 140px;
     color: #ffffff;
-    line-height: 10px;
-    width: 100%;
-    padding-left: 8px;
+    line-height: 1vh;
+    /*width: 100%;*/
+    /*padding-left: 1vh;*/
     display: flex;
     align-items: center;
+    justify-content:center;
   }
   .smalls{
-    font-size: 8px;
+    font-size: 1vh;
     font-family: PingFang SC;
-    line-height: 8px;
+    line-height: 1vh;
     color: #ffffff;
-  }
-  .kddw {
-    font-size: 20px;
-    font-family: YouSheBiaoTiHei;
-    line-height: 26px;
-    color: #ffffff;
-  }
-  .kdsz {
-    font-size: 28px;
-    font-family: YouSheBiaoTiHei;
-    line-height: 26px;
-    color: #ffffff;
-  }
-  .kdwzleft {
-    font-size: 14px;
-    font-family: PingFang SC;
-    line-height: 20px;
-    color: #16eaea;
-    padding-left: 4px;
-  }
-  .kdwzright {
-    font-size: 14px;
-    font-family: PingFang SC;
-    line-height: 20px;
-    color: #00ffd4;
-    padding-left: 25px;
   }
   .xbt {
-    font-size: 18px;
+    font-size: 2vh;
     font-family: YouSheBiaoTiHei;
-    line-height: 16px;
+    line-height: 1.6vh;
     color: #ffffff;
-    padding-bottom: 5%;
+    padding-bottom: 1vh;
     /*overflow-y: auto;*/
     /*letter-spacing: 15px;*/
-  }
-  .zs {
-    width: 50%;
-  }
-  .wenzi {
-    padding-left: 3%;
   }
   .jianju {
     /*padding-top: 2%;*/
@@ -797,7 +646,7 @@
   .kdjj {
     // padding-top: 7%;
     // padding-bottom: 7%;
-    padding: 15px 0;
+    padding: 1.5vh 0;
   }
   .box {
     display: flex;
@@ -805,29 +654,17 @@
     align-items:center;
   }
   .yxxm {
-    padding-top: 15%;
-    padding-bottom: 10%;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
   }
   .zsj {
-    padding-left: 3%;
+    padding-left: 2vh;
   }
   .tp {
     position: relative;
   }
   .ssj {
-    padding-top: 5%;
-  }
-  .ssjda {
-    padding-top: 10%;
-    padding-bottom: 5%;
-  }
-  .ssjda1 {
-    padding-top: 5%;
-    padding-bottom: 5%;
-  }
-  .ssjda2 {
-    padding-top: 4%;
-    /*padding-bottom: 5%;*/
+    padding-top: 1vh;
   }
   .ssj1 {
     /*padding-top: 1%;*/
@@ -838,18 +675,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  .tpwzls {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #215dde;
-  }
-  .tpjg {
-    padding-right: 15px;
-  }
   .buttonpd {
-    padding-right: 30px;
+    padding-right: 3vh;
     cursor: pointer;
     &.active {
       .button {
@@ -857,30 +684,11 @@
       }
     }
   }
-  // .buttonpd1 {
-  //   padding-right: 20px;
-  // }
   .ding {
-    // padding-bottom: 7px;
     padding-top: 5%;
   }
   .sp {
     width: 100%;
     padding-right: 10px;
-  }
-  .dbz {
-    display: flex;
-    align-items: center;
-    padding-right: 30px;
-  }
-  .dby {
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  .d1 {
-    // padding-top: 5%;
-    padding-top: 10px;
   }
 </style>

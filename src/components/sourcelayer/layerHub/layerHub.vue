@@ -97,7 +97,7 @@
         <span :class="{active: !showMenu}" @click="switchMenu(false)">资源目录</span>
         <span :class="{active: showMenu}" @click="switchMenu(true)">塘河简介</span>
       </div>
-      <div class="switch-menu-decorate"></div>
+      <div class="switch-menu-decorate" v-if="!showLarge"></div>
     </div>
     <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" >
       <div>
@@ -512,16 +512,15 @@ export default {
   width: 100%;
   display: flex;
   align-items: flex-start;
-  /*height: 1280px;*/
   height: 100%;
 }
 .lefts{
-width: 400px;
+width: 40vhpx;
 }
 .rig{
-flex:1;
-padding-left: 3%;
-height: 1280px;
+/*flex:1;*/
+padding-left: 2vh;
+height: 100vh;
 }
 .ssjda{
 padding-top: 1vh;
@@ -531,6 +530,6 @@ padding-top: 4.5vh;
 
 }
 .zsj{
-padding-left: 5vh;
+/*padding-left: 1vh;*/
 }
 </style>

@@ -32,17 +32,6 @@
                 </div>
               </div>
             </div>
-<!--            <div>-->
-<!--              <div class="box">-->
-<!--                <div class="left">-->
-
-<!--                </div>-->
-<!--                <div class="right">-->
-
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-
             <div class="uls1">
               <div>
                 <img src="./img/发光圈圈.png" alt="" class="jz1">
@@ -213,6 +202,10 @@
         },
         drawLine() {
           this.lineEchart = this.$echarts.init(this.$refs.lineEchart);
+          const that = this;
+          // this.$nextTick(()=>{
+          //   that.lineEchart.resistance();
+          // })
           this.lineEchart.setOption({
             legend: {
               orient: "horizontal",
@@ -311,11 +304,14 @@
               },
             ],
           });
+          window.addEventListener("resize",function () {
+            that.lineEchart.resize();
+          });
         },
         initBar(){
+          const that = this;
           this.echartBar1 = this.$echarts.init(this.$refs.echartBar1);
-          this.echartBar1.setOption(
-            {
+          this.echartBar1.setOption({
               grid: {
                 left: "3%",
                 containLabel: false,
@@ -386,12 +382,12 @@
                   }
                 }
               ]
-            }
-          );
-
+            });
+          window.addEventListener("resize",function () {
+            that.echartBar1.resize();
+          });
           this.echartBar = this.$echarts.init(this.$refs.echartBar);
-          this.echartBar.setOption(// 通过setOption来生成柱状图
-            {
+          this.echartBar.setOption({
               grid: {
                 left: "3%",
                 containLabel: false,
@@ -464,8 +460,10 @@
                   }
                 }
               ]
-            }
-          );
+            });
+          window.addEventListener("resize",function () {
+            that.echartBar.resize();
+          });
         },
       }
     }

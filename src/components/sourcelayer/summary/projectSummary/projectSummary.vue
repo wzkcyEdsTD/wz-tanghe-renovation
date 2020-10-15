@@ -156,7 +156,7 @@ export default {
           value: (data[key].number/list.length*100).toFixed(2),
         })
       }
-
+      const that = this;
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
       this.pieEchart.setOption({
         legend: {
@@ -204,6 +204,9 @@ export default {
           },
         ],
       });
+      window.addEventListener("resize",function () {
+        that.pieEchart.resize();
+      });
     },
     drawBar() {
       let list = this.sourceMap[this.currentSource]
@@ -223,7 +226,7 @@ export default {
         dataAxis.push(key)
         data.push(tempobj[key])
       }
-
+      const that = this;
       this.barEchart = this.$echarts.init(this.$refs.barEchart);
       this.barEchart.setOption({
         grid: {
@@ -283,6 +286,9 @@ export default {
             },
           },
         ],
+      });
+      window.addEventListener("resize",function () {
+        that.barEchart.resize();
       });
     },
     drawLine() {

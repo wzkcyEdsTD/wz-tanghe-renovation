@@ -75,7 +75,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 29vw;
+    width: 20vw;
     height: 100%;
     // background-image: linear-gradient(
     //   90deg,
@@ -90,7 +90,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 20vw;
+    width: 29vw;
     height: 100%;
     // background-image: linear-gradient(
     //   90deg,

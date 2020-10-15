@@ -5,21 +5,22 @@
         <div class="box" v-if="!showLarge">
           <div class="buttonpd" :class="{active: currentType=='total'}" @click="currentType='total'">
             <div class="tp">
-              <img src="./img/组合.png" alt="" v-if="currentType=='total'" />
-              <img src="./img/button.png" alt="" v-if="currentType=='source'" />
+              <img src="./img/组合.png" alt="" v-if="currentType=='total'" class="tupianxuanzhong"/>
+              <img src="./img/button.png" alt="" v-if="currentType=='source'"   class="tupian"/>
               <span class="button">总览</span>
             </div>
           </div>
           <div class="buttonpd" :class="{active: currentType=='source'}" @click="currentType='source'">
             <div class="tp">
-              <img src="./img/组合.png" alt="" v-if="currentType=='source'" />
-              <img src="./img/button.png" alt="" v-if="currentType=='total'" />
+              <img src="./img/组合.png" alt="" v-if="currentType=='source'" class="tupianxuanzhong"/>
+              <img src="./img/button.png" alt="" v-if="currentType=='total'" class="tupian"/>
               <span class="button">资源</span>
             </div>
           </div>
         </div>
         <div>
-          <img src="./img/装饰.png" alt="" v-if="!showLarge"/>
+          <img src="./img/switch-decorate.png" class="zhuangshi" v-if="!showLarge"/>
+<!--          <img src="./img/装饰.png" alt="" v-if="!showLarge"/>-->
         </div>
       </div>
       <div v-if="showLarge" >
@@ -85,6 +86,14 @@ export default {
 </script>
 
 <style lang="less">
+  .tupian{
+    width: 9vh;
+    height: 4vh;
+  }
+  .tupianxuanzhong{
+    width: 11vh;
+    height: 4.5vh;
+  }
   .summary {
     position: fixed;
     box-sizing: border-box;
@@ -198,6 +207,12 @@ export default {
     align-items: flex-start;
   }
   .lefts1{width: 45vh;}
-  .lefts1da{width: 35vh;height: 100vh}
+  .lefts1da{width: 36vh;height: 100vh}
   .rig{flex: 1;padding-left: 1vh}
+  .zhuangshi {
+    margin-top: 1vh;
+    width: 38vh;
+    height: 0.8vh;
+    transform: rotateY(180deg);
+  }
 </style>

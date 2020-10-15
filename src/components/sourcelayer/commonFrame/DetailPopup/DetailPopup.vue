@@ -259,7 +259,7 @@ export default {
           }
           currentZBQJ.forEach(i => {
             ZBQJList.forEach(j => {
-              if (i === j.NAME || i === j.FEATUREGUID) {
+              if (i === j.NAME) {
                 overallList.push(j)
               }
             })

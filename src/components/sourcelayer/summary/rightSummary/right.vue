@@ -200,12 +200,20 @@
             this.showHub = false;
           };
         },
+        getFontSize(){
+          let e = this.screenWidth;
+          if (e>4000){
+            e = 13;
+          }else {
+            e = 12;
+          }
+          return e;
+        },
         drawLine() {
           this.lineEchart = this.$echarts.init(this.$refs.lineEchart);
           const that = this;
-          // this.$nextTick(()=>{
-          //   that.lineEchart.resistance();
-          // })
+          let e = this.getFontSize();
+          console.log(e);
           this.lineEchart.setOption({
             legend: {
               orient: "horizontal",
@@ -216,7 +224,6 @@
               itemHeight: 6,
               textStyle: {
                 color: "#fff",
-                fontSize: 11,
               },
               // selectedMode: false,
               data: ["1"],
@@ -233,7 +240,10 @@
               axisPointer: {
                 // type: 'cross',
                 label: {
-                  backgroundColor: '#6a7985'
+                  backgroundColor: '#6a7985',
+                  textStyle:{
+                    fontSize: e,
+                  }
                 }
               }
             },
@@ -260,7 +270,8 @@
                 interval: 0,
                 color: "#fff",
                 textStyle:{
-                  fontSize:12
+                  // fontSize:12
+                  fontSize: e,
                 }
               },
               data: ["","20年第四季度", "21年第一季度", "21年第二季度", "21年第三季度", "21年第四季度", "22年第一季度", "22年第二季度", "22年第三季度", "22年第四季度"],
@@ -279,7 +290,7 @@
               axisLabel: {
                 textStyle: {
                   color: "#fff",
-                  fontSize:12
+                  fontSize: e,
                 },
 
               },

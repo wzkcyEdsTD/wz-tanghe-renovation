@@ -131,6 +131,9 @@ export default {
       });
     },
     drawPie() {
+      // let e = this.screeHeight;
+      // e = (e/1000*12);
+      let e = this.getFontSize();
       let data = {}
       let legendData = []
       let resultList = []
@@ -168,7 +171,7 @@ export default {
           itemHeight: 14,
           textStyle: {
             color: "#fff",
-            fontSize: 14,
+            fontSize: e
           },
           data: legendData,
           formatter: function (name) {
@@ -208,12 +211,21 @@ export default {
         that.pieEchart.resize();
       });
     },
+    getFontSize(){
+      let e = this.screenWidth;
+      if (e>4000){
+        e = 18;
+      }else {
+        e = 12;
+      }
+      return e;
+    },
     drawBar() {
       let list = this.sourceMap[this.currentSource]
       let tempobj = {}
       let dataAxis = []
       var data = []
-
+      let e = this.getFontSize();
       list.forEach((item, index) => {
         let street = item.attributes.STREET
         if(tempobj[street]) {
@@ -252,6 +264,9 @@ export default {
             interval: 0,
             rotate: 45,
             color: "#fff",
+            textStyle:{
+              fontSize: e,
+            }
           },
         },
         yAxis: {
@@ -264,6 +279,7 @@ export default {
           axisLabel: {
             textStyle: {
               color: "#fff",
+              fontSize: e,
             },
           },
           splitLine: {
@@ -303,7 +319,7 @@ export default {
           itemHeight: 6,
           textStyle: {
             color: "#fff",
-            fontSize: 11,
+            fontSize: e
           },
           // selectedMode: false,
           data: ["公益性项目", "基础类项目", "产业发展项目"],
@@ -328,6 +344,9 @@ export default {
           axisLabel: {
             interval: 0,
             color: "#fff",
+            textStyle:{
+              fontSize: e
+            }
           },
           data: ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
         },
@@ -342,6 +361,7 @@ export default {
           axisLabel: {
             textStyle: {
               color: "#fff",
+              fontSize: e
             },
           },
           splitLine: {

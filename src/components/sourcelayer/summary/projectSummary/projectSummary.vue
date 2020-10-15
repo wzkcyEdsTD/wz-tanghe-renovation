@@ -214,7 +214,7 @@ export default {
     getFontSize(){
       let e = this.screenWidth;
       if (e>4000){
-        e = 18;
+        e = 16;
       }else {
         e = 12;
       }

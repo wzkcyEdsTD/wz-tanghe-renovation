@@ -203,10 +203,11 @@
         getFontSize(){
           let e = this.screenWidth;
           if (e>4000){
-            e = 13;
+            e = 16;
           }else {
             e = 12;
           }
+
           return e;
         },
         drawLine() {
@@ -230,10 +231,11 @@
             },
             color: ["#077768"],
             grid: {
-              left: "10%",
+              left: "5%",
               top: "8%",
-              width: '80%',
-
+              width: '90%',
+              height: "90%",
+              containLabel: true,
             },
             tooltip : {
               trigger: 'axis',

@@ -54,14 +54,14 @@
       <div >
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span :class="showHub?'titleda':'title'">卡点</span>
+          <span :class="showHub?'titleda':'title'">断点</span>
         </div>
         <div>
           <div class="kdjj">
             <div class="zsj">
               <div class="jianju">
                 <div :class="[!showHub?'':'ssjda2']">
-                  <span class="xbt">卡点预计完成情况</span>
+                  <span class="xbt">断点预计完成情况</span>
 <!--                  <img src="./img/装饰.png" alt="" class="zs" />-->
                 </div>
                 <div >

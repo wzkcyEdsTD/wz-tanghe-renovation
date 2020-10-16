@@ -61,46 +61,35 @@
             <div class="spot-wrapper">
               <div class="sub-title">景观图</div>
               <div class="img-content">
-                <viewer class="img-wrapper" :images="spotList">
+                <!-- <viewer class="img-wrapper" :images="spotList">
                   <img v-for="(item,index) in spotList" :key="index"
                     :src="`/static/images/${forceEntity.type}/${item}`" alt=""
                   >
-                </viewer>
+                </viewer> -->
+                <el-image style="width: 160px; height: 100px; margin-right: 10px; margin-top: 10px;" v-for="(item,index) in spotList" :key="index"
+                  :src="item" 
+                  :preview-src-list="spotList">
+                </el-image>
               </div>
               <div class="no-tip" v-show="!haveSpot">暂无数据</div>
             </div>
             <div class="spot-wrapper">
               <div class="sub-title">现场记录</div>
-              <!-- <div class="spot-box" v-for="(value,key,index) in photoList" :key="index">
-                <span class="time">{{`${key.substring(0,4)}-${key.substring(4,6)}-${key.substring(6,8)}`}}</span>
-                <div class="spot-content">
-                  <viewer class="img-wrapper" :images="value">
-                    <img v-for="(item,index) in value" :key="index"
-                      :src="`/static/images/${forceEntity.type}/${item}`" alt=""
-                    >
-                  </viewer>
-                </div>
-              </div> -->
               <div class="spot-box" v-for="(item,index) in photoList" :key="index">
                 <span class="time">{{`${item[0].split('_')[1].substring(0,4)}-${item[0].split('_')[1].substring(4,6)}-${item[0].split('_')[1].substring(6,8)}`}}</span>
                 <div class="spot-content">
-                  <viewer class="img-wrapper" :images="item">
+                  <!-- <viewer class="img-wrapper" :images="item">
                     <img v-for="(img,j) in item" :key="j"
                       :src="`/static/images/${forceEntity.type}/${img}`" alt=""
                     >
-                  </viewer>
+                  </viewer> -->
+                  <el-image style="width: 160px; height: 100px; margin-right: 10px; margin-top: 10px;" v-for="(img,j) in item" :key="j"
+                    :src="img" 
+                    :preview-src-list="item">
+                  </el-image>
                 </div>
               </div>
               <div class="no-tip" v-show="!havePhoto">暂无数据</div>
-              <!-- <div class="time">{{photoList[0].time.substring(0,4)-photoList[0].time.substring(4,6)-photoList[0].time.substring(6,8)}}</div> -->
-              <!-- <div class="img-content">
-                <viewer class="img-wrapper" :images="photoList">
-                  <img v-for="(item,index) in photoList" :key="index"
-                    :src="`/static/images/${forceEntity.type}/${item.photo}`" alt=""
-                  >
-                </viewer>
-                <div class="no-tip" v-show="!havePhoto">暂无数据</div>
-              </div> -->
             </div>
           </div>
           <div class="content-item video-wrapper" id="video">
@@ -191,37 +180,30 @@ export default {
     },
     photoList() {
       let tempArr = []
-      let result = {}
+      let tempObj = {}
       if (this.forceEntity.attributes && this.forceEntity.attributes.PHOTO) {
         let photoStr = this.forceEntity.attributes.PHOTO
         if (photoStr.length) {
           this.havePhoto = true
           if (~photoStr.indexOf(';')) {
-            // return photoStr.split(';')
             tempArr = photoStr.split(';')
             tempArr.forEach(item => {
-              // result.push({
-              //   photo: item,
-              //   time: item.split('_')[1],
-              // })
               let time = item.split('_')[1].split('.')[0]
-              if (result[time]) {
-                result[time].push(item)
+              if (tempObj[time]) {
+                // tempObj[time].push(item)
+                tempObj[time].push(`/static/images/${this.forceEntity.type}/${item}`)
               } else {
-                result[time] = [item]
+                // tempObj[time] = [item]
+                tempObj[time] = [`/static/images/${this.forceEntity.type}/${item}`]
               }
             })
           } else {
-            // return [photoStr]
-            // return [{
-            //   photo: photoStr,
-            //   time: photoStr.split('_')[1],
-            // }]
             let time = photoStr.split('_')[1].split('.')[0]
-            result[time] = [photoStr]
+            // tempObj[time] = [photoStr]
+            tempObj[time] = [`/static/images/${this.forceEntity.type}/${photoStr}`]
           }
-          console.log('result!!!!', result)
-          let arr = Object.values(result).reverse()
+          console.log('tempObj!!!!', tempObj)
+          let arr = Object.values(tempObj).reverse()
           console.log('arr!!!', arr);
           return arr
         }
@@ -231,16 +213,21 @@ export default {
     },
     spotList() {
       let tempArr = []
+      let result = []
       if (this.forceEntity.attributes && this.forceEntity.attributes.JGT) {
         let photoStr = this.forceEntity.attributes.JGT
         if (photoStr.length) {
           this.haveSpot = true
           if (~photoStr.indexOf(';')) {
-            return photoStr.split(';')
+            tempArr =  photoStr.split(';')
           } else {
-            return [photoStr]
+            tempArr = [photoStr]
           }
         }
+        result = tempArr.map(item => {
+          return `/static/images/${this.forceEntity.type}/${item}`
+        })
+        return result
       } else {
         this.haveSpot = false
       }
@@ -376,6 +363,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import url("./DetailPopup.less");
 </style>

@@ -85,7 +85,8 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
   // });
   //  hash赋值
   window.billboardMap[node.id] = window.earth.scene.primitives.add(new Cesium.BillboardCollection());
-  window.labelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
+  window.whiteLabelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
+  window.blackLabelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
 
   // context.featureMap[node.id] = result.features;
   let forceDrawFeatures = [];
@@ -164,7 +165,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       item.geometry.y,
       4
     );
-    window.labelMap[node.id].add({
+    window.whiteLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
       fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
@@ -174,6 +175,17 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
+    window.blackLabelMap[node.id].add({
+      id: `label@${item.attributes.SMID}@${node.id}`,
+      text: item.attributes.SHORTNAME || item.attributes.NAME,
+      fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#010C27"),
+      font: "8px",
+      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
+      pixelOffset: new Cesium.Cartesian2(0, -30),
+      disableDepthTestDistance: Number.POSITIVE_INFINITY,
+      position
+    });
+    window.currentMapType == 'vectorwhite' ? window.whiteLabelMap[node.id].setAllLabelsVisible(false) : window.blackLabelMap[node.id].setAllLabelsVisible(false)
     window.billboardMap[node.id].add({
       id: `billboard@${item.attributes.SMID}@${node.id}`,
       image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,

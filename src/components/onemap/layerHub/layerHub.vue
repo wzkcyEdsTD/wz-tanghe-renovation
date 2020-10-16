@@ -105,7 +105,7 @@
             <div class="sub-title">卡点分布</div>
             <div class="decorate"></div>
           </div>
-          <div style="width: 300px;height: 150px" class="echart" ref="pieEchart"></div>
+          <div style="width: 30vh;height: 15vh" class="echart" ref="pieEchart"></div>
         </div>
         <div class="czwt-info">
           <div class="sub-title-wrapper">
@@ -167,7 +167,7 @@
             <div class="sub-title">建设情况</div>
             <div class="decorate"></div>
           </div>
-          <div style="height: 150px" class="echart" ref="barEchart"></div>
+          <div style="height: 16vh" class="echart" ref="barEchart"></div>
         </div>
         <div class="czwt-info">
           <div class="sub-title-wrapper">
@@ -210,12 +210,12 @@
           </div>
           <div class="chart-wrapper">
             <div class="rate-item">
-              <p>投资完成率</p>
-              <div style="height: 50px" class="echart" ref="shangEchart"></div>
+              <p class="xiaobiaoti">投资完成率</p>
+              <div style="height: 5.5vh" class="echart" ref="shangEchart"></div>
             </div>
             <div class="rate-item">
-              <p>项目完成率</p>
-              <div style="height: 50px" class="echart" ref="xiaEchart"></div>
+              <p class="xiaobiaoti">项目完成率</p>
+              <div style="height: 5.5vh" class="echart" ref="xiaEchart"></div>
             </div>
           </div>
         </div>
@@ -231,6 +231,7 @@ import { getIserverFields } from "api/iServerAPI";
 export default {
   data() {
     return {
+      screenWidth: document.body.clientWidth,
       currentType: 'xm',
       zrdwList: [
         "指挥部",
@@ -422,6 +423,7 @@ export default {
         data1.push(parseFloat(this.$data.ret.pointDist.inner.number));//内环个数
         data2.push(parseFloat(this.$data.ret.pointDist.inner.length));//内环长度
       }
+      const that = this;
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
       this.pieEchart.setOption({
         series: [
@@ -503,9 +505,24 @@ export default {
           },
         ],
       });
+      window.addEventListener("resize",function () {
+        that.pieEchart.resize();
+      });
+    },
+    getFontSize(){
+      let e = this.screenWidth;
+      if (e>4000){
+        e = 14;
+      }else {
+        e = 9;
+      }
+
+      return e;
     },
     drawBars() {
       let data1=[],data2=[],lab;
+      const e = this.getFontSize();
+      console.log(e);
       if(!!this.$data.ret){
         data1.push(parseFloat(this.$data.ret.situation.build));//在建
         data1.push(parseFloat(this.$data.ret.situation.pre));//前期研究
@@ -515,12 +532,13 @@ export default {
         data2.push(parseFloat(this.$data.ret.situation.preLag));//前期滞后
         //lab = this.$data.ret.project.sum;
       }
+      const that = this;
       this.barEchart = this.$echarts.init(this.$refs.barEchart);
       this.barEchart.setOption({
         grid: {
-          left: 100,
+          left: '30%',
           top: 10,
-          bottom: 15,
+          bottom: '15%',
         },
         xAxis: {
           type: "value",
@@ -542,7 +560,7 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: 9,
+              fontSize: e,
               color: "#ffffff",
             },
           },
@@ -554,7 +572,7 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: 10,
+              fontSize: e,
               color: "#ffffff",
             },
             formatter: function (name) {
@@ -567,11 +585,11 @@ export default {
             rich: {
               a: {
                 color: "#FF21D4",
-                fontSize: 10,
+                fontSize: e,
               },
               b: {
                 color: "#FF0059",
-                fontSize: 10,
+                fontSize: e,
               },
             },
           },
@@ -630,8 +648,12 @@ export default {
           },
         ],
       });
+      window.addEventListener("resize",function () {
+        that.barEchart.resize();
+      });
     },
     drawXiaLines() {
+      const that = this;
       let data1,data2,lab;
       if(!!this.$data.ret){
         data1 = parseFloat(this.$data.ret.speed.finish);
@@ -746,8 +768,12 @@ export default {
           },
         ],
       });
+      window.addEventListener("resize",function () {
+        that.xiaEchart.resize();
+      });
     },
     drawShangLines() {
+      const that = this;
       let data1,data2,lab;
       if(!!this.$data.ret){
         data1 = parseFloat(this.$data.ret.speed.Completion);
@@ -861,6 +887,9 @@ export default {
             },
           },
         ],
+      });
+      window.addEventListener("resize",function () {
+        that.shangEchart.resize();
       });
     },
     getData(name){

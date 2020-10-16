@@ -22,39 +22,41 @@
     display: flex;
     >span {
       flex: 1;
-      line-height: 37px;
+      line-height: 4vh;
       font-family: YouSheBiaoTiHei;
-      font-size: 26px;
+      font-size: 3vh;
       color: #fff;
       opacity: .5;
       &.active {
         opacity: 1;
+        font-size: 3vh;
       }
     }
   }
   .switch-menu-decorate {
-    margin-top: 15px;
-    width: 350px;
-    height: 7px;
+    margin-top: 2vh;
+    width: 35vh;
+    height: 1vh;
     .bg-image('./images/switch-decorate');
   }
 }
 .left-content {
   z-index: 1;
   position: fixed;
-  left: 20px;
-  top: 150px;
+  left: 2vh;
+  top: 16vh;
   display: flex;
   .zrdw-list {
-    margin-top: 30px;
+    margin-top: 4vh;
     font-family: PingFang;
-    font-size: 13px;
+    font-size: 1.3vh;
     color: #fff;
     .zrdw-item {
-      margin-top: 18px;
-      width: 92px;
-      height: 44px;
-      line-height: 44px;
+      margin-top: 3vh;
+      width: 10vh;
+      height: 5vh;
+      line-height: 5vh;
+      font-size: 1.4vh;
       text-align: center;
       .bg-image('./images/zrdw-bg');
       cursor: pointer;
@@ -64,22 +66,22 @@
     }
   }
   .xm-container {
-    margin-left: 30px;
+    margin-left: 3vh;
     .xm-list {
-      margin-top: 10px;
-      max-height: 800px;
+      margin-top: 1vh;
+      max-height: 78vh;
       overflow-y: scroll;
       .xm-item {
-        width: 220px;
+        width: 23vh;
         // height: 50px;
         // background-color: #03070F;
         background: linear-gradient(180deg, #10254B 0%, #03070F 100%);
-        border: 1px solid #165FEA;
-        padding: 5px 10px;
+        border: 0.1vh solid #165FEA;
+        padding: 0.5vh 1vh;
         .name {
-          width: 160px;
+          width: 16vh;
           font-family: YouSheBiaoTiHei;
-          font-size: 14px;
+          font-size: 1.7vh;
           color: #16EAEA;
           white-space: nowrap;
           text-overflow: ellipsis;
@@ -96,13 +98,13 @@
             transform: scale(0.9);
             text-align: left;
             .key {
-              margin-top: 3px;
-              font-size: 12px;
+              margin-top: 0.3vh;
+              font-size: 1.2vh;
               color: #eee;
             }
             .value {
-              margin-top: 3px;
-              font-size: 12px;
+              margin-top: 0.3vh;
+              font-size: 1.2vh;
               color: #16EAEA;
             }
           }
@@ -110,9 +112,9 @@
           //   flex: 1.3;
           // }
           .split {
-            margin: 0 5px;
-            width: 1px;
-            height: 16px;
+            margin: 0 0.5vh;
+            width: 0.1vh;
+            height: 2vh;
             background-color: rgba(255, 255, 255, 0.4);
           }
         }
@@ -120,29 +122,30 @@
     }
   }
   .dd-container {
-    margin-left: 30px;
+    margin-left: 3vh;
     .dd-list {
-      margin-top: 10px;
-      max-height: 800px;
+      margin-top: 1vh;
+      max-height: 78vh;
       overflow-y: scroll;
       .dd-item {
         display: flex;
         align-items: center;
         >img {
-          width: 60px;
-          height: 50px;
+          width: 7vh;
+          height: 5.8vh;
         }
         .info-container {
-          margin-left: 6px;
-          padding: 5px 0;
-          width: 140px;
+          margin-left: 0.5vh;
+          padding:0.5vh 0;
+          width: 17vh;
+          height: 6vh;
           background: linear-gradient(180deg, #10254B 0%, #03070F 100%);
-          border: 1px solid #165FEA;
+          border: 0.1vh solid #165FEA;
           .name {
             padding-left: 8px;
             width: 100%;
             font-family: YouSheBiaoTiHei;
-            font-size: 14px;
+            font-size: 1.7vh;
             color: #16EAEA;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -155,14 +158,14 @@
             transform: scale(0.9);
             .key {
               flex: 2;
-              margin-top: 3px;
-              font-size: 12px;
+              margin-top: 0.3vh;
+              font-size: 1.3vh;
               color: #eee;
             }
             .value {
               flex: 1;
-              margin-top: 3px;
-              font-size: 12px;
+              margin-top: 0.3vh;
+              font-size: 1.3vh;
               color: #16EAEA;
             }
           }
@@ -174,19 +177,20 @@
 .right-content {
   z-index: 1;
   position: fixed;
-  right: 20px;
-  top: 100px;
+  right: 2vh;
+  top: 10vh;
   display: flex;
   .kdtj-container, .xmtj-container {
-    width: 300px;
+    width: 35vh;
     .base-info {
       display: flex;
-      margin-top: 20px;
+      margin-top: 3vh;
       .base-item {
         position: relative;
-        margin-right: 30px;
+        margin-right: 7vh;
         >img {
-          width: 100px;
+          width: 11vh;
+          height: 10vh;
           // height: 73px;
         }
         .title {
@@ -194,31 +198,33 @@
           top: -5px;
           left: 50%;
           transform: translateX(-50%);
-          font-size: 12px;
+          font-size: 1.3vh;
         }
         .text {
           position: absolute;
-          top: 12px;
+          //top: 12px;
+          top: 15%;
           left: 50%;
           transform: translateX(-50%);
           font-family: YouSheBiaoTiHei;
-          font-size: 20px;
+          font-size: 2.5vh;
           color: #FAFAFA;
           white-space: nowrap;
           .unit {
-            font-size: 12px;
+            font-size: 1.5vh;
             font-family: YouSheBiaoTiHei;
           }
         }
       }
     }
     .kdfb-info, .czwt-info, .jh-info, .jd-info {
-      margin-top: 20px;
+      margin-top: 1vh;
     }
     .gif-wrapper {
-      margin-top: 5px;
+      margin-top: 1vh;
       >img {
         width: 100%;
+        height: 18vh;
       }
     }
     .chart-wrapper {
@@ -234,14 +240,15 @@
   }
   .xmtj-container {
     .base-info {
-      margin-top: 10px;
+      margin-top: 1.3vh;
       .base-item {
         .title {
-          top: 15px;
+          top: 1.5vh;
+          font-size: 1.2vh;
           white-space: nowrap;
         }
         .text {
-          top: 30px;
+          top: 3.2vh;
         }
       }
     }
@@ -255,30 +262,30 @@
   align-items: flex-end;
   .pre {
     display: block;
-    width: 8px;
-    height: 24px;
+    width: 1vh;
+    height: 2vh;
     background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
     transform: skewX(-30deg);
   }
   .title {
     display: block;
-    height: 35px;
-    line-height: 35px;
+    height: 3vh;
+    line-height: 3vh;
     font-family: YouSheBiaoTiHei;
-    font-size: 18px;
+    font-size: 2vh;
     letter-spacing: 0px;
     color: #ffffff;
     text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
     position: relative;
-    padding-left: 12px;
+    padding-left: 1vh;
   }
   .title::before {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 2px;
-    width: 200px;
-    height: 15px;
+    left: 0.2vh;
+    width: 22vh;
+    height: 1.5vh;
     z-index: -1;
     background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
     transform: skewX(-30deg);
@@ -287,28 +294,30 @@
 .sub-title-wrapper {
   display: flex;
   align-items: center;
+  font-size: 1.7vh;
   .sub-title {
     font-family: YouSheBiaoTiHei;
     color: #fff;
+    font-size: 1.7vh;
     .number {
       font-family: YouSheBiaoTiHei;
       color: #16EAEA;
     }
   }
   .decorate {
-    width: 175px;
-    height: 5px;
+    width: 18vh;
+    height: 0.5vh;
     .bg-image('./images/decorate-line');
   }
 }
 .split-line {
-  margin: 10px auto;
+  margin: 1vh auto;
   width: 95%;
-  height: 1px;
+  height: 0.1vh;
   background-color: rgba(255, 255, 255, 0.4);
 }
 .result-wrapper {
-  margin-top: 5px;
+  margin-top: 1vh;
   width  : 99%;
   height : 30vh;
   font-family: PingFang;
@@ -320,10 +329,10 @@
       display        : flex;
       justify-content: space-between;
       align-items    : center;
-      padding        : 5px 0 5px 15px;
-      height: 30px;
-      line-height: 30px;
-      font-size: 12px;
+      padding        : 0.5vh 0 0.5vh 1.5vh;
+      height: 3.2vh;
+      line-height: 3.2vh;
+      font-size: 1.2vh;
       .index {
         flex: 1;
       }
@@ -365,4 +374,10 @@
 ::-webkit-scrollbar-thumb {
   background-color: #073691;
   box-shadow      : 0px 3px 6px 0px #012623;
+}
+
+.xiaobiaoti{
+  padding-left: 3vh;
+  color: #eee;
+  font-size: 1vh
 }

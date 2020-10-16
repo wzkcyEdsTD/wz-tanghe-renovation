@@ -92,13 +92,15 @@ export default {
   .route-wrapper {
     z-index: 3;
     position: absolute;
-    top: 20px;
+    top: 20%;
     right: 20%;
     color: #fff;
     display: flex;
     .route-item {
       cursor: pointer;
-      margin-right: 30px;
+      margin-right: 3vh;
+      width: 9vh;
+      height: 1vh;
       &.active {
         color: #16EAEA;
       }

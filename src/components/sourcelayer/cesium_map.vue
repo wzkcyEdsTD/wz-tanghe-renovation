@@ -244,23 +244,24 @@ export default {
       );
       window.earth = viewer;
 
-      // this.datalayer = viewer.imageryLayers.addImageryProvider(
-      //   new Cesium.SuperMapImageryProvider({
-      //     url: ServiceUrl.DataImage,
-      //   })
-      // );
-
       this.imagelayer[2019] = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.SWImage[2019],
         })
       );
 
-      // window.earth.imageryLayers.addImageryProvider(
-      //   new Cesium.SuperMapImageryProvider({
-      //     url: ServiceUrl.SEJBZ,
+      // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      //     url:
+      //       "http://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=856886d7882dbcad0f73442fb277db3c",
+      //     layer: "vec",
+      //     style: "default",
+      //     format: "tiles",
+      //     tileMatrixSetID: "w",
+      //     credit: new Cesium.Credit("天地图全球影像服务"),
+      //     subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+      //     maximumLevel: 18,
       //   })
-      // );
+      // )      
 
       // const mapMvt = viewer.scene.addVectorTilesMap({
       //   url: ServiceUrl.YJMVT,
@@ -287,12 +288,12 @@ export default {
       this.xzjxjdlayer.alpha = 0.5;
       this.xzjxjdlayer.show = false
 
-      this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.TANGHEFWM,
-        })
-      )
-      this.thfwmlayer.alpha = 0.7;
+      // this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
+      //   new Cesium.SuperMapImageryProvider({
+      //     url: ServiceUrl.TANGHEFWM,
+      //   })
+      // )
+      // this.thfwmlayer.alpha = 0.7;
 
       this.xzjxqxlayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
@@ -325,10 +326,6 @@ export default {
       // Cesium.when(promise, async (layers) => {
       //   this.sceneLayers = layers.slice(1)
       // });
-
-      // 范围圈效果
-      // this.lipai();
-      // this.quan();
 
       // 移除缓冲圈
       $(".cesium-widget-credits").hide();

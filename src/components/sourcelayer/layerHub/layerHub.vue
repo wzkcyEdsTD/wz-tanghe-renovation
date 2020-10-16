@@ -182,11 +182,7 @@ export default {
       screeHeight: document.body.clientHeight,
       showLarge:false,
       // TARGET_SOURCE,
-      //  tile layers
       tileLayers: {},
-      //  cesium Object
-      // entityMap: {},
-      // featureMap: {}, //  源数据,量小
       saveDataMap: {},
       showHub: false,
       currentMouse: '',
@@ -231,7 +227,7 @@ export default {
     this.getKuanGao();
   },
   mounted() {
-    this.$refs.tree.setCheckedKeys(['十二景', '断点', '绿道', '塘河范围面']);
+    this.$refs.tree.setCheckedKeys(['十二景', '断点', '绿道']);
   },
   methods: {
     ...mapActions("map", ["setSourceMap", "setCurrentource", "setSejList"]),
@@ -326,14 +322,19 @@ export default {
           this.setCurrentource(node.id)
           if (node.id == '项目') this.showSign = true
           if (node.withImage) {
-            const LAYER = this.tileLayers[node.id];
-            LAYER
-              ? (LAYER.show = true)
-              : (this.tileLayers[node.id] = window.earth.imageryLayers.addImageryProvider(
+            node.withImage.forEach(item => {
+              const LAYER = this.tileLayers[item.name];
+              if (LAYER) {
+                LAYER.show = true
+              } else {
+                this.tileLayers[item.name] = window.earth.imageryLayers.addImageryProvider(
                   new Cesium.SuperMapImageryProvider({
-                    url: node.withImage,
+                    url: item.url,
                   })
-                ));
+                )
+                item.alpha && (this.tileLayers[item.name].alpha = item.alpha);
+              }
+            })
           }
           // if (node.id && this.entityMap[node.id]) {
           if (node.id && window.billboardMap[node.id]) {

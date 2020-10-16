@@ -53,41 +53,42 @@ export default {
 <style scoped lang="less">
 .header-wrapper {
   position: relative;
-  z-index: 999;
+  z-index: 1;
   width: 100%;
-  height: ;
-  background-image: linear-gradient(#040D33 0%, rgba(4, 13, 51, 0.94) 50%, rgba(4, 13, 51, 0) 100%);
+  height: 1rem;
+  background-image: linear-gradient(#040D33 0%, rgba(4, 13, 51, 0.94) 70%);
   text-align: center;
   .header-img {
     position: relative;
-    height: 0.9rem;
+    height: 100%;
     .bg-img {
       position: absolute;
       left: 0;
       top: 0;
       width: 100%;
-      height: 1rem;
+      height: 100%;
       z-index: 2;
+    }
+    .topLab{
+      height: 100%;
     }
     .shadow {
       position: absolute;
-       left: 50%;
+      left: 50%;
       transform: translateX(-50%);
-      top: 4vh;
-      z-index: 1;
+      bottom: 10px;
       width: 34vh;
       height: 4vh;
     }
   }
   .info {
     position: absolute;
-    top: 7.5vh;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     color: #fff;
-    font-size: 1.5vh;
+    font-size: 1vh;
     font-family: DIN;
-    z-index: 3;
   }
   .route-wrapper {
     z-index: 3;
@@ -106,11 +107,5 @@ export default {
       }
     }
   }
-}
-.topLab{
-  clear: both;
-  display: block;
-  margin:auto;
-  width: 23vh;
 }
 </style>

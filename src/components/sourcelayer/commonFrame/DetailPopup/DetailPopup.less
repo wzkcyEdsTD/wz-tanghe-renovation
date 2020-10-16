@@ -78,7 +78,7 @@
   bottom: 0;
   top: 0;
   z-index: 1999;
-  padding: 7.5vh 1vh 0 1vh;
+  padding: 0.5vh 1vh 0 1vh;
   // background: linear-gradient(271deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   background-color: #040D33;
   color: #fff;
@@ -90,8 +90,6 @@
     height: 1.5vh;
     .bg-image("./images/close-info");
     cursor: pointer;
-    top: 10vh;
-    //z-index: 5;
   }
   .header-list {
     z-index: 99999;
@@ -146,25 +144,22 @@
           word-break: break-all;
         }
       }
-      // li:nth-child(even) {
-      //   background-color: rgba(22, 95, 234, 0.24);
-      // }
     }
   }
   .spot-wrapper, .video-wrapper {
     margin-top: 2vh;
-    .img-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      // padding: 10px 15px;
-    }
-    img {
-      width: 16vh;
-      margin-right: 1vh;
-      margin-top: 1vh;
-      height: 11vh;
-    }
+    // .img-wrapper {
+    //   display: flex;
+    //   flex-wrap: wrap;
+    //   align-items: center;
+    //   // padding: 10px 15px;
+    // }
+    // img {
+    //   width: 16vh;
+    //   margin-right: 1vh;
+    //   margin-top: 1vh;
+    //   height: 11vh;
+    // }
   }
   .overall-wrapper {
     margin-top: 2vh;
@@ -189,23 +184,23 @@
     }
     .title {
       display: block;
-      height: 3.5vh;
-      line-height: 3.5vh;
+      height: 35px;
+      line-height: 35px;
       font-family: YouSheBiaoTiHei;
-      font-size: 3vh;
+      font-size: 27px;
       letter-spacing: 0px;
       color: #ffffff;
       text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
       position: relative;
-      padding-left: 1vh;
+      padding-left: 12px;
     }
     .title::before {
       content: "";
       position: absolute;
-      bottom: 0;vh
-      left: 0.1;
-      width: 30vh;
-      height: 1.5vh;
+      bottom: 0;
+      left: 2px;
+      width: 300px;
+      height: 15px;
       z-index: -1;
       background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
       transform: skewX(-30deg);
@@ -226,6 +221,14 @@
   .sub-title::before {
     content: "";
     position: absolute;
+    z-index: 9999;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 1s;
+    background: rgba(19,45,85,.9);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+    box-sizing: border-box;
     bottom: 0;
     width: 20vh;
     height: 1.5vh;
@@ -243,7 +246,6 @@
       .bg-image("./images/time-bg");
       font-family: DIN;
       font-size: 1.7vh;
-
     }
   }
   .video {
@@ -291,4 +293,8 @@
     cursor: pointer;
     z-index: 99;
   }
+}
+
+.el-image-viewer__img {
+  max-height: 80% !important;
 }

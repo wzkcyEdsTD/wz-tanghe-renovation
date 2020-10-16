@@ -65,8 +65,12 @@ export default {
     window.featureMap = {};
     //  点位icon hash
     window.billboardMap = {};
-    //  点位label hash
-    window.labelMap = {};
+    //  点位浅色label hash
+    window.whiteLabelMap = {};
+    //  点位深色label hash
+    window.blackLabelMap = {};
+    // 当前底图
+    window.currentMapType = 'yx'
   },
   async mounted() {
     this.init3DMap(() => {
@@ -101,19 +105,6 @@ export default {
         const pick = window.earth.scene.pick(e.position);
         console.log("pick", pick);
         if (!pick.id) return;
-          // if (~pick.id.id.indexOf("项目_")) {
-          //   this.$bus.$emit("cesium-projectClick", {
-          //     extra_data: pick.id.extra_data,
-          //   });
-          // }
-          // if (~pick.id.id.indexOf("断点_")) {
-          //   this.$bus.$emit("cesium-kadianClick", {
-          //     extra_data: pick.id.extra_data,
-          //   });
-          // }
-          // this.$bus.$emit("cesium-kadianClick", {
-          //     extra_data: pick.id.extra_data,
-          //   });
         if (typeof pick.id == "string") {
           const [_TYPE_, _SMID_, _NODEID_] = pick.id.split("@");
           // *****[detailPopup]  资源详情点*****
@@ -131,7 +122,7 @@ export default {
       this.$bus.$off("cesium-layer-switch");
       this.$bus.$on("cesium-layer-switch", ({ type, value }) => {
         //  底图切换
-        console.log("layer-switch");
+        // console.log("layer-switch", window.whiteLabelMap, window.blackLabelMap);
         if (type == "yx") {
           console.log("yx", value, ServiceUrl.SWImage);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
@@ -146,8 +137,7 @@ export default {
                 })
               ));
           window.earth.imageryLayers.lowerToBottom(this.imagelayer[value])
-          // this.lipai();
-          // this.quan();
+          window.currentMapType = 'yx'
         } else {
           // this.removeAll();
           console.log("vector", value, ServiceUrl.DataImage);
@@ -163,24 +153,20 @@ export default {
                 })
               ));
           window.earth.imageryLayers.lowerToBottom(this.datalayer[value])
+          window.currentMapType = `vector${value}`
+        }
+        if (window.currentMapType == 'vectorwhite') {
+          for (let key in window.whiteLabelMap) {
+            window.whiteLabelMap[key].setAllLabelsVisible(false)
+            window.blackLabelMap[key].setAllLabelsVisible(true)
+          }
+        } else {
+          for (let key in window.whiteLabelMap) {
+            window.whiteLabelMap[key].setAllLabelsVisible(true)
+            window.blackLabelMap[key].setAllLabelsVisible(false)
+          }
         }
       });
-      // this.$bus.$off("cesium-lvdao-switch");
-      // this.$bus.$on("cesium-lvdao-switch", ({ value }) => {
-      //   //  绿道切换
-      //   console.log("lvdao-switch");
-      //   if (value) {
-      //     this.lvdaolayer
-      //       ? (this.lvdaolayer.show = true)
-      //       : (this.lvdaolayer = window.earth.imageryLayers.addImageryProvider(
-      //           new Cesium.SuperMapImageryProvider({
-      //             url: ServiceUrl.LVDAOImage,
-      //           })
-      //         ));
-      //   } else {
-      //     this.lvdaolayer ? this.lvdaolayer.show = false : null
-      //   }
-      // });
       this.$bus.$off("cesium-3d-switch");
       this.$bus.$on("cesium-3d-switch", ({ type, value }) => {
         // 白模切换
@@ -244,23 +230,24 @@ export default {
       );
       window.earth = viewer;
 
-      // this.datalayer = viewer.imageryLayers.addImageryProvider(
-      //   new Cesium.SuperMapImageryProvider({
-      //     url: ServiceUrl.DataImage,
-      //   })
-      // );
-
       this.imagelayer[2019] = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.SWImage[2019],
         })
       );
 
-      // window.earth.imageryLayers.addImageryProvider(
-      //   new Cesium.SuperMapImageryProvider({
-      //     url: ServiceUrl.SEJBZ,
+      // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      //     url:
+      //       "http://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=856886d7882dbcad0f73442fb277db3c",
+      //     layer: "vec",
+      //     style: "default",
+      //     format: "tiles",
+      //     tileMatrixSetID: "w",
+      //     credit: new Cesium.Credit("天地图全球影像服务"),
+      //     subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+      //     maximumLevel: 18,
       //   })
-      // );
+      // )      
 
       // const mapMvt = viewer.scene.addVectorTilesMap({
       //   url: ServiceUrl.YJMVT,
@@ -287,12 +274,12 @@ export default {
       this.xzjxjdlayer.alpha = 0.5;
       this.xzjxjdlayer.show = false
 
-      this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.TANGHEFWM,
-        })
-      )
-      this.thfwmlayer.alpha = 0.7;
+      // this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
+      //   new Cesium.SuperMapImageryProvider({
+      //     url: ServiceUrl.TANGHEFWM,
+      //   })
+      // )
+      // this.thfwmlayer.alpha = 0.7;
 
       this.xzjxqxlayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
@@ -325,10 +312,6 @@ export default {
       // Cesium.when(promise, async (layers) => {
       //   this.sceneLayers = layers.slice(1)
       // });
-
-      // 范围圈效果
-      // this.lipai();
-      // this.quan();
 
       // 移除缓冲圈
       $(".cesium-widget-credits").hide();

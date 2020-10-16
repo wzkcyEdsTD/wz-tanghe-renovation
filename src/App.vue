@@ -64,10 +64,10 @@ body {
 }
 #app > .content {
   position: absolute;
-  top: 0;
+  top: 1rem;
   bottom: 0;
   width: 100%;
-  z-index: 9;
+  // z-index: 9;
   > * {
     width: 100%;
     height: 100%;

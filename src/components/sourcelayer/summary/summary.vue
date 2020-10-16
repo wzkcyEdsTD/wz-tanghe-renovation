@@ -97,12 +97,12 @@ export default {
   .summary {
     position: fixed;
     box-sizing: border-box;
-    top: 6vh;
-    bottom: 4vh;
+    top: 1rem;
+    bottom: 0;
     overflow: hidden;
     right: 0px;
     width: 80vh;
-    height: 100vh;
+    // height: 100vh;
     color: white;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -141,16 +141,16 @@ export default {
   .summary1 {
     position: fixed;
     box-sizing: border-box;
-    top: 6vh;
-    bottom: 4vh;
+    top: 1rem;
+    bottom: 0;
     overflow: hidden;
     right: 0px;
     width: 38vh;
-    height: 100vh;
+    // height: 100vh;
     color: white;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 1vh;
+    padding: 0 1vh;
     z-index: 999;
     .ding {
       padding-top: 1vh;
@@ -185,7 +185,7 @@ export default {
   .mask-right {
     z-index: -2;
     position: fixed;
-    top: 0;
+    top: 1rem;
     right: 0;
     width: 90vh;
     height: 100vh;
@@ -195,7 +195,7 @@ export default {
   .mask-right1 {
     z-index: -2;
     position: fixed;
-    top: 0;
+    top: 1rem;
     right: 0;
     width: 41vh;
     height: 100vh;

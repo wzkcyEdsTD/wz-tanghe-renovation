@@ -25,7 +25,7 @@
           <div v-for="(item, index) in currentXmList" :key="index">
             <div class="xm-item" @click="itemClick(item)">
               <div class="name">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
-              <div class="info-container">
+              <div class="info-box">
                 <div class="info-item">
                   <div class="key">建设状态</div>
                   <div class="value">{{ item.attributes.CURRENT_STATE }}</div>
@@ -60,7 +60,7 @@
                   item.attributes.PHOTO.split(';')[0]
                 }`"
               />
-              <div class="info-container">
+              <div class="info-box">
                 <div class="name">
                   {{ index + 1 }}.{{ item.attributes.NAME }}
                 </div>
@@ -102,7 +102,7 @@
         </div>
         <div class="kdfb-info">
           <div class="sub-title-wrapper">
-            <div class="sub-title">卡点分布</div>
+            <div class="sub-title">断点分布</div>
             <div class="decorate"></div>
           </div>
           <div style="width: 30vh;height: 15vh" class="echart" ref="pieEchart"></div>

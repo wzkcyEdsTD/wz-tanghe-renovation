@@ -182,11 +182,7 @@ export default {
       screeHeight: document.body.clientHeight,
       showLarge:false,
       // TARGET_SOURCE,
-      //  tile layers
       tileLayers: {},
-      //  cesium Object
-      // entityMap: {},
-      // featureMap: {}, //  源数据,量小
       saveDataMap: {},
       showHub: false,
       currentMouse: '',
@@ -231,17 +227,11 @@ export default {
     this.getKuanGao();
   },
   mounted() {
-    this.$refs.tree.setCheckedKeys(['十二景', '断点', '绿道', '塘河范围面']);
+    this.$refs.tree.setCheckedKeys(['十二景', '断点', '绿道']);
   },
   methods: {
     ...mapActions("map", ["setSourceMap", "setCurrentource", "setSejList"]),
     eventRegsiter() {
-      // this.$bus.$off("cesium-targetChange");
-      // this.$bus.$on("cesium-targetChange", ({target}) => {
-      //   console.log("target", target);
-      //   // this.currentTarget = target
-      //   this.targetChange(target)
-      // });
     },
     getKuanGao(){
       //4320*1280
@@ -326,14 +316,19 @@ export default {
           this.setCurrentource(node.id)
           if (node.id == '项目') this.showSign = true
           if (node.withImage) {
-            const LAYER = this.tileLayers[node.id];
-            LAYER
-              ? (LAYER.show = true)
-              : (this.tileLayers[node.id] = window.earth.imageryLayers.addImageryProvider(
+            node.withImage.forEach(item => {
+              const LAYER = this.tileLayers[item.name];
+              if (LAYER) {
+                LAYER.show = true
+              } else {
+                this.tileLayers[item.name] = window.earth.imageryLayers.addImageryProvider(
                   new Cesium.SuperMapImageryProvider({
-                    url: node.withImage,
+                    url: item.url,
                   })
-                ));
+                )
+                item.alpha && (this.tileLayers[item.name].alpha = item.alpha);
+              }
+            })
           }
           // if (node.id && this.entityMap[node.id]) {
           if (node.id && window.billboardMap[node.id]) {
@@ -343,7 +338,8 @@ export default {
             window.billboardMap[node.id]._billboards.map(
               (v) => (v.show = true)
             );
-            window.labelMap[node.id].setAllLabelsVisible(true);
+            // window.labelMap[node.id].setAllLabelsVisible(true);
+            window.currentMapType == 'vectorwhite' ? window.blackLabelMap[node.id].setAllLabelsVisible(true) : window.whiteLabelMap[node.id].setAllLabelsVisible(true)
           } else {
             this.getPOIPickedFeature(node, () => {
               this.$bus.$emit('source-change', { value: node.id });
@@ -402,7 +398,8 @@ export default {
           //   this[node.saveData]([]);
           // }
           window.billboardMap[node.id]._billboards.map((v) => (v.show = false));
-          window.labelMap[node.id].setAllLabelsVisible(false);
+          // window.labelMap[node.id].setAllLabelsVisible(false);
+          window.currentMapType == 'vectorwhite' ? window.blackLabelMap[node.id].setAllLabelsVisible(false) : window.whiteLabelMap[node.id].setAllLabelsVisible(false)
         }
         node.componentEvent &&
           this.$bus.$emit(node.componentEvent, { value: null });
@@ -433,57 +430,8 @@ export default {
         if (node.id == '项目') this.showSign = false
       }
     },
-    // targetChange(target) {
-    //   if (target === '绿道断点') {
-    //     this.$bus.$emit("cesium-lvdao-switch", { value: !this.showLvdao });
-    //   }
-    //   this.TARGET_SOURCE.forEach((item) => {
-    //     if (item.id == target) {
-    //       console.log(666)
-    //       if (item.id && this.entityMap[item.id]) {
-    //         console.log(777)
-    //         this.entityMap[item.id].show = !this.entityMap[item.id].show;
-    //       } else {
-    //         console.log(888)
-    //         this.getPOIPickedFeature(item);
-    //       }
-    //     }
-    //   })
-    // }
   },
   watch: {
-    // currentLayer(val) {
-    //   console.log('newval', val)
-    //   if (val === 'vector') {
-    //     this.$bus.$emit("cesium-layer-switch", { type: 'vector', value: this.currentVector });
-    //   }
-    //   if (val === 'yx') {
-    //     this.$bus.$emit("cesium-layer-switch", { type: 'yx', value: this.currentYear });
-    //   }
-    // },
-    // currentTarget(val) {
-    //   console.log('newval', val)
-    //   if (val === '绿道断点') {
-    //     this.$bus.$emit("cesium-lvdao-switch", { value: true });
-    //   } else {
-    //     this.$bus.$emit("cesium-lvdao-switch", { value: false });
-    //   }
-    //   this.TARGET_SOURCE.forEach((item) => {
-    //     if (item.id == val) {
-    //       console.log(666)
-    //       if (item.id && this.entityMap[item.id]) {
-    //         this.entityMap[item.id].show = true;
-    //       } else {
-    //         console.log(777)
-    //         this.getPOIPickedFeature(item);
-    //       }
-    //     } else {
-    //       if (item.id && this.entityMap[item.id]) {
-    //         this.entityMap[item.id].show = false;
-    //       }
-    //     }
-    //   })
-    // }
     currentYear(val) {
       if (val) {
         this.$bus.$emit("cesium-layer-switch", { type: 'yx', value: val });

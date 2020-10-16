@@ -424,6 +424,7 @@ export default {
         data2.push(parseFloat(this.$data.ret.pointDist.inner.length));//内环长度
       }
       const that = this;
+      const e = this.getFontSize();
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
       this.pieEchart.setOption({
         series: [
@@ -465,6 +466,7 @@ export default {
               formatter: " {b}：{c}个 ",
               textStyle: {
                 color: "#040C32",
+                fontSize: e,
               },
             },
 
@@ -484,6 +486,7 @@ export default {
               formatter: " {b}",
               textStyle: {
                 color: "#FFFFFF",
+                fontSize: e,
               },
             },
             labelLine: {
@@ -492,6 +495,7 @@ export default {
                 length: 5, // 改变标示线的长度
                 lineStyle: {
                   color: "#A4EEFF", // 改变标示线的颜色
+                  fontSize: e,
                 },
               },
             },

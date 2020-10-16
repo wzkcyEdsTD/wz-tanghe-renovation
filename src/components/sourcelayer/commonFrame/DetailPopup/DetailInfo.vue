@@ -27,24 +27,24 @@ export default ({
   position: absolute;
   right: 0;
   bottom: 0;
-  top: 80px;
+  top: 8vh;
   z-index: 999999;
-  padding: 10px;
+  padding: 1vh;
   color: #fff;
   .close-btn {
     position: absolute;
-    right: 30px;
-    width: 15px;
-    height: 15px;
+    right: 3vh;
+    width: 1.5vh;
+    height: 1.5vh;
     .bg-image("./images/close-info");
   }
   .header {
     display: flex;
     align-items: center;
     .header-item {
-      margin-right: 20px;
+      margin-right: 2vh;
       font-family: PingFang;
-      font-size: 18px;
+      font-size: 1.8vh;
       color: #165CE2;
     }
   }

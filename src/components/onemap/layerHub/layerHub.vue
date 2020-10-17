@@ -21,8 +21,25 @@
           <span class="pre"></span>
           <span class="title">项目</span>
         </div>
+        <div class="search-header">
+          <el-input
+            v-model="searchXMText"
+            class="searchFilterInput"
+            placeholder="查找项目"
+            size="small"
+            @keyup.enter.native="searchXMFilter"
+          />
+          <div class="button-container">
+            <div class="button-item">
+              <i class="icon-common icon-clear" @click="searchXMClear"></i>
+            </div>
+            <div class="button-item">
+              <i class="icon-common icon-search" @click="searchXMFilter"></i>
+            </div>
+          </div>
+        </div>
         <div class="xm-list">
-          <div v-for="(item, index) in currentXmList" :key="index">
+          <div v-for="(item, index) in xmList" :key="index">
             <div class="xm-item" @click="itemClick(item)">
               <div class="name">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
               <div class="info-box">
@@ -52,8 +69,25 @@
           <span class="pre"></span>
           <span class="title">断点</span>
         </div>
+        <div class="search-header">
+          <el-input
+            v-model="searchDDText"
+            class="searchFilterInput"
+            placeholder="查找断点"
+            size="small"
+            @keyup.enter.native="searchDDFilter"
+          />
+          <div class="button-container">
+            <div class="button-item">
+              <i class="icon-common icon-clear" @click="searchDDClear"></i>
+            </div>
+            <div class="button-item">
+              <i class="icon-common icon-search" @click="searchDDFilter"></i>
+            </div>
+          </div>
+        </div>
         <div class="dd-list">
-          <div v-for="(item, index) in currentDdList" :key="index">
+          <div v-for="(item, index) in ddList" :key="index">
             <div class="dd-item" @click="itemClick(item)">
               <img
                 :src="`/static/images/断点/${
@@ -234,10 +268,10 @@ export default {
       screenWidth: document.body.clientWidth,
       currentType: 'xm',
       zrdwList: [
-        "指挥部",
-        "鹿城区政府",
-        "瓯海区政府",
-        "龙湾区政府",
+        '指挥部',
+        '鹿城区政府',
+        '瓯海区政府',
+        '龙湾区政府',
         "瑞安市政府",
         "温州城发集团",
         "温州现代集团",
@@ -309,6 +343,10 @@ export default {
             //     "卡点分布":{"东线":{"个数":"","长度":""},"南线":{"个数":"","长度":""},"内环":{"个数":"","长度":""},"外环":{"个数":"","长度":""},"西线":{"个数":"","长度":""},}
             // }
             ],
+      ddList:[],
+      xmList:[],
+      searchDDText: "",
+      searchXMText: "",
       ret:  {   "name":"指挥部",
                 "project":{"sum":"67","plan":"275"},
                 "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
@@ -337,7 +375,8 @@ export default {
       } else {
         result = alldata
       }
-      return result
+      this.xmList = result;
+      // return result
     },
     currentDdList() {
       let result = []
@@ -349,7 +388,7 @@ export default {
       } else {
         result = alldata
       }
-      return result
+      this.ddList = result;
     },
     delayXmList() {
       let result
@@ -923,7 +962,41 @@ export default {
         },
         maximumHeight: 450,
       });
-    }
+    },
+    searchXMClear() {
+      this.searchXMText = "";
+      this.xmList = [];
+      this.searchXMFilter();
+    },
+    searchXMFilter() {
+      // console.log(this.currentXmList);
+      let allSearchList = this.sourceMap['项目'];
+      allSearchList = allSearchList.filter(item => {
+        return item.attributes.NAME.length
+      })
+      this.xmList = this.searchXMText
+        ? allSearchList.filter((item) => {
+          return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
+        })
+        : allSearchList;
+    },
+    searchDDFilter() {
+      // console.log(this.currentXmList);
+      let allSearchList = this.sourceMap['断点'];
+      allSearchList = allSearchList.filter(item => {
+        return item.attributes.NAME.length
+      })
+      this.ddList = this.searchDDText
+        ? allSearchList.filter((item) => {
+          return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
+        })
+        : allSearchList;
+    },
+    searchDDClear() {
+      this.searchDDText = "";
+      this.ddList = [];
+      this.searchDDFilter();
+    },
   },
   mounted() {
     const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
@@ -959,6 +1032,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import url("./layerHub.less");
 </style>

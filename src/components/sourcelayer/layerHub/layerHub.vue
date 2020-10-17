@@ -440,11 +440,4 @@ export default {
 
 <style lang="less">
 @import url("./layerHub.less");
-.ulsda{
-  display: flex;
-  align-items: flex-start;
-}
-.rig{
-  padding-left: 2vh;
-}
 </style>

@@ -230,24 +230,24 @@ export default {
       );
       window.earth = viewer;
 
-      this.imagelayer[2019] = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.SWImage[2019],
-        })
-      );
-
-      // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-      //     url:
-      //       "http://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=856886d7882dbcad0f73442fb277db3c",
-      //     layer: "vec",
-      //     style: "default",
-      //     format: "tiles",
-      //     tileMatrixSetID: "w",
-      //     credit: new Cesium.Credit("天地图全球影像服务"),
-      //     subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-      //     maximumLevel: 18,
+      // this.imagelayer[2019] = window.earth.imageryLayers.addImageryProvider(
+      //   new Cesium.SuperMapImageryProvider({
+      //     url: ServiceUrl.SWImage[2019],
       //   })
-      // )      
+      // );
+
+      window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+          url:
+            "http://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=856886d7882dbcad0f73442fb277db3c",
+          layer: "vec",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "w",
+          credit: new Cesium.Credit("天地图全球影像服务"),
+          subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+          maximumLevel: 18,
+        })
+      )  
 
       // const mapMvt = viewer.scene.addVectorTilesMap({
       //   url: ServiceUrl.YJMVT,
@@ -316,20 +316,20 @@ export default {
       // 移除缓冲圈
       $(".cesium-widget-credits").hide();
       viewer.scene.globe.depthTestAgainstTerrain = false;
-      // this.cameraMove();
-      this.fly();
+      this.cameraMove();
+      // this.fly();
       fn && fn();
     },
     cameraMove() {
       window.earth.scene.camera.setView({
         destination: Cesium.Cartesian3.fromDegrees(
           120.67625660935506,
-          27.841332018707733,
-          10000.0
+          27.951332018707733,
+          36000.0
         ),
         orientation: {
           heading: 0.01768860454315663,
-          pitch: -0.5808830390057396,
+          pitch: Cesium.Math.toRadians(-90),
           roll: 0,
         },
       });

@@ -1,8 +1,8 @@
 <template>
   <div>
     <div :class="[showLarge?'summary':'summary1']">
-      <div class="ding">
-        <div class="box" v-if="!showLarge">
+      <div class="ding" v-if="!showLarge">
+        <div class="box">
           <div class="buttonpd" :class="{active: currentType=='total'}" @click="currentType='total'">
             <div class="tp">
               <img src="./img/组合.png" alt="" v-if="currentType=='total'" class="tupianxuanzhong"/>
@@ -19,23 +19,19 @@
           </div>
         </div>
         <div>
-          <img src="./img/switch-decorate.png" class="zhuangshi" v-if="!showLarge"/>
-<!--          <img src="./img/装饰.png" alt="" v-if="!showLarge"/>-->
+          <img src="./img/switch-decorate.png" class="zhuangshi"/>
+<!--          <img src="./img/装饰.png" alt="" />-->
         </div>
       </div>
-      <div v-if="showLarge" >
-        <div class="ssj">
-          <div class="uls" >
-            <div :class="[!showLarge?'lefts1':'lefts1da']">
-              <Right/>
-            </div>
-            <div class="rig">
-              <ProjectSummary/>
-            </div>
-          </div>
+      <div class="uls" v-if="showLarge" >
+        <div>
+          <Right/>
+        </div>
+        <div class="rig">
+          <ProjectSummary/>
         </div>
       </div>
-      <div v-if="!showLarge" class="gdkd">
+      <div v-if="!showLarge">
         <Right v-if="currentType == 'total'" />
         <ProjectSummary v-if="currentType == 'source'" />
       </div>
@@ -85,7 +81,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .tupian{
     width: 9vh;
     height: 4vh;
@@ -100,8 +96,8 @@ export default {
     top: 1rem;
     bottom: 0;
     overflow: hidden;
-    right: 0px;
-    width: 80vh;
+    right: 2vh;
+    // width: 80vh;
     // height: 100vh;
     color: white;
     -webkit-box-sizing: border-box;
@@ -179,9 +175,6 @@ export default {
       font-size: 2vh;
     }
   }
-  .gdkd{
-    width: 40vh;
-  }
   .mask-right {
     z-index: -2;
     position: fixed;
@@ -206,9 +199,9 @@ export default {
     display: flex;
     align-items: flex-start;
   }
-  .lefts1{width: 45vh;}
-  .lefts1da{width: 36vh;height: 100vh}
-  .rig{flex: 1;padding-left: 1vh}
+  // .lefts1{width: 45vh;}
+  // .lefts1da{width: 36vh;height: 100vh}
+  .rig{padding-left: 1vh}
   .zhuangshi {
     margin-top: 1vh;
     width: 38vh;

@@ -92,67 +92,59 @@
         </div>
       </div>
     </div>
-    <div class="switch-menu-wrapper">
-      <div class="switch-menu-container" v-if="!showLarge">
+    <div class="switch-menu-wrapper" v-if="!showLarge">
+      <div class="switch-menu-container">
         <span :class="{active: !showMenu}" @click="switchMenu(false)">资源目录</span>
         <span :class="{active: showMenu}" @click="switchMenu(true)">塘河简介</span>
       </div>
-      <div class="switch-menu-decorate" v-if="!showLarge"></div>
+      <div class="switch-menu-decorate"></div>
     </div>
     <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" >
-      <div>
-        <div class="ulsda" v-if="showLarge">
-          <div class="lefts">
-            <RightSummary ></RightSummary>
-          </div>
-          <div class="rig">
-            <div class="zsj">
-              <div class="title-wrapper">
-                <span class="pre"></span>
-                <span class="title">资源目录</span>
-              </div>
-              <div class="ssjda">
-                <div class="tree-container">
-                  <el-tree
-                    ref="tree"
-                    :data="data"
-                    show-checkbox
-                    node-key="id"
-                    :filter-node-method="filterNode"
-                    default-expand-all
-                    @check-change="nodeCheckChange"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="ulsda" v-if="showLarge">
+        <div class="lefts">
+          <RightSummary ></RightSummary>
         </div>
-        <div v-if="!showLarge">
-          <div v-if="!leftOrRight">
-            <div class="title-wrapper">
-              <span class="pre"></span>
-              <span class="title">资源目录</span>
-            </div>
-            <div class="tree-container">
-              <el-tree
-                ref="tree"
-                :data="data"
-                show-checkbox
-                node-key="id"
-                :filter-node-method="filterNode"
-                default-expand-all
-                @check-change="nodeCheckChange"
-              />
-            </div>
+        <div class="rig">
+          <div class="title-wrapper">
+            <span class="pre"></span>
+            <span class="title">资源目录</span>
           </div>
-          <div v-if="leftOrRight">
-            <div class="gdkd">
-              <RightSummary ></RightSummary>
-            </div>
+          <div class="tree-container">
+            <el-tree
+              ref="tree"
+              :data="data"
+              show-checkbox
+              node-key="id"
+              :filter-node-method="filterNode"
+              default-expand-all
+              @check-change="nodeCheckChange"
+            />
           </div>
         </div>
       </div>
-    </div>
+      <div v-if="!showLarge">
+        <div v-if="!leftOrRight">
+          <div class="title-wrapper">
+            <span class="pre"></span>
+            <span class="title">资源目录</span>
+          </div>
+          <div class="tree-container">
+            <el-tree
+              ref="tree"
+              :data="data"
+              show-checkbox
+              node-key="id"
+              :filter-node-method="filterNode"
+              default-expand-all
+              @check-change="nodeCheckChange"
+            />
+          </div>
+        </div>
+        <div v-if="leftOrRight">
+          <RightSummary ></RightSummary>
+        </div>
+      </div>
+      </div>
     <div class="sign-wrapper" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div>
@@ -448,36 +440,11 @@ export default {
 
 <style lang="less">
 @import url("./layerHub.less");
-.gdkd{
-  width: 41vh;
-}
-.uls{
-  /*width: 100%;*/
-  display: flex;
-  align-items: flex-start;
-}
 .ulsda{
-  width: 100%;
   display: flex;
   align-items: flex-start;
-  height: 100%;
-}
-.lefts{
-width: 40vhpx;
 }
 .rig{
-/*flex:1;*/
-padding-left: 2vh;
-height: 100vh;
-}
-.ssjda{
-padding-top: 1vh;
-}
-.ssjda2{
-padding-top: 4.5vh;
-
-}
-.zsj{
-/*padding-left: 1vh;*/
+  padding-left: 2vh;
 }
 </style>

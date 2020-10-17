@@ -57,7 +57,7 @@ export default {
   }
   .left {
     position: fixed;
-    top: 0;
+    top: 5vh;
     left: 0;
     width: 40vh;
     height: 100%;
@@ -65,7 +65,7 @@ export default {
   }
   .right {
     position: fixed;
-    top: 0;
+    top: 5vh;
     right: 0;
     width: 40vh;
     height: 100%;

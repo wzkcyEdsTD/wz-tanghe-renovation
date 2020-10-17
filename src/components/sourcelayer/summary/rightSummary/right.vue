@@ -521,9 +521,10 @@
     width: 2vh;
   }
   .zxp1{
-    position: absolute;
+    // position: absolute;
     /*top: 1vh;*/
-    right: 1vh;
+    // right: 1vh;
+    float: right;
     width: 2vh;
     transform: rotate(-180deg);
   }

@@ -55,8 +55,8 @@ export default {
   position: relative;
   z-index: 1;
   width: 100%;
-  height: 1rem;
-  background-image: linear-gradient(#040D33 0%, rgba(4, 13, 51, 0.94) 70%);
+  height: 8vh;
+  background-image: linear-gradient(#040d33,rgba(4,13,51,.94) 50%,rgba(4,13,51,0));
   text-align: center;
   .header-img {
     position: relative;

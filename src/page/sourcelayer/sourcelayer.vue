@@ -73,17 +73,10 @@ export default {
   }
   .left {
     position: fixed;
-    top: 1rem;
+    top: 5vh;
     left: 0;
     width: 40vh;
     height: 100%;
-    // background-image: linear-gradient(
-    //   90deg,
-    //   rgba(0, 13, 26, 0.84) 0%,
-    //   rgba(0, 17, 34, 0.55) 70%,
-    //   rgba(0, 19, 38, 0) 100%
-    // );
-    /*z-index:10;*/
     background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }
   .leftlarger {
@@ -92,13 +85,6 @@ export default {
     left: 0;
     width: 29vw;
     height: 100%;
-    // background-image: linear-gradient(
-    //   90deg,
-    //   rgba(0, 13, 26, 0.84) 0%,
-    //   rgba(0, 17, 34, 0.55) 70%,
-    //   rgba(0, 19, 38, 0) 100%
-    // );
-    /*z-index:10;*/
     background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }
   .bottom {

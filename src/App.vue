@@ -64,7 +64,7 @@ body {
 }
 #app > .content {
   position: absolute;
-  top: 1rem;
+  top: 0;
   bottom: 0;
   width: 100%;
   // z-index: 9;

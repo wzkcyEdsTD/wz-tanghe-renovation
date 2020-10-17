@@ -93,7 +93,7 @@ export default {
   .summary {
     position: fixed;
     box-sizing: border-box;
-    top: 1rem;
+    top: 8vh;
     bottom: 0;
     overflow: hidden;
     right: 2vh;
@@ -137,7 +137,7 @@ export default {
   .summary1 {
     position: fixed;
     box-sizing: border-box;
-    top: 1rem;
+    top: 8vh;
     bottom: 0;
     overflow: hidden;
     right: 0px;
@@ -188,7 +188,7 @@ export default {
   .mask-right1 {
     z-index: -2;
     position: fixed;
-    top: 1rem;
+    top: 5vh;
     right: 0;
     width: 41vh;
     height: 100vh;

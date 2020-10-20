@@ -124,14 +124,34 @@
           <div class="base-item">
             <img src="./images/kd-number.png" alt="" />
             <div class="title" style="color: #2fc8e9">总数</div>
-            <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum}}<span class="unit">个</span></div>
-            <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>
+            <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum||0}}<span class="unit">个</span></div>
+<!--            <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>-->
           </div>
           <div class="base-item">
             <img src="./images/kd-length.png" alt="" />
             <div class="title" style="color: #ff8b4f">总长度</div>
-            <div class="text" v-if="ret.pointStat.length">{{ret.pointStat.length}}<span class="unit">米</span></div>
-            <div class="text" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>
+            <div class="text" v-if="ret.pointStat.length">{{ret.pointStat.length||0}}<span class="unit">米</span></div>
+<!--            <div class="text" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>-->
+          </div>
+        </div>
+        <div class="base-info">
+          <div class="base-item">
+            <div class="progressEmpty">
+              <img src="./images/0%（蓝）.png" class="empty">
+              <div class="progressFull" style="width: 1.00vh">
+                <img src="./images/100%（蓝）.png" class="full">
+              </div>
+              <span class="progressTitle">10%</span>
+            </div>
+          </div>
+          <div class="base-item">
+            <div class="progressEmpty">
+              <img src="./images/0%（橙）.png" class="empty">
+              <div class="progressFull" style="width: 1.00vh">
+                <img src="./images/100%（橙）.png" class="full">
+              </div>
+              <span class="progressTitleRight">10%</span>
+            </div>
           </div>
         </div>
         <div class="kdfb-info">
@@ -140,6 +160,15 @@
             <div class="decorate"></div>
           </div>
           <div style="width: 30vh;height: 15vh" class="echart" ref="pieEchart"></div>
+        </div>
+        <div class="jh-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">计划贯通时间轴</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="gif-wrapper">
+            <img src="./images/timegif.gif" alt="" />
+          </div>
         </div>
         <div class="czwt-info">
           <div class="sub-title-wrapper">
@@ -169,15 +198,6 @@
             </ul>
           </div>
         </div>
-        <div class="jh-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">计划贯通时间轴</div>
-            <div class="decorate"></div>
-          </div>
-          <div class="gif-wrapper">
-            <img src="./images/timegif.gif" alt="" />
-          </div>
-        </div>
       </div>
       <div class="xmtj-container" v-show="currentType=='xm'">
         <div class="title-wrapper">
@@ -196,12 +216,50 @@
             <div class="text">{{ret.project.plan}}<span class="unit">亿元</span></div>
           </div>
         </div>
+        <div class="base-info">
+          <div class="base-item">
+            <div class="progressEmpty">
+              <img src="./images/0%（蓝）.png" class="empty">
+              <div class="progressFull" style="width: 1.00vh">
+                <img src="./images/100%（蓝）.png" class="full">
+              </div>
+              <span class="progressTitle">10%</span>
+            </div>
+          </div>
+          <div class="base-item">
+            <div class="progressEmpty">
+              <img src="./images/0%（红）.png" class="empty">
+              <div class="progressFull" style="width: 1.00vh">
+                <img src="./images/100%（红）.png" class="full">
+              </div>
+              <span class="progressTitleRight">10%</span>
+            </div>
+          </div>
+        </div>
+
+<!--        <div class="square"></div>-->
         <div class="jsqk-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">建设情况</div>
             <div class="decorate"></div>
           </div>
           <div style="height: 16vh" class="echart" ref="barEchart"></div>
+        </div>
+        <div class="jd-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">项目投资计划表</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="chart-wrapper">
+            <div class="rate-item">
+              <p class="xiaobiaoti">{{'投资计划(亿元)'}}</p>
+              <div style="height: 16vh" class="echart" ref="lineEchart"></div>
+            </div>
+<!--            <div class="rate-item">-->
+<!--              <p class="xiaobiaoti">项目完成率</p>-->
+<!--              <div style="height: 5.5vh" class="echart" ref="xiaEchart"></div>-->
+<!--            </div>-->
+          </div>
         </div>
         <div class="czwt-info">
           <div class="sub-title-wrapper">
@@ -235,22 +293,6 @@
                 }}</span>
               </li>
             </ul>
-          </div>
-        </div>
-        <div class="jd-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">建设进度</div>
-            <div class="decorate"></div>
-          </div>
-          <div class="chart-wrapper">
-            <div class="rate-item">
-              <p class="xiaobiaoti">投资完成率</p>
-              <div style="height: 5.5vh" class="echart" ref="shangEchart"></div>
-            </div>
-            <div class="rate-item">
-              <p class="xiaobiaoti">项目完成率</p>
-              <div style="height: 5.5vh" class="echart" ref="xiaEchart"></div>
-            </div>
           </div>
         </div>
       </div>
@@ -356,8 +398,8 @@ export default {
             },
       pieEchart: null,
       barEchart: null,
-      shangEchart: null,
-      xiaEchart: null,
+      lineEchart: null,
+      // xiaEchart: null,
     };
   },
   computed: {
@@ -557,23 +599,26 @@ export default {
       if (e>4000){
         e = 14;
       }else {
-        e = 9;
+        e = 10;
       }
 
       return e;
     },
     drawBars() {
-      let data1=[],data2=[],lab;
+      let data1=[],data2=[],lab=[];
       const e = this.getFontSize();
       console.log(e);
       if(!!this.$data.ret){
+        // data1.push("");
         data1.push(parseFloat(this.$data.ret.situation.build));//在建
         data1.push(parseFloat(this.$data.ret.situation.pre));//前期研究
 
         data2.push(parseFloat(this.$data.ret.situation.finish));//完工
         data2.push(parseFloat(this.$data.ret.situation.buildLag));//在建滞后
         data2.push(parseFloat(this.$data.ret.situation.preLag));//前期滞后
-        //lab = this.$data.ret.project.sum;
+        lab.push(""+data2[0]);
+        lab.push((data2[1]+data1[0])+'('+data2[1]+")在建");
+        lab.push((data2[2]+data1[1])+'('+data2[2]+")前期");
       }
       const that = this;
       this.barEchart = this.$echarts.init(this.$refs.barEchart);
@@ -647,18 +692,8 @@ export default {
             type: "bar",
             stack: "总量",
             barWidth: 25, //柱图宽度
-            // barWidth : 40,
-            label: {
-              show: true,
-              formatter: "{c}个",
-              textStyle: {
-                fontSize: 12,
-                color: "#fff",
-                fontFamily: "PingFang SC",
-              },
-            },
             data: [
-              { value: "", itemStyle: { color: "#00FF84" } },
+              { value: "", itemStyle: { color: "#3379FF" } },
               { value: data1[0], itemStyle: { color: "#FF0059" } },
               {
                 value: data1[1],
@@ -670,152 +705,202 @@ export default {
             name: "第二部分",
             type: "bar",
             stack: "总量",
-            label: {
-              show: true,
-              formatter: "{c}个",
-              position: "right",
-              textStyle: {
-                fontSize: 12,
-                color: "#fff",
-                fontFamily: "PingFang SC",
-              },
-            },
             data: [
-              { value: data2[0], itemStyle: { color: "#00FF84" } },
-              { value: data2[1], itemStyle: { color: "#FF765D" } },
+              { value: data2[0], name:lab[0],itemStyle: { color: "#3379FF" } },
+              { value: data2[1], name:lab[1],itemStyle: { color: "#3379FF" } },
               {
-                value: data2[2],
-                itemStyle: { color: "#4DAEF8" },
+                value: data2[2],name:lab[2],
+                itemStyle: { color: "#3379FF" },
               },
             ],
           },
+          {
+            name: "第二部分",
+            type: "bar",
+            stack: "总量",
+            label: {
+              show: true,
+              position: "right",
+              textStyle: {
+                fontSize: 10,
+                color: "#fff",
+                fontFamily: "PingFang SC",
+              },
+              formatter: function (params) {
+                let temp = params.name;
+                let first, secend;
+                if (temp.indexOf('(') > -1) {
+                  first = temp.split('(')[0];
+                  secend = temp.split('(')[1].toString().split(')')[0];
+                  const lab = temp.split('(')[1].toString().split(')')[1].toString();
+                  if (lab === "前期") {
+                    return "{a|" + first + "}" + '(' + "{c|" + secend + "}" + ")";
+                  }
+                  if (lab === "在建") {
+                    return "{a|" + first + "}" + '(' + "{b|" + secend + "}" + ")";
+                  }
+                } else {
+                  return temp
+                }
+
+              },
+              rich: {
+                a: {
+                  fontSize: e,
+                  fontFamily: "PingFang SC",
+                  color: "#ffffff",
+                },
+                b:{
+                  fontSize: e,
+                  fontFamily: "PingFang SC",
+                  color: "#FF0059",
+                },
+                c:{
+                  fontSize: e,
+                  fontFamily: "PingFang SC",
+                  color: "#FF21D4",
+
+                }
+              },
+            },
+            data: [
+              { value: 50-data2[0], name:lab[0],itemStyle: { color: "#000000" } },
+              { value: 50-data2[1]-data1[0], name:lab[1],itemStyle: { color: "#000000" } },
+              {
+                value: 50-data2[2]-data1[1],name:lab[2],
+                itemStyle: { color: "#000000" },
+              },
+            ],
+          },
+
         ],
       });
       window.addEventListener("resize",function () {
         that.barEchart.resize();
       });
     },
-    drawXiaLines() {
-      const that = this;
-      let data1,data2,lab;
-      if(!!this.$data.ret){
-        data1 = parseFloat(this.$data.ret.speed.finish);
-        data2 = 100 - 1 - data1;
-        lab = this.$data.ret.project.sum;
-      }
-      this.xiaEchart = this.$echarts.init(this.$refs.xiaEchart);
-      this.xiaEchart.setOption({
-        grid: {
-          right: 100,
-        },
-        yAxis: {
-          data: [""],
-          axisTick: {
-            //x轴刻度线
-            show: false,
-          },
-          splitLine: {
-            //网格线
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          axisLine: {
-            //坐标轴线
-            show: false,
-          },
-        },
-        xAxis: {
-          max: 100,
-          min: 0,
-          axisLabel: {
-            show: false,
-          },
-          axisLine: {
-            //坐标轴线
-            show: false,
-          },
-          axisLable: {
-            //坐标轴线
-            show: false,
-          },
-          splitLine: {
-            //网格线
-            show: false,
-          },
-          axisTick: {
-            //x轴刻度线
-            show: false,
-          },
-        },
-        series: [
-          {
-            name: "已完成",
-            type: "bar",
-            stack: "完成情况",
-            data: [data1],
-            barWidth: 30, //柱图宽度
-            itemStyle: {
-              color: "#CE4142",
-              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
-            },
-            label: {
-              formatter: "{a|{c}%}",
-              show: true,
-              textStyle: {
-                rich: {
-                  a: {
-                    fontSize: "16",
-                    fontFamily: "PingFang SC",
-                    color: "#ffffff",
-                  },
-                },
-              },
-            },
-          },
-          {
-            name: "渐变",
-            type: "bar",
-            stack: "完成情况",
-            data: [1],
-            // barGap: '-100%',
-            itemStyle: {
-              color: "#FF2729",
-              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
-            },
-          },
-          {
-            name: "未完成",
-            type: "bar",
-            stack: "完成情况",
-            data: [data2],
-            label: {
-              formatter: "{a|"+lab+"个}",
-              show: true,
-              position: "right",
-              textStyle: {
-                rich: {
-                  a: {
-                    fontSize: "16",
-                    fontFamily: "PingFang SC",
-                    color: "#ffffff",
-                  },
-                },
-              },
-            },
-            itemStyle: {
-              color: "#361B23",
-              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
-            },
-          },
-        ],
-      });
-      window.addEventListener("resize",function () {
-        that.xiaEchart.resize();
-      });
-    },
-    drawShangLines() {
+    // drawXiaLines() {
+    //   const that = this;
+    //   let data1,data2,lab;
+    //   if(!!this.$data.ret){
+    //     data1 = parseFloat(this.$data.ret.speed.finish);
+    //     data2 = 100 - 1 - data1;
+    //     lab = this.$data.ret.project.sum;
+    //   }
+    //   this.xiaEchart = this.$echarts.init(this.$refs.xiaEchart);
+    //   this.xiaEchart.setOption({
+    //     grid: {
+    //       right: 100,
+    //     },
+    //     yAxis: {
+    //       data: [""],
+    //       axisTick: {
+    //         //x轴刻度线
+    //         show: false,
+    //       },
+    //       splitLine: {
+    //         //网格线
+    //         show: false,
+    //       },
+    //       axisLabel: {
+    //         show: false,
+    //       },
+    //       axisLine: {
+    //         //坐标轴线
+    //         show: false,
+    //       },
+    //     },
+    //     xAxis: {
+    //       max: 100,
+    //       min: 0,
+    //       axisLabel: {
+    //         show: false,
+    //       },
+    //       axisLine: {
+    //         //坐标轴线
+    //         show: false,
+    //       },
+    //       axisLable: {
+    //         //坐标轴线
+    //         show: false,
+    //       },
+    //       splitLine: {
+    //         //网格线
+    //         show: false,
+    //       },
+    //       axisTick: {
+    //         //x轴刻度线
+    //         show: false,
+    //       },
+    //     },
+    //     series: [
+    //       {
+    //         name: "已完成",
+    //         type: "bar",
+    //         stack: "完成情况",
+    //         data: [data1],
+    //         barWidth: 30, //柱图宽度
+    //         itemStyle: {
+    //           color: "#CE4142",
+    //           barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+    //         },
+    //         label: {
+    //           formatter: "{a|{c}%}",
+    //           show: true,
+    //           textStyle: {
+    //             rich: {
+    //               a: {
+    //                 fontSize: "16",
+    //                 fontFamily: "PingFang SC",
+    //                 color: "#ffffff",
+    //               },
+    //             },
+    //           },
+    //         },
+    //       },
+    //       {
+    //         name: "渐变",
+    //         type: "bar",
+    //         stack: "完成情况",
+    //         data: [1],
+    //         // barGap: '-100%',
+    //         itemStyle: {
+    //           color: "#FF2729",
+    //           barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+    //         },
+    //       },
+    //       {
+    //         name: "未完成",
+    //         type: "bar",
+    //         stack: "完成情况",
+    //         data: [data2],
+    //         label: {
+    //           formatter: "{a|"+lab+"个}",
+    //           show: true,
+    //           position: "right",
+    //           textStyle: {
+    //             rich: {
+    //               a: {
+    //                 fontSize: "16",
+    //                 fontFamily: "PingFang SC",
+    //                 color: "#ffffff",
+    //               },
+    //             },
+    //           },
+    //         },
+    //         itemStyle: {
+    //           color: "#361B23",
+    //           barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+    //         },
+    //       },
+    //     ],
+    //   });
+    //   window.addEventListener("resize",function () {
+    //     that.xiaEchart.resize();
+    //   });
+    // },
+    drawLines() {
+      const e = this.getFontSize();
       const that = this;
       let data1,data2,lab;
       if(!!this.$data.ret){
@@ -825,114 +910,89 @@ export default {
         lab = this.$data.ret.project.plan;
       }
       // console.log(data2);
-      this.shangEchart = this.$echarts.init(this.$refs.shangEchart);
-      this.shangEchart.setOption({
-        grid: {
-          right: 100,
-          // containLabel: false,
-        },
-        textStyle: {
-          color: "#FAFAFA",
-          fontSize: 13,
-          fontFamily: "PingFang SC",
-        },
-        yAxis: {
-          data: [""],
-          axisTick: {
-            //x轴刻度线
-            show: false,
-          },
-          splitLine: {
-            //网格线
-            show: false,
-          },
-          axisLine: {
-            //坐标轴线
-            show: false,
-          },
-        },
-        xAxis: {
-          max: 100,
-          min: 0,
-          axisLine: {
-            //坐标轴线
-            show: false,
-          },
-          splitLine: {
-            //网格线
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          axisTick: {
-            //x轴刻度线
-            show: false,
-          },
-        },
-        series: [
-          {
-            name: "已完成",
-            type: "bar",
-            stack: "完成情况",
-            //"speed":{"Completion":"0","finish":"0"},
-            data: [data1],
-            barWidth: 30, //柱图宽度
-            itemStyle: {
-              color: "#1A56E2",
-              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
+      this.lineEchart = this.$echarts.init(this.$refs.lineEchart);
+      this.lineEchart.setOption({
+            grid: {
+              top: '10%',
+              bottom:'20%',
+              left:'20%'
             },
-            label: {
-              formatter: "{a|{c}%}",
-              show: true,
-              textStyle: {
-                rich: {
-                  a: {
-                    fontSize: "16",
-                    fontFamily: "PingFang SC",
-                  },
-                },
+            xAxis: {
+              type: 'category',
+              boundaryGap:'',
+              data: ['2020.12', '2021.1', '2021.2', '2021.3', '2021.4'],
+              axisTick: {
+                //x轴刻度线
+                show: false,
+              },
+              splitLine: {
+                //网格线
+                show: false,
+              },
+              axisLabel: {
+                show: true,
+                textStyle:{
+                  color:"#ffffff",
+                  fontFamily:'DIN',
+                  fontSize:e
+                }
+              },
+              axisLine: {
+                //坐标轴线
+                show: true,
+                lineStyle: {
+                  color: '#ffffff',
+                }
               },
             },
-          },
-          {
-            name: "渐变",
-            type: "bar",
-            stack: "完成情况",
-            data: [1],
-            // barGap: '-100%',
-            itemStyle: {
-              color: "#729CFF",
-              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
-            },
-          },
-          {
-            name: "未完成",
-            type: "bar",
-            stack: "完成情况",
-            data: [data2],
-            label: {
-              formatter: "{a|"+lab+"亿元}",
-              show: true,
-              position: "right",
-              textStyle: {
-                rich: {
-                  a: {
-                    fontSize: "16",
-                    fontFamily: "PingFang SC",
-                  },
-                },
+            yAxis: {
+              type: 'value',
+              max:400,
+              axisTick: {
+                //x轴刻度线
+                show: false,
+              },
+              splitLine: {
+                //网格线
+                show: false,
+              },
+              axisLabel: {
+                show: true,
+                textStyle:{
+                  fontFamily:'DIN',
+                  color:"#ffffff",
+                  fontSize:e
+                }
+              },
+              axisLine: {
+                //坐标轴线
+                show: true,
+                lineStyle: {
+                  color: '#ffffff',
+                }
               },
             },
-            itemStyle: {
-              color: "#122F76",
-              barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
-            },
-          },
-        ],
+            series: [{
+              data: [200, 210, 220, 230, 240, ],
+              type: 'line',
+              smooth: true,
+              areaStyle: {
+                normal: {
+                  color: '#52D1FE' //改变区域颜色
+                }
+              },
+              itemStyle: {
+                normal: {
+                  color: '#52D1FE', //改变折线点的颜色
+                  lineStyle: {
+                    color: '#52D1FE' //改变折线颜色
+                  }
+                }
+              },
+            }]
       });
       window.addEventListener("resize",function () {
-        that.shangEchart.resize();
+        that.lineEchart.resize();
       });
     },
     getData(name){
@@ -946,8 +1006,8 @@ export default {
       if(rets.length>0){
         this.ret = rets[0];
       }
-      this.drawShangLines();
-      this.drawXiaLines();
+      this.drawLines();
+      // this.drawXiaLines();
       this.drawBars();
       this.drawPies();
     },
@@ -1021,8 +1081,8 @@ export default {
     });
     this.drawPies();
     this.drawBars();
-    this.drawShangLines();
-    this.drawXiaLines();
+    this.drawLines();
+    // this.drawXiaLines();
   },
   watch: {
     drawData(val) {

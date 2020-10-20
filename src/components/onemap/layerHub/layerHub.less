@@ -60,7 +60,7 @@
     margin-left: 3vh;
     .xm-list {
       margin-top: 1vh;
-      max-height: 78vh;
+      max-height: 73vh;
       overflow-y: scroll;
       .xm-item {
         width: 23vh;
@@ -116,7 +116,7 @@
     margin-left: 3vh;
     .dd-list {
       margin-top: 1vh;
-      max-height: 78vh;
+      max-height: 74vh;
       overflow-y: scroll;
       .dd-item {
         display: flex;
@@ -175,7 +175,7 @@
     width: 35vh;
     .base-info {
       display: flex;
-      margin-top: 3vh;
+      margin-top: 2vh;
       .base-item {
         position: relative;
         margin-right: 7vh;
@@ -310,7 +310,7 @@
 .result-wrapper {
   margin-top: 1vh;
   width  : 99%;
-  height : 30vh;
+  height : 28vh;
   font-family: PingFang;
   color: #fff;
   .result-list {
@@ -427,4 +427,45 @@
       .bg-image('./images/search');
     }
   }
+}
+
+.progressEmpty {
+  height: 1.5vh;
+  //margin: 0.5vh auto;
+  position: relative;
+  left: 1vh;
+  width: 11vh;
+}
+
+.empty{
+  height: 100%;
+}
+
+.full{
+  height: 1.5vh;
+}
+
+.progressFull{
+  transition: width .1s;
+  //background: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.progressTitle{
+  position: absolute;
+  top: 0;
+  left: 10vh;
+  color: #ffffff;
+  font-size: 1.5vh;
+}
+
+.progressTitleRight{
+  position: absolute;
+  top: 0;
+  right: -2vh;
+  color: #ffffff;
+  font-size: 1.5vh;
 }

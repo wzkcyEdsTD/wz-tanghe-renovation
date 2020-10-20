@@ -114,7 +114,7 @@
         <div class="no-tip" v-show="currentDdList && !currentDdList.length">暂无数据</div>
       </div>
     </div>
-    <div class="right-content">
+    <div class="right-content" v-show="changeType=='other'">
       <div class="kdtj-container" v-show="currentType=='dd'">
         <div class="title-wrapper">
           <span class="pre"></span>
@@ -297,6 +297,274 @@
         </div>
       </div>
     </div>
+    <div class="right-content" v-show="changeType=='all'">
+      <div class="kdtj-container" v-show="currentType=='dd'">
+        <div class="title-wrapper">
+          <span class="pre"></span>
+          <span class="title">断点统计</span>
+        </div>
+        <div class="yhsxzcd-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">一环三线断点总长度</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="progressFlex">
+            <span class="yhsxText">瓯海区</span>
+            <div class = "square">
+              <div class="squareIn" style="width: 0.4vh"></div>
+              <div class="squareInText">1%</div>
+            </div>
+            <span class="yhsxTextRight">62米</span>
+          </div>
+          <div class="progressFlex">
+            <span class="yhsxText">鹿城区</span>
+            <div class = "square">
+              <div class="squareIn" style="width: 0.8vh"></div>
+              <div class="squareInText">2%</div>
+            </div>
+            <span class="yhsxTextRight">62米</span>
+          </div>
+          <div class="progressFlex">
+            <span class="yhsxText">龙湾区</span>
+            <div class = "square">
+              <div class="squareIn" style="width: 0.8vh"></div>
+              <div class="squareInText">2%</div>
+            </div>
+            <span class="yhsxTextRight">62米</span>
+          </div>
+        </div>
+        <div class="yhsx-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">一环三线</div>
+            <div class="decorate"></div>
+          </div>
+          <img src="./images/动图2.gif" class="yhsxdongtu">
+        </div>
+        <div class="zrdw-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">责任单位卡点时间轴</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="progressFlexIn">
+            <div class="lab">
+              <p class="labTitle">2020.12</p>
+              <p class="labtext">龙湾区完成</p>
+              <p class="labtext">卡点个数 8个</p>
+              <p class="labtext">卡点总长度 1412米</p>
+            </div>
+            <div class="labOH">
+              <p class="labTitle">2022.10</p>
+              <p class="labtext">鹿城区完成</p>
+              <p class="labtext">卡点个数 21个</p>
+              <p class="labtext">卡点总长度 8752米</p>
+            </div>
+          </div>
+          <div class="end">
+            <div>
+              <img src="./images/红线.png" class="redLine">
+              <img src="./images/红线.png" class="redLineMidle">
+              <img src="./images/红线.png" class="redLineRight">
+              <div class="straightLine"></div>
+            </div>
+          </div>
+          <div class="progressFlexIn">
+            <div class="labLW">
+              <p class="labTitle">2021.12</p>
+              <p class="labtext">瓯海区完成</p>
+              <p class="labtext">卡点个数 11个</p>
+              <p class="labtext">卡点总长度 8910米</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="xmtj-container" v-show="currentType=='xm'">
+        <div class="title-wrapper">
+          <span class="pre"></span>
+          <span class="title">项目统计</span>
+        </div>
+        <div class="xmtzjh-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">项目投资计划完成率排行</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="mxph">
+            <img src="./images/xmtzjh.png" class="xmtzPicture">
+            <div class="second">65%</div>
+            <div class="secondText">总 39亿元</div>
+            <div class="first">75%</div>
+            <div class="firstText">总 39亿元</div>
+            <div class="third">35%</div>
+            <div class="thirdText">总 39亿元</div>
+          </div>
+          <div class="progressFlex">
+            <span class="xmtzOH">瓯海区</span>
+            <span class="xmtzLC">鹿城区</span>
+            <span class="xmtzLW">龙湾区</span>
+          </div>
+          <ul>
+            <li class="info-item-right">
+              <span class="value">瑞安市</span>
+              <span class="value">浙江产业区</span>
+              <span class="value">温州现代集团</span>
+              <span class="value">温州城发集团</span>
+            </li>
+            <li class="info-item-right">
+              <div class="key">
+                <div class="keyAllText">
+                  <p class="firstKeyText">45%</p>
+                  <p class="secondKeyText">9个</p>
+                </div>
+              </div>
+              <div class="key">
+                <div class="keyAllText">
+                  <p class="firstKeyText">35%</p>
+                  <p class="secondKeyText">9个</p>
+                </div>
+              </div>
+              <div class="key">
+                <div class="keyAllText">
+                  <p class="firstKeyText">25%</p>
+                  <p class="secondKeyText">9个</p>
+                </div>
+              </div>
+              <div class="key">
+                <div class="keyAllText">
+                  <p class="firstKeyText">15%</p>
+                  <p class="secondKeyText">9个</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="xmwgl-info">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">项目完工率</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="pictureFlex">
+            <div class="xmwg">
+                <img src="./images/lan.png" class="bothSides">
+                <span class="compleRate">65%</span>
+              </div>
+            <div class="xmwg">
+              <img src="./images/lan.png" class="middlePic">
+              <span class="compleRate">75%</span>
+            </div>
+            <div class="xmwg">
+              <img src="./images/bai.png" class="bothSides">
+              <span class="compleRateRight">55%</span>
+            </div>
+          </div>
+          <div class="pictureFlex">
+            <p class="compleRateText">瓯海区<br/>9个</p>
+            <p class="compleRateText">鹿城区<br/>9个</p>
+            <p class="compleRateTextRight">龙湾区<br/>9个</p>
+          </div>
+          <ul>
+            <li class="info-item-right">
+              <span class="value">瑞安市</span>
+              <span class="value">浙江产业区</span>
+              <span class="value">温州现代集团</span>
+              <span class="value">温州城发集团</span>
+            </li>
+            <li class="info-item-right">
+              <div class="key">
+                <div class="keyAllText">
+                    <p class="firstKeyText">45%</p>
+                    <p class="secondKeyText">9个</p>
+                  </div>
+              </div>
+              <div class="key">
+                <div class="keyAllText">
+                  <p class="firstKeyText">35%</p>
+                  <p class="secondKeyText">9个</p>
+                </div>
+              </div>
+              <div class="key">
+                <div class="keyAllText">
+                  <p class="firstKeyText">25%</p>
+                  <p class="secondKeyText">9个</p>
+                </div>
+              </div>
+              <div class="key">
+                <div class="keyAllText">
+                  <p class="firstKeyText">15%</p>
+                  <p class="secondKeyText">9个</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="zrdwxmsjz">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">责任单位项目时间轴</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="progressFlexIn">
+            <div class="buleText">
+              <div class="lucheng">
+                <p class="buleLabTitle">2020.6.1完成</p>
+                <p class="buleLabText">温州现代集团</p>
+                <p class="buleLabText">项目个数 4个</p>
+                <p class="buleLabText">投资计划 6.1亿元</p>
+              </div>
+              <div class="ouhai">
+                <p class="buleLabTitle">2020.12.1完成</p>
+                <p class="buleLabText">瑞安市政府</p>
+                <p class="buleLabText">项目个数 7个</p>
+                <p class="buleLabText">投资计划 18.4亿元</p>
+              </div>
+              <div class="longwan">
+                <p class="buleLabTitle">2023.12.1完成</p>
+                <p class="buleLabText">浙南产业区</p>
+                <p class="buleLabText">项目个数 1个</p>
+                <p class="buleLabText">投资计划 11.5亿元</p>
+              </div>
+              <div class="ruian">
+                <p class="buleLabTitle">2024.3.1完成</p>
+                <p class="buleLabText">龙湾区政府</p>
+                <p class="buleLabText">项目个数 8个</p>
+                <p class="buleLabText">投资计划 45.1亿元</p>
+              </div>
+            </div>
+          </div>
+          <div class="end">
+            <div class="blueLine">
+              <img src="./images/蓝线.png" class="lucheng">
+              <img src="./images/蓝线.png" class="ouhai">
+              <img src="./images/蓝线.png" class="zhenan">
+              <img src="./images/蓝线.png" class="longwan">
+              <img src="./images/蓝线.png" class="xiandai">
+              <img src="./images/蓝线.png" class="ruian">
+              <img src="./images/蓝线.png" class="chengfa">
+              <div class="straightLine"></div>
+            </div>
+          </div>
+          <div class="progressFlexIn">
+            <div class="buleText">
+              <div class="zhenan">
+                <p class="buleLabTitle">2022.9.1完成</p>
+                <p class="buleLabText">瓯海区政府</p>
+                <p class="buleLabText">项目个数 17个</p>
+                <p class="buleLabText">投资计划 108.9亿元</p>
+              </div>
+              <div class="xiandai">
+                <p class="buleLabTitle">2023.9.1完成</p>
+                <p class="buleLabText">温州城发集团完成</p>
+                <p class="buleLabText">项目个数 12个</p>
+                <p class="buleLabText">投资计划 34.6亿元</p>
+              </div>
+              <div class="chengfa">
+                <p class="buleLabTitle">2020.12.1完成</p>
+                <p class="buleLabText">鹿城区政府</p>
+                <p class="buleLabText">项目个数 18个</p>
+                <p class="buleLabText">投资计划 50.5亿元</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -309,14 +577,15 @@ export default {
     return {
       screenWidth: document.body.clientWidth,
       currentType: 'xm',
+      changeType:'all',
       zrdwList: [
         '指挥部',
         '鹿城区政府',
         '瓯海区政府',
         '龙湾区政府',
         "瑞安市政府",
-        "温州城发集团",
         "温州现代集团",
+        "温州城发集团",
         "浙南产业区",
       ],
       currentZrdw: '指挥部',
@@ -410,6 +679,7 @@ export default {
     currentXmList() {
       let result
       let alldata = this.sourceMap['项目']
+      console.log(alldata)
       if (this.currentZrdw != '指挥部') {
         result = alldata.filter(item => {
           return item.attributes.ZR_DEPTID == this.currentZrdw
@@ -779,126 +1049,6 @@ export default {
         that.barEchart.resize();
       });
     },
-    // drawXiaLines() {
-    //   const that = this;
-    //   let data1,data2,lab;
-    //   if(!!this.$data.ret){
-    //     data1 = parseFloat(this.$data.ret.speed.finish);
-    //     data2 = 100 - 1 - data1;
-    //     lab = this.$data.ret.project.sum;
-    //   }
-    //   this.xiaEchart = this.$echarts.init(this.$refs.xiaEchart);
-    //   this.xiaEchart.setOption({
-    //     grid: {
-    //       right: 100,
-    //     },
-    //     yAxis: {
-    //       data: [""],
-    //       axisTick: {
-    //         //x轴刻度线
-    //         show: false,
-    //       },
-    //       splitLine: {
-    //         //网格线
-    //         show: false,
-    //       },
-    //       axisLabel: {
-    //         show: false,
-    //       },
-    //       axisLine: {
-    //         //坐标轴线
-    //         show: false,
-    //       },
-    //     },
-    //     xAxis: {
-    //       max: 100,
-    //       min: 0,
-    //       axisLabel: {
-    //         show: false,
-    //       },
-    //       axisLine: {
-    //         //坐标轴线
-    //         show: false,
-    //       },
-    //       axisLable: {
-    //         //坐标轴线
-    //         show: false,
-    //       },
-    //       splitLine: {
-    //         //网格线
-    //         show: false,
-    //       },
-    //       axisTick: {
-    //         //x轴刻度线
-    //         show: false,
-    //       },
-    //     },
-    //     series: [
-    //       {
-    //         name: "已完成",
-    //         type: "bar",
-    //         stack: "完成情况",
-    //         data: [data1],
-    //         barWidth: 30, //柱图宽度
-    //         itemStyle: {
-    //           color: "#CE4142",
-    //           barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
-    //         },
-    //         label: {
-    //           formatter: "{a|{c}%}",
-    //           show: true,
-    //           textStyle: {
-    //             rich: {
-    //               a: {
-    //                 fontSize: "16",
-    //                 fontFamily: "PingFang SC",
-    //                 color: "#ffffff",
-    //               },
-    //             },
-    //           },
-    //         },
-    //       },
-    //       {
-    //         name: "渐变",
-    //         type: "bar",
-    //         stack: "完成情况",
-    //         data: [1],
-    //         // barGap: '-100%',
-    //         itemStyle: {
-    //           color: "#FF2729",
-    //           barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
-    //         },
-    //       },
-    //       {
-    //         name: "未完成",
-    //         type: "bar",
-    //         stack: "完成情况",
-    //         data: [data2],
-    //         label: {
-    //           formatter: "{a|"+lab+"个}",
-    //           show: true,
-    //           position: "right",
-    //           textStyle: {
-    //             rich: {
-    //               a: {
-    //                 fontSize: "16",
-    //                 fontFamily: "PingFang SC",
-    //                 color: "#ffffff",
-    //               },
-    //             },
-    //           },
-    //         },
-    //         itemStyle: {
-    //           color: "#361B23",
-    //           barBorderRadius: [0, 0, 0, 0], // 统一设置四个角的圆角大小
-    //         },
-    //       },
-    //     ],
-    //   });
-    //   window.addEventListener("resize",function () {
-    //     that.xiaEchart.resize();
-    //   });
-    // },
     drawLines() {
       const e = this.getFontSize();
       const that = this;
@@ -996,7 +1146,13 @@ export default {
       });
     },
     getData(name){
-      this.currentZrdw = name
+      this.currentZrdw = name;
+      if (name==='指挥部'){
+        this.changeType = 'all';
+      }else{
+        this.changeType = 'other';
+      }
+      console.log(this.changeType);
       let rets = [];
       this.list.forEach(function (element) {
         if(element.name==name){
@@ -1063,7 +1219,6 @@ export default {
     const SW_DATA = "/data-alldata/rest/data";
     const SW_DATA_NAME = "172.168.3.181_thxm:";
     const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
-    const that = this;
     this.getPOIPickedFeature({
       id: "项目",
       label: "项目",
@@ -1082,7 +1237,6 @@ export default {
     this.drawPies();
     this.drawBars();
     this.drawLines();
-    // this.drawXiaLines();
   },
   watch: {
     drawData(val) {

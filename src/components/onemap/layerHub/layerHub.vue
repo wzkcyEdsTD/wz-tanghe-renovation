@@ -243,7 +243,7 @@
             <div class="sub-title">建设情况</div>
             <div class="decorate"></div>
           </div>
-          <div style="height: 16vh" class="echart" ref="barEchart"></div>
+          <div style="height: 16vh;  width: 35vh;" class="echart" ref="barEchart"></div>
         </div>
         <div class="jd-info">
           <div class="sub-title-wrapper">
@@ -252,8 +252,8 @@
           </div>
           <div class="chart-wrapper">
             <div class="rate-item">
-              <p class="xiaobiaoti">{{'投资计划(亿元)'}}</p>
-              <div style="height: 16vh" class="echart" ref="lineEchart"></div>
+              <p class="xiaobiaoti">{{'投资计划(万元)'}}</p>
+              <div style="height: 16vh;  width: 35vh;" class="echart" ref="lineEchart"></div>
             </div>
 <!--            <div class="rate-item">-->
 <!--              <p class="xiaobiaoti">项目完成率</p>-->
@@ -871,7 +871,6 @@ export default {
       }else {
         e = 10;
       }
-
       return e;
     },
     drawBars() {
@@ -1061,16 +1060,29 @@ export default {
       }
       // console.log(data2);
       this.lineEchart = this.$echarts.init(this.$refs.lineEchart);
+      // debugger;
       this.lineEchart.setOption({
             grid: {
               top: '10%',
               bottom:'20%',
               left:'20%'
             },
+            tooltip : {
+              trigger: 'axis',
+              axisPointer: {
+                // type: 'cross',
+                label: {
+                  backgroundColor: '#6a7985',
+                  textStyle:{
+                    fontSize: e,
+                  }
+                }
+              }
+            },
             xAxis: {
               type: 'category',
               boundaryGap:'',
-              data: ['2020.12', '2021.1', '2021.2', '2021.3', '2021.4'],
+              data: ['2020.1.1', '2020.2.1','2020.6.1','2020.8.1','2020.9.1','2020.10.1','2020.11.1','2020.12.1','2021.1.1','2021.3.1','2021.4.1','2021.6.1','2022.3.1','2022.7.1','2022.9.1','2021.10.1','2021.12.1','2022.10.1','2022.12.1','2023.9.1','2023.12.1','2024.3.1'],
               axisTick: {
                 //x轴刻度线
                 show: false,
@@ -1097,7 +1109,7 @@ export default {
             },
             yAxis: {
               type: 'value',
-              max:400,
+              // max:400,
               axisTick: {
                 //x轴刻度线
                 show: false,
@@ -1123,7 +1135,7 @@ export default {
               },
             },
             series: [{
-              data: [200, 210, 220, 230, 240, ],
+              data: [3000, 19000, 150, 15144, 103200, 161250,500,24813.36,194718,7540,20016,133571,7340,50000,67214,1454,928097,5000,408570,171360,176769,240263],
               type: 'line',
               smooth: true,
               areaStyle: {
@@ -1162,10 +1174,11 @@ export default {
       if(rets.length>0){
         this.ret = rets[0];
       }
-      this.drawLines();
-      // this.drawXiaLines();
-      this.drawBars();
-      this.drawPies();
+      this.$nextTick(()=>{
+        this.drawLines();
+        this.drawBars();
+        this.drawPies();
+      });
     },
     itemClick(item) {
       const { x, y } = item.geometry;

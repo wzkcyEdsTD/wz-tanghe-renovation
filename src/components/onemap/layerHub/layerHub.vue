@@ -991,7 +991,7 @@ export default {
               show: true,
               position: "right",
               textStyle: {
-                fontSize: 10,
+                fontSize: e,
                 color: "#fff",
                 fontFamily: "PingFang SC",
               },

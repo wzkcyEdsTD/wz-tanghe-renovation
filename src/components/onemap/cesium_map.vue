@@ -11,7 +11,7 @@
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
 import LayerHub from "./layerHub/layerHub";
-import DetailPopup from "../sourcelayer/commonFrame/DetailPopup/DetailPopup";
+import DetailPopup from "../sourcelayer/commonFrame/CommonDetailPopup/CommonDetailPopup";
 const Cesium = window.Cesium;
 
 export default {

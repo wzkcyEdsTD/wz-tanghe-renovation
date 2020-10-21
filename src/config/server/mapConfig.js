@@ -57,7 +57,7 @@ export const ServiceUrl = {
     "http://172.168.3.183:8090/iserver/services/3D-th/rest/realspace/datas/th",
   // 绿道
   LVDAOImage: {
-    BOLD: "http://172.168.3.183:8090/iserver/services/3D-ld_1-19t19/rest/realspace/datas/ld_1.19t19",
+    BOLD: "http://172.168.3.183:8090/iserver/services/3D-ldc/rest/realspace/datas/ld1.59t19",
     THIN: "http://172.168.3.183:8090/iserver/services/3D-ld_0-55t19/rest/realspace/datas/ld_0.55t19",
   },
   // 行政区县

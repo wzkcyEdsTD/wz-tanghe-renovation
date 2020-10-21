@@ -1,0 +1,297 @@
+.project-detail-popup {
+  position: fixed;
+  right: 0;
+  top: 5vh;
+  bottom: 0;
+  z-index: 999;
+  width: 50vh;
+  padding: 5vh 2vh;
+  background-color: #040D33;
+  color: #fff;
+  .close-btn {
+    position: absolute;
+    top: 2vh;
+    right: 1vh;
+    width: 1.5vh;
+    height: 1.5vh;
+    .bg-image("./images/close-info");
+    cursor: pointer;
+  }
+  .content-info {
+    display: flex;
+    flex-direction: column;
+    .top {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1.5vh;
+      width: 85%;
+      .top-item {
+        margin-right: 1vh;
+        padding: 0.5vh 1.6vh;
+        background-image: linear-gradient(180deg, #05296E 0%, #031537 100%);
+        border: 1px solid #165FEA;
+        border-radius: 5px;
+        font-family: YouSheBiaoTiHei;
+        color: #165FEA;
+        font-size: 1.6vh;
+      }
+    }
+    .bottom {
+      display: flex;
+      align-items: center;
+      margin-top: 2vh;
+      .left {
+        .date-list {
+          padding: 1vh;
+          border-right: 1px dashed #2283FC;
+          .date-item {
+            margin: 0.5vh 0;
+            padding: 0.5vh 1vh;
+            .bg-image("./images/time-bg");
+            font-family: DIN;
+            font-size: 1.2vh;
+            opacity: 0.5;
+            .icon {
+              width: 1vh;
+            }
+          }
+        }
+      }
+      .right {
+        display: flex;
+        align-items: center;
+        margin-left: 1vh;
+        .swiper-buttons {
+          cursor: pointer;
+          width: 1vh;
+          height: 3vh;
+          .bg-image("./images/swiper-btn");
+        }
+        .swiper-button-left {
+          margin-right: 1vh;
+        }
+        .swiper-button-right {
+          margin-left: 1vh;
+          transform: rotate(180deg);
+        }
+        .swiper-wrapper {
+          margin: 0;
+          width: 26vh;
+          .swiper-item {
+            img {
+              width: 100%;
+              // height: 114px;
+            }
+          }
+          .swiper-scrollbar {
+            height: 3px;
+            background: rgba(0, 0, 0, 0.5);
+          }
+          .swiper-scrollbar-drag {
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+  .base-info {
+    margin-top: 3vh;
+    .base-content {
+      margin-top: 3vh;
+      .base-item {
+        display: flex;
+        align-items: center;
+        padding: 0.8vh 1vh;
+        margin-bottom: 0.5vh;
+        .title {
+          display: flex;
+          align-items: center;
+          >img {
+            width: 2vh;
+            margin-right: 0.2vh;
+          }
+          >span {
+            font-family: PingFang;
+            font-size: 1.6vh;
+            color: #04BAFB;
+          }
+        }
+        .value {
+          font-size: 1.4vh;
+        }
+      }
+      .inline {
+        display: flex;
+        padding: 0 1vh;
+        margin-bottom: 0.2vh;
+        .base-item {
+          flex: 1;
+          padding: 0.8vh 0;
+          margin-bottom: 0;
+        }
+      }
+      .bg {
+        background: rgba(22, 95, 234, 0.24);
+      }
+    }
+    .time-line-wrapper{
+      margin-bottom: 1.5vh;
+      .time-line {
+        display: flex;
+        padding-top: 4vh;
+        width: 92%;
+        position: relative;
+        .line-item {
+          // width: 7vh;
+          flex: 1;
+          height: 0.4vh;
+        }
+        .blue {
+          background-color: #0E5AF2;
+        }
+        .yellow {
+          background-color: #FEA100;
+        }
+        .pink {
+          background-color: #DF88F9;
+        }
+        .red {
+          background-color: #EE2D2D;
+        }
+        .green {
+          background-color: #00FF84;
+        }
+        .light-blue {
+          background-color: #04BAFB;
+        }
+        .pop {
+          position: absolute;
+          top: -10%;
+          padding: 1vh 0.5vh 1.6vh 0.5vh;
+          white-space: nowrap;
+        }
+        .pop1 {
+          left: 12%;
+          .bg-image("./images/blue-pop");
+        }
+        .pop2 {
+          left: 32%;
+          .bg-image("./images/yellow-pop");
+        }
+        .pop3 {
+          left: 52%;
+          .bg-image("./images/pink-pop");
+        }
+        .pop4 {
+          left: 72%;
+          .bg-image("./images/red-pop");
+        }
+        .pop5 {
+          left: 92%;
+          .bg-image("./images/green-pop");
+        }
+        .circle {
+          position: absolute;
+          bottom: -0.1vh;
+          width: 0.6vh;
+          height: 0.6vh;
+          border-radius: 100%;
+          background-color: #fff;
+        }
+        .circle1 {
+          left: 19.5%;
+        }
+        .circle2 {
+          left: 39.5%;
+        }
+        .circle3 {
+          left: 59.5%;
+        }
+        .circle4 {
+          left: 79.5%;
+        }
+        .circle5 {
+          left: 99.5%;
+        }
+      }
+      .time-desc {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.5vh;
+        width: 92%;
+        font-size: 1.2vh;
+      }
+      .flex-end {
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+
+
+.QJFrame {
+  position: absolute;
+  z-index: 9999;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 1s;
+  background: rgba(19,45,85,.9);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  box-sizing: border-box;
+  bottom: 0;
+  #content {
+    width: 100%;
+    height: 80vh;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  .close {
+    .bg-image("./images/close");
+    position: absolute;
+    top: 12%;
+    right: 3%;
+    width: 3.2vh;
+    height: 3.2vh;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 99;
+  }
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: flex-end;
+  .pre {
+    display: block;
+    width: 1vh;
+    height: 2.5vh;
+    background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
+    transform: skewX(-30deg);
+  }
+  .title {
+    display: block;
+    // height: 35px;
+    line-height: 3.5vh;
+    font-family: YouSheBiaoTiHei;
+    font-size: 2.8vh;
+    letter-spacing: 0px;
+    color: #ffffff;
+    text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+    position: relative;
+    padding-left: 1.2vh;
+  }
+  .title::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 2px;
+    width: 300px;
+    height: 15px;
+    z-index: -1;
+    background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+    transform: skewX(-30deg);
+  }
+}

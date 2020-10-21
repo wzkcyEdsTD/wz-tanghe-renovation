@@ -1,43 +1,40 @@
 <template>
-  <div>
-    <div :class="[showLarge?'summary':'summary1']">
-      <div class="ding" v-if="!showLarge">
-        <div class="box">
-          <div class="buttonpd" :class="{active: currentType=='total'}" @click="currentType='total'">
-            <div class="tp">
-              <img src="./img/组合.png" alt="" v-if="currentType=='total'" class="tupianxuanzhong"/>
-              <img src="./img/button.png" alt="" v-if="currentType=='source'"   class="tupian"/>
-              <span class="button">总览</span>
-            </div>
-          </div>
-          <div class="buttonpd" :class="{active: currentType=='source'}" @click="currentType='source'">
-            <div class="tp">
-              <img src="./img/组合.png" alt="" v-if="currentType=='source'" class="tupianxuanzhong"/>
-              <img src="./img/button.png" alt="" v-if="currentType=='total'" class="tupian"/>
-              <span class="button">资源</span>
-            </div>
+  <div :class="[showLarge?'summary':'summary1']">
+    <div class="ding" v-if="!showLarge">
+      <div class="box">
+        <div class="buttonpd" :class="{active: currentType=='total'}" @click="currentType='total'">
+          <div class="tp">
+            <img src="./img/组合.png" alt="" v-if="currentType=='total'" class="tupianxuanzhong"/>
+            <img src="./img/button.png" alt="" v-if="currentType=='source'"   class="tupian"/>
+            <span class="button">总览</span>
           </div>
         </div>
-        <div>
-          <img src="./img/switch-decorate.png" class="zhuangshi"/>
-<!--          <img src="./img/装饰.png" alt="" />-->
+        <div class="buttonpd" :class="{active: currentType=='source'}" @click="currentType='source'">
+          <div class="tp">
+            <img src="./img/组合.png" alt="" v-if="currentType=='source'" class="tupianxuanzhong"/>
+            <img src="./img/button.png" alt="" v-if="currentType=='total'" class="tupian"/>
+            <span class="button">资源</span>
+          </div>
         </div>
       </div>
-      <div class="uls" v-if="showLarge" >
-        <div>
-          <Right/>
-        </div>
-        <div class="rig">
-          <ProjectSummary/>
-        </div>
+      <div>
+        <img src="./img/switch-decorate.png" class="zhuangshi"/>
       </div>
-      <div v-if="!showLarge">
-        <Right v-if="currentType == 'total'" />
-        <ProjectSummary v-if="currentType == 'source'" />
-      </div>
-      <div class="mask-right" v-if="showLarge"></div>
-      <div class="mask-right1" v-if="!showLarge"></div>
     </div>
+    <div class="uls" v-if="showLarge" >
+      <div>
+        <Right/>
+      </div>
+      <div class="rig">
+        <ProjectSummary/>
+      </div>
+    </div>
+    <div v-if="!showLarge">
+      <Right v-if="currentType == 'total'" />
+      <ProjectSummary v-if="currentType == 'source'" />
+    </div>
+    <div class="mask-right" v-if="showLarge"></div>
+    <div class="mask-right1" v-if="!showLarge"></div>
   </div>
 </template>
 
@@ -178,12 +175,11 @@ export default {
   .mask-right {
     z-index: -2;
     position: fixed;
-    top: 1rem;
+    top: 5vh;
     right: 0;
     width: 90vh;
     height: 100vh;
     background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
-    // background-image: linear-gradient(270deg, rgba(0, 13, 26, 0.84) 0%, rgba(0, 17, 34, 0.55) 65%, rgba(0, 19, 38, 0) 100%);
   }
   .mask-right1 {
     z-index: -2;
@@ -193,14 +189,11 @@ export default {
     width: 41vh;
     height: 100vh;
     background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
-    // background-image: linear-gradient(270deg, rgba(0, 13, 26, 0.84) 0%, rgba(0, 17, 34, 0.55) 65%, rgba(0, 19, 38, 0) 100%);
   }
   .uls{
     display: flex;
     align-items: flex-start;
   }
-  // .lefts1{width: 45vh;}
-  // .lefts1da{width: 36vh;height: 100vh}
   .rig{padding-left: 1vh}
   .zhuangshi {
     margin-top: 1vh;

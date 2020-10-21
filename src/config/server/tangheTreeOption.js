@@ -88,7 +88,7 @@ const JG_INFO = [
       url: "http://172.168.3.183:8090/iserver/services/3D-gydl/rest/realspace/datas/gydl",
     },
   ] },
-  { label: "公园兴趣点", dataset: "公园兴趣点" },
+  // { label: "公园兴趣点", dataset: "公园兴趣点" },
   { label: "景点", dataset: "scenic_spot" },
   { label: "古树名木", dataset: "tree" },
   { label: "公园配套设施", dataset: "park_facilities" },

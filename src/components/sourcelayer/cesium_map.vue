@@ -4,7 +4,8 @@
     <div v-if="mapLoaded">
       <Summary />
       <LayerHub ref="layerhub" />
-      <DetailPopup ref="detailPopup" />
+      <CommonDetailPopup ref="commonDetailPopup" />
+      <ProjectDetailPopup ref="projectDetailPopup" />
       <SejPopup ref="SejPopup" />
     </div>
   </div>
@@ -16,7 +17,8 @@ import TotalTarget from "./totalTarget/totalTarget";
 import Summary from "./summary/summary"
 import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import LayerHub from "./layerHub/layerHub";
-import DetailPopup from "./commonFrame/DetailPopup/DetailPopup";
+import CommonDetailPopup from "./commonFrame/CommonDetailPopup/CommonDetailPopup";
+import ProjectDetailPopup from "./commonFrame/ProjectDetailPopup/ProjectDetailPopup";
 import SejPopup from "./commonFrame/SejPopup/SejPopup";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
@@ -28,7 +30,8 @@ export default {
     TotalTarget,
     RoadLine,
     LayerHub,
-    DetailPopup,
+    CommonDetailPopup,
+    ProjectDetailPopup,
     SejPopup,
     Summary
   },
@@ -87,8 +90,8 @@ export default {
         if (!window.earth || !this.mapLoaded || !Object.keys(this.$refs).length)
           return;
         //  *****[detailPopup]  详情查看点位*****
-        if (this.$refs.detailPopup) {
-          this.$refs.detailPopup.renderForceEntity();
+        if (this.$refs.commonDetailPopup) {
+          this.$refs.commonDetailPopup.renderForceEntity();
         }
         //  *****[bayonetList] 十二景名称点位*****
         if (this.$refs.SejPopup) {
@@ -109,10 +112,17 @@ export default {
           const [_TYPE_, _SMID_, _NODEID_] = pick.id.split("@");
           // *****[detailPopup]  资源详情点*****
           if (~["label", "billboard"].indexOf(_TYPE_)) {
-            this.$refs.detailPopup.getForceEntity({
-              ...window.featureMap[_NODEID_][_SMID_],
-              position: pick.primitive.position,
-            });
+            // if (_NODEID_ == '项目' || _NODEID_ == '断点') {
+            //   this.$refs.projectDetailPopup.getForceEntity({
+            //     ...window.featureMap[_NODEID_][_SMID_],
+            //     position: pick.primitive.position,
+            //   });
+            // } else {
+              this.$refs.commonDetailPopup.getForceEntity({
+                ...window.featureMap[_NODEID_][_SMID_],
+                position: pick.primitive.position,
+              });
+            // }
           }
         }
         // this.$refs.layerhub.showHub = false
@@ -212,10 +222,52 @@ export default {
           }
         }
       });
-      // this.$bus.$off("change-summay");
-      // this.$bus.$on("change-summay", ({ value }) => {
-      //   this.showSummary = value
+
+      this.$bus.$off("remove-texiao");
+      this.$bus.$on("remove-texiao", ({ value }) => {
+        this.removeAll(value)
+      })
+
+      this.$bus.$off("switch-lvdao");
+      this.$bus.$on("switch-lvdao", ({ value }) => {
+        this.lvdaoShow = value
+        if (value) {
+          if (this.cameraHeight >= 3000) {
+            this.lvdaolayerThin.show = true
+            this.lvdaolayerBold.show = false
+          } else {
+            this.lvdaolayerThin.show = false
+            this.lvdaolayerBold.show = true
+          }
+        } else {
+          this.lvdaolayerThin.show = false
+          this.lvdaolayerBold.show = false
+        }
+      })
+
+      this.$bus.$off("switch-thfwm");
+      this.$bus.$on("switch-thfwm", ({ value }) => {
+        this.thfwmlayer.show = value
+      })
+
+      // this.$bus.$off("switch-thyx");
+      // this.$bus.$on("switch-thyx", ({ value }) => {
+      //   const layer = window.earth.scene.layers.find('十二景@th_zy#1_1')
+      //   layer && (layer.visible = value)
+      //   this.sceneLayers.forEach(item => {
+      //     item.show = value
+      //   })
       // })
+
+      this.$bus.$off("switch-xzjxqx");
+      this.$bus.$on("switch-xzjxqx", ({ value }) => {
+        this.xzjxqxlayer.show = value
+      })
+
+      this.$bus.$off("switch-xzjxjd");
+      this.$bus.$on("switch-xzjxjd", ({ value }) => {
+        this.xzjxjdlayer.show = value
+      })
     },
     init3DMap(fn) {
       const that = this;
@@ -236,18 +288,33 @@ export default {
       //   })
       // );
 
-      window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-          url:
-            "http://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=856886d7882dbcad0f73442fb277db3c",
-          layer: "vec",
-          style: "default",
-          format: "tiles",
-          tileMatrixSetID: "w",
-          credit: new Cesium.Credit("天地图全球影像服务"),
-          subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-          maximumLevel: 18,
+      this.datalayer.white = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.DataImage.white,
         })
-      )  
+      );
+
+      // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      //     url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=5c8b939368cb51f494b9472cd6ad74cc&service=WMTS&request=GetTile&version=1.0.0&style=default&tilematrixSet=w&format=tiles&width=256&height=256&layer=vec&tilematrix={TileMatrix}&tilerow={TileRow}&tilecol={TileCol}",
+      //     layer: "vec",
+      //     style: "default",
+      //     format: "tiles",
+      //     tileMatrixSetID: "w",
+      //     // credit: new Cesium.Credit("天地图全球影像服务"),
+      //     subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+      //     maximumLevel: 18,
+      //   })
+      // )
+      // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      //     url: "http://t0.tianditu.gov.cn/cva_w/wmts?tk=5c8b939368cb51f494b9472cd6ad74cc&service=WMTS&request=GetTile&version=1.0.0&style=default&tilematrixSet=w&format=tiles&width=256&height=256&layer=cva&tilematrix={TileMatrix}&tilerow={TileRow}&tilecol={TileCol}",
+      //     layer: "cva",
+      //     style: "default",
+      //     format: "tiles",
+      //     tileMatrixSetID: "w",
+      //     subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+      //     maximumLevel: 18,
+      //   })
+      // )
 
       // const mapMvt = viewer.scene.addVectorTilesMap({
       //   url: ServiceUrl.YJMVT,
@@ -274,12 +341,13 @@ export default {
       this.xzjxjdlayer.alpha = 0.5;
       this.xzjxjdlayer.show = false
 
-      // this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
-      //   new Cesium.SuperMapImageryProvider({
-      //     url: ServiceUrl.TANGHEFWM,
-      //   })
-      // )
-      // this.thfwmlayer.alpha = 0.7;
+      this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.TANGHEFWM,
+        })
+      )
+      this.thfwmlayer.alpha = 0.7;
+      this.thfwmlayer.show = false
 
       this.xzjxqxlayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
@@ -291,6 +359,12 @@ export default {
       window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.TANGHE2D,
+        })
+      )
+
+      window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: 'http://172.168.3.183:8090/iserver/services/3D-thmfg/rest/realspace/datas/thmfg',
         })
       )
 
@@ -503,38 +577,6 @@ export default {
       handler.setInputAction(function(event) {
         // self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
-    },
-    switchLvdao(value) {
-      this.lvdaoShow = value
-      if (value) {
-        if (this.cameraHeight >= 3000) {
-          this.lvdaolayerThin.show = true
-          this.lvdaolayerBold.show = false
-        } else {
-          this.lvdaolayerThin.show = false
-          this.lvdaolayerBold.show = true
-        }
-      } else {
-        this.lvdaolayerThin.show = false
-        this.lvdaolayerBold.show = false
-      }
-    },
-    switchThfwmlayer(value) {
-      this.thfwmlayer.show = value
-    },
-    switchThyx(value) {
-      console.log('switchThyx')
-      var layer = window.earth.scene.layers.find('十二景@th_zy#1_1')
-      layer && (layer.visible = value)
-      this.sceneLayers.forEach(item => {
-        item.show = value
-      })
-    },
-    switchXzjxqxlayer(value) {
-      this.xzjxqxlayer.show = value
-    },
-    switchXzjxjdlayer(value) {
-      this.xzjxjdlayer.show = value
     },
     switchHanddrawn(value) {
       if (value) {

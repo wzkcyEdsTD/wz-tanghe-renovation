@@ -5,8 +5,8 @@
     </div>
     <div class="mask-wrapper">
       <div class="top"></div>
-      <div class="left" v-if="!showLarger"></div>
-      <div class="leftlarger" v-if="showLarger"></div>
+      <!-- <div class="left" v-if="!showLarger"></div> -->
+      <!-- <div class="leftlarger" v-if="showLarger"></div> -->
       <!-- <div class="bottom"></div> -->
     </div>
   </div>

@@ -64,9 +64,9 @@
         <RightSummary v-if="leftOrRight" />
       </div>
     </div>
-    <!-- <div class="sign-wrapper" v-if="showSign">
+    <div class="sign-wrapper" :style="{right: showLarge?'85vh':'52vh'}" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -120,7 +120,7 @@ export default {
       }],
       current3d: '',
       // currentTarget: '',
-      // showSign: false,
+      showSign: true,
       // showBaimo: false,
       showMenu: false,
       // data: CESIUM_TREE_OPTION,

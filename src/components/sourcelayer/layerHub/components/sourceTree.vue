@@ -78,7 +78,7 @@ export default {
         this.selectedSourceList.push(node.id)
         console.log('selectedSourceList', this.selectedSourceList)
         if (node.type == "mvt" && node.id) {
-          // if (node.id == '项目') this.showSign = true
+          if (node.id == '项目') this.$parent.showSign = true
           if (node.withImage) {
             node.withImage.forEach((item) => {
               const LAYER = this.tileLayers[item.name];
@@ -205,7 +205,7 @@ export default {
         //   console.log('cesium_thyx_off')
         //   this.$parent.switchThyx(false);
         // }
-        // if (node.id == '项目') this.showSign = false
+        if (node.id == '项目') this.$parent.showSign = false
       }
     },
   },

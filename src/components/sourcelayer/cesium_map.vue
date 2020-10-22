@@ -47,6 +47,8 @@ export default {
         black: undefined
       },
       lvdaoShow: true,
+      tanghe: undefined,
+      tangheFG: undefined,
       lvdaolayerThin: undefined,
       lvdaolayerBold: undefined,
       thfwmlayer: undefined,
@@ -360,15 +362,16 @@ export default {
       )
       this.xzjxqxlayer.show = false
 
-      window.earth.imageryLayers.addImageryProvider(
+      this.tanghe = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.TANGHE2D,
         })
       )
+      this.tanghe.show = false
 
-      window.earth.imageryLayers.addImageryProvider(
+      this.tangheFG = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
-          url: 'http://172.168.3.183:8090/iserver/services/3D-thmfg/rest/realspace/datas/thmfg',
+          url: ServiceUrl.TANGHEFG,
         })
       )
 
@@ -566,9 +569,13 @@ export default {
         this.cameraHeight = viewer.camera.positionCartographic.height;
         if (this.lvdaoShow) {
           if (this.cameraHeight >= 3000) {
+            this.tangheFG.show = true
+            this.tanghe.show = false
             this.lvdaolayerThin.show = true
             this.lvdaolayerBold.show = false
           } else {
+            this.tangheFG.show = false
+            this.tanghe.show = true
             this.lvdaolayerThin.show = false
             this.lvdaolayerBold.show = true
           }

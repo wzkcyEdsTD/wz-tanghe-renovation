@@ -55,6 +55,9 @@ export const ServiceUrl = {
     // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
     // "http://172.168.3.183:8090/iserver/services/3D-thmplus/rest/realspace/datas/thmplus",
     "http://172.168.3.183:8090/iserver/services/3D-th/rest/realspace/datas/th",
+  // 塘河发光
+  TANGHEFG:
+    "http://172.168.3.183:8090/iserver/services/3D-thmfg/rest/realspace/datas/thmfg",
   // 绿道
   LVDAOImage: {
     BOLD: "http://172.168.3.183:8090/iserver/services/3D-ldc/rest/realspace/datas/ld1.59t19",

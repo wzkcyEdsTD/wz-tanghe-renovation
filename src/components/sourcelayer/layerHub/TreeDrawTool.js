@@ -197,7 +197,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
       width: node.iconSize == 'small' ? 24 : 24,
       height: node.iconSize == 'small' ? 24 : 25,
-      scaleByDistance:new Cesium.NearFarScalar(3000, 2.5, 6000, 1),
+      scaleByDistance:new Cesium.NearFarScalar(3000, 2, 6000, 1.5),
       // sizeInMeters:true,
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position

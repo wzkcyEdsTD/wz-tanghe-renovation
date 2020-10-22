@@ -68,8 +68,7 @@ const ST_INFO = [
   { label: "公厕", dataset: "toilet" },
   { label: "医疗设施", dataset: "yiliao" },
   { label: "养老设施", dataset: "yanglao" },
-  { label: "桥梁", dataset: "bridge" },
-  { label: "码头", dataset: "wharf" },
+
 ]
 
 const JG_INFO = [
@@ -89,7 +88,7 @@ const JG_INFO = [
     },
   ] },
   // { label: "公园兴趣点", dataset: "公园兴趣点" },
-  { label: "景点", dataset: "scenic_spot" },
+
   { label: "古树名木", dataset: "tree" },
   { label: "公园配套设施", dataset: "park_facilities" },
 ]
@@ -167,7 +166,46 @@ export const CESIUM_TREE_OPTION = [
         label: "绿道",
         type: "cesium_lvdao",
       },
-
+      {
+        id:'桥梁',
+        icon:"桥梁",
+        label: "桥梁",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}bridge`,
+        type: "mvt"
+      },
+      {
+        id:'码头',
+        icon:'码头',
+        label: "码头",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}wharf`,
+        type: "mvt"
+      },
+      {
+        id:'景点',
+        icon:'景点',
+        label: "景点",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}scenic_spot`,
+        type: "mvt"
+      },
+      {
+        id:'全景',
+        icon:'全景',
+        label: "全景",
+        url: SERVER_DEFAULT_DATA,
+        // newdataset: `${SW_DATA_NAME}scenic_spot`,
+        type: "mvt"
+      },
+      {
+        id:'视频',
+        icon:'视频',
+        label: "视频",
+        url: SERVER_DEFAULT_DATA,
+        // newdataset: `${SW_DATA_NAME}scenic_spot`,
+        type: "mvt"
+      },
     ]
   },
   // {

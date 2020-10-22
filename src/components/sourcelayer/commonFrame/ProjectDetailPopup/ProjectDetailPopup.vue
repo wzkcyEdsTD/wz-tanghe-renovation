@@ -329,7 +329,7 @@ export default {
                   }
                 }
               } else {
-                let time = '20200101之前'
+                let time = '20200101'
                 this.finalData[time] = {date: time}
                 this.finalData[time][key] = []
                 this.finalData[time][key].push(item)
@@ -355,7 +355,7 @@ export default {
                 }
               }
             } else {
-              let time = '20200101之前'
+              let time = '20200101'
               this.finalData[time] = {date: time}
               this.finalData[time][key] = [attrValue]
               if (~attr.indexOf('SLT')) {

@@ -440,10 +440,10 @@ export default {
     itemClick(item) {
       const { x, y } = item.geometry;
       window.earth.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(x, y - 0.005, 450),
+        destination: Cesium.Cartesian3.fromDegrees(x, y, 450),
         orientation: {
-          heading: 0.003336768850279448,
-          pitch: -0.5808830390057418,
+          heading: 0.01768860454315663,
+          pitch: Cesium.Math.toRadians(-90),
           roll: 0.0,
         },
         maximumHeight: 450,

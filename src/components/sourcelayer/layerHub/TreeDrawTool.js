@@ -171,7 +171,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       text: item.attributes.SHORTNAME || item.attributes.NAME,
       fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
       font: "8px",
-      scaleByDistance: new Cesium.NearFarScalar(7000, 1.5, 9000, 0.7),
+      scaleByDistance: new Cesium.NearFarScalar(6000, 1, 9000, 0.7),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 10000),
       pixelOffset: new Cesium.Cartesian2(0, -50),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
@@ -180,11 +180,11 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.blackLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#010C27"),
+      fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#02FCDC"),
       font: "8px",
-      scaleByDistance: new Cesium.NearFarScalar(7000, 1.5, 9000, 0.7),
+      scaleByDistance: new Cesium.NearFarScalar(6000, 1, 9000, 0.7),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 10000),
-      pixelOffset: new Cesium.Cartesian2(0, -30),
+      pixelOffset: new Cesium.Cartesian2(0, -50),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
@@ -195,7 +195,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
       width: node.iconSize == 'small' ? 24 : 24,
       height: node.iconSize == 'small' ? 24 : 25,
-      scaleByDistance:new Cesium.NearFarScalar(10000, 2.5, 30000, 0.85),
+      scaleByDistance:new Cesium.NearFarScalar(3000, 3, 10000, 0.7),
       // sizeInMeters:true,
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position

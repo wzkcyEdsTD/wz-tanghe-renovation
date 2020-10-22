@@ -123,11 +123,13 @@ export default {
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
               });
+              this.$refs.commonDetailPopup.closePopup()
             } else {
               this.$refs.commonDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
               });
+              this.$refs.projectDetailPopup.closeInfo()
             }
           }
         }

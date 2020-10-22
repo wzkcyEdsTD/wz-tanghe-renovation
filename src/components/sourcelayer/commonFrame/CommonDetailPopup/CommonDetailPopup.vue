@@ -272,7 +272,6 @@ export default {
      */
     getForceEntity(forceEntity) {
       this.forceEntity = forceEntity;
-      // this.isShow = true
       console.log('aaa', forceEntity)
     },
     /**

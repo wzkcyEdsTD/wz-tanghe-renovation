@@ -141,8 +141,6 @@ export default {
       }],
       havePhoto: false,
       haveSpot: false,
-      haveZbOverall: false,
-      haveOverall: false,
       activeStep: 0,
       showQJ: false,
       QJURL: '',
@@ -222,24 +220,14 @@ export default {
       if (this.forceEntity.attributes && this.forceEntity.attributes.QJSLT) {
         let ZBQJStr = this.forceEntity.attributes.QJSLT
         if (ZBQJStr.length) {
-          this.haveOverall = true
           if (~ZBQJStr.indexOf(';')) {
             currentZBQJ = ZBQJStr.split(';')
           } else {
             currentZBQJ = [ZBQJStr]
           }
           console.log('haha', currentZBQJ)
-          // currentZBQJ.forEach(i => {
-          //   ZBQJList.forEach(j => {
-          //     if (i === j.NAME) {
-          //       overallList.push(j)
-          //     }
-          //   })
-          // })
           return currentZBQJ
         }
-      } else {
-        this.haveOverall = false
       }
     },
     zbOverallList() {
@@ -248,24 +236,14 @@ export default {
       if (this.forceEntity.attributes && this.forceEntity.attributes.ZBQJSLT) {
         let ZBQJStr = this.forceEntity.attributes.ZBQJSLT
         if (ZBQJStr.length) {
-          this.haveZbOverall = true
           if (~ZBQJStr.indexOf(';')) {
             currentZBQJ = ZBQJStr.split(';')
           } else {
             currentZBQJ = [ZBQJStr]
           }
           console.log('xixi', currentZBQJ)
-          // currentZBQJ.forEach(i => {
-          //   ZBQJList.forEach(j => {
-          //     if (i === j.NAME) {
-          //       overallList.push(j)
-          //     }
-          //   })
-          // })
           return currentZBQJ
         }
-      } else {
-        this.haveZbOverall = false
       }
     },
     spList() {

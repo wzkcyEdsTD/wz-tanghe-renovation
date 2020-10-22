@@ -43,47 +43,27 @@
         </div>
       </div>
     </div>
-    <div class="switch-menu-wrapper" v-if="!showLarge">
-      <div class="switch-menu-container">
-        <span :class="{active: !showMenu}" @click="switchMenu(false)">资源目录</span>
-        <span :class="{active: showMenu}" @click="switchMenu(true)">塘河简介</span>
-      </div>
-      <div class="switch-menu-decorate"></div>
-    </div>
     <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" >
       <div class="ulsda" v-if="showLarge">
         <div class="lefts">
           <RightSummary />
         </div>
         <div class="rig">
-          <div class="title-wrapper">
-            <span class="pre"></span>
-            <span class="title">资源目录</span>
-          </div>
-          <!-- <div class="tree-container">
-            <el-tree
-              ref="tree"
-              :data="data"
-              show-checkbox
-              node-key="id"
-              :filter-node-method="filterNode"
-              default-expand-all
-              @check-change="nodeCheckChange"
-            />
-          </div> -->
           <SourceTree />
         </div>
       </div>
       <div v-if="!showLarge">
-        <div v-if="!leftOrRight">
-          <SourceTree />
+        <div class="switch-menu-wrapper">
+          <div class="switch-menu-container">
+            <span :class="{active: !showMenu}" @click="switchMenu(false)">资源目录</span>
+            <span :class="{active: showMenu}" @click="switchMenu(true)">塘河简介</span>
+          </div>
+          <div class="switch-menu-decorate"></div>
         </div>
-        <div v-if="leftOrRight">
-          <RightSummary />
-        </div>
+        <SourceTree v-if="!leftOrRight" />
+        <RightSummary v-if="leftOrRight" />
       </div>
     </div>
-    <div class="mask-left"></div>
     <!-- <div class="sign-wrapper" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div> -->
@@ -166,8 +146,10 @@ export default {
       console.log(this.screenWidth);
       if(this.screenWidth>4000&this.screeHeight>1000){
         this.showLarge = true;
+        window.showLarge = true
       }else {
         this.showLarge = false;
+        window.showLarge = false
       }
     },
     // toggleLayer(type) {

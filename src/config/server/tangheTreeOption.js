@@ -46,7 +46,7 @@ const PUBLIC_INFO = [
   { label: "公厕", dataset: "toilet" },
   { label: "场馆", dataset: "venues" },
   { label: "公园", dataset: "park" },
-  { label: "景点", dataset: "scenic_spot" },
+  // { label: "景点", dataset: "scenic_spot" },
   { label: "古树名木", dataset: "tree" },
   { label: "公园配套设施", dataset: "park_facilities" },
   { label: "医疗设施", dataset: "yiliao" },
@@ -89,7 +89,7 @@ const JG_INFO = [
     },
   ] },
   // { label: "公园兴趣点", dataset: "公园兴趣点" },
-  { label: "景点", dataset: "scenic_spot" },
+
   { label: "古树名木", dataset: "tree" },
   { label: "公园配套设施", dataset: "park_facilities" },
 ]
@@ -182,6 +182,14 @@ export const CESIUM_TREE_OPTION = [
         newdataset: `${SW_DATA_NAME}wharf`,
         icon: '码头',
         type: "mvt",
+      },
+      {
+        id:'景点',
+        icon:'景点',
+        label: "景点",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}scenic_spot`,
+        type: "mvt"
       },
     ]
   },

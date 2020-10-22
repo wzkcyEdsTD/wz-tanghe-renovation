@@ -6,7 +6,7 @@
         <span class="title">资源区县</span>
         <!-- <span class="desc">截至2020年5月15日</span> -->
       </div>
-      <div style="height:18vh;" class="echart" ref="pieEchart"></div>
+      <div style="height:16vh;" class="echart" ref="pieEchart"></div>
     </div>
     <div class="composition-container">
       <div class="title-wrapper">
@@ -233,9 +233,10 @@ export default {
         grid: {
           left: "0%",
           top: "8%",
+          bottom:'20%',
           // bottom: "8%",
           width: "100%",
-          height: "90%",
+          height: "80%",
           containLabel: true,
         },
         xAxis: {
@@ -277,10 +278,15 @@ export default {
         },
         dataZoom : [
           {
-            type: 'inside',
+            type: 'slider',
             show: true,
             start: 0,
             end: 30,
+            width: "95%",
+            height: "10%",
+            right:'1%',
+            left:'1%',
+            bottom:0,
             xAxisIndex: [0],
           },
         ],

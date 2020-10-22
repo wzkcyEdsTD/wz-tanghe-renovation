@@ -78,7 +78,6 @@ export default {
         this.selectedSourceList.push(node.id)
         console.log('selectedSourceList', this.selectedSourceList)
         if (node.type == "mvt" && node.id) {
-          this.setCurrentource(node.id);
           // if (node.id == '项目') this.showSign = true
           if (node.withImage) {
             node.withImage.forEach((item) => {
@@ -97,17 +96,15 @@ export default {
               }
             });
           }
-          // if (node.id && this.entityMap[node.id]) {
           if (node.id && window.billboardMap[node.id]) {
             node.saveData
               ? this[node.saveData](this.saveDataMap[node.id])
               : null;
             this.$bus.$emit("source-change", { value: node.id });
-            // this.entityMap[node.id].show = true;
             window.billboardMap[node.id]._billboards.map(
               (v) => (v.show = true)
             );
-            // window.labelMap[node.id].setAllLabelsVisible(true);
+            this.setCurrentource(node.id);
             window.currentMapType == "vectorwhite"
               ? window.blackLabelMap[node.id].setAllLabelsVisible(true)
               : window.whiteLabelMap[node.id].setAllLabelsVisible(true);

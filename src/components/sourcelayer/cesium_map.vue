@@ -73,7 +73,7 @@ export default {
     //  点位深色label hash
     window.blackLabelMap = {};
     // 当前底图
-    window.currentMapType = 'yx'
+    window.currentMapType = 'vectorwhite'
   },
   async mounted() {
     this.init3DMap(() => {

@@ -424,6 +424,8 @@ export default {
       this.searchFilter();
     },
     searchFilter() {
+      console.log('searchFilter111', this.sourceMap)
+      console.log('searchFilter222', this.currentSource)
       let allSearchList = this.sourceMap[this.currentSource]
       allSearchList = allSearchList.filter(item => {
         return item.attributes.NAME.length

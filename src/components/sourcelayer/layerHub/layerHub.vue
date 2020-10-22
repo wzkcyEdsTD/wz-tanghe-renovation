@@ -97,7 +97,7 @@ export default {
       currentMouse: '',
       currentLayer: 'vector',
       yearList: [2018, 2019],
-      currentYear: 2019,
+      currentYear: '',
       // vectorList: ['白色', '黑色'],
       vectorList: [{
         label: '日景',

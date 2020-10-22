@@ -104,6 +104,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     context[node.saveData](forceDrawFeatures)
   }
   context.setSourceMap({[node.id]: forceDrawFeatures});
+  context.setCurrentource(node.id);
 
   // forceDrawFeatures.map(item => {
   //   const entityOption = {
@@ -168,7 +169,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.whiteLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#000") : new Cesium.Color.fromCssColorString("#000"),
+      fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
       font: "8px",
       scaleByDistance: new Cesium.NearFarScalar(7000, 1.5, 9000, 0.7),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 10000),
@@ -187,6 +188,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
+    console.log('window.currentMapType!!', window.currentMapType)
     window.currentMapType == 'vectorwhite' ? window.whiteLabelMap[node.id].setAllLabelsVisible(false) : window.blackLabelMap[node.id].setAllLabelsVisible(false)
     window.billboardMap[node.id].add({
       id: `billboard@${item.attributes.SMID}@${node.id}`,

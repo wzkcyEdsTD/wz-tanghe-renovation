@@ -53,11 +53,11 @@ const mutations = {
     state.sourceMap = Object.assign({}, state.sourceMap, data)
   },
   [types.SET_CURRENT_SOURCE](state, data) {
-    console.log(222, data)
+    console.log(333, data)
     state.currentSource = data;
   },
   [types.SET_SEJ_LIST](state, data) {
-    console.log(222, data)
+    console.log(444, data)
     state.sejList = data;
   },
 };

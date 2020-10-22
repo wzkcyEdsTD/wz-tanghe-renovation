@@ -100,10 +100,10 @@ export default {
       currentYear: 2019,
       // vectorList: ['白色', '黑色'],
       vectorList: [{
-        label: '白色',
+        label: '日景',
         value: 'white'
       }, {
-        label: '黑色',
+        label: '夜景',
         value: 'black'
       }, {
         label: '手绘',

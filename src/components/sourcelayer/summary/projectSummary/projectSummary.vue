@@ -286,6 +286,15 @@ export default {
             show: false,
           },
         },
+        dataZoom : [
+          {
+            type: 'inside',
+            show: true,
+            start: 0,
+            end: 30,
+            xAxisIndex: [0],
+          },
+        ],
         series: [
           {
             name: "分布",

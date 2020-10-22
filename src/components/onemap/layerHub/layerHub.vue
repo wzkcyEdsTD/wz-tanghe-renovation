@@ -1064,8 +1064,8 @@ export default {
       this.lineEchart.setOption({
             grid: {
               top: '10%',
-              bottom:'20%',
-              left:'20%'
+              bottom:'30%',
+              left:'20%',
             },
             tooltip : {
               trigger: 'axis',
@@ -1093,6 +1093,7 @@ export default {
               },
               axisLabel: {
                 show: true,
+                rotate: 45,
                 textStyle:{
                   color:"#ffffff",
                   fontFamily:'DIN',
@@ -1134,6 +1135,15 @@ export default {
                 }
               },
             },
+            dataZoom : [
+          {
+            type: 'inside',
+            show: true,
+            start: 0,
+            end: 30,
+            xAxisIndex: [0],
+          },
+        ],
             series: [{
               data: [3000, 19000, 150, 15144, 103200, 161250,500,24813.36,194718,7540,20016,133571,7340,50000,67214,1454,928097,5000,408570,171360,176769,240263],
               type: 'line',

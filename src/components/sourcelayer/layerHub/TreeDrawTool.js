@@ -168,7 +168,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.whiteLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
+      fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#000") : new Cesium.Color.fromCssColorString("#000"),
       font: "8px",
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
       pixelOffset: new Cesium.Cartesian2(0, -30),

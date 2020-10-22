@@ -407,7 +407,7 @@ export default {
       window.earth.scene.camera.setView({
         destination: Cesium.Cartesian3.fromDegrees(
           120.67625660935506,
-          28.001332018707733,
+          27.990332018707733,
           15000.0
         ),
         orientation: {

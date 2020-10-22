@@ -39,6 +39,11 @@
           border: 1px solid #16EAEA;
           color: #00FFEB;
         }
+        &.disabled {
+          border: 1px solid #3A568D;
+          color: #50688A;
+          background-color: #2C384D;
+        }
       }
     }
     .bottom {
@@ -397,4 +402,9 @@
     cursor: pointer;
     z-index: 99;
   }
+}
+
+button {
+  border: 1px solid transparent;  //自定义边框
+  outline: none;    //消除默认点击蓝色边框效果
 }

@@ -9,9 +9,9 @@
         </div>
         <div class="content-info">
           <div class="top">
-            <div class="top-item" :class="{'active':currentShow=='qj'}" @click="currentShow='qj'">全景</div>
-            <div class="top-item" :class="{'active':currentShow=='sp'}" @click="currentShow='sp'">视频</div>
-            <div class="top-item" :class="{'active':currentShow=='photo'}" @click="currentShow='photo'">图片</div>
+            <button class="top-item" :disabled="!currentData.qj" :class="{'active':currentShow=='qj','disabled':!currentData.qj}" @click="currentShow='qj'">全景</button>
+            <button class="top-item" :disabled="!currentData.sp" :class="{'active':currentShow=='sp','disabled':!currentData.sp}" @click="currentShow='sp'">视频</button>
+            <button class="top-item" :disabled="!currentData.photo" :class="{'active':currentShow=='photo','disabled':!currentData.photo}" @click="currentShow='photo'">图片</button>
           </div>
           <div class="bottom">
             <div class="left">
@@ -45,7 +45,7 @@
                 v-show="currentShow=='sp'"
               >
                 <swiper-slide v-for="(item,i) in currentData.sp" :key="i" class="swiper-item">
-                  <video :style="{height: showLarge?'35vh':'20vh'}" :src="`/static/video/${forceEntity.type}/${item}`" 
+                  <video style="width:100%;" :style="{height: showLarge?'35vh':'20vh'}" :src="`/static/video/${item}`" 
                     controls="controls"></video>
                 </swiper-slide>
                 <swiper-slide class="swiper-item" v-if="!currentData.sp">
@@ -285,113 +285,21 @@ export default {
       this.initData()
     },
     initData() {
+      this.currentIndex = 0
       this.currentData = {}
       this.finalData = {}
-      // if (this.forceEntity.attributes && this.forceEntity.attributes.PHOTO) {
-      //   let photoStr = this.forceEntity.attributes.PHOTO
-      //   if (photoStr.length) {
-      //     if (~photoStr.indexOf(';')) {
-      //       let photoTempArr = photoStr.split(';')
-      //       photoTempArr.forEach(item => {
-      //         let time = item.split('_')[1].split('.')[0]
-      //         if (obj[time]) {
-      //           obj[time].photo.push(`/static/images/${this.forceEntity.type}/${item}`)
-      //         } else {
-      //           obj[time] = {}
-      //           obj[time].date = time
-      //           obj[time].photo = [`/static/images/${this.forceEntity.type}/${item}`]
-      //         }
-      //       })
-      //     }
-      //     else {
-      //       let time = photoStr.split('_')[1].split('.')[0]
-      //       if (obj[time]) {
-      //         obj[time].photo = [`/static/images/${this.forceEntity.type}/${photoStr}`]
-      //       } else {
-      //         obj[time] = {}
-      //         obj[time].date = time
-      //         obj[time].photo = [`/static/images/${this.forceEntity.type}/${photoStr}`]
-      //       }
-      //     }
-      //   }
-      // }
-      // if (this.forceEntity.attributes && this.forceEntity.attributes.QJSLT) {
-      //   let QJSLTStr = this.forceEntity.attributes.QJSLT
-      //   let QJStr = this.forceEntity.attributes.QJ
-      //   if (QJSLTStr.length) {
-      //     if (~QJSLTStr.indexOf(';')) {
-      //       let qjsltTempArr = QJSLTStr.split(';')
-      //       let qjTempArr = QJStr.split(';')
-      //       qjsltTempArr.forEach((item, index) => {
-      //         if (item.split('_')[1]) {
-      //           let time = item.split('_')[1].split('.')[0]
-      //           if (obj[time]) {
-      //             obj[time].qjslt.push(`/static/images/VRPic/${this.forceEntity.type}/${item}`)
-      //             obj[time].qj.push(qjTempArr[index])
-      //           } else {
-      //             obj[time] = {}
-      //             obj[time].date = time
-      //             obj[time].qjslt = [`/static/images/VRPic/${this.forceEntity.type}/${item}`]
-      //             obj[time].qj = [qjTempArr[index]]
-      //           }
-      //         }
-      //       })
-      //     } else {
-      //       if (QJSLTStr.split('_')[1]) {
-      //         let time = QJSLTStr.split('_')[1].split('.')[0]
-      //         if (obj[time]) {
-      //           obj[time].qjslt = [`/static/images/VRPic/${this.forceEntity.type}/${QJSLTStr}`]
-      //           obj[time].qj = [QJStr]
-      //         } else {
-      //           obj[time] = {}
-      //           obj[time].date = time
-      //           obj[time].qjslt = [`/static/images/VRPic/${this.forceEntity.type}/${QJSLTStr}`]
-      //           obj[time].qj = [QJStr]
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
-      // if (this.forceEntity.attributes && this.forceEntity.attributes.SP) {
-      //   let SPStr = this.forceEntity.attributes.SP
-      //   if (SPStr.length) {
-      //     if (~SPStr.indexOf(';')) {
-      //       let spTempArr = SPStr.split(';')
-      //       spTempArr.forEach(item => {
-      //         if (item.split('_')[1]) {
-      //           let time = item.split('_')[1].split('.')[0]
-      //           if (obj[time]) {
-      //             obj[time].sp.push(item)
-      //           } else {
-      //             obj[time] = {}
-      //             obj[time].date = time
-      //             obj[time].sp = [item]
-      //           }
-      //         }
-      //       })
-      //     } else {
-      //       if (SPStr.split('_')[1]) {
-      //         let time = SPStr.split('_')[1].split('.')[0]
-      //         if (obj[time]) {
-      //           obj[time].sp = [SPStr]
-      //         } else {
-      //           obj[time] = {}
-      //           obj[time].date = time
-      //           obj[time].sp = [SPStr]
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
+      this.currentShow = 'qj'
       this.formatData('PHOTO', 'photo')
       this.formatData('JGT', 'photo')
       this.formatData('QJSLT', 'qjslt')
-      this.formatData('ZBQJSLT', 'qjslt')
+      // this.formatData('ZBQJSLT', 'qjslt')
       this.formatData('SP', 'sp')
       console.log('finalData!!!!!!!!', this.finalData)
       this.finalList = Object.values(this.finalData).reverse()
       console.log('finalList', this.finalList)
-      this.finalList.length && (this.currentData = this.finalList[this.currentIndex])
+      if (this.finalList.length) {
+        this.currentData = this.finalList[this.currentIndex]
+      }
       console.log('currentData', this.currentData)
     },
     formatData(attr, key) {
@@ -408,6 +316,7 @@ export default {
               if (item.split('_')[1]) {
                 let time = item.split('_')[1].split('.')[0]
                 if (this.finalData[time]) {
+                  !this.finalData[time][key] && (this.finalData[time][key] = [])
                   this.finalData[time][key].push(item)
                   if (~attr.indexOf('SLT')) {
                     this.finalData[time].qj.push(qjTempArr[index])
@@ -418,6 +327,15 @@ export default {
                   if (~attr.indexOf('SLT')) {
                     this.finalData[time].qj = [qjTempArr[index]]
                   }
+                }
+              } else {
+                let time = '20200101之前'
+                this.finalData[time] = {date: time}
+                this.finalData[time][key] = []
+                this.finalData[time][key].push(item)
+                if (~attr.indexOf('SLT')) {
+                  this.finalData[time].qj = []
+                  this.finalData[time].qj.push(qjTempArr[index])
                 }
               }
             })
@@ -435,6 +353,13 @@ export default {
                 if (~attr.indexOf('SLT')) {
                   this.finalData[time].qj = [QJStr]
                 }
+              }
+            } else {
+              let time = '20200101之前'
+              this.finalData[time] = {date: time}
+              this.finalData[time][key] = [attrValue]
+              if (~attr.indexOf('SLT')) {
+                this.finalData[time].qj = [QJStr]
               }
             }
           }
@@ -483,6 +408,18 @@ export default {
     currentIndex(val) {
       this.currentData = this.finalList[val]
       console.log('watchcurrentData', this.currentData)
+      console.log('watchcurrentshow', this.currentShow)
+    },
+    currentData(val) {
+      if (!val.qj) {
+        if (val.sp) {
+          this.currentShow = 'sp'
+        } else {
+          val.photo && (this.currentShow = 'photo')
+        }
+      } else {
+        this.currentShow = 'qj'
+      }
     }
   }
 };

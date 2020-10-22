@@ -68,8 +68,8 @@ const ST_INFO = [
   { label: "公厕", dataset: "toilet" },
   { label: "医疗设施", dataset: "yiliao" },
   { label: "养老设施", dataset: "yanglao" },
-  { label: "桥梁", dataset: "bridge" },
-  { label: "码头", dataset: "wharf" },
+  // { label: "桥梁", dataset: "bridge" },
+  // { label: "码头", dataset: "wharf" },
 ]
 
 const JG_INFO = [
@@ -135,6 +135,16 @@ export const CESIUM_TREE_OPTION = [
     label: "塘河沿线",
     children: [
       {
+        id: "十二景",
+        label: "十二景",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}十二景`,
+        icon: '十二景',
+        type: "mvt",
+        saveData: "setSejList",
+        // withImage: "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz"
+      },
+      {
         id: "项目",
         label: "项目",
         url: SERVER_DEFAULT_DATA,
@@ -153,21 +163,26 @@ export const CESIUM_TREE_OPTION = [
         type: "mvt",
       },
       {
-        id: "十二景",
-        label: "十二景",
-        url: SERVER_DEFAULT_DATA,
-        newdataset: `${SW_DATA_NAME}十二景`,
-        icon: '十二景',
-        type: "mvt",
-        saveData: "setSejList",
-        // withImage: "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz"
-      },
-      {
         id: "绿道",
         label: "绿道",
         type: "cesium_lvdao",
       },
-
+      {
+        id: "桥梁",
+        label: "桥梁",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}bridge`,
+        icon: '桥梁',
+        type: "mvt",
+      },
+      {
+        id: "码头",
+        label: "码头",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}wharf`,
+        icon: '码头',
+        type: "mvt",
+      },
     ]
   },
   // {

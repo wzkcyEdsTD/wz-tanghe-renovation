@@ -30,8 +30,8 @@
       </div>
     </div>
     <div v-if="!showLarge">
-      <Right v-if="currentType == 'total'" />
-      <ProjectSummary v-if="currentType == 'source'" />
+      <Right v-show="currentType == 'total'" />
+      <ProjectSummary v-show="currentType == 'source'" />
     </div>
     <!-- <div class="mask-right" v-if="showLarge"></div> -->
     <!-- <div class="mask-right1" v-if="!showLarge"></div> -->

@@ -9,30 +9,20 @@
       <div style="height:18vh;" class="echart" ref="pieEchart"></div>
     </div>
     <div class="composition-container">
-      <div>
-        <div class="title-wrapper">
-          <span class="pre"></span>
-          <span class="title">资源街道</span>
-          <!-- <span class="desc">截至2020年5月15日</span> -->
-        </div>
+      <div class="title-wrapper">
+        <span class="pre"></span>
+        <span class="title">资源街道</span>
+        <!-- <span class="desc">截至2020年5月15日</span> -->
       </div>
-      <div>
-        <span class="small">单位：个</span>
-      </div>
-      <div style="height: 18vh;width: 36vh">
-        <div  style="height:100%;width: 100%" ref="barEchart"></div>
-      </div>
-
+      <span class="small">单位：个</span>
+      <div  style="height:18vh;" class="echart" ref="barEchart"></div>
     </div>
     <div class="search-container">
-      <div >
-        <div class="title-wrapper">
-          <span class="pre"></span>
-          <span class="title">资源列表</span>
-          <!-- <span class="desc">截至2020年5月15日</span> -->
-        </div>
+      <div class="title-wrapper">
+        <span class="pre"></span>
+        <span class="title">资源列表</span>
+        <!-- <span class="desc">截至2020年5月15日</span> -->
       </div>
-
       <div class="search-header">
         <el-input
           v-model="searchText"
@@ -65,7 +55,6 @@
         </ul>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -92,22 +81,22 @@ export default {
     }
   },
   mounted() {
-    console.log('mounted???')
+    console.log('mounted???', this.currentSource)
     this.eventRegsiter()
-    this.drawPie()
-    this.drawBar()
-    this.searchFilter()
+    // this.drawPie()
+    // this.drawBar()
+    // this.searchFilter()
   },
   created() {
     this.getKuanGao();
   },
-  watch:{
-    'drawData'(val) {
-      this.drawPie()
-      this.drawBar()
-      this.searchFilter()
-    }
-  },
+  // watch:{
+  //   'drawData'(val) {
+  //     this.drawPie()
+  //     this.drawBar()
+  //     this.searchFilter()
+  //   }
+  // },
   methods: {
     getKuanGao(){
       //4320*1280

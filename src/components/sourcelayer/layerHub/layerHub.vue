@@ -90,9 +90,7 @@ export default {
   data() {
     return {
       leftOrRight:false,
-      screenWidth: document.body.clientWidth,
-      screeHeight: document.body.clientHeight,
-      showLarge:false,
+      showLarge:window.showLarge,
       showHub: false,
       currentMouse: '',
       currentLayer: 'vector',
@@ -132,7 +130,7 @@ export default {
   },
   created() {
     this.eventRegsiter()
-    this.getKuanGao();
+
   },
   // mounted() {
   //   this.$refs.tree.setCheckedKeys(['十二景', '断点', '绿道']);
@@ -141,17 +139,7 @@ export default {
     // ...mapActions("map", ["setSourceMap", "setCurrentource", "setSejList"]),
     eventRegsiter() {
     },
-    getKuanGao(){
-      //4320*1280
-      console.log(this.screenWidth);
-      if(this.screenWidth>4000&this.screeHeight>1000){
-        this.showLarge = true;
-        window.showLarge = true
-      }else {
-        this.showLarge = false;
-        window.showLarge = false
-      }
-    },
+
     // toggleLayer(type) {
     //   console.log('toggleLayer', type)
     //   this.currentLayer = type

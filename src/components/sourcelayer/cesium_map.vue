@@ -57,13 +57,17 @@ export default {
       isTotalTarget: true,
       showSummary: 'total',
       sceneLayers: [],
-      cameraHeight: 3000
+      cameraHeight: 3000,
+      screenWidth: document.body.clientWidth,
+      screeHeight: document.body.clientHeight,
+      showLarge:null,
     };
   },
   computed: {
     ...mapGetters("map", ["medicalListWithGeometry"]),
   },
   created() {
+    this.getKuanGao();
     //  点位信息 hash
     window.featureMap = {};
     //  点位icon hash
@@ -590,7 +594,18 @@ export default {
       } else {
         this.handdrawnlayer.show = false
       }
-    }
+    },
+    getKuanGao(){
+      //4320*1280
+      console.log(this.screenWidth);
+      if(this.screenWidth>4000&this.screeHeight>1000){
+        window.showLarge = true
+        this.showLarge = window.showLarge
+      }else {
+        window.showLarge = false
+        this.showLarge = window.showLarge
+      }
+    },
   },
 };
 </script>

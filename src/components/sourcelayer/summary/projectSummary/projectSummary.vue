@@ -63,9 +63,10 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      showLarge: false,
-      screenWidth: document.body.clientWidth,
-      screeHeight: document.body.clientHeight,
+      showLarge:window.showLarge,
+      // showLarge: false,
+      // screenWidth: document.body.clientWidth,
+      // screeHeight: document.body.clientHeight,
       searchText: "",
       searchList: [],
       // currentSource: '断点',
@@ -88,7 +89,7 @@ export default {
     // this.searchFilter()
   },
   created() {
-    this.getKuanGao();
+    // this.getKuanGao();
   },
   // watch:{
   //   'drawData'(val) {
@@ -98,18 +99,18 @@ export default {
   //   }
   // },
   methods: {
-    getKuanGao(){
-      //4320*1280
-      console.log(this.screenWidth);
-      //大屏返回true
-      if(this.screenWidth>4000&this.screeHeight>1000){
-        console.log(true);
-        this.showLarge = true;
-      }else {
-        console.log(false);
-        this.showLarge = false;
-      };
-    },
+    // getKuanGao(){
+    //   //4320*1280
+    //   console.log(this.screenWidth);
+    //   //大屏返回true
+    //   if(this.screenWidth>4000&this.screeHeight>1000){
+    //     console.log(true);
+    //     this.showLarge = true;
+    //   }else {
+    //     console.log(false);
+    //     this.showLarge = false;
+    //   };
+    // },
     eventRegsiter() {
       this.$bus.$off("source-change");
       this.$bus.$on("source-change", ({value}) => {

@@ -93,9 +93,10 @@
   export default {
     data() {
       return {
-        showLarge: false,
-        screenWidth: document.body.clientWidth,
-        screeHeight: document.body.clientHeight,
+        showLarge:window.showLarge,
+        // showLarge: false,
+        // screenWidth: document.body.clientWidth,
+        // screeHeight: document.body.clientHeight,
         temp:
           "温瑞塘河位于瓯江以南、飞云江以北的温瑞平原，是温州市境内十分重要的河道水系，分属于鹿城、瓯海、龙湾、瑞安等“三区一市”管辖。",
         attributes: {},
@@ -111,21 +112,21 @@
     computed: {
     },
     methods:{
-      getKuanGao(){
-        //4320*1280
-        console.log(this.screenWidth);
-        //大屏返回true
-        if(this.screenWidth>4000&this.screeHeight>1000){
-          console.log(true);
-          this.showLarge = true;
-        }else {
-          console.log(false);
-          this.showLarge = false;
-        };
-      },
+      // getKuanGao(){
+      //   //4320*1280
+      //   console.log(this.screenWidth);
+      //   //大屏返回true
+      //   if(this.screenWidth>4000&this.screeHeight>1000){
+      //     console.log(true);
+      //     this.showLarge = true;
+      //   }else {
+      //     console.log(false);
+      //     this.showLarge = false;
+      //   };
+      // },
     },
     mounted() {
-      this.getKuanGao();
+      // this.getKuanGao();
     }
 
   };

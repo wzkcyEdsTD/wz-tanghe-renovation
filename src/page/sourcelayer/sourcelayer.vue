@@ -19,10 +19,9 @@ export default {
   name: "Map",
   data() {
     return {
-      showLarger:false,
-      screenWidth: document.body.clientWidth,
-      screeHeight: document.body.clientHeight,
-
+      showLarge:window.showLarge,
+      // screenWidth: document.body.clientWidth,
+      // screeHeight: document.body.clientHeight,
     };
   },
   computed: {
@@ -30,19 +29,19 @@ export default {
   },
   mounted() {
     this.eventRegsiter();
-    this.getKuanGao();
+    // this.getKuanGao();
   },
   methods: {
     eventRegsiter() {},
-    getKuanGao(){
-      //4320*1280
-      console.log(this.screenWidth);
-      if(this.screenWidth>4000&this.screeHeight>1000){
-        this.showLarger = true;
-      }else {
-        this.showLarger = false;
-      }
-    },
+    // getKuanGao(){
+    //   //4320*1280
+    //   console.log(this.screenWidth);
+    //   if(this.screenWidth>4000&this.screeHeight>1000){
+    //     this.showLarger = true;
+    //   }else {
+    //     this.showLarger = false;
+    //   }
+    // },
   },
   components: {
     CesiumMap,

@@ -55,25 +55,25 @@ export default {
       currentType: 'total',
       screenWidth: document.body.clientWidth,
       screeHeight: document.body.clientHeight,
-      showLarge: false,
+      showLarge:window.showLarge,
     }
   },
   methods:{
-    getKuanGao(){
-      //4320*1280
-      console.log(this.screenWidth);
-      //大屏返回true
-      if(this.screenWidth>4000&this.screeHeight>1000){
-        console.log(true);
-        this.showLarge = true;
-      }else {
-        console.log(false);
-        this.showLarge = false;
-      };
-    },
+    // getKuanGao(){
+    //   //4320*1280
+    //   console.log(this.showLarge);
+    //   // //大屏返回true
+    //   // if(this.screenWidth>4000&this.screeHeight>1000){
+    //   //   console.log(true);
+    //   //   this.showLarge = true;
+    //   // }else {
+    //   //   console.log(false);
+    //   //   this.showLarge = false;
+    //   // };
+    // },
   },
   created() {
-    this.getKuanGao();
+    // this.getKuanGao();
   }
 }
 </script>

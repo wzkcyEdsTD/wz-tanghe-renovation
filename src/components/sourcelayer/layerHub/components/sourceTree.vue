@@ -10,7 +10,7 @@
         :data="data"
         show-checkbox
         node-key="id"
-        default-expand-all
+        :default-expanded-keys="['塘河沿线']"
         @check-change="nodeCheckChange">
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <div class="img-wrapper" v-if="!data.children">
@@ -42,7 +42,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.tree.setCheckedKeys(['十二景', '断点', '绿道']);
+    this.$refs.tree.setCheckedKeys(['十二景', '项目', '绿道']);
   },
   methods: {
     ...mapActions("map", ["setSourceMap", "setCurrentource", "setSejList"]),

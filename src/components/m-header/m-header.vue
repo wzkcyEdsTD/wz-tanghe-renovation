@@ -9,7 +9,9 @@
       <span class="time">{{date}}</span>
     </div>
     <div class="route-wrapper">
-      <div class="route-item" :class="{active: currentPage=='sourcelayer'}" @click="goRoute('sourcelayer')">资源一张图</div>
+      <div class="route-item" :class="{active: currentPage=='sourcelayer'}" @click="goRoute('sourcelayer')">
+        资源一张图
+      </div>
       <div class="route-item" :class="{active: currentPage=='onemap'}" @click="goRoute('onemap')">互学互比</div>
     </div>
   </div>
@@ -22,7 +24,7 @@ export default {
   data() {
     return {
       date: '',
-      currentPage: this.$route.name
+      currentPage: 'sourcelayer'
     };
   },
   mounted() {
@@ -93,18 +95,25 @@ export default {
   .route-wrapper {
     z-index: 3;
     position: absolute;
-    top: 20%;
+    top: 10%;
     right: 20%;
     color: #fff;
     display: flex;
     .route-item {
       cursor: pointer;
       margin-right: 3vh;
-      width: 9vh;
-      height: 1vh;
+      width: 13vh;
+      height: 2.5vh;
+      font-size: 2.3vh;
+      font-family: YouSheBiaoTiHei;
+      color:#0E5AF2;
       &.active {
-        color: #16EAEA;
+        color: #FFFFFF;
+        background: url("./images/选中光.png");
+        background-size: 13vh 2.5vh;
+        z-index: 10;
       }
+
     }
   }
 }

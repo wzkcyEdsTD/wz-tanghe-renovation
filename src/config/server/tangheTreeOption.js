@@ -1,5 +1,5 @@
 
-const SERVER_HOST = 
+const SERVER_HOST =
 "http://172.168.3.183:8090/iserver/services"
 // "http://172.20.83.223:8098/iserver/services";
 const SW_DATA = "/data-alldata/rest/data";
@@ -167,11 +167,7 @@ export const CESIUM_TREE_OPTION = [
         label: "绿道",
         type: "cesium_lvdao",
       },
-      {
-        id: "塘河范围面",
-        label: "塘河范围面",
-        type: "cesium_thfwm",
-      },
+
     ]
   },
   // {
@@ -198,22 +194,7 @@ export const CESIUM_TREE_OPTION = [
   //     };
   //   })
   // }
-  {
-    id: "行政界线",
-    label: "行政界线",
-    children: [
-      {
-        id: "区县",
-        label: "区县",
-        type: "cesium_xzqx",
-      },
-      {
-        id: "街道",
-        label: "街道",
-        type: "cesium_xzjd",
-      },
-    ]
-  },
+
   {
     id: "城市塘河",
     label: "城市塘河",
@@ -269,7 +250,28 @@ export const CESIUM_TREE_OPTION = [
         type: "mvt"
       };
     })
-  }
+  },
+  {
+    id: "界线",
+    label: "界线",
+    children: [
+      {
+        id: "区县",
+        label: "区县",
+        type: "cesium_xzqx",
+      },
+      {
+        id: "街道",
+        label: "街道",
+        type: "cesium_xzjd",
+      },
+      {
+        id: "塘河范围面",
+        label: "塘河范围面",
+        type: "cesium_thfwm",
+      },
+    ]
+  },
 ]
 
 

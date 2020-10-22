@@ -112,17 +112,17 @@ export default {
           const [_TYPE_, _SMID_, _NODEID_] = pick.id.split("@");
           // *****[detailPopup]  资源详情点*****
           if (~["label", "billboard"].indexOf(_TYPE_)) {
-            // if (_NODEID_ == '项目' || _NODEID_ == '断点') {
-            //   this.$refs.projectDetailPopup.getForceEntity({
-            //     ...window.featureMap[_NODEID_][_SMID_],
-            //     position: pick.primitive.position,
-            //   });
-            // } else {
+            if (_NODEID_ == '项目' || _NODEID_ == '断点') {
+              this.$refs.projectDetailPopup.getForceEntity({
+                ...window.featureMap[_NODEID_][_SMID_],
+                position: pick.primitive.position,
+              });
+            } else {
               this.$refs.commonDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
               });
-            // }
+            }
           }
         }
         // this.$refs.layerhub.showHub = false

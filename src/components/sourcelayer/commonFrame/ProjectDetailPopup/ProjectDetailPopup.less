@@ -34,6 +34,11 @@
         font-family: YouSheBiaoTiHei;
         color: #165FEA;
         font-size: 1.6vh;
+        cursor: pointer;
+        &.active {
+          border: 1px solid #16EAEA;
+          color: #00FFEB;
+        }
       }
     }
     .bottom {
@@ -41,6 +46,7 @@
       align-items: center;
       margin-top: 2vh;
       .left {
+        // flex: 1;
         .date-list {
           padding: 1vh;
           border-right: 1px dashed #2283FC;
@@ -50,9 +56,13 @@
             .bg-image("./images/time-bg");
             font-family: DIN;
             font-size: 1.2vh;
-            opacity: 0.5;
+            opacity: 0.3;
+            cursor: pointer;
             .icon {
               width: 1vh;
+            }
+            &.active {
+              opacity: 1;
             }
           }
         }
@@ -61,6 +71,7 @@
         display: flex;
         align-items: center;
         margin-left: 1vh;
+        flex: 1;
         .swiper-buttons {
           cursor: pointer;
           width: 1vh;
@@ -77,10 +88,20 @@
         .swiper-wrapper {
           margin: 0;
           width: 26vh;
+          flex: 1;
           .swiper-item {
             img {
               width: 100%;
               // height: 114px;
+            }
+            .no-tip {
+              height: 16vh;
+              line-height: 16vh;
+              width: 100%;
+              text-align: center;
+              font-family: YouSheBiaoTiHei;
+              font-size: 2vh;
+              color: #165FEA;
             }
           }
           .swiper-scrollbar {
@@ -97,7 +118,7 @@
   .base-info {
     margin-top: 3vh;
     .base-content {
-      margin-top: 3vh;
+      margin-top: 1vh;
       .base-item {
         display: flex;
         align-items: center;
@@ -117,6 +138,7 @@
           }
         }
         .value {
+          flex: 1;
           font-size: 1.4vh;
         }
       }
@@ -169,26 +191,37 @@
           top: -10%;
           padding: 1vh 0.5vh 1.6vh 0.5vh;
           white-space: nowrap;
+          width: 9vh;
+          text-align: center;
+          font-size: 1.4vh;
         }
         .pop1 {
-          left: 12%;
+          left: 10%;
           .bg-image("./images/blue-pop");
         }
         .pop2 {
-          left: 32%;
+          left: 30%;
           .bg-image("./images/yellow-pop");
         }
         .pop3 {
-          left: 52%;
+          left: 50%;
           .bg-image("./images/pink-pop");
         }
         .pop4 {
-          left: 72%;
+          left: 70%;
           .bg-image("./images/red-pop");
         }
         .pop5 {
-          left: 92%;
+          left: 90%;
           .bg-image("./images/green-pop");
+        }
+        .pop6 {
+          left: 24%;
+          .bg-image("./images/blue-pop");
+        }
+        .pop7 {
+          left: 66%;
+          .bg-image("./images/blue-pop");
         }
         .circle {
           position: absolute;
@@ -213,6 +246,13 @@
         .circle5 {
           left: 99.5%;
         }
+        .circle6 {
+          // left: 25%;
+          left: 33%;
+        }
+        .circle7 {
+          left: 75%;
+        }
       }
       .time-desc {
         display: flex;
@@ -223,6 +263,29 @@
       }
       .flex-end {
         justify-content: flex-end;
+      }
+      &.large {
+        .pop1 {
+          left: 14%;
+        }
+        .pop2 {
+          left: 34%;
+        }
+        .pop3 {
+          left: 54%;
+        }
+        .pop4 {
+          left: 74%;
+        }
+        .pop5 {
+          left: 94%;
+        }
+        .pop6 {
+          left: 28%;
+        }
+        .pop7 {
+          left: 70%;
+        }
       }
     }
   }
@@ -293,5 +356,45 @@
     z-index: -1;
     background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
     transform: skewX(-30deg);
+  }
+}
+
+.el-image-viewer__img {
+  max-height: 80% !important;
+  max-width: 90% !important;
+}
+.el-icon-circle-close {
+  color: #fff !important;
+}
+
+.QJFrame {
+  position: absolute;
+  z-index: 9999;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 1s;
+  background: rgba(19,45,85,.9);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  box-sizing: border-box;
+  bottom: 0;
+  #content {
+    width: 100%;
+    height: 800px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  .close {
+    .bg-image("./images/close");
+    position: absolute;
+    top: 12%;
+    right: 3%;
+    width: 32px;
+    height: 32px;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 99;
   }
 }

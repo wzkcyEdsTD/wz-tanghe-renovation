@@ -33,8 +33,8 @@
       <Right v-if="currentType == 'total'" />
       <ProjectSummary v-if="currentType == 'source'" />
     </div>
-    <div class="mask-right" v-if="showLarge"></div>
-    <div class="mask-right1" v-if="!showLarge"></div>
+    <!-- <div class="mask-right" v-if="showLarge"></div> -->
+    <!-- <div class="mask-right1" v-if="!showLarge"></div> -->
   </div>
 </template>
 
@@ -90,16 +90,15 @@ export default {
   .summary {
     position: fixed;
     box-sizing: border-box;
-    top: 8vh;
+    top: 5vh;
     bottom: 0;
-    overflow: hidden;
-    right: 2vh;
-    // width: 80vh;
-    // height: 100vh;
+    right: 0;
+    padding: 3vh 2vh 0 2vh;
+    background-color: #040D33;
     color: white;
+    overflow: hidden;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 10px;
     z-index: 999;
     .ding {
       padding-top: 1vh;
@@ -134,17 +133,17 @@ export default {
   .summary1 {
     position: fixed;
     box-sizing: border-box;
-    top: 8vh;
+    top: 5vh;
     bottom: 0;
-    overflow: hidden;
     right: 0px;
-    width: 38vh;
-    // height: 100vh;
+    width: 40vh;
+    padding: 3vh 2vh 0 2vh;
+    background-color: #040D33;
     color: white;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 0 1vh;
     z-index: 999;
+    overflow: hidden;
     .ding {
       padding-top: 1vh;
     }
@@ -172,24 +171,24 @@ export default {
       font-size: 2vh;
     }
   }
-  .mask-right {
-    z-index: -2;
-    position: fixed;
-    top: 5vh;
-    right: 0;
-    width: 90vh;
-    height: 100vh;
-    background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
-  }
-  .mask-right1 {
-    z-index: -2;
-    position: fixed;
-    top: 5vh;
-    right: 0;
-    width: 41vh;
-    height: 100vh;
-    background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
-  }
+  // .mask-right {
+  //   z-index: -2;
+  //   position: fixed;
+  //   top: 5vh;
+  //   right: 0;
+  //   width: 90vh;
+  //   height: 100vh;
+  //   background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+  // }
+  // .mask-right1 {
+  //   z-index: -2;
+  //   position: fixed;
+  //   top: 5vh;
+  //   right: 0;
+  //   width: 41vh;
+  //   height: 100vh;
+  //   background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+  // }
   .uls{
     display: flex;
     align-items: flex-start;

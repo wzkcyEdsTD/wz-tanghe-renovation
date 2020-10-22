@@ -170,8 +170,9 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       text: item.attributes.SHORTNAME || item.attributes.NAME,
       fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#000") : new Cesium.Color.fromCssColorString("#000"),
       font: "8px",
+      scaleByDistance: new Cesium.NearFarScalar(6000, 2, 12000, 0.7),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-      pixelOffset: new Cesium.Cartesian2(0, -30),
+      pixelOffset: new Cesium.Cartesian2(0, -50),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
@@ -191,6 +192,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
       width: node.iconSize == 'small' ? 24 : 24,
       height: node.iconSize == 'small' ? 24 : 25,
+      scaleByDistance:new Cesium.NearFarScalar(6000, 3, 12000, 1),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     })

@@ -3,7 +3,7 @@
     <!-- <div class="sign-wrapper">
       <img src="/static/images/common/sign@2x.png">
     </div> -->
-    <div class="switch-menu-wrapper">
+    <div class="switch-menu-wrapper-onemap">
       <div class="switch-menu-container">
         <span :class="{active: currentType=='xm'}" @click="currentType='xm'">项目</span>
         <span :class="{active: currentType=='dd'}" @click="currentType='dd'">断点</span>

@@ -20,6 +20,8 @@ export const ServiceUrl = {
     2018: "http://172.168.3.183:8090/iserver/services/map-agscachev2-Layers/rest/maps/Layers",
     2019: "http://172.168.3.183:8090/iserver/services/3D-yx2019/rest/realspace/datas/YX_2019_SW",
   },
+  // 影像注记
+  ImageMark: "http://172.168.3.183:8090/iserver/services/3D-dlyzj/rest/realspace/datas/dlyzj",
   //  大数据底图
   DataImage: {
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DSJCGS2000SW/rest/realspace/datas/DSJ_CGS2000_SW",

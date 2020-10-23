@@ -40,7 +40,8 @@ export default {
       mapLoaded: false,
       imagelayer: {
         2018: undefined,
-        2019: undefined
+        2019: undefined,
+        mark: undefined
       },
       datalayer: {
         white: undefined,
@@ -142,9 +143,11 @@ export default {
         //  底图切换
         // console.log("layer-switch", window.whiteLabelMap, window.blackLabelMap);
         if (type == "yx") {
-          console.log("yx", value, ServiceUrl.SWImage);
+          console.log("yx", value, ServiceUrl.SWImage,this.imagelayer);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
+          
+          this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
           this.imagelayer[value]
@@ -154,6 +157,16 @@ export default {
                   url: ServiceUrl.SWImage[value],
                 })
               ));
+
+          // 影像注记
+          this.imagelayer["mark"]
+            ? (this.imagelayer["mark"].show = true)
+            : (this.imagelayer["mark"] = window.earth.imageryLayers.addImageryProvider(
+                new Cesium.SuperMapImageryProvider({
+                  url: ServiceUrl.ImageMark,
+                })
+              ));
+
           window.earth.imageryLayers.lowerToBottom(this.imagelayer[value])
           window.currentMapType = 'yx'
         } else {
@@ -161,6 +174,7 @@ export default {
           console.log("vector", value, ServiceUrl.DataImage);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
+          this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
           this.datalayer[value]
@@ -301,6 +315,25 @@ export default {
           url: ServiceUrl.DataImage.white,
         })
       );
+
+
+      /* this.datalayer.white = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.WebMapTileServiceImageryProvider({
+          url: "http://61.164.104.154:80/iserver/services/3dmap/wmts/3dmap/default/Custom_3dmap/{TileMatrix}/{TileRow}/{TileCol}.png",
+          layer: "3dmap",
+          style: "default",
+          format: "image/png",
+          tileMatrixSetID: "Custom_3dmap",
+          tilingScheme: new Cesium.GeographicTilingScheme({
+            numberOfLevelZeroTilesX: 1,
+            numberOfLevelZeroTilesY: 1
+
+          }),
+          // subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
+          // maximumLevel: 18,
+        })
+      ); */
+
 
       // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
       //     url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=5c8b939368cb51f494b9472cd6ad74cc&service=WMTS&request=GetTile&version=1.0.0&style=default&tilematrixSet=w&format=tiles&width=256&height=256&layer=vec&tilematrix={TileMatrix}&tilerow={TileRow}&tilecol={TileCol}",

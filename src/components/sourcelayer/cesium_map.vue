@@ -70,6 +70,9 @@ export default {
   },
   created() {
     this.getKuanGao();
+    setTimeout(() => {
+      // this.splitScreen()
+    }, 5000)
     //  点位信息 hash
     window.featureMap = {};
     //  点位icon hash
@@ -615,6 +618,13 @@ export default {
         this.showLarge = window.showLarge
       }
     },
+    splitScreen() {
+      console.log('splitScreen')
+      document.getElementById('header').style.width = '60%'
+      document.getElementById('content').style.width = '60%'
+      document.getElementById('leftHide').style.display = 'none'
+      document.getElementById('rightHide').style.display = 'none'
+    }
   },
 };
 </script>

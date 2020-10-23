@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="uls" v-if="showLarge" >
-      <div>
+      <div id="rightHide">
         <Right/>
       </div>
       <div class="rig">
@@ -88,7 +88,7 @@ export default {
     height: 4.5vh;
   }
   .summary {
-    position: fixed;
+    position: absolute;
     box-sizing: border-box;
     top: 5vh;
     bottom: 0;
@@ -131,7 +131,7 @@ export default {
     }
   }
   .summary1 {
-    position: fixed;
+    position: absolute;
     box-sizing: border-box;
     top: 5vh;
     bottom: 0;

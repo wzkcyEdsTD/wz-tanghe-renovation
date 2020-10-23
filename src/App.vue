@@ -2,7 +2,7 @@
   <div id="app">
     <m-header></m-header>
     <loading v-show="isLoading"></loading>
-    <div class="content">
+    <div id="content" class="content">
       <router-view />
     </div>
   </div>
@@ -67,6 +67,7 @@ body {
   top: 0;
   bottom: 0;
   width: 100%;
+  transition: width 1s linear;
   // z-index: 9;
   > * {
     width: 100%;

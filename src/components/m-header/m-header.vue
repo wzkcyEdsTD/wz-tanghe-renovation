@@ -1,5 +1,5 @@
 <template>
-  <div class="header-wrapper">
+  <div id="header" class="header-wrapper">
     <div class="header-img">
       <img class="bg-img" src="./images/top1.png" alt="">
       <img class="topLab" src="./images/topLab.png" alt="">
@@ -60,6 +60,7 @@ export default {
   height: 8vh;
   background-image: linear-gradient(#040d33,rgba(4,13,51,.94) 50%,rgba(4,13,51,0));
   text-align: center;
+  transition: width 1s linear;
   .header-img {
     position: relative;
     height: 100%;

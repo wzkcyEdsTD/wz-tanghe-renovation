@@ -45,7 +45,7 @@
     </div>
     <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" >
       <div class="ulsda" v-if="showLarge">
-        <div class="lefts">
+        <div id="leftHide" class="lefts">
           <RightSummary />
         </div>
         <div class="rig">

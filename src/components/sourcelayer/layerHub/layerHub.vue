@@ -189,6 +189,6 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url("./layerHub.less");
 </style>

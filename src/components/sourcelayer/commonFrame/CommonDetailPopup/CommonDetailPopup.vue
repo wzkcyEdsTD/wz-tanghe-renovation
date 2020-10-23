@@ -21,7 +21,7 @@
                 <span>{{forceEntity.attributes.STREET}}</span>
               </li>
             </ul>
-            <div class="detail" @click="isShow = true">查看详情 >></div>
+            <div class="detail" @click="goDetail(forceEntity)">查看详情 >></div>
           </div>
         </div>
       </div>
@@ -88,6 +88,7 @@
             <div class="sub-title">音频</div>
             <div class="video-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.YY">
               <audio class="audio" :src="`/static/audio/${forceEntity.type}/${this.forceEntity.attributes.YY}`" controls="controls"></audio>
+              <!-- <AudioTool /> -->
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
@@ -112,11 +113,16 @@
       <i class="close" @click="closeQJ"></i>
       <iframe id="content" :src="QJURL"></iframe>
     </div>
+    <div class="videoFrame" v-show="showVideo">
+      <i class="close" @click="closeVideo"></i>
+      <video :src="VideoURL" controls="controls"></video>
+    </div>
   </div>
 </template>
 
 <script>
 // import {ZBQJList} from "config/ZBQJConfig";
+import AudioTool from "../AudioTool/AudioTool";
 export default {
   data() {
     return {
@@ -144,9 +150,12 @@ export default {
       activeStep: 0,
       showQJ: false,
       QJURL: '',
-      hideField: ["名称", "标签", "备注", "形象进度", "目录分类", "数据来源", "经度", "纬度", "建设地点1", "建设地点2", "建设地点3", "是否属于67个里面的", "类型", "统计", "唯一码", "更新参考数据源", "照片编号", "类型1", "类型2", "类型3", "显示级别", "类型编码", "马克", "照片", "颜色", "全景", "视频", "语音", "现场记录", "景观图", "周边全景", "全景缩略图"]
+      hideField: ["名称", "标签", "备注", "形象进度", "目录分类", "数据来源", "经度", "纬度", "建设地点1", "建设地点2", "建设地点3", "是否属于67个里面的", "类型", "统计", "唯一码", "更新参考数据源", "照片编号", "类型1", "类型2", "类型3", "显示级别", "类型编码", "马克", "照片", "颜色", "全景", "视频", "语音", "现场记录", "景观图", "周边全景", "全景缩略图"],
+      showVideo: false,
+      VideoURL: ''
     };
   },
+  components: { AudioTool },
   computed: {
     fixData() {
       let fixData = {}
@@ -344,6 +353,27 @@ export default {
       this.forceEntity = {};
       this.closeInfo()
     },
+
+    // 关闭视频
+    closeVideo() {
+      this.showVideo = false;
+      this.VideoURL = '';
+    },
+
+    // 跳转详情
+    goDetail(entity) {
+      if(entity.type === "全景") {
+        this.QJURL = entity.attributes.QJMC;
+        this.showQJ = true;
+        this.isShow = false;
+      } else if(entity.type === "视频") {
+        this.VideoURL = `/static/video/${entity.attributes.SPWJM}`;
+        this.showVideo = true;
+        this.isShow = false;
+      } else {
+        this.isShow = true;
+      }      
+    }
   },
 };
 </script>

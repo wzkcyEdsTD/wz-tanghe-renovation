@@ -13,7 +13,7 @@
                 <div>
                   <div class="tp">
                     <img src="./img/zuo.png" alt="" class="quanquan"/>
-                    <span class="xmzs">66</span>
+                    <span class="xmzs">87</span>
                   </div>
                 </div>
                 <div class="yxxm">

@@ -154,6 +154,15 @@ export const CESIUM_TREE_OPTION = [
         // saveData: "setProjectList"
       },
       {
+        id: "2021年重点项目",
+        label: "2021年重点项目",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}xm2021`,
+        icon: false,
+        type: "mvt",
+        // saveData: "setProjectList"
+      },
+      {
         id: "断点",
         label: "断点",
         url: SERVER_DEFAULT_DATA,

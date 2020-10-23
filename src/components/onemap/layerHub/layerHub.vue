@@ -246,7 +246,6 @@
             </div>
           </div>
         </div>
-<!--        <div class="square"></div>-->
         <div class="jsqk-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">建设情况</div>
@@ -264,10 +263,6 @@
               <p class="xiaobiaoti">{{'投资计划(万元)'}}</p>
               <div style="height: 16vh;  width: 35vh;" class="echart" ref="lineEchart"></div>
             </div>
-<!--            <div class="rate-item">-->
-<!--              <p class="xiaobiaoti">项目完成率</p>-->
-<!--              <div style="height: 5.5vh" class="echart" ref="xiaEchart"></div>-->
-<!--            </div>-->
           </div>
         </div>
         <div class="czwt-info">

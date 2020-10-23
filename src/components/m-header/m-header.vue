@@ -60,7 +60,7 @@ export default {
   height: 8vh;
   background-image: linear-gradient(#040d33,rgba(4,13,51,.94) 50%,rgba(4,13,51,0));
   text-align: center;
-  transition: width 1s linear;
+  // transition: width 1s linear;
   .header-img {
     position: relative;
     height: 100%;

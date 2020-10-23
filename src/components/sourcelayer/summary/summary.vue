@@ -22,9 +22,9 @@
       </div>
     </div>
     <div class="uls" v-if="showLarge" >
-      <div id="rightHide">
+      <!-- <div id="rightHide">
         <Right/>
-      </div>
+      </div> -->
       <div class="rig">
         <ProjectSummary/>
       </div>
@@ -193,7 +193,10 @@ export default {
     display: flex;
     align-items: flex-start;
   }
-  .rig{padding-left: 1vh}
+  .rig{
+    padding-left: 1vh;
+    padding-right: 1vh;
+  }
   .zhuangshi {
     margin-top: 1vh;
     width: 38vh;

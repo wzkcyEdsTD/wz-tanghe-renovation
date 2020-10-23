@@ -71,9 +71,6 @@ export default {
   },
   created() {
     this.getKuanGao();
-    setTimeout(() => {
-      // this.splitScreen()
-    }, 5000)
     //  点位信息 hash
     window.featureMap = {};
     //  点位icon hash
@@ -646,6 +643,7 @@ export default {
       if(this.screenWidth>4000&this.screeHeight>1000){
         window.showLarge = true
         this.showLarge = window.showLarge
+        this.splitScreen()
       }else {
         window.showLarge = false
         this.showLarge = window.showLarge
@@ -655,8 +653,9 @@ export default {
       console.log('splitScreen')
       document.getElementById('header').style.width = '60%'
       document.getElementById('content').style.width = '60%'
-      document.getElementById('leftHide').style.display = 'none'
-      document.getElementById('rightHide').style.display = 'none'
+      // document.getElementById('leftHide').style.display = 'none'
+      // document.getElementById('rightHide').style.display = 'none'
+      this.$bus.$emit("change-screen", { value: true });
     }
   },
 };

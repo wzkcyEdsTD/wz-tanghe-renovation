@@ -45,9 +45,9 @@
     </div>
     <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" >
       <div class="ulsda" v-if="showLarge">
-        <div id="leftHide" class="lefts">
+        <!-- <div id="leftHide" class="lefts">
           <RightSummary />
-        </div>
+        </div> -->
         <div class="rig">
           <SourceTree />
         </div>
@@ -64,7 +64,7 @@
         <RightSummary v-if="leftOrRight" />
       </div>
     </div>
-    <div class="sign-wrapper" :style="{right: showLarge?'85vh':'52vh'}" v-if="showSign">
+    <div class="sign-wrapper" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div>
   </div>

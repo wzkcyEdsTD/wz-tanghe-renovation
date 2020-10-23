@@ -206,14 +206,20 @@
         </div>
         <div class="base-info">
           <div class="base-item">
-            <img src="./images/xm-nuber.png" alt="" />
-            <div class="title" style="color: #2fc8e9">总数</div>
-            <div class="text">{{ret.project.sum}}<span class="unit">个</span></div>
+            <div class="leftPicture">
+              <img src="./images/球-蓝.png" alt="" style="width: 13vh"/>
+              <div class="title" style="color: #2fc8e9">总数</div>
+              <div class="text">{{ret.project.sum}}<span class="unit">个</span></div>
+            </div>
+            <img src="./images/台子-蓝.png" alt="" class="leftPictureBottom"/>
           </div>
           <div class="base-item">
-            <img src="./images/xm-count.png" alt="" />
-            <div class="title" style="color: #ff8b4f">投资计划</div>
-            <div class="text">{{ret.project.plan}}<span class="unit">亿元</span></div>
+            <div class="rightPicture">
+              <img src="./images/球-红.png" alt="" style="width: 15vh"/>
+              <div class="titleRight" style="color: #ff8b4f">投资计划</div>
+              <div class="textRight">{{ret.project.plan}}<span class="unit">亿元</span></div>
+            </div>
+            <img src="./images/台子-红.png" alt="" class="rightPictureBottom"/>
           </div>
         </div>
         <div class="base-info">

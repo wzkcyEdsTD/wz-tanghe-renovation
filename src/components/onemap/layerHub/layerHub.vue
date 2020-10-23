@@ -128,7 +128,6 @@
               <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum}}<span class="unit">个</span></div>
               <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>
             </div>
-
           </div>
           <div class="base-item">
             <div>
@@ -137,8 +136,6 @@
               <div class="textRight" v-if="ret.pointStat.length">{{ret.pointStat.length}}<span class="unit">米</span></div>
               <div class="textRight" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>
             </div>
-
-
           </div>
         </div>
         <div class="base-info">
@@ -249,7 +246,6 @@
             </div>
           </div>
         </div>
-
 <!--        <div class="square"></div>-->
         <div class="jsqk-info">
           <div class="sub-title-wrapper">

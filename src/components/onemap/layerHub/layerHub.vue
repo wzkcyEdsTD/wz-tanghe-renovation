@@ -122,16 +122,23 @@
         </div>
         <div class="base-info">
           <div class="base-item">
-            <img src="./images/kd-number.png" alt="" />
-            <div class="title" style="color: #2fc8e9">总数</div>
-            <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum||0}}<span class="unit">个</span></div>
-<!--            <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>-->
+            <div style="padding-left: 1vh;">
+              <img src="./images/kd-number.png" alt="" style="width:11vh"/>
+              <div class="title" style="color: #2fc8e9">总数</div>
+              <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum}}<span class="unit">个</span></div>
+              <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>
+            </div>
+
           </div>
           <div class="base-item">
-            <img src="./images/kd-length.png" alt="" />
-            <div class="title" style="color: #ff8b4f">总长度</div>
-            <div class="text" v-if="ret.pointStat.length">{{ret.pointStat.length||0}}<span class="unit">米</span></div>
-<!--            <div class="text" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>-->
+            <div>
+              <img src="./images/kd-length.png" alt="" style="width: 11vh;"/>
+              <div class="titleRight" style="color: #ff8b4f">总长度</div>
+              <div class="textRight" v-if="ret.pointStat.length">{{ret.pointStat.length}}<span class="unit">米</span></div>
+              <div class="textRight" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>
+            </div>
+
+
           </div>
         </div>
         <div class="base-info">

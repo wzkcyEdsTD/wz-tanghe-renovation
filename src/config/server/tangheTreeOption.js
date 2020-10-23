@@ -200,6 +200,22 @@ export const CESIUM_TREE_OPTION = [
         newdataset: `${SW_DATA_NAME}scenic_spot`,
         type: "mvt"
       },
+      {
+        id:'视频',
+        icon:'视频',
+        label: "视频",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}shipin`,
+        type: "mvt"
+      },
+      {
+        id:'全景',
+        icon:'全景',
+        label: "全景",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}quanjin`,
+        type: "mvt"
+      },
     ]
   },
   // {

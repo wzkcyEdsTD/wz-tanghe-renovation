@@ -122,16 +122,20 @@
         </div>
         <div class="base-info">
           <div class="base-item">
-            <img src="./images/kd-number.png" alt="" />
-            <div class="title" style="color: #2fc8e9">总数</div>
-            <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum||0}}<span class="unit">个</span></div>
-<!--            <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>-->
+            <div style="padding-left: 1vh;">
+              <img src="./images/kd-number.png" alt="" style="width:11vh"/>
+              <div class="title" style="color: #2fc8e9">总数</div>
+              <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum}}<span class="unit">个</span></div>
+              <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>
+            </div>
           </div>
           <div class="base-item">
-            <img src="./images/kd-length.png" alt="" />
-            <div class="title" style="color: #ff8b4f">总长度</div>
-            <div class="text" v-if="ret.pointStat.length">{{ret.pointStat.length||0}}<span class="unit">米</span></div>
-<!--            <div class="text" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>-->
+            <div>
+              <img src="./images/kd-length.png" alt="" style="width: 11vh;"/>
+              <div class="titleRight" style="color: #ff8b4f">总长度</div>
+              <div class="textRight" v-if="ret.pointStat.length">{{ret.pointStat.length}}<span class="unit">米</span></div>
+              <div class="textRight" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>
+            </div>
           </div>
         </div>
         <div class="base-info">
@@ -206,14 +210,20 @@
         </div>
         <div class="base-info">
           <div class="base-item">
-            <img src="./images/xm-nuber.png" alt="" />
-            <div class="title" style="color: #2fc8e9">总数</div>
-            <div class="text">{{ret.project.sum}}<span class="unit">个</span></div>
+            <div class="leftPicture">
+              <img src="./images/球-蓝.png" alt="" style="width: 13vh"/>
+              <div class="title" style="color: #2fc8e9">总数</div>
+              <div class="text">{{ret.project.sum}}<span class="unit">个</span></div>
+            </div>
+            <img src="./images/台子-蓝.png" alt="" class="leftPictureBottom"/>
           </div>
           <div class="base-item">
-            <img src="./images/xm-count.png" alt="" />
-            <div class="title" style="color: #ff8b4f">投资计划</div>
-            <div class="text">{{ret.project.plan}}<span class="unit">亿元</span></div>
+            <div class="rightPicture">
+              <img src="./images/球-红.png" alt="" style="width: 15vh"/>
+              <div class="titleRight" style="color: #ff8b4f">投资计划</div>
+              <div class="textRight">{{ret.project.plan}}<span class="unit">亿元</span></div>
+            </div>
+            <img src="./images/台子-红.png" alt="" class="rightPictureBottom"/>
           </div>
         </div>
         <div class="base-info">
@@ -236,8 +246,6 @@
             </div>
           </div>
         </div>
-
-<!--        <div class="square"></div>-->
         <div class="jsqk-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">建设情况</div>
@@ -255,10 +263,6 @@
               <p class="xiaobiaoti">{{'投资计划(万元)'}}</p>
               <div style="height: 16vh;  width: 35vh;" class="echart" ref="lineEchart"></div>
             </div>
-<!--            <div class="rate-item">-->
-<!--              <p class="xiaobiaoti">项目完成率</p>-->
-<!--              <div style="height: 5.5vh" class="echart" ref="xiaEchart"></div>-->
-<!--            </div>-->
           </div>
         </div>
         <div class="czwt-info">
@@ -1064,7 +1068,7 @@ export default {
       this.lineEchart.setOption({
             grid: {
               top: '10%',
-              bottom:'30%',
+              bottom:'35%',
               left:'20%',
             },
             tooltip : {
@@ -1093,7 +1097,7 @@ export default {
               },
               axisLabel: {
                 show: true,
-                rotate: 45,
+                rotate: 40,
                 textStyle:{
                   color:"#ffffff",
                   fontFamily:'DIN',
@@ -1136,14 +1140,16 @@ export default {
               },
             },
             dataZoom : [
-          {
-            type: 'inside',
-            show: true,
-            start: 0,
-            end: 30,
-            xAxisIndex: [0],
-          },
-        ],
+              {
+                type: 'slider',
+                show: true,
+                start: 0,
+                end: 30,
+                xAxisIndex: [0],
+                height: "10%",
+                bottom:0,
+              },
+            ],
             series: [{
               data: [3000, 19000, 150, 15144, 103200, 161250,500,24813.36,194718,7540,20016,133571,7340,50000,67214,1454,928097,5000,408570,171360,176769,240263],
               type: 'line',

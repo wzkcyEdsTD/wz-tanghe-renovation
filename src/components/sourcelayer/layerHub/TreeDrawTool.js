@@ -103,7 +103,11 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     context[node.saveData](forceDrawFeatures)
   }
   context.setSourceMap({[node.id]: forceDrawFeatures});
-  context.setCurrentource(node.id);
+  try {
+    context.setCurrentource(node.id);
+  }catch (e) {
+  }
+
 
   // forceDrawFeatures.map(item => {
   //   const entityOption = {

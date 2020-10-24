@@ -13,7 +13,7 @@
                 <div>
                   <div class="tp">
                     <img src="./img/zuo.png" alt="" class="quanquan"/>
-                    <span class="xmzs">87</span>
+                    <span class="xmzs">85</span>
                   </div>
                 </div>
                 <div class="yxxm">
@@ -24,7 +24,7 @@
                 <div >
                   <div class="tp">
                     <img src="./img/you.png" alt="" class="quanquan"/>
-                    <span class="xmzje">275.11</span>
+                    <span class="xmzje">283.5</span>
                   </div>
                 </div>
                 <div class="yxxm">

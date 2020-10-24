@@ -198,12 +198,16 @@ export default {
         }
         if (window.currentMapType == 'vectorwhite') {
           for (let key in window.whiteLabelMap) {
+            if (window.whiteLabelMap[key]._labels[0].show) {
+              window.blackLabelMap[key].setAllLabelsVisible(true)
+            }
             window.whiteLabelMap[key].setAllLabelsVisible(false)
-            window.blackLabelMap[key].setAllLabelsVisible(true)
           }
         } else {
           for (let key in window.whiteLabelMap) {
-            window.whiteLabelMap[key].setAllLabelsVisible(true)
+            if (window.blackLabelMap[key]._labels[0].show) {
+              window.whiteLabelMap[key].setAllLabelsVisible(true)
+            }
             window.blackLabelMap[key].setAllLabelsVisible(false)
           }
         }
@@ -652,6 +656,7 @@ export default {
       if(this.screenWidth>4000&this.screeHeight>1000){
         window.showLarge = true
         this.showLarge = window.showLarge
+        this.splitScreen()
       }else {
         window.showLarge = false
         this.showLarge = window.showLarge
@@ -740,14 +745,15 @@ export default {
           }
       });
       getFeatureService.processAsync(getFeatureParameter);
+    },
+    splitScreen() {
+      console.log('splitScreen')
+      document.getElementById('header').style.width = '60%'
+      document.getElementById('content').style.width = '60%'
+      // document.getElementById('leftHide').style.display = 'none'
+      // document.getElementById('rightHide').style.display = 'none'
+      this.$bus.$emit("change-screen", { value: true });
     }
-
-
-
-
-
-
-
   },
 };
 </script>

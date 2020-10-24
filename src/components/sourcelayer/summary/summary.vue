@@ -1,6 +1,7 @@
 <template>
-  <div :class="[showLarge?'summary':'summary1']">
-    <div class="ding" v-if="!showLarge">
+  <!-- <div :class="[showLarge?'summary':'summary1']"> -->
+  <div class="summary">
+    <!-- <div class="ding" v-if="!showLarge"> -->
       <div class="box">
         <div class="buttonpd" :class="{active: currentType=='total'}" @click="currentType='total'">
           <div class="tp">
@@ -17,24 +18,22 @@
           </div>
         </div>
       </div>
-      <div>
-        <img src="./img/switch-decorate.png" class="zhuangshi"/>
-      </div>
-    </div>
-    <div class="uls" v-if="showLarge" >
-      <div>
+      <img src="./img/switch-decorate.png" class="zhuangshi"/>
+    <!-- </div> -->
+    <!-- <div class="uls" v-if="showLarge" >
+      <div id="rightHide">
         <Right/>
       </div>
       <div class="rig">
         <ProjectSummary/>
       </div>
-    </div>
-    <div v-if="!showLarge">
+    </div> -->
+    <!-- <div v-if="!showLarge">
       <Right v-show="currentType == 'total'" />
       <ProjectSummary v-show="currentType == 'source'" />
-    </div>
-    <!-- <div class="mask-right" v-if="showLarge"></div> -->
-    <!-- <div class="mask-right1" v-if="!showLarge"></div> -->
+    </div> -->
+    <Right v-show="currentType == 'total'" />
+    <ProjectSummary v-show="currentType == 'source'" />
   </div>
 </template>
 
@@ -88,12 +87,13 @@ export default {
     height: 4.5vh;
   }
   .summary {
-    position: fixed;
+    position: absolute;
     box-sizing: border-box;
     top: 5vh;
     bottom: 0;
     right: 0;
     padding: 3vh 2vh 0 2vh;
+    width: 40vh;
     background-color: #040D33;
     color: white;
     overflow: hidden;
@@ -127,73 +127,58 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 1vh;
+      font-size: 1.6vh;
     }
   }
-  .summary1 {
-    position: fixed;
-    box-sizing: border-box;
-    top: 5vh;
-    bottom: 0;
-    right: 0px;
-    width: 40vh;
-    padding: 3vh 2vh 0 2vh;
-    background-color: #040D33;
-    color: white;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    z-index: 999;
-    overflow: hidden;
-    .ding {
-      padding-top: 1vh;
-    }
-    .box {
-      display: flex;
-      flex-direction: row;
-    }
-    .buttonpd {
-      padding-right: 5vh;
-      cursor: pointer;
-      &.active {
-        .button {
-          top: 40%;
-        }
-      }
-    }
-    .tp {
-      position: relative;
-    }
-    .button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2vh;
-    }
-  }
-  // .mask-right {
-  //   z-index: -2;
-  //   position: fixed;
+  // .summary1 {
+  //   position: absolute;
+  //   box-sizing: border-box;
   //   top: 5vh;
-  //   right: 0;
-  //   width: 90vh;
-  //   height: 100vh;
-  //   background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+  //   bottom: 0;
+  //   right: 0px;
+  //   width: 40vh;
+  //   padding: 3vh 2vh 0 2vh;
+  //   background-color: #040D33;
+  //   color: white;
+  //   -webkit-box-sizing: border-box;
+  //   box-sizing: border-box;
+  //   z-index: 999;
+  //   overflow: hidden;
+  //   .ding {
+  //     padding-top: 1vh;
+  //   }
+  //   .box {
+  //     display: flex;
+  //     flex-direction: row;
+  //   }
+  //   .buttonpd {
+  //     padding-right: 5vh;
+  //     cursor: pointer;
+  //     &.active {
+  //       .button {
+  //         top: 40%;
+  //       }
+  //     }
+  //   }
+  //   .tp {
+  //     position: relative;
+  //   }
+  //   .button {
+  //     position: absolute;
+  //     top: 50%;
+  //     left: 50%;
+  //     transform: translate(-50%, -50%);
+  //     font-size: 2vh;
+  //   }
   // }
-  // .mask-right1 {
-  //   z-index: -2;
-  //   position: fixed;
-  //   top: 5vh;
-  //   right: 0;
-  //   width: 41vh;
-  //   height: 100vh;
-  //   background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+  // .uls{
+  //   display: flex;
+  //   align-items: flex-start;
   // }
-  .uls{
-    display: flex;
-    align-items: flex-start;
-  }
-  .rig{padding-left: 1vh}
+  // .rig{
+  //   padding-left: 1vh;
+  //   padding-right: 1vh;
+  // }
   .zhuangshi {
     margin-top: 1vh;
     width: 38vh;

@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <transition name="slide">
+    <transition name="fade">
       <div class="info-container" v-show="isShow">
         <span class="close-btn" @click="closeInfo"></span>
         <div class="header-wrapper">
@@ -126,6 +126,7 @@ import AudioTool from "../AudioTool/AudioTool";
 export default {
   data() {
     return {
+      showLarge: window.showLarge,
       forceEntity: {},
       forcePosition: {},
       isShow: false,
@@ -363,13 +364,21 @@ export default {
     // 跳转详情
     goDetail(entity) {
       if(entity.type === "全景") {
-        this.QJURL = entity.attributes.QJMC;
-        this.showQJ = true;
-        this.isShow = false;
+        if (this.showLarge) {
+          this.$bus.$emit("change-rightContent", { type: 'qj', value: entity.attributes.QJMC });
+        } else {
+          this.QJURL = entity.attributes.QJMC;
+          this.showQJ = true;
+          this.isShow = false;
+        }
       } else if(entity.type === "视频") {
-        this.VideoURL = `/static/video/${entity.attributes.SPWJM}`;
-        this.showVideo = true;
-        this.isShow = false;
+        if (this.showLarge) {
+          this.$bus.$emit("change-rightContent", { type: 'video', value: `/static/video/${entity.attributes.SPWJM}` });
+        } else {
+          this.VideoURL = `/static/video/${entity.attributes.SPWJM}`;
+          this.showVideo = true;
+          this.isShow = false;
+        }
       } else {
         this.isShow = true;
       }      

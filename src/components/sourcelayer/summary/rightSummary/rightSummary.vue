@@ -16,7 +16,7 @@
             controls
             class="sp"
           >
-            <source src="static/video/温瑞塘河/温瑞塘河.mp4">
+            <source src="static/video/温瑞塘河.mp4">
           </video>
           <div class="jianju">
             <span class="xbt">流域</span>

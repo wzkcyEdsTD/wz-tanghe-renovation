@@ -2,8 +2,14 @@
   <div id="app">
     <m-header></m-header>
     <loading v-show="isLoading"></loading>
-    <div class="content">
+    <div id="content" class="content">
       <router-view />
+    </div>
+    <div class="rightScreen-wrapper" v-if="showRightScreen">
+      <div class="player-wrapper">
+        <video class="video" v-show="showType=='video'" :src="showSrc" controls="controls" autoplay muted></video>
+        <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
+      </div>
     </div>
   </div>
 </template>
@@ -21,7 +27,12 @@ export default {
   },
   data() {
     return {
-      nameList: [],
+      showRightScreen: false,
+      showType: 'video',
+      // showSrc: 'https://720yun.com/t/08vkOm1hrry?scene_id=57144125'
+      showSrc: 'static/video/温瑞塘河.mp4'
+      // videoSrc: 'static/video/温瑞塘河/温瑞塘河.mp4',
+      // qjSrc: ''
     };
   },
   computed: {
@@ -35,6 +46,16 @@ export default {
   created() {
   },
   mounted() {
+    this.$bus.$off("change-screen");
+    this.$bus.$on("change-screen", ({ value }) => {
+      this.showRightScreen = value
+    })
+    this.$bus.$off("change-rightContent");
+    this.$bus.$on("change-rightContent", ({ type, value }) => {
+      console.log('gogogo')
+      this.showType = type
+      this.showSrc = value
+    })
   },
   methods: {
   },
@@ -67,109 +88,34 @@ body {
   top: 0;
   bottom: 0;
   width: 100%;
+  // transition: width 1s linear;
   // z-index: 9;
   > * {
     width: 100%;
     height: 100%;
   }
 }
-.water-detail {
-  border: 1px solid #40c7ff;
-  /deep/.el-picker-panel__body-wrapper {
-    background-color: #0d182c;
-  }
-  /deep/.el-picker-panel__footer {
-    background-color: #0d182c;
-    border-top: 1px solid #40c7ff;
-  }
-  /deep/.el-picker-panel__sidebar {
-    background-color: #0d182c;
-    border-right: 1px solid #40c7ff;
-  }
-  /deep/.el-date-range-picker__content.is-left {
-    border-right: 1px solid #40c7ff;
-  }
-  /deep/.el-date-range-picker__time-header {
-    border-bottom: 1px solid #40c7ff;
-  }
-  /deep/.el-date-table th {
-    border-bottom: solid 1px #40c7ff;
-    color: #fff;
-  }
-  /deep/.el-picker-panel__shortcut {
-    color: #ffffff;
-  }
-  /deep/.el-input--small .el-input__inner {
-    background-color: #0c2146;
-    color: #ffffff;
-    border: 1px solid #409eff;
-  }
-  /deep/.el-date-range-picker .el-picker-panel__content {
-    color: #ffffff;
-  }
-  /deep/.el-date-table td.in-range div,
-  .el-date-table td.in-range div:hover,
-  .el-date-table.is-week-mode .el-date-table__row.current div,
-  .el-date-table.is-week-mode .el-date-table__row:hover div {
-    background-color: #000;
-  }
-  /deep/.el-button.is-plain:focus,
-  .el-button.is-plain:hover {
-    background-color: #0088eb;
-    color: #fff;
-  }
-  /deep/.el-button {
-    background-color: #159bfd;
-    color: #fff;
-    border: none;
-  }
-  /deep/.el-button--text {
-    background-color: rgba(0, 0, 0, 0);
-    color: #d3d3d3;
-  }
-  /deep/.popper__arrow::after {
-    border-bottom-color: rgba(0, 0, 0, 0);
-  }
-  /deep/.el-popper .popper__arrow {
-    border-bottom-color: #40c7ff;
-  }
-  /deep/.el-date-range-picker__content .el-date-range-picker__header div {
-    color: #fff;
-  }
-  /deep/.available {
-    color: #fff;
-  }
-  /deep/.el-button.is-disabled.is-plain {
-    background-color: #159bfd;
-    color: #ffffff;
-  }
-  /deep/.el-time-panel {
-    background-color: #000;
-    border: none;
-    box-shadow: #159bfd 0px 0px 18px inset;
-    border-radius: 6px;
-    padding-top: 10px;
-  }
-  /deep/.el-time-spinner__item {
-    color: #fff;
-  }
-  /deep/.el-time-spinner__item.active:not(.disabled) {
-    color: #159bfd;
-  }
-  /deep/.el-time-panel__footer {
-    border-top: none;
-  }
-  /deep/.el-time-panel__btn {
-    color: #d7d7d7;
-  }
-  /deep/.el-time-panel__content::after,
-  .el-time-panel__content::before {
-    border-top: 1px solid #ababab;
-    border-bottom: 1px solid #ababab;
-  }
-  /deep/.el-time-spinner__item:hover:not(.disabled):not(.active) {
-    background: rgba(0, 0, 0, 0);
-    color: #159bfd;
+.rightScreen-wrapper {
+  position: absolute;
+  top: 5vh;
+  bottom: 0;
+  left: 60%;
+  width: 40%;
+  padding: 3%;
+  background-color: #040D33;
+  color: #fff;
+  .player-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    .video, .iframe {
+      width: 100%;
+      border: 1px solid #165FEA;
+    }
+    .iframe {
+      height: 100%;
+    }
   }
 }
 </style>

@@ -60,6 +60,9 @@ const mutations = {
     console.log(444, data)
     state.sejList = data;
   },
+  [types.SET_BUFFER_QUERY_DATA](state, data) {
+    state.bufferQueryData = data
+  },
 };
 
 export default mutations;

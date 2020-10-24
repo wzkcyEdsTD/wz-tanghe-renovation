@@ -85,3 +85,8 @@ export const setCurrentource = ({ commit }, data) => {
 export const setSejList = ({ commit }, data) => {
   commit(types.SET_SEJ_LIST, data);
 };
+
+// 缓冲查询数据
+export const SetBufferQueryData = function({ commit }, data) {
+  commit(types.SET_BUFFER_QUERY_DATA, data)
+}

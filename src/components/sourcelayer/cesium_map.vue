@@ -67,7 +67,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("map", ["medicalListWithGeometry"]),
+    ...mapGetters("map", ["bufferQueryData"]),
   },
   created() {
     this.getKuanGao();
@@ -90,8 +90,11 @@ export default {
     });
     this.eventRegsiter();
     this.hide(this);
+
+    this.createEntityCollection();
   },
   methods: {
+    ...mapActions("map", ["SetBufferQueryData"]),
     initPostRender() {
       window.earth.scene.postRender.addEventListener(() => {
         if (!window.earth || !this.mapLoaded || !Object.keys(this.$refs).length)
@@ -120,6 +123,12 @@ export default {
           // *****[detailPopup]  资源详情点*****
           if (~["label", "billboard"].indexOf(_TYPE_)) {
             if (~_NODEID_.indexOf('项目') || _NODEID_ == '断点') {
+
+              // 画圆查询
+              this.drawProjectCircle({
+                ...window.featureMap[_NODEID_][_SMID_]
+              }, pick.id);
+              
               this.$refs.projectDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
@@ -648,6 +657,97 @@ export default {
         this.showLarge = window.showLarge
       }
     },
+
+    // 创建datasource
+    createEntityCollection() {
+      const ProjectCircleEntityCollection = new Cesium.CustomDataSource(
+        "project"
+      );
+      window.earth.dataSources.add(ProjectCircleEntityCollection);
+    },
+
+
+    // 画缓冲区
+    async drawProjectCircle({ geometry }, id) {
+      // 清除原有图形
+      this.removeProjectCircle();
+      const { x, y } = geometry;
+
+      const datasource = window.earth.dataSources.getByName("project")[0];
+      const circleEntity = new Cesium.Entity({
+        position: Cesium.Cartesian3.fromDegrees(x, y, 0),
+        ellipse: {
+          semiMinorAxis: 500,
+          semiMajorAxis: 500,
+          height: 0,
+          material: Cesium.Color.YELLOW.withAlpha(0.2),
+          outline: true,
+          outlineWidth: 3,
+          outlineColor: Cesium.Color.WHITE,
+        },
+        id,
+      });
+      datasource.entities.add(circleEntity);
+
+      const point = new SuperMap.Geometry.Point(x, y);
+      this.bufferQuery(point);
+    },
+
+
+    // 删除缓冲区，无id删除全部
+    removeProjectCircle(id) {
+      const datasource = window.earth.dataSources.getByName("project")[0];
+      id ? datasource.entities.removeById(id) : datasource.entities.removeAll();
+    },
+
+
+    // 缓冲查询
+    bufferQuery(geometryArgs) {
+      // 查询
+      this.singleQuery(geometryArgs, "项目");
+      this.singleQuery(geometryArgs, "绿道断点");
+      this.singleQuery(geometryArgs, "quanjin");
+
+      // 延时获取异步数据
+      setTimeout(() => {
+        console.log("bufferQueryData", this.bufferQueryData)
+      }, 30);
+    },
+
+
+    // 单个查询
+    singleQuery(geometryArgs, dataset) {
+      const baseUrl = "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data";
+      let getFeatureParameter, getFeatureService;
+      getFeatureParameter = new SuperMap.REST.GetFeaturesByBufferParameters({
+        // 缓冲距离单位疑似十万米！！！图形单位米！！！
+        bufferDistance: 0.005,
+        toIndex: -1,
+        datasetNames: [`172.168.3.181_thxm:${dataset}`],
+        returnContent: true,
+        geometry: geometryArgs
+      });
+      getFeatureService = new SuperMap.REST.GetFeaturesByBufferService(baseUrl, {
+          eventListeners: {
+            processCompleted: async (res) => {
+              if(res.result && res.result.features && res.result.features.length) {
+                const obj = this.bufferQueryData;
+                obj[dataset] = res.result.features;
+                this.SetBufferQueryData(obj)
+              }
+            },
+            processFailed: (msg) => console.log(msg),
+          }
+      });
+      getFeatureService.processAsync(getFeatureParameter);
+    }
+
+
+
+
+
+
+
   },
 };
 </script>

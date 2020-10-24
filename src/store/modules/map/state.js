@@ -32,5 +32,8 @@ const state = {
   currentSource: '断点',
   // 十二景
   sejList: [],
+
+  // 缓冲区查询
+  bufferQueryData: {}
 };
 export default state;

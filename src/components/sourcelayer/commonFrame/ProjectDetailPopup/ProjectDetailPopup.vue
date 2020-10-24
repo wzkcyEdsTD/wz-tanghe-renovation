@@ -1,7 +1,8 @@
 <template>
   <div>
-    <transition name="slide" v-if="forceEntity.attributes">
-      <div class="project-detail-popup" :style="{width:showLarge?'83vh':'50vh'}" v-show="isShow">
+    <transition name="fade" v-if="forceEntity.attributes">
+      <!-- <div class="project-detail-popup" :style="{width:showLarge?'83vh':'50vh'}" v-show="isShow"> -->
+      <div class="project-detail-popup" v-show="isShow">
         <span class="close-btn" @click="closeInfo"></span>
         <div class="title-wrapper">
           <span class="pre"></span>
@@ -31,7 +32,8 @@
                 v-show="currentShow=='qj'"
               >
                 <swiper-slide v-for="(item,i) in currentData.qjslt" :key="i" class="swiper-item">
-                  <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" :style="{height: showLarge?'35vh':'20vh'}" @click="openQJ(i)">
+                  <!-- <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" :style="{height: showLarge?'35vh':'20vh'}" @click="openQJ(i)"> -->
+                  <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" @click="openQJ(i)">
                 </swiper-slide>
                 <swiper-slide class="swiper-item" v-if="!currentData.qjslt">
                   <div class="no-tip">暂无数据</div>
@@ -45,9 +47,23 @@
                 v-show="currentShow=='sp'"
               >
                 <swiper-slide v-for="(item,i) in currentData.sp" :key="i" class="swiper-item">
-                  <video style="width:100%;" :style="{height: showLarge?'35vh':'20vh'}" :src="`/static/video/${item}`" 
-                    controls="controls"></video>
+                  <!-- <video ref="video" style="width:100%;" :style="{height: showLarge?'35vh':'20vh'}" :src="`/static/video/${item}`" 
+                    controls="controls" autoplay></video> -->
+                  <video ref="video" style="width:100%;" :src="`/static/video/${item}`" 
+                    controls="controls" muted></video>
                 </swiper-slide>
+                <!-- <swiper-slide class="swiper-item">
+                  <video ref="video1" style="width:100%;" src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218114723HDu3hhxqIT.mp4" 
+                    controls="controls" muted="true"></video>
+                </swiper-slide>
+                <swiper-slide class="swiper-item">
+                  <video ref="video2" style="width:100%;" src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218093206z8V1JuPlpe.mp4" 
+                    controls="controls" muted="true"></video>
+                </swiper-slide>
+                <swiper-slide class="swiper-item">
+                  <video ref="video3" style="width:100%;" src="https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4" 
+                    controls="controls" muted="true"></video>
+                </swiper-slide> -->
                 <swiper-slide class="swiper-item" v-if="!currentData.sp">
                   <div class="no-tip">暂无数据</div>
                 </swiper-slide>
@@ -60,7 +76,9 @@
                 v-show="currentShow=='photo'"
               >
                 <swiper-slide v-for="(item,i) in currentData.photo" :key="i" class="swiper-item">
-                  <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain" :style="{height: showLarge?'35vh':'20vh'}"
+                  <!-- <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain" :style="{height: showLarge?'35vh':'20vh'}"
+                    @click="onPreview(currentData.photo, i)"></el-image> -->
+                  <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain"
                     @click="onPreview(currentData.photo, i)"></el-image>
                 </swiper-slide>
                 <swiper-slide class="swiper-item" v-if="!currentData.photo">
@@ -151,7 +169,8 @@
                 <span>计划时间：</span>
               </div>
             </div>
-            <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '项目'">
+            <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '项目'"> -->
+            <div class="time-line-wrapper" v-if="forceEntity.type == '项目'">
               <div class="time-line">
                 <div class="line-item blue"></div>
                 <div class="line-item yellow"></div>
@@ -188,7 +207,8 @@
                 </div>
               </div>
             </div>
-            <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '断点'">
+            <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '断点'"> -->
+              <div class="time-line-wrapper" v-if="forceEntity.type == '断点'">
               <div class="time-line">
                 <div
                   class="line-item green"
@@ -265,6 +285,16 @@ export default {
           nextEl: ".swiper-button-right",
           prevEl: ".swiper-button-left",
         },
+        on: {
+          slideChangeTransitionEnd: () => {
+            console.log('slideChangeTransitionEnd!!', this.currentShow)
+            if (this.currentShow == 'sp') {
+              this.$refs.video1.pause()
+              this.$refs.video2.pause()
+              this.$refs.video3.pause()
+            }
+          },
+        }
       },
       showViewer: false,
       srcList: [],
@@ -299,8 +329,9 @@ export default {
       console.log('finalList', this.finalList)
       if (this.finalList.length) {
         this.currentData = this.finalList[this.currentIndex]
+        console.log('currentData', this.currentData)
+        // console.log('refsVideo', this.$refs.video)
       }
-      console.log('currentData', this.currentData)
     },
     formatData(attr, key) {
       if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
@@ -370,9 +401,13 @@ export default {
       this.isShow = false
     },
     openQJ(index) {
-      this.QJURL = this.currentData.qj[index]
-      console.log('QJURL', this.QJURL)
-      this.showQJ = true
+      if (this.showLarge) {
+        this.$bus.$emit("change-rightContent", { type: 'qj', value: this.currentData.qj[index] });
+      } else {
+        this.QJURL = this.currentData.qj[index]
+        console.log('QJURL', this.QJURL)
+        this.showQJ = true
+      }
     },
     closeQJ() {
       this.showQJ = false
@@ -387,6 +422,10 @@ export default {
     },
     closeViewer() {
      this.showViewer = false
+    },
+    handlePlay(e) {
+      console.log('handlePlay', e)
+      this.$bus.$emit("change-rightContent", { type: 'video', value: e.target.currentSrc });
     },
     getNowFormatDate() {
       let date = new Date();
@@ -419,6 +458,29 @@ export default {
         }
       } else {
         this.currentShow = 'qj'
+      }
+    },
+    currentShow(val) {
+      if (val == 'sp' && this.showLarge) {
+        console.log('haveSP', this.$refs.video)
+        this.$refs.video.forEach(item => {
+          item.addEventListener('play', (e) => {
+            console.log('eeee', e)
+            this.handlePlay(e)
+          });
+        })
+        // this.$refs.video1.addEventListener('play', (e) => {
+        //   console.log('eeee', e)
+        //   this.handlePlay(e)
+        // });
+        // this.$refs.video2.addEventListener('play', (e) => {
+        //   console.log('eeee', e)
+        //   this.handlePlay(e)
+        // });
+        // this.$refs.video3.addEventListener('play', (e) => {
+        //   console.log('eeee', e)
+        //   this.handlePlay(e)
+        // });
       }
     }
   }

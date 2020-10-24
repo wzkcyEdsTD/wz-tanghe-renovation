@@ -1,9 +1,9 @@
 <template>
   <div class="source-tree">
-    <div class="title-wrapper">
+    <!-- <div class="title-wrapper">
       <span class="pre"></span>
       <span class="title">资源目录</span>
-    </div>
+    </div> -->
     <div class="tree-container">
       <el-tree
         ref="tree"
@@ -175,9 +175,11 @@ export default {
           // }
           window.billboardMap[node.id]._billboards.map((v) => (v.show = false));
           // window.labelMap[node.id].setAllLabelsVisible(false);
-          window.currentMapType == "vectorwhite"
-            ? window.blackLabelMap[node.id].setAllLabelsVisible(false)
-            : window.whiteLabelMap[node.id].setAllLabelsVisible(false);
+          // window.currentMapType == "vectorwhite"
+          //   ? window.blackLabelMap[node.id].setAllLabelsVisible(false)
+          //   : window.whiteLabelMap[node.id].setAllLabelsVisible(false);
+          window.blackLabelMap[node.id].setAllLabelsVisible(false)
+          window.whiteLabelMap[node.id].setAllLabelsVisible(false)
         }
         node.componentEvent &&
           this.$bus.$emit(node.componentEvent, { value: null });

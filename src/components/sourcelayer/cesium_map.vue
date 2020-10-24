@@ -189,12 +189,16 @@ export default {
         }
         if (window.currentMapType == 'vectorwhite') {
           for (let key in window.whiteLabelMap) {
+            if (window.whiteLabelMap[key]._labels[0].show) {
+              window.blackLabelMap[key].setAllLabelsVisible(true)
+            }
             window.whiteLabelMap[key].setAllLabelsVisible(false)
-            window.blackLabelMap[key].setAllLabelsVisible(true)
           }
         } else {
           for (let key in window.whiteLabelMap) {
-            window.whiteLabelMap[key].setAllLabelsVisible(true)
+            if (window.blackLabelMap[key]._labels[0].show) {
+              window.whiteLabelMap[key].setAllLabelsVisible(true)
+            }
             window.blackLabelMap[key].setAllLabelsVisible(false)
           }
         }

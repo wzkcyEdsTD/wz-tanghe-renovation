@@ -7,7 +7,8 @@
     </div>
     <div class="rightScreen-wrapper" v-if="showRightScreen">
       <div class="player-wrapper">
-        <video class="video" :src="videoSrc" controls="controls"></video>
+        <video class="video" v-show="showType=='video'" :src="showSrc" controls="controls" autoplay muted></video>
+        <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
       </div>
     </div>
   </div>
@@ -27,10 +28,11 @@ export default {
   data() {
     return {
       showRightScreen: false,
-      showVideo: true,
-      videoSrc: 'https://www.w3school.com.cn/i/movie.ogg',
-      showQj: false,
-      qjSrc: ''
+      showType: 'video',
+      // showSrc: 'https://720yun.com/t/08vkOm1hrry?scene_id=57144125'
+      showSrc: 'static/video/温瑞塘河.mp4'
+      // videoSrc: 'static/video/温瑞塘河/温瑞塘河.mp4',
+      // qjSrc: ''
     };
   },
   computed: {
@@ -46,8 +48,13 @@ export default {
   mounted() {
     this.$bus.$off("change-screen");
     this.$bus.$on("change-screen", ({ value }) => {
-      console.log('gogogo')
       this.showRightScreen = value
+    })
+    this.$bus.$off("change-rightContent");
+    this.$bus.$on("change-rightContent", ({ type, value }) => {
+      console.log('gogogo')
+      this.showType = type
+      this.showSrc = value
     })
   },
   methods: {
@@ -102,9 +109,12 @@ body {
     height: 100%;
     display: flex;
     align-items: center;
-    .video {
+    .video, .iframe {
       width: 100%;
       border: 1px solid #165FEA;
+    }
+    .iframe {
+      height: 100%;
     }
   }
 }

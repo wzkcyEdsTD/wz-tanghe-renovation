@@ -170,7 +170,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       4
     );
     let color
-    if (node.id == '项目') {
+    if (~node.id.indexOf('项目')) {
       color = item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC")
     } else if (node.id == '2021年重点项目') {
       color = new Cesium.Color.fromCssColorString("#EE2D2D")
@@ -180,7 +180,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.whiteLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: color,
+      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
       font: node.id == '项目' ?"8px YouSheBiaoTiHei":"8px YouSheBiaoTiHei",
       scaleByDistance: new Cesium.NearFarScalar(4000, 1.8, 6000, 1.8),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
@@ -191,7 +191,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.blackLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: color,
+      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#010C27"),
       font: node.id == '项目' ?"8px YouSheBiaoTiHei":"8px YouSheBiaoTiHei",
       outlineColor:node.id == '项目' ? new Cesium.Color.fromCssColorString("#010C27") :'',
       style: Cesium.LabelStyle.FILL_AND_OUTLINE ,

@@ -37,6 +37,19 @@ export default {
   methods: {
     goRoute(name) {
       if (this.currentPage != name) {
+        if (name == 'onemap') {
+          console.log('allScreen')
+          document.getElementById('header').style.width = '100%'
+          document.getElementById('content').style.width = '100%'
+          this.$bus.$emit("change-screen", { value: false });
+        } else {
+          console.log('splitScreen')
+          document.getElementById('header').style.width = '60%'
+          document.getElementById('content').style.width = '60%'
+          // document.getElementById('leftHide').style.display = 'none'
+          // document.getElementById('rightHide').style.display = 'none'
+          this.$bus.$emit("change-screen", { value: true });
+        }
         this.currentPage = name
         this.$router.push({name})
       }

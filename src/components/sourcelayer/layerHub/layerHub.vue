@@ -1,7 +1,7 @@
 
 <template>
   <div class="layerhub-wrapper">
-    <div class="layer-wrapper">
+    <div class="layer-wrapper" :style="{right: showLarge?'22%':'25%'}">
       <div class="hub-list">
         <div class="hub-item" :class="{selected: currentLayer=='yx'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
           <img v-if="currentLayer=='yx'" src="./images/yx-sel2.png">
@@ -43,28 +43,29 @@
         </div>
       </div>
     </div>
-    <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" >
-      <div class="ulsda" v-if="showLarge">
-        <!-- <div id="leftHide" class="lefts">
+    <!-- <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" > -->
+    <div class="left-menu-wrapper" >
+      <!-- <div class="ulsda" v-if="showLarge">
+        <div id="leftHide" class="lefts">
           <RightSummary />
-        </div> -->
+        </div>
         <div class="rig">
           <SourceTree />
         </div>
-      </div>
-      <div v-if="!showLarge">
+      </div> -->
+      <!-- <div v-if="!showLarge"> -->
         <div class="switch-menu-wrapper">
           <div class="switch-menu-container">
-            <span :class="{active: !showMenu}" @click="switchMenu(false)">资源目录</span>
             <span :class="{active: showMenu}" @click="switchMenu(true)">塘河简介</span>
+            <span :class="{active: !showMenu}" @click="switchMenu(false)">资源目录</span>
           </div>
           <div class="switch-menu-decorate"></div>
         </div>
-        <SourceTree v-if="!leftOrRight" />
-        <RightSummary v-if="leftOrRight" />
-      </div>
+        <SourceTree v-show="!leftOrRight" />
+        <RightSummary v-show="leftOrRight" />
+      <!-- </div> -->
     </div>
-    <div class="sign-wrapper" v-if="showSign">
+    <div class="sign-wrapper" :style="{right: showLarge?'22%':'25%'}" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div>
   </div>
@@ -89,7 +90,7 @@ export default {
   },
   data() {
     return {
-      leftOrRight:false,
+      leftOrRight:true,
       showLarge:window.showLarge,
       showHub: false,
       currentMouse: '',
@@ -122,7 +123,7 @@ export default {
       // currentTarget: '',
       showSign: true,
       // showBaimo: false,
-      showMenu: false,
+      showMenu: true,
       // data: CESIUM_TREE_OPTION,
     };
   },

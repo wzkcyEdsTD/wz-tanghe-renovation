@@ -10,7 +10,7 @@
       <div class="weizhi">当前位置：</div>
       <p class="text">{{name}}</p>
     </div>
-    <div>
+    <div class="result">
       <div class="fjxm">
         <div class="tp">
           <img src="./images/时间框.png" class="kuang">
@@ -57,8 +57,6 @@
           </ul>
         </div>
       </div>
-    </div>
-    <div>
       <div class="fjxm">
         <div class="tp">
           <img src="./images/时间框.png" class="kuang">
@@ -109,8 +107,6 @@
           </ul>
         </div>
       </div>
-    </div>
-    <div>
       <div class="fjxm">
         <div class="tp">
           <img src="./images/时间框.png" class="kuang">

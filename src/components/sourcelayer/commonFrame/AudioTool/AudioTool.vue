@@ -1,15 +1,20 @@
 <template>
   <div class="audioTool">
-    <audio class="audio" :src="src" controls="controls"></audio>
     <div class="audioKit">
       <img
         class="control"
         :src="require(`./images/${status ? 'pause' : 'play'}.png`)"
         @click="changeStatus"
       />
-      <span class="duration">0:00/0:00</span>
+      <span class="duration"
+        >{{ timeFormat(currentTime) }}/{{ timeFormat(duration) }}</span
+      >
       <div class="bar">
-        <el-slider v-model="progress" :show-tooltip="false"></el-slider>
+        <el-slider
+          v-model="progress"
+          :show-tooltip="false"
+          @change="changeAudioTime"
+        ></el-slider>
       </div>
       <img
         class="sound"
@@ -25,15 +30,20 @@
       @mouseleave="soundMouseLeaveHandle($event)"
     >
       <div class="soundBar">
-        <!-- <span class="soundSpot"></span> -->
         <el-slider
           v-model="soundValue"
           :show-tooltip="false"
           vertical
-          height="7vh"
         ></el-slider>
       </div>
     </div>
+    <audio
+      id="nativeAudio"
+      class="audio"
+      ref="nativeAudio"
+      :src="src"
+      controls="controls"
+    ></audio>
   </div>
 </template>
 
@@ -42,18 +52,23 @@ export default {
   data() {
     return {
       status: false,
-      progress: 30,
-      soundValue: 0,
-      soundShow: true,
+      currentTime: 0,
+      duration: 0,
+      progress: 0,
+      soundValue: 30,
+      soundShow: false,
       soundMouseEnter: false,
     };
   },
   props: ["src"],
-  mounted() {},
+  mounted() {
+    this.audioBind();
+  },
   methods: {
     // 播放状态
     changeStatus() {
       this.status = !this.status;
+      this.status ? this.nativeAudio.play() : this.nativeAudio.pause();
     },
 
     // 音量按钮悬停
@@ -79,6 +94,58 @@ export default {
         this.soundShow = this.soundMouseEnter = false;
       }, 1000);
     },
+
+    // 与原生组件关联
+    audioBind() {
+      const that = this;
+      this.nativeAudio = document.getElementById("nativeAudio");
+
+      this.nativeAudio.volume = this.soundValue / 100;
+      this.nativeAudio.load();
+
+      this.nativeAudio.oncanplay = () => {
+        that.duration = that.nativeAudio.duration;
+
+        console.log(that.duration)
+
+        // 监听进度
+        that.nativeAudio.addEventListener("timeupdate", that.updateProgress);
+      };
+    },
+
+    // 进度条更新
+    updateProgress() {
+      this.progress = parseInt(
+        (parseInt(this.nativeAudio.currentTime) / parseInt(this.duration)) * 100
+      );
+
+      this.currentTime = this.nativeAudio.currentTime;
+    },
+
+    // 时间转换
+    timeFormat(time) {
+      const seconds = parseInt(time % 60);
+      const minute = parseInt(time / 60);
+      return `${minute}:${seconds < 10 ? "0" : ""}${seconds}`;
+    },
+
+    // 改变进度条
+    changeAudioTime(val) {
+      this.currentTime = this.nativeAudio.currentTime = parseInt(
+        (val / 100) * parseInt(this.duration)
+      );
+    },
+  },
+
+  watch: {
+    currentTime(val) {
+      if (val == this.duration) {
+        this.status = false;
+      }
+    },
+    soundValue(val) {
+      this.nativeAudio.volume = val / 100;
+    },
   },
 };
 </script>
@@ -87,8 +154,10 @@ export default {
 .audioTool {
   position: relative;
   width: 30vh;
+  padding-top: 10px;
 
   .audio {
+    display: none;
     width: 30vh;
     height: 6vh;
   }

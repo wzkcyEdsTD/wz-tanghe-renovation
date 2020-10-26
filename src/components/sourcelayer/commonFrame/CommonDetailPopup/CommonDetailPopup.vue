@@ -21,7 +21,13 @@
                 <span>{{forceEntity.attributes.STREET}}</span>
               </li>
             </ul>
-            <div class="detail" @click="goDetail(forceEntity)">查看详情 >></div>
+            <div class="searchAndDetail">
+              <div>
+                <img src="./images/搜索icon.png" class="searchIcon">
+              </div>
+              <div class="search" @click='goSearch(forceEntity)'>周边搜索</div>
+              <div class="detail" @click="goDetail(forceEntity)">查看详情</div>
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +63,7 @@
               <div class="sub-title">景观图</div>
               <div class="img-content">
                 <el-image style="width: 160px; height: 100px; margin-right: 10px; margin-top: 10px;" v-for="(item,index) in spotList" :key="index"
-                  :src="item" 
+                  :src="item"
                   :preview-src-list="spotList">
                 </el-image>
               </div>
@@ -69,7 +75,7 @@
                 <span class="time">{{`${item[0].split('_')[1].substring(0,4)}-${item[0].split('_')[1].substring(4,6)}-${item[0].split('_')[1].substring(6,8)}`}}</span>
                 <div class="spot-content">
                   <el-image style="width: 160px; height: 100px; margin-right: 10px; margin-top: 10px;" v-for="(img,j) in item" :key="j"
-                    :src="img" 
+                    :src="img"
                     :preview-src-list="item">
                   </el-image>
                 </div>
@@ -108,7 +114,7 @@
           </div>
         </div>
       </div>
-    </transition>
+    </transition>c
     <div class="QJFrame" v-show="showQJ">
       <i class="close" @click="closeQJ"></i>
       <iframe id="content" :src="QJURL"></iframe>
@@ -117,12 +123,15 @@
       <i class="close" @click="closeVideo"></i>
       <video :src="VideoURL" controls="controls"></video>
     </div>
+    <searchDetail ref="searchDetail"  v-show="showDetail"></searchDetail>
   </div>
 </template>
 
 <script>
 // import {ZBQJList} from "config/ZBQJConfig";
 import AudioTool from "../AudioTool/AudioTool";
+import searchDetail from "./searchDetail";
+import {mapGetters} from "vuex";
 export default {
   data() {
     return {
@@ -153,11 +162,14 @@ export default {
       QJURL: '',
       hideField: ["名称", "标签", "备注", "形象进度", "目录分类", "数据来源", "经度", "纬度", "建设地点1", "建设地点2", "建设地点3", "是否属于67个里面的", "类型", "统计", "唯一码", "更新参考数据源", "照片编号", "类型1", "类型2", "类型3", "显示级别", "类型编码", "马克", "照片", "颜色", "全景", "视频", "语音", "现场记录", "景观图", "周边全景", "全景缩略图"],
       showVideo: false,
-      VideoURL: ''
+      VideoURL: '',
+      showDetail:false,
+      list:[],
     };
   },
-  components: { AudioTool },
+  components: { AudioTool,searchDetail},
   computed: {
+    ...mapGetters("map", ["bufferQueryData"]),
     fixData() {
       let fixData = {}
       let currentData = this.forceEntity.fix_data
@@ -352,7 +364,9 @@ export default {
     closePopup() {
       this.forcePosition = {};
       this.forceEntity = {};
-      this.closeInfo()
+      this.closeInfo();
+      this.showDetail = false;
+      this.$refs.showZB = false;
     },
 
     // 关闭视频
@@ -382,12 +396,19 @@ export default {
       } else {
         this.forceEntity = entity;
         this.isShow = true;
-      }      
-    }
+      }
+    },
+
+    goSearch(forceEntity){
+      this.showDetail = true;
+      this.list = this.bufferQueryData;
+      this.$refs.searchDetail.getdata(this.list,forceEntity);
+    },
+
   },
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url("./CommonDetailPopup.less");
 </style>

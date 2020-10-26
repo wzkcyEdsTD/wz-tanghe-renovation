@@ -6,6 +6,7 @@
       <LayerHub ref="layerhub" />
       <CommonDetailPopup ref="commonDetailPopup" />
       <ProjectDetailPopup ref="projectDetailPopup" />
+      <searchDetail ref="searchDetail" />
       <SejPopup ref="SejPopup" />
     </div>
   </div>
@@ -20,6 +21,7 @@ import LayerHub from "./layerHub/layerHub";
 import CommonDetailPopup from "./commonFrame/CommonDetailPopup/CommonDetailPopup";
 import ProjectDetailPopup from "./commonFrame/ProjectDetailPopup/ProjectDetailPopup";
 import SejPopup from "./commonFrame/SejPopup/SejPopup";
+import searchDetail from "./commonFrame/CommonDetailPopup/searchDetail";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
@@ -33,7 +35,8 @@ export default {
     CommonDetailPopup,
     ProjectDetailPopup,
     SejPopup,
-    Summary
+    Summary,
+    searchDetail
   },
   data() {
     return {
@@ -127,25 +130,41 @@ export default {
 
             if (~_NODEID_.indexOf('项目') || _NODEID_ == '断点') {
 
-              /**
-               * 画圆查询
-               * 空间查询未完善，暂时隐藏
-               */
-              // this.drawProjectCircle({
-              //   ...window.featureMap[_NODEID_][_SMID_]
-              // }, pick.id);
-              
+              // 画圆查询
+              this.drawProjectCircle({
+                ...window.featureMap[_NODEID_][_SMID_]
+              }, pick.id);
+
               this.$refs.projectDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
               });
+              setTimeout(()=>{
+                this.$refs.projectDetailPopup.getdata(this.bufferQueryData);
+              },500);
               this.$refs.commonDetailPopup.closePopup()
             } else {
+
               // 跳过查看详情步骤
               this.$refs.commonDetailPopup.goDetail({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
               });
+
+              if(~_NODEID_.indexOf('视频') || _NODEID_ == '全景'){
+                this.drawProjectCircle({
+                  ...window.featureMap[_NODEID_][_SMID_]
+                }, pick.id);
+                this.$refs.searchDetail.getForceEntity({
+                  ...window.featureMap[_NODEID_][_SMID_],
+                  position: pick.primitive.position,
+                });
+                setTimeout(()=>{
+                  this.$refs.searchDetail.getdata(this.bufferQueryData);
+                  console.log("bufferQueryData",this.bufferQueryData);
+                },500);
+              }
+
               this.$refs.projectDetailPopup.closeInfo()
             }
           }
@@ -162,7 +181,7 @@ export default {
           console.log("yx", value, ServiceUrl.SWImage,this.imagelayer);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
-          
+
           this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
@@ -730,6 +749,8 @@ export default {
 
     // 缓冲查询
     bufferQuery(geometryArgs) {
+
+      this.SetBufferQueryData({})
       // 查询
       this.singleQuery(geometryArgs, "项目");
       this.singleQuery(geometryArgs, "绿道断点");

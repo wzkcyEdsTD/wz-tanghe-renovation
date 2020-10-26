@@ -134,6 +134,14 @@ export default {
                 position: pick.primitive.position,
               });
               this.$refs.commonDetailPopup.closePopup()
+            } else if(~_NODEID_.indexOf('视频') || _NODEID_ == '全景') {
+
+              // 跳过查看详情步骤
+              this.$refs.commonDetailPopup.goDetail({
+                ...window.featureMap[_NODEID_][_SMID_],
+                position: pick.primitive.position,
+              });
+              this.$refs.projectDetailPopup.closeInfo()
             } else {
               this.$refs.commonDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],

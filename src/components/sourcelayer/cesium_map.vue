@@ -115,17 +115,25 @@ export default {
       this.handler.setInputAction((e) => {
         const pick = window.earth.scene.pick(e.position);
         console.log("pick", pick);
-        if (!pick.id) return;
+        if (!pick || !pick.id) return;
         if (typeof pick.id == "string") {
           const [_TYPE_, _SMID_, _NODEID_] = pick.id.split("@");
           // *****[detailPopup]  资源详情点*****
           if (~["label", "billboard"].indexOf(_TYPE_)) {
+
+            // 定位图标
+            const geometry = window.featureMap[_NODEID_][_SMID_].geometry;
+            this.addLocationIcon(geometry);
+
             if (~_NODEID_.indexOf('项目') || _NODEID_ == '断点') {
 
-              // 画圆查询
-              this.drawProjectCircle({
-                ...window.featureMap[_NODEID_][_SMID_]
-              }, pick.id);
+              /**
+               * 画圆查询
+               * 空间查询未完善，暂时隐藏
+               */
+              // this.drawProjectCircle({
+              //   ...window.featureMap[_NODEID_][_SMID_]
+              // }, pick.id);
               
               this.$refs.projectDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
@@ -659,12 +667,39 @@ export default {
 
     // 创建datasource
     createEntityCollection() {
+      // 项目
       const ProjectCircleEntityCollection = new Cesium.CustomDataSource(
         "project"
       );
       window.earth.dataSources.add(ProjectCircleEntityCollection);
+
+      // 定位
+      const locationEntityCollection = new Cesium.CustomDataSource(
+        "location"
+      );
+      window.earth.dataSources.add(locationEntityCollection);
     },
 
+
+    // 添加定位图标
+    addLocationIcon(geometry, id) {
+      const datasource = window.earth.dataSources.getByName("location")[0];
+      datasource.entities.removeAll();
+
+      const { x, y } = geometry;
+      const locationEntity = new Cesium.Entity({
+        position: Cesium.Cartesian3.fromDegrees(x, y, 4),
+        billboard: {
+          image: `/static/images/map-ico/定位.png`,
+          width: 24,
+          height: 25,
+          scaleByDistance:new Cesium.NearFarScalar(3000, 1.7, 6000, 1.5),
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        },
+        id,
+      });
+      datasource.entities.add(locationEntity);
+    },
 
     // 画缓冲区
     async drawProjectCircle({ geometry }, id) {

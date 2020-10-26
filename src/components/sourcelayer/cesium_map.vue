@@ -61,16 +61,14 @@ export default {
       showSummary: 'total',
       sceneLayers: [],
       cameraHeight: 3000,
-      screenWidth: document.body.clientWidth,
-      screeHeight: document.body.clientHeight,
-      showLarge:null,
+      showLarge: window.showLarge,
     };
   },
   computed: {
     ...mapGetters("map", ["bufferQueryData"]),
   },
   created() {
-    this.getKuanGao();
+    // this.getKuanGao();
     //  点位信息 hash
     window.featureMap = {};
     //  点位icon hash
@@ -624,7 +622,7 @@ export default {
       handler.setInputAction((wheelment) => {
         this.cameraHeight = viewer.camera.positionCartographic.height;
         if (this.lvdaoShow) {
-          if (this.cameraHeight >= 3000) {
+          if (this.cameraHeight >= 4000) {
             this.tangheFG.show = true
             this.tanghe.show = false
             this.lvdaolayerThin.show = true
@@ -656,18 +654,6 @@ export default {
             ));
       } else {
         this.handdrawnlayer.show = false
-      }
-    },
-    getKuanGao(){
-      //4320*1280
-      console.log(this.screenWidth);
-      if(this.screenWidth>4000&this.screeHeight>1000){
-        window.showLarge = true
-        this.showLarge = window.showLarge
-        this.splitScreen()
-      }else {
-        window.showLarge = false
-        this.showLarge = window.showLarge
       }
     },
 
@@ -754,14 +740,6 @@ export default {
       });
       getFeatureService.processAsync(getFeatureParameter);
     },
-    splitScreen() {
-      console.log('splitScreen')
-      document.getElementById('header').style.width = '60%'
-      document.getElementById('content').style.width = '60%'
-      // document.getElementById('leftHide').style.display = 'none'
-      // document.getElementById('rightHide').style.display = 'none'
-      this.$bus.$emit("change-screen", { value: true });
-    }
   },
 };
 </script>

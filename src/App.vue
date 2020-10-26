@@ -30,9 +30,11 @@ export default {
       showRightScreen: false,
       showType: 'video',
       // showSrc: 'https://720yun.com/t/08vkOm1hrry?scene_id=57144125'
-      showSrc: 'static/video/温瑞塘河.mp4'
+      showSrc: 'static/video/温瑞塘河.mp4',
       // videoSrc: 'static/video/温瑞塘河/温瑞塘河.mp4',
       // qjSrc: ''
+      screenWidth: document.body.clientWidth,
+      screeHeight: document.body.clientHeight,
     };
   },
   computed: {
@@ -44,20 +46,54 @@ export default {
   watch: {
   },
   created() {
+    window.showLarge = false;
+    this.getKuanGao();
   },
   mounted() {
-    this.$bus.$off("change-screen");
-    this.$bus.$on("change-screen", ({ value }) => {
-      this.showRightScreen = value
-    })
-    this.$bus.$off("change-rightContent");
-    this.$bus.$on("change-rightContent", ({ type, value }) => {
-      console.log('gogogo')
-      this.showType = type
-      this.showSrc = value
-    })
+    this.initScreen()
+    this.eventRegsiter()
   },
   methods: {
+    getKuanGao(){
+      //4320*1280
+      console.log('screenWidth!!!!', this.screenWidth);
+      if(this.screenWidth>4000&this.screeHeight>1000){
+        window.showLarge = true
+      }else {
+        window.showLarge = false
+      }
+    },
+    initScreen() {
+      if (window.showLarge) {
+        document.getElementById('header').style.width = '60%'
+        document.getElementById('content').style.width = '60%'
+        this.showRightScreen = true
+      }
+    },
+    eventRegsiter() {
+      this.$bus.$off("change-screen");
+      this.$bus.$on("change-screen", ({ value }) => {
+        console.log('changeScreen!!!!!!!!', value)
+        if (value) {
+          console.log('aaaaaaaaaaaa')
+          document.getElementById('header').style.width = '60%'
+          document.getElementById('content').style.width = '60%'
+          // document.getElementById('leftHide').style.display = 'none'
+          // document.getElementById('rightHide').style.display = 'none'
+        } else {
+          console.log('bbbbbbbbbbbbbbb')
+          document.getElementById('header').style.width = '100%'
+          document.getElementById('content').style.width = '100%'
+        }
+        this.showRightScreen = value
+      })
+      this.$bus.$off("change-rightContent");
+      this.$bus.$on("change-rightContent", ({ type, value }) => {
+        console.log('gogogo')
+        this.showType = type
+        this.showSrc = value
+      })
+    }
   },
 };
 </script>
@@ -101,7 +137,7 @@ body {
   bottom: 0;
   left: 60%;
   width: 40%;
-  padding: 3%;
+  padding: 1%;
   background-color: #040D33;
   color: #fff;
   .player-wrapper {

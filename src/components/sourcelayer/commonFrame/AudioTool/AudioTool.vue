@@ -1,6 +1,6 @@
 <template>
   <div class="audioTool">
-    <audio :src="src"></audio>
+    <audio class="audio" :src="src" controls="controls"></audio>
     <div class="audioKit">
       <img
         class="control"
@@ -44,7 +44,7 @@ export default {
       status: false,
       progress: 30,
       soundValue: 0,
-      soundShow: false,
+      soundShow: true,
       soundMouseEnter: false,
     };
   },
@@ -87,6 +87,11 @@ export default {
 .audioTool {
   position: relative;
   width: 30vh;
+
+  .audio {
+    width: 30vh;
+    height: 6vh;
+  }
 
   .audioKit {
     display: flex;
@@ -147,10 +152,26 @@ export default {
 
     .soundBar {
       width: 100%;
-      height: 70%;
+      height: 65%;
       display: flex;
       justify-content: center;
 
+      /deep/ .el-slider__runway {
+        height: 100% !important;
+        background-color: #040d33;
+      }
+
+      /deep/ .el-slider__bar {
+        border-radius: 3px;
+        background-color: #5b8b9d;
+      }
+
+      /deep/ .el-slider__button {
+        width: 1vh;
+        height: 1vh;
+        border: none;
+        background-color: #14c0ff;
+      }
     }
   }
 }

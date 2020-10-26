@@ -98,9 +98,9 @@ export default {
         if (!window.earth || !this.mapLoaded || !Object.keys(this.$refs).length)
           return;
         //  *****[detailPopup]  详情查看点位*****
-        if (this.$refs.commonDetailPopup) {
-          this.$refs.commonDetailPopup.renderForceEntity();
-        }
+        // if (this.$refs.commonDetailPopup) {
+          // this.$refs.commonDetailPopup.renderForceEntity();
+        // }
         //  *****[bayonetList] 十二景名称点位*****
         if (this.$refs.SejPopup) {
           this.$refs.SejPopup.fixPopup();
@@ -140,16 +140,9 @@ export default {
                 position: pick.primitive.position,
               });
               this.$refs.commonDetailPopup.closePopup()
-            } else if(~_NODEID_.indexOf('视频') || _NODEID_ == '全景') {
-
+            } else {
               // 跳过查看详情步骤
               this.$refs.commonDetailPopup.goDetail({
-                ...window.featureMap[_NODEID_][_SMID_],
-                position: pick.primitive.position,
-              });
-              this.$refs.projectDetailPopup.closeInfo()
-            } else {
-              this.$refs.commonDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
               });
@@ -690,7 +683,7 @@ export default {
       const locationEntity = new Cesium.Entity({
         position: Cesium.Cartesian3.fromDegrees(x, y, 4),
         billboard: {
-          image: `/static/images/map-ico/定位.png`,
+          image: `/static/images/map-ico/定位.gif`,
           width: 24,
           height: 25,
           scaleByDistance:new Cesium.NearFarScalar(3000, 1.7, 6000, 1.5),

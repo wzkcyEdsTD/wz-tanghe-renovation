@@ -88,7 +88,7 @@
             <div class="sub-title">音频</div>
             <div class="video-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.YY">
               <audio class="audio" :src="`/static/audio/${forceEntity.type}/${this.forceEntity.attributes.YY}`" controls="controls"></audio>
-              <!-- <AudioTool /> -->
+              <!-- <AudioTool :src="`http://172.168.3.182:8090/static/audio/${forceEntity.type}/${this.forceEntity.attributes.YY}`" /> -->
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
@@ -380,6 +380,7 @@ export default {
           this.isShow = false;
         }
       } else {
+        this.forceEntity = entity;
         this.isShow = true;
       }      
     }

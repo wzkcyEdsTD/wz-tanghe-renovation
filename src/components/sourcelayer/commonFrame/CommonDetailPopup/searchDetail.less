@@ -10,103 +10,104 @@
   // background: linear-gradient(271deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   background-color: #040D33;
   color: #fff;
-  .close-btn {
-    cursor: pointer;
-    position: absolute;
-    right: 3vh;
-    top: 2vh;
-    width: 1.5vh;
-    height: 1.5vh;
-    .bg-image("./images/close-info");
-  }
-  .title-wrapper {
-    display: flex;
-    align-items: flex-end;
-    padding-left: 1vh;
-    .pre {
-      display: block;
-      width: 1vh;
-      height: 2.5vh;
-      background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
-      transform: skewX(-30deg);
-    }
-    .title {
-      display: block;
-      height: 3.6vh;
-      line-height: 3.6vh;
-      font-family: YouSheBiaoTiHei;
-      font-size: 3vh;
-      letter-spacing: 0vh;
-      color: #ffffff;
-      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
-      position: relative;
-      padding-left: 1.2vh;
-    }
-    .titleda{
-      display: block;
-      height: 35px;
-      line-height: 35px;
-      font-family: YouSheBiaoTiHei;
-      font-size: 34px;
-      letter-spacing: 0px;
-      color: #ffffff;
-      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
-      position: relative;
-      padding-left: 12px;
-    }
-    .titleda::before{
-      content: "";
+  .head{
+    .close-btn {
+      cursor: pointer;
       position: absolute;
-      bottom: 0;
-      left: 2px;
-      width: 300px;
-      height: 15px;
-      z-index: -1;
-      background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
-      transform: skewX(-30deg);
-    }
-    .title::before {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0.2vh;
-      width: 30vh;
+      right: 3vh;
+      top: 2vh;
+      width: 1.5vh;
       height: 1.5vh;
-      z-index: -1;
-      background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
-      transform: skewX(-30deg);
+      .bg-image("./images/close-info");
     }
-    .desc {
-      margin-left: 4px;
-      font-size: 11px;
-      font-family: PingFang;
-      color: #fff;
-      opacity: .8;
-    }
-  }
-  .zhouBianFlex {
-    display: flex;
-    padding-top: 1.5vh;
-    padding-left: 2vh;
-    .dingwei {
-      width: 1vh;
-      height: 1.5vh;
-    }
-    .text{
-      font-family: "PingFang SC";
-      font-size: 1.5vh;
-      color: #16E8E8;
-      padding-right: 3vh;
-    }
-    .weizhi{
+    .title-wrapper {
+      display: flex;
+      align-items: flex-end;
       padding-left: 1vh;
-      font-family: "PingFang SC";
-      font-size: 1.5vh;
-      color: #16E8E8;
-      flex: none;
+      .pre {
+        display: block;
+        width: 1vh;
+        height: 2.5vh;
+        background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
+        transform: skewX(-30deg);
+      }
+      .title {
+        display: block;
+        height: 3.6vh;
+        line-height: 3.6vh;
+        font-family: YouSheBiaoTiHei;
+        font-size: 3vh;
+        letter-spacing: 0vh;
+        color: #ffffff;
+        text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+        position: relative;
+        padding-left: 1.2vh;
+      }
+      .titleda{
+        display: block;
+        height: 35px;
+        line-height: 35px;
+        font-family: YouSheBiaoTiHei;
+        font-size: 34px;
+        letter-spacing: 0px;
+        color: #ffffff;
+        text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+        position: relative;
+        padding-left: 12px;
+      }
+      .titleda::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 2px;
+        width: 300px;
+        height: 15px;
+        z-index: -1;
+        background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+        transform: skewX(-30deg);
+      }
+      .title::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0.2vh;
+        width: 30vh;
+        height: 1.5vh;
+        z-index: -1;
+        background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+        transform: skewX(-30deg);
+      }
+      .desc {
+        margin-left: 4px;
+        font-size: 11px;
+        font-family: PingFang;
+        color: #fff;
+        opacity: .8;
+      }
+    }
+    .zhouBianFlex {
+      display: flex;
+      padding-top: 1.5vh;
+      padding-left: 2vh;
+      .dingwei {
+        width: 1vh;
+        height: 1.5vh;
+      }
+      .text{
+        font-family: "PingFang SC";
+        font-size: 1.5vh;
+        color: #16E8E8;
+        padding-right: 3vh;
+      }
+      .weizhi{
+        padding-left: 1vh;
+        font-family: "PingFang SC";
+        font-size: 1.5vh;
+        color: #16E8E8;
+        flex: none;
+      }
     }
   }
-
   .result{
     .fjxm{
       display: flex;
@@ -244,6 +245,4 @@
       //}
     }
   }
-
-
 }

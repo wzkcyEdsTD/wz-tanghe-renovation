@@ -1,14 +1,16 @@
 <template>
   <div class="searchResult" v-show="showZB">
-    <span class="close-btn" @click="closeSearch"></span>
-    <div class="title-wrapper">
-      <span class="pre"></span>
-      <span class="title">周边搜索</span>
-    </div>
-    <div class="zhouBianFlex">
-      <img src="./images/定位icon.png" class="dingwei">
-      <div class="weizhi">当前位置：</div>
-      <p class="text">{{name}}</p>
+    <div class="head">
+      <span class="close-btn" @click="closeSearch"></span>
+      <div class="title-wrapper">
+        <span class="pre"></span>
+        <span class="title">周边搜索</span>
+      </div>
+      <div class="zhouBianFlex">
+        <img src="./images/定位icon.png" class="dingwei">
+        <div class="weizhi">当前位置：</div>
+        <p class="text">{{name}}</p>
+      </div>
     </div>
     <div class="result">
       <div class="fjxm">

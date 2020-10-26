@@ -63,14 +63,14 @@ export default {
       cameraHeight: 3000,
       screenWidth: document.body.clientWidth,
       screeHeight: document.body.clientHeight,
-      showLarge:null,
+      showLarge: window.showLarge,
     };
   },
   computed: {
     ...mapGetters("map", ["medicalListWithGeometry"]),
   },
   created() {
-    this.getKuanGao();
+    // this.getKuanGao();
     //  点位信息 hash
     window.featureMap = {};
     //  点位icon hash
@@ -641,26 +641,6 @@ export default {
         this.handdrawnlayer.show = false
       }
     },
-    getKuanGao(){
-      //4320*1280
-      console.log(this.screenWidth);
-      if(this.screenWidth>4000&this.screeHeight>1000){
-        window.showLarge = true
-        this.showLarge = window.showLarge
-        this.splitScreen()
-      }else {
-        window.showLarge = false
-        this.showLarge = window.showLarge
-      }
-    },
-    splitScreen() {
-      console.log('splitScreen')
-      document.getElementById('header').style.width = '60%'
-      document.getElementById('content').style.width = '60%'
-      // document.getElementById('leftHide').style.display = 'none'
-      // document.getElementById('rightHide').style.display = 'none'
-      this.$bus.$emit("change-screen", { value: true });
-    }
   },
 };
 </script>

@@ -89,7 +89,6 @@ const JG_INFO = [
     },
   ] },
   // { label: "公园兴趣点", dataset: "公园兴趣点" },
-
   { label: "古树名木", dataset: "tree" },
   { label: "公园配套设施", dataset: "park_facilities" },
 ]
@@ -174,7 +173,7 @@ export const CESIUM_TREE_OPTION = [
       {
         id: "绿道",
         label: "绿道",
-        type: "cesium_lvdao",
+        switchLayer: 'switch-lvdao'
       },
       {
         id: "桥梁",
@@ -306,17 +305,17 @@ export const CESIUM_TREE_OPTION = [
       {
         id: "区县",
         label: "区县",
-        type: "cesium_xzqx",
+        switchLayer: "switch-xzjxqx"
       },
       {
         id: "街道",
         label: "街道",
-        type: "cesium_xzjd",
+        switchLayer: "switch-xzjxjd"
       },
       {
         id: "塘河范围面",
         label: "塘河范围面",
-        type: "cesium_thfwm",
+        switchLayer: "switch-thfwm"
       },
     ]
   },

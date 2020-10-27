@@ -77,27 +77,23 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["sourceMap", "currentSource"]),
-    drawData() {
-      return this.$store.state.map.sourceMap
+    drawScouce() {
+      return this.$store.state.map.currentSource
     }
   },
   mounted() {
     console.log('mounted???', this.currentSource)
-    this.eventRegsiter()
-    // this.drawPie()
-    // this.drawBar()
-    // this.searchFilter()
   },
   created() {
     // this.getKuanGao();
   },
-  // watch:{
-  //   'drawData'(val) {
-  //     this.drawPie()
-  //     this.drawBar()
-  //     this.searchFilter()
-  //   }
-  // },
+  watch:{
+    'drawScouce'(val) {
+      this.drawPie()
+      this.drawBar()
+      this.searchFilter()
+    }
+  },
   methods: {
     // getKuanGao(){
     //   //4320*1280
@@ -111,15 +107,6 @@ export default {
     //     this.showLarge = false;
     //   };
     // },
-    eventRegsiter() {
-      this.$bus.$off("source-change");
-      this.$bus.$on("source-change", ({value}) => {
-        // this.currentSource = value
-        this.searchFilter()
-        this.drawPie()
-        this.drawBar()
-      });
-    },
     drawPie() {
       // let e = this.screeHeight;
       // e = (e/1000*12);
@@ -447,6 +434,9 @@ export default {
           roll: 0.0,
         },
         maximumHeight: 450,
+        complete: () => {
+          this.$bus.$emit('clickFly');
+        }
       });
     }
   },

@@ -63,7 +63,7 @@ export default {
       isTotalTarget: true,
       showSummary: 'total',
       sceneLayers: [],
-      cameraHeight: 3000,
+      cameraHeight: 5000,
       showLarge: window.showLarge,
     };
   },
@@ -71,7 +71,6 @@ export default {
     ...mapGetters("map", ["bufferQueryData"]),
   },
   created() {
-    // this.getKuanGao();
     //  点位信息 hash
     window.featureMap = {};
     //  点位icon hash
@@ -169,7 +168,6 @@ export default {
             }
           }
         }
-        // this.$refs.layerhub.showHub = false
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     },
     eventRegsiter() {
@@ -293,7 +291,7 @@ export default {
       this.$bus.$on("switch-lvdao", ({ value }) => {
         this.lvdaoShow = value
         if (value) {
-          if (this.cameraHeight >= 3000) {
+          if (this.cameraHeight >= 5000) {
             this.lvdaolayerThin.show = true
             this.lvdaolayerBold.show = false
           } else {
@@ -311,15 +309,6 @@ export default {
         this.thfwmlayer.show = value
       })
 
-      // this.$bus.$off("switch-thyx");
-      // this.$bus.$on("switch-thyx", ({ value }) => {
-      //   const layer = window.earth.scene.layers.find('十二景@th_zy#1_1')
-      //   layer && (layer.visible = value)
-      //   this.sceneLayers.forEach(item => {
-      //     item.show = value
-      //   })
-      // })
-
       this.$bus.$off("switch-xzjxqx");
       this.$bus.$on("switch-xzjxqx", ({ value }) => {
         this.xzjxqxlayer.show = value
@@ -328,6 +317,14 @@ export default {
       this.$bus.$off("switch-xzjxjd");
       this.$bus.$on("switch-xzjxjd", ({ value }) => {
         this.xzjxjdlayer.show = value
+      })
+
+      this.$bus.$off("clickFly");
+      this.$bus.$on("clickFly", () => {
+        this.tangheFG.show = false
+        this.tanghe.show = true
+        this.lvdaolayerThin.show = false
+        this.lvdaolayerBold.show = true
       })
     },
     init3DMap(fn) {
@@ -373,18 +370,6 @@ export default {
         })
       ); */
 
-
-      // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-      //     url: "http://t0.tianditu.gov.cn/vec_w/wmts?tk=5c8b939368cb51f494b9472cd6ad74cc&service=WMTS&request=GetTile&version=1.0.0&style=default&tilematrixSet=w&format=tiles&width=256&height=256&layer=vec&tilematrix={TileMatrix}&tilerow={TileRow}&tilecol={TileCol}",
-      //     layer: "vec",
-      //     style: "default",
-      //     format: "tiles",
-      //     tileMatrixSetID: "w",
-      //     // credit: new Cesium.Credit("天地图全球影像服务"),
-      //     subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-      //     maximumLevel: 18,
-      //   })
-      // )
       // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
       //     url: "http://t0.tianditu.gov.cn/cva_w/wmts?tk=5c8b939368cb51f494b9472cd6ad74cc&service=WMTS&request=GetTile&version=1.0.0&style=default&tilematrixSet=w&format=tiles&width=256&height=256&layer=cva&tilematrix={TileMatrix}&tilerow={TileRow}&tilecol={TileCol}",
       //     layer: "cva",
@@ -619,8 +604,6 @@ export default {
       const viewer = window.earth;
       const id = ["ruian","tangxia","liao","chshan","wenzhoushiqu","xianyan"];
       const idOther = ["wrth","oj","fyj"];
-      // const temp = !this.biaoshi;
-      // console.log(temp);
       try {
         id.forEach(function (element) {
           viewer.entities.getById(element).show = value;
@@ -630,8 +613,6 @@ export default {
         idOther.forEach(function (element) {
           viewer.entities.getById(element).show=value;
         });
-        // this.biaoshi = temp;
-        // console.log(this.biaoshi);
       } catch (e) {
         console.log(e);
       }
@@ -642,7 +623,7 @@ export default {
       handler.setInputAction((wheelment) => {
         this.cameraHeight = viewer.camera.positionCartographic.height;
         if (this.lvdaoShow) {
-          if (this.cameraHeight >= 4000) {
+          if (this.cameraHeight >= 5000) {
             this.tangheFG.show = true
             this.tanghe.show = false
             this.lvdaolayerThin.show = true
@@ -654,13 +635,10 @@ export default {
             this.lvdaolayerBold.show = true
           }
         }
-        // self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.WHEEL);
       handler.setInputAction(function(event) {
-        // self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
       handler.setInputAction(function(event) {
-        // self.removeAll(false);
       }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
     },
     switchHanddrawn(value) {

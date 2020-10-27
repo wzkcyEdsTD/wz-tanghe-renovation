@@ -80,7 +80,7 @@ export default {
     mouseLeaveHandle(event) {
       setTimeout(() => {
         this.soundShow = this.soundMouseEnter;
-      }, 2000);
+      }, 1000);
     },
 
     // 音量组件悬停

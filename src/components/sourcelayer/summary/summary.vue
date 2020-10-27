@@ -39,13 +39,11 @@
 
 <script>
 import ProjectSummary from "./projectSummary/projectSummary";
-import SightSummary from "./sightSummary/sightSummary";
 import Right from "./rightSummary/right"
 import RightSummary from "./rightSummary/rightSummary"
 export default {
   components: {
     ProjectSummary,
-    SightSummary,
     Right,
     RightSummary
   },

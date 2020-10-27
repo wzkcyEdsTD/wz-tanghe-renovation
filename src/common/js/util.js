@@ -14,7 +14,7 @@ export function getDate() {
   var m = myDate.getMinutes() // 获取当前分钟数(0-59)
   var s = myDate.getSeconds()
   // 获取当前时间
-  return year + '-' + conver(month) + '-' + conver(date) + ' ' + conver(h) + ':' + conver(m) + ':' + conver(s)
+  return year + '年' + conver(month) + '月' + conver(date) + '日data' + conver(h) + ':' + conver(m) + ':' + conver(s)
 }
 
 function conver(s) {

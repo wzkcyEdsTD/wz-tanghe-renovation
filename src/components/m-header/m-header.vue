@@ -6,11 +6,19 @@
       <img class="shadow" src="./images/shadow.png" alt="">
     </div>
     <div class="logoGroup">
-      <img src="./images/现代集团logo.png" >
-      <img src="./images/温州设计集团logo.png" >
+      <div class="xd">
+        <img src="./images/现代集团logo.png" class="xdlogo">
+        <span class="logoText">现代集团</span>
+      </div>
+      <div class="sj">
+        <img src="./images/设计集团logo.png" class="sjlogo">
+        <span class="logoText">设计集团</span>
+      </div>
+
     </div>
     <div class="info">
-      <span class="time">{{date}}</span>
+      <p class="time">{{date}}</p>
+      <p class="time">{{times}}</p>
     </div>
     <div class="route-wrapper">
       <div class="route-item" :class="{active: currentPage=='sourcelayer'}" @click="goRoute('sourcelayer')">
@@ -28,15 +36,21 @@ export default {
   data() {
     return {
       date: '',
+      times:"",
       currentPage: 'sourcelayer',
       showLarge: window.showLarge,
     };
   },
   mounted() {
     console.log('currentPage!!!!!', this.currentPage, this.showLarge)
-    this.date = getDate()
+    const temp = getDate();
+    this.date = temp.split("data")[0];
+    this.times = temp.split("data")[1];
+    console.log("时间",this.data,this.times);
     setInterval(() => {
-      this.date = getDate()
+      const temp = getDate();
+      this.date = temp.split("data")[0];
+      this.times = temp.split("data")[1];
     }, 1000)
   },
   methods: {
@@ -101,20 +115,55 @@ export default {
     top: 0;
     height: 60%;
     z-index: 2;
-
-    img {
-      height: 100%;
+    .xd{
+      position: absolute;
+      top: 0.5vh;
+      left: 2vh;
+      .xdlogo{
+        width: 3.5vh;
+        height: 3.2vh;
+      }
+      .logoText{
+        color: #ffffff;
+        font-family: DIN-Regular;
+        font-size: 2vh;
+        position: absolute;
+        top: 0.4vh;
+        width: 9vh;
+      }
     }
+    .sj{
+      position: absolute;
+      top: 0.8vh;
+      left: 16vh;
+      .sjlogo{
+        width: 2.5vh;
+        height: 2.5vh;
+      }
+      .logoText{
+        color: #ffffff;
+        font-family: DIN-Regular;
+        font-size: 2vh;
+        position: absolute;
+        width: 8vh;
+        left: 3.5vh;
+      }
+    }
+
+
   }
 
   .info {
     position: absolute;
-    bottom: 10px;
-    left: 50%;
+    top: 0.3vh;
+    right: 1vh;
     transform: translateX(-50%);
     color: #fff;
-    font-size: 1vh;
-    font-family: DIN;
+    font-size: 1.5vh;
+    text-align: left;
+    line-height: 1.8vh;
+    z-index: 3;
+    font-family: DIN-Regular;
   }
   .route-wrapper {
     z-index: 3;

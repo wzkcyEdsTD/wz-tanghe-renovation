@@ -15,6 +15,7 @@ import "./font/Digital-7Mono.css";
 import "./font/YouSheBiaoTiHei.css";
 import "./font/PingFang.css";
 import "./font/DIN.css";
+import "./font/DIN-Regular.css"
 import * as filters from "./filters"; // 全局过滤器
 import ElementUI from "element-ui";
 import VueBus from "vue-bus";

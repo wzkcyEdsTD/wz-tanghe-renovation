@@ -3,397 +3,389 @@
     <transition name="fade" v-if="forceEntity.attributes">
       <!-- <div class="project-detail-popup" :style="{width:showLarge?'83vh':'50vh'}" v-show="isShow"> -->
       <div class="project-detail-popup" v-show="isShow">
-        <div class="scroll">
-          <span class="close-btn" @click="closeInfo"></span>
+        <span class="close-btn" @click="closeInfo"></span>
+        <div class="title-wrapper">
+          <span class="pre"></span>
+          <span class="title">{{ forceEntity.attributes.NAME }}</span>
+        </div>
+        <div class="content-info">
+          <div class="top">
+            <button class="top-item" :disabled="!currentData.qj" :class="{'active':currentShow=='qj','disabled':!currentData.qj}" @click="currentShow='qj'">全景</button>
+            <button class="top-item" :disabled="!currentData.sp" :class="{'active':currentShow=='sp','disabled':!currentData.sp}" @click="currentShow='sp'">视频</button>
+            <button class="top-item" :disabled="!currentData.photo" :class="{'active':currentShow=='photo','disabled':!currentData.photo}" @click="currentShow='photo'">图片</button>
+          </div>
+          <div class="bottom">
+            <div class="left">
+              <ul class="date-list">
+                <li class="date-item" :class="{'active': currentIndex==index}" v-for="(item,index) in finalList" :key="index" @click="currentIndex=index">
+                  <img class="icon" src="./images/time-icon.png" />
+                  <span>{{`${item.date.substring(0,4)}-${item.date.substring(4,6)}-${item.date.substring(6,8)}`}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="right">
+              <div class="swiper-buttons swiper-button-left"></div>
+              <swiper
+                ref="mySwiper"
+                class="swiper-wrapper"
+                :options="swiperOptions"
+                v-show="currentShow=='qj'"
+              >
+                <swiper-slide v-for="(item,i) in currentData.qjslt" :key="i" class="swiper-item">
+                  <!-- <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" :style="{height: showLarge?'35vh':'20vh'}" @click="openQJ(i)"> -->
+                  <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" @click="openQJ(i)">
+                </swiper-slide>
+                <swiper-slide class="swiper-item" v-if="!currentData.qjslt">
+                  <div class="no-tip">暂无数据</div>
+                </swiper-slide>
+                <div class="swiper-scrollbar" slot="scrollbar"></div>
+              </swiper>
+              <swiper
+                ref="mySwiper"
+                class="swiper-wrapper"
+                :options="swiperOptions"
+                v-show="currentShow=='sp'"
+              >
+                <swiper-slide v-for="(item,i) in currentData.sp" :key="i" class="swiper-item">
+                  <!-- <video ref="video" style="width:100%;" :style="{height: showLarge?'35vh':'20vh'}" :src="`/static/video/${item}`"
+                    controls="controls" autoplay></video> -->
+                  <video ref="video" style="width:100%;" :src="`/static/video/${item}`"
+                          controls="controls" muted></video>
+                </swiper-slide>
+                <!-- <swiper-slide class="swiper-item">
+                  <video ref="video1" style="width:100%;" src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218114723HDu3hhxqIT.mp4"
+                    controls="controls" muted="true"></video>
+                </swiper-slide>
+                <swiper-slide class="swiper-item">
+                  <video ref="video2" style="width:100%;" src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218093206z8V1JuPlpe.mp4"
+                    controls="controls" muted="true"></video>
+                </swiper-slide>
+                <swiper-slide class="swiper-item">
+                  <video ref="video3" style="width:100%;" src="https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4"
+                    controls="controls" muted="true"></video>
+                </swiper-slide> -->
+                <swiper-slide class="swiper-item" v-if="!currentData.sp">
+                  <div class="no-tip">暂无数据</div>
+                </swiper-slide>
+                <div class="swiper-scrollbar" slot="scrollbar"></div>
+              </swiper>
+              <swiper
+                ref="mySwiper"
+                class="swiper-wrapper"
+                :options="swiperOptions"
+                v-show="currentShow=='photo'"
+              >
+                <swiper-slide v-for="(item,i) in currentData.photo" :key="i" class="swiper-item">
+                  <!-- <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain" :style="{height: showLarge?'35vh':'20vh'}"
+                    @click="onPreview(currentData.photo, i)"></el-image> -->
+                  <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain"
+                            @click="onPreview(currentData.photo, i)"></el-image>
+                </swiper-slide>
+                <swiper-slide class="swiper-item" v-if="!currentData.photo">
+                  <div class="no-tip">暂无数据</div>
+                </swiper-slide>
+                <div class="swiper-scrollbar" slot="scrollbar"></div>
+              </swiper>
+              <div class="swiper-buttons swiper-button-right"></div>
+            </div>
+          </div>
+        </div>
+        <div class="base-info">
           <div class="title-wrapper">
-            <span class="pre"></span>
-            <span class="title">{{ forceEntity.attributes.NAME }}</span>
+            <span class="title">信息详情</span>
           </div>
-          <div class="content-info">
-            <div class="top">
-              <button class="top-item" :disabled="!currentData.qj" :class="{'active':currentShow=='qj','disabled':!currentData.qj}" @click="currentShow='qj'">全景</button>
-              <button class="top-item" :disabled="!currentData.sp" :class="{'active':currentShow=='sp','disabled':!currentData.sp}" @click="currentShow='sp'">视频</button>
-              <button class="top-item" :disabled="!currentData.photo" :class="{'active':currentShow=='photo','disabled':!currentData.photo}" @click="currentShow='photo'">图片</button>
-            </div>
-            <div class="bottom">
-              <div class="left">
-                <ul class="date-list">
-                  <li class="date-item" :class="{'active': currentIndex==index}" v-for="(item,index) in finalList" :key="index" @click="currentIndex=index">
-                    <img class="icon" src="./images/time-icon.png" />
-                    <span>{{`${item.date.substring(0,4)}-${item.date.substring(4,6)}-${item.date.substring(6,8)}`}}</span>
-                  </li>
-                </ul>
+          <div class="base-content">
+            <div class="base-item">
+              <div class="title">
+                <img src="./images/name-icon.png" />
+                <span>名称：</span>
               </div>
-              <div class="right">
-                <div class="swiper-buttons swiper-button-left"></div>
-                <swiper
-                  ref="mySwiper"
-                  class="swiper-wrapper"
-                  :options="swiperOptions"
-                  v-show="currentShow=='qj'"
-                >
-                  <swiper-slide v-for="(item,i) in currentData.qjslt" :key="i" class="swiper-item">
-                    <!-- <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" :style="{height: showLarge?'35vh':'20vh'}" @click="openQJ(i)"> -->
-                    <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" @click="openQJ(i)">
-                  </swiper-slide>
-                  <swiper-slide class="swiper-item" v-if="!currentData.qjslt">
-                    <div class="no-tip">暂无数据</div>
-                  </swiper-slide>
-                  <div class="swiper-scrollbar" slot="scrollbar"></div>
-                </swiper>
-                <swiper
-                  ref="mySwiper"
-                  class="swiper-wrapper"
-                  :options="swiperOptions"
-                  v-show="currentShow=='sp'"
-                >
-                  <swiper-slide v-for="(item,i) in currentData.sp" :key="i" class="swiper-item">
-                    <!-- <video ref="video" style="width:100%;" :style="{height: showLarge?'35vh':'20vh'}" :src="`/static/video/${item}`"
-                      controls="controls" autoplay></video> -->
-                    <video ref="video" style="width:100%;" :src="`/static/video/${item}`"
-                           controls="controls" muted></video>
-                  </swiper-slide>
-                  <!-- <swiper-slide class="swiper-item">
-                    <video ref="video1" style="width:100%;" src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218114723HDu3hhxqIT.mp4"
-                      controls="controls" muted="true"></video>
-                  </swiper-slide>
-                  <swiper-slide class="swiper-item">
-                    <video ref="video2" style="width:100%;" src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218093206z8V1JuPlpe.mp4"
-                      controls="controls" muted="true"></video>
-                  </swiper-slide>
-                  <swiper-slide class="swiper-item">
-                    <video ref="video3" style="width:100%;" src="https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4"
-                      controls="controls" muted="true"></video>
-                  </swiper-slide> -->
-                  <swiper-slide class="swiper-item" v-if="!currentData.sp">
-                    <div class="no-tip">暂无数据</div>
-                  </swiper-slide>
-                  <div class="swiper-scrollbar" slot="scrollbar"></div>
-                </swiper>
-                <swiper
-                  ref="mySwiper"
-                  class="swiper-wrapper"
-                  :options="swiperOptions"
-                  v-show="currentShow=='photo'"
-                >
-                  <swiper-slide v-for="(item,i) in currentData.photo" :key="i" class="swiper-item">
-                    <!-- <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain" :style="{height: showLarge?'35vh':'20vh'}"
-                      @click="onPreview(currentData.photo, i)"></el-image> -->
-                    <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain"
-                              @click="onPreview(currentData.photo, i)"></el-image>
-                  </swiper-slide>
-                  <swiper-slide class="swiper-item" v-if="!currentData.photo">
-                    <div class="no-tip">暂无数据</div>
-                  </swiper-slide>
-                  <div class="swiper-scrollbar" slot="scrollbar"></div>
-                </swiper>
-                <div class="swiper-buttons swiper-button-right"></div>
+              <div class="value">{{ forceEntity.attributes.NAME }}</div>
+            </div>
+            <div class="inline bg">
+              <div class="base-item" v-if="forceEntity.type == '项目'">
+                <div class="title">
+                  <img src="./images/type-icon.png" />
+                  <span>类型：</span>
+                </div>
+                <div class="value">{{ forceEntity.attributes.FUNDTYPE }}</div>
               </div>
-            </div>
-          </div>
-          <div class="base-info">
-            <div class="title-wrapper">
-              <span class="title">信息详情</span>
-            </div>
-            <div class="base-content">
+              <div class="base-item" v-if="forceEntity.type == '断点'">
+                <div class="title">
+                  <img src="./images/length-icon.png" />
+                  <span>断点长度：</span>
+                </div>
+                <div class="value">{{ forceEntity.attributes.LENGTH }}米</div>
+              </div>
               <div class="base-item">
                 <div class="title">
-                  <img src="./images/name-icon.png" />
-                  <span>名称：</span>
-                </div>
-                <div class="value">{{ forceEntity.attributes.NAME }}</div>
-              </div>
-              <div class="inline bg">
-                <div class="base-item" v-if="forceEntity.type == '项目'">
-                  <div class="title">
-                    <img src="./images/type-icon.png" />
-                    <span>类型：</span>
-                  </div>
-                  <div class="value">{{ forceEntity.attributes.FUNDTYPE }}</div>
-                </div>
-                <div class="base-item" v-if="forceEntity.type == '断点'">
-                  <div class="title">
-                    <img src="./images/length-icon.png" />
-                    <span>断点长度：</span>
-                  </div>
-                  <div class="value">{{ forceEntity.attributes.LENGTH }}米</div>
-                </div>
-                <div class="base-item">
-                  <div class="title">
-                    <img src="./images/count-icon.png" />
-                    <span>总投资：</span>
-                  </div>
-                  <div class="value">
-                    {{
-                    forceEntity.attributes.TOTALAMOUNT
-                    ? `${forceEntity.attributes.TOTALAMOUNT}万元`
-                    : "无"
-                    }}
-                  </div>
-                </div>
-              </div>
-              <div class="inline">
-                <div class="base-item">
-                  <div class="title">
-                    <img src="./images/unit-icon.png" />
-                    <span>责任单位：</span>
-                  </div>
-                  <div class="value">
-                    {{
-                    forceEntity.attributes.ZR_DEPTID ||
-                    forceEntity.attributes.ZRDW
-                    }}
-                  </div>
-                </div>
-                <div class="base-item">
-                  <div class="title">
-                    <img src="./images/street-icon.png" />
-                    <span>所属街道：</span>
-                  </div>
-                  <div class="value">{{ forceEntity.attributes.STREET }}</div>
-                </div>
-              </div>
-              <div class="base-item bg">
-                <div class="title">
-                  <img src="./images/question-icon.png" />
-                  <span>问题：</span>
+                  <img src="./images/count-icon.png" />
+                  <span>总投资：</span>
                 </div>
                 <div class="value">
                   {{
-                  forceEntity.attributes.CZWT ? forceEntity.attributes.CZWT : "无"
+                  forceEntity.attributes.TOTALAMOUNT
+                  ? `${forceEntity.attributes.TOTALAMOUNT}万元`
+                  : "无"
+                  }}
+                </div>
+              </div>
+            </div>
+            <div class="inline">
+              <div class="base-item">
+                <div class="title">
+                  <img src="./images/unit-icon.png" />
+                  <span>责任单位：</span>
+                </div>
+                <div class="value">
+                  {{
+                  forceEntity.attributes.ZR_DEPTID ||
+                  forceEntity.attributes.ZRDW
                   }}
                 </div>
               </div>
               <div class="base-item">
                 <div class="title">
-                  <img src="./images/plan-icon.png" />
-                  <span>计划时间：</span>
+                  <img src="./images/street-icon.png" />
+                  <span>所属街道：</span>
                 </div>
-                <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '项目'"> -->
-                <div class="time-line-wrapper" v-if="forceEntity.type == '项目'">
-                  <div class="time-line">
-                    <div class="line-item blue"></div>
-                    <div class="line-item yellow"></div>
-                    <div class="line-item pink"></div>
-                    <div class="line-item red"></div>
-                    <div class="line-item green"></div>
-                    <div v-if="forceEntity.attributes.CURRENT_STATE == '前期研究'">
-                      <div class="pop pop1">前期研究</div>
-                      <div class="circle circle1"></div>
-                    </div>
-                    <div v-if="forceEntity.attributes.CURRENT_STATE == '前期(滞后)'">
-                      <div class="pop pop2">前期滞后</div>
-                      <div class="circle circle2"></div>
-                    </div>
-                    <div v-if="forceEntity.attributes.CURRENT_STATE == '在建'">
-                      <div class="pop pop3">正在建设</div>
-                      <div class="circle circle3"></div>
-                    </div>
-                    <div v-if="forceEntity.attributes.CURRENT_STATE == '在建(滞后)'">
-                      <div class="pop pop4">在建滞后</div>
-                      <div class="circle circle4"></div>
-                    </div>
-                    <div v-if="forceEntity.attributes.CURRENT_STATE == '完工'">
-                      <div class="pop pop5">完工建设</div>
-                      <div class="circle circle5"></div>
-                    </div>
-                  </div>
-                  <div class="time-desc">
-                    <div class="start-time">
-                      计划开工时间：{{ forceEntity.attributes.CONSYEARB }}
-                    </div>
-                    <div class="end-time">
-                      计划建成时间：{{ forceEntity.attributes.CONSYEARE }}
-                    </div>
-                  </div>
+                <div class="value">{{ forceEntity.attributes.STREET }}</div>
+              </div>
+            </div>
+            <div class="base-item bg">
+              <div class="title">
+                <img src="./images/question-icon.png" />
+                <span>问题：</span>
+              </div>
+              <div class="value">
+                {{
+                forceEntity.attributes.CZWT ? forceEntity.attributes.CZWT : "无"
+                }}
+              </div>
+            </div>
+            <div class="base-item">
+              <div class="title">
+                <img src="./images/plan-icon.png" />
+                <span>计划时间：</span>
+              </div>
+            </div>
+            <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '项目'"> -->
+            <div class="time-line-wrapper" v-if="forceEntity.type == '项目'">
+              <div class="time-line">
+                <div class="line-item blue"></div>
+                <div class="line-item yellow"></div>
+                <div class="line-item pink"></div>
+                <div class="line-item red"></div>
+                <div class="line-item green"></div>
+                <div v-if="forceEntity.attributes.CURRENT_STATE == '前期研究'">
+                  <div class="pop pop1">前期研究</div>
+                  <div class="circle circle1"></div>
                 </div>
-                <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '断点'"> -->
-                <div class="time-line-wrapper" v-if="forceEntity.type == '断点'">
-                  <div class="time-line">
-                    <div
-                      class="line-item green"
-                      :style="{
-                    flex:
-                      forceEntity.attributes.JHGTSJ.substring(0, 4) > 2021
-                        ? 0.5
-                        : 3,
-                  }"
-                    >
-                      <div class="line-item light-blue"></div>
-                      <div v-if="forceEntity.attributes.JHGTSJ.substring(0, 4) > 2021">
-                        <div class="pop pop6">{{date}}</div>
-                        <div class="circle circle6"></div>
-                      </div>
-                      <div v-else>
-                        <div class="pop pop7">{{date}}</div>
-                        <div class="circle circle7"></div>
-                      </div>
-                    </div>
-                    <div class="time-desc flex-end">
-                      <div class="end-time">
-                        计划贯通时间：{{ forceEntity.attributes.JHGTSJ }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="base-item">
-                    <div class="title">
-                      <img src="./images/remark-icon.png" />
-                      <span>备注：</span>
-                    </div>
-                    <div class="value">
-                      {{ forceEntity.attributes.BZ ? forceEntity.attributes.BZ : "无" }}
-                    </div>
-                  </div>
+                <div v-if="forceEntity.attributes.CURRENT_STATE == '前期(滞后)'">
+                  <div class="pop pop2">前期滞后</div>
+                  <div class="circle circle2"></div>
                 </div>
+                <div v-if="forceEntity.attributes.CURRENT_STATE == '在建'">
+                  <div class="pop pop3">正在建设</div>
+                  <div class="circle circle3"></div>
+                </div>
+                <div v-if="forceEntity.attributes.CURRENT_STATE == '在建(滞后)'">
+                  <div class="pop pop4">在建滞后</div>
+                  <div class="circle circle4"></div>
+                </div>
+                <div v-if="forceEntity.attributes.CURRENT_STATE == '完工'">
+                  <div class="pop pop5">完工建设</div>
+                  <div class="circle circle5"></div>
+                </div>
+              </div>
+              <div class="time-desc">
+                <div class="start-time">
+                  计划开工时间：{{ forceEntity.attributes.CONSYEARB }}
+                </div>
+                <div class="end-time">
+                  计划建成时间：{{ forceEntity.attributes.CONSYEARE }}
+                </div>
+              </div>
+            </div>
+            <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '断点'"> -->
+            <div class="time-line-wrapper" v-if="forceEntity.type == '断点'">
+              <div class="time-line">
+                <div class="line-item green"
+                  :style="{flex:forceEntity.attributes.JHGTSJ.substring(0, 4) > 2021? 0.5: 3,}"
+                >
+                </div>
+                <div class="line-item light-blue"></div>
+                <div v-if="forceEntity.attributes.JHGTSJ.substring(0, 4) > 2021">
+                  <div class="pop pop6">{{date}}</div>
+                  <div class="circle circle6"></div>
+                </div>
+                <div v-else>
+                  <div class="pop pop7">{{date}}</div>
+                  <div class="circle circle7"></div>
+                </div>
+              </div>
+              <div class="time-desc flex-end">
+                <div class="end-time">
+                  计划贯通时间：{{ forceEntity.attributes.JHGTSJ }}
+                </div>
+              </div>
+            </div>
+            <div class="base-item">
+              <div class="title">
+                <img src="./images/remark-icon.png" />
+                <span>备注：</span>
+              </div>
+              <div class="value">
+                {{ forceEntity.attributes.BZ ? forceEntity.attributes.BZ : "无" }}
               </div>
             </div>
           </div>
-          <div class="perimeterSearch">
-            <div class="fjxm">
-              <div class="tp">
-                <img src="./images/时间框.png" class="kuang">
-                <span class="text">附近项目</span>
-              </div>
+        </div>
+        <div class="perimeterSearch">
+          <div class="fjxm">
+            <div class="tp">
+              <img src="./images/时间框.png" class="kuang">
+              <span class="text">附近项目</span>
             </div>
-            <div class="list">
-              <div class="search-header">
-                <el-input
-                  v-model="searchXMText"
-                  class="searchFilterInput"
-                  placeholder="查找项目"
-                  size="small"
-                  @keyup.enter.native="searchXMFilter"
-                />
-                <div class="button-container">
-                  <div class="button-item">
-                    <i class="icon-common icon-clear" @click="searchXMClear"></i>
-                  </div>
-                  <div class="button-item">
-                    <i class="icon-common icon-search" @click="searchXMFilter"></i>
-                  </div>
+          </div>
+          <div class="list">
+            <div class="search-header">
+              <el-input
+                v-model="searchXMText"
+                class="searchFilterInput"
+                placeholder="查找项目"
+                size="small"
+                @keyup.enter.native="searchXMFilter"
+              />
+              <div class="button-container">
+                <div class="button-item">
+                  <i class="icon-common icon-clear" @click="searchXMClear"></i>
+                </div>
+                <div class="button-item">
+                  <i class="icon-common icon-search" @click="searchXMFilter"></i>
                 </div>
               </div>
-              <div class="result-wrapper">
-                <ul class="result-list">
-                  <li class="result-item header">
-                    <span class="index">序号</span>
-                    <span class="name">项目名称</span>
-                    <span class="content">所属街道</span>
-                  </li>
-                  <li
-                    class="result-item"
-                    v-for="(item, index) in xmList"
-                    :key="index"
-                    @click="itemClick(item)"
-                  >
-                    <span class="index">{{ index + 1 }}</span>
-                    <span class="name" :title="item.attributes.NAME">{{
-                    item.attributes.NAME
-                  }}</span>
-                    <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
-                  </li>
-                </ul>
-              </div>
             </div>
-            <div class="fjxm">
-              <div class="tp">
-                <img src="./images/时间框.png" class="kuang">
-                <span class="text">附近断点</span>
-              </div>
+            <div class="result-wrapper">
+              <ul class="result-list">
+                <li class="result-item header">
+                  <span class="index">序号</span>
+                  <span class="name">项目名称</span>
+                  <span class="content">所属街道</span>
+                </li>
+                <li
+                  class="result-item"
+                  v-for="(item, index) in xmList"
+                  :key="index"
+                  @click="itemClick(item)"
+                >
+                  <span class="index">{{ index + 1 }}</span>
+                  <span class="name" :title="item.attributes.NAME">{{
+                  item.attributes.NAME
+                }}</span>
+                  <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                </li>
+              </ul>
             </div>
-            <div class="list">
-              <div class="search-header">
-                <el-input
-                  v-model="searchDDText"
-                  class="searchFilterInput"
-                  placeholder="查找断点"
-                  size="small"
-                  @keyup.enter.native="searchDDFilter"
-                />
-                <div class="button-container">
-                  <div class="button-item">
-                    <i class="icon-common icon-clear" @click="searchDDClear"></i>
-                  </div>
-                  <div class="button-item">
-                    <i class="icon-common icon-search" @click="searchDDFilter"></i>
-                  </div>
+          </div>
+          <div class="fjxm">
+            <div class="tp">
+              <img src="./images/时间框.png" class="kuang">
+              <span class="text">附近断点</span>
+            </div>
+          </div>
+          <div class="list">
+            <div class="search-header">
+              <el-input
+                v-model="searchDDText"
+                class="searchFilterInput"
+                placeholder="查找断点"
+                size="small"
+                @keyup.enter.native="searchDDFilter"
+              />
+              <div class="button-container">
+                <div class="button-item">
+                  <i class="icon-common icon-clear" @click="searchDDClear"></i>
+                </div>
+                <div class="button-item">
+                  <i class="icon-common icon-search" @click="searchDDFilter"></i>
                 </div>
               </div>
-              <div class="result-wrapper">
-                <ul class="result-list">
-                  <li class="result-item header">
-                    <span class="index">序号</span>
-                    <span class="name">断点名称</span>
-                    <span class="content">所属街道</span>
-                  </li>
-                  <li
-                    class="result-item"
-                    v-for="(item, index) in ddList"
-                    :key="index"
-                    @click="itemClick(item)"
-                  >
-                    <span class="index">{{ index + 1 }}</span>
-                    <!--            <div class="icon">-->
-                    <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
-                    <!--            </div>-->
+            </div>
+            <div class="result-wrapper">
+              <ul class="result-list">
+                <li class="result-item header">
+                  <span class="index">序号</span>
+                  <span class="name">断点名称</span>
+                  <span class="content">所属街道</span>
+                </li>
+                <li
+                  class="result-item"
+                  v-for="(item, index) in ddList"
+                  :key="index"
+                  @click="itemClick(item)"
+                >
+                  <span class="index">{{ index + 1 }}</span>
+                  <!--            <div class="icon">-->
+                  <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
+                  <!--            </div>-->
 
-                    <span class="name" :title="item.attributes.NAME">{{
-                    item.attributes.NAME
-                  }}</span>
-                    <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
-                  </li>
-                </ul>
-              </div>
+                  <span class="name" :title="item.attributes.NAME">{{
+                  item.attributes.NAME
+                }}</span>
+                  <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                </li>
+              </ul>
             </div>
-            <div class="fjxm">
-              <div class="tp">
-                <img src="./images/时间框.png" class="kuang">
-                <span class="text">附近全景</span>
-              </div>
+          </div>
+          <div class="fjxm">
+            <div class="tp">
+              <img src="./images/时间框.png" class="kuang">
+              <span class="text">附近全景</span>
             </div>
-            <div class="list">
-              <div class="search-header">
-                <el-input
-                  v-model="searchQJText"
-                  class="searchFilterInput"
-                  placeholder="查找全景"
-                  size="small"
-                  @keyup.enter.native="searchQJFilter"
-                />
-                <div class="button-container">
-                  <div class="button-item">
-                    <i class="icon-common icon-clear" @click="searchQJClear"></i>
-                  </div>
-                  <div class="button-item">
-                    <i class="icon-common icon-search" @click="searchQJFilter"></i>
-                  </div>
+          </div>
+          <div class="list">
+            <div class="search-header">
+              <el-input
+                v-model="searchQJText"
+                class="searchFilterInput"
+                placeholder="查找全景"
+                size="small"
+                @keyup.enter.native="searchQJFilter"
+              />
+              <div class="button-container">
+                <div class="button-item">
+                  <i class="icon-common icon-clear" @click="searchQJClear"></i>
+                </div>
+                <div class="button-item">
+                  <i class="icon-common icon-search" @click="searchQJFilter"></i>
                 </div>
               </div>
-              <div class="result-wrapper">
-                <ul class="result-list">
-                  <li class="result-item header">
-                    <span class="index">序号</span>
-                    <span class="name">全景名称</span>
-                    <span class="content">所属街道</span>
-                  </li>
-                  <li
-                    class="result-item"
-                    v-for="(item, index) in qjList"
-                    :key="index"
-                    @click="itemClick(item)"
-                  >
-                    <span class="index">{{ index + 1 }}</span>
-                    <!--            <div class="icon">-->
-                    <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
-                    <!--            </div>-->
+            </div>
+            <div class="result-wrapper">
+              <ul class="result-list">
+                <li class="result-item header">
+                  <span class="index">序号</span>
+                  <span class="name">全景名称</span>
+                  <span class="content">所属街道</span>
+                </li>
+                <li
+                  class="result-item"
+                  v-for="(item, index) in qjList"
+                  :key="index"
+                  @click="itemClick(item)"
+                >
+                  <span class="index">{{ index + 1 }}</span>
+                  <!--            <div class="icon">-->
+                  <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
+                  <!--            </div>-->
 
-                    <span class="name" :title="item.attributes.NAME">{{
-                    item.attributes.NAME
-                  }}</span>
-                    <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
-                  </li>
-                </ul>
-              </div>
+                  <span class="name" :title="item.attributes.NAME">{{
+                  item.attributes.NAME
+                }}</span>
+                  <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

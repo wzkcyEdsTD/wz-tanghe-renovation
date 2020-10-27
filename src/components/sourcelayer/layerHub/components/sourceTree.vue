@@ -77,30 +77,32 @@ export default {
       if (checked) {
         this.selectedSourceList.push(node.id)
         console.log('selectedSourceList', this.selectedSourceList)
+        if (~node.id.indexOf('项目')) this.$parent.showSign = true
+        if (node.withImage) {
+          node.withImage.forEach((item) => {
+            const LAYER = this.tileLayers[item.name];
+            if (LAYER) {
+              LAYER.show = true;
+            } else {
+              this.tileLayers[
+                item.name
+              ] = window.earth.imageryLayers.addImageryProvider(
+                new Cesium.SuperMapImageryProvider({
+                  url: item.url,
+                })
+              );
+              item.alpha && (this.tileLayers[item.name].alpha = item.alpha);
+            }
+          });
+        }
+        if (node.switchLayer) {
+          this.$bus.$emit(node.switchLayer, { value: true });
+        }
         if (node.type == "mvt" && node.id) {
-          if (~node.id.indexOf('项目')) this.$parent.showSign = true
-          if (node.withImage) {
-            node.withImage.forEach((item) => {
-              const LAYER = this.tileLayers[item.name];
-              if (LAYER) {
-                LAYER.show = true;
-              } else {
-                this.tileLayers[
-                  item.name
-                ] = window.earth.imageryLayers.addImageryProvider(
-                  new Cesium.SuperMapImageryProvider({
-                    url: item.url,
-                  })
-                );
-                item.alpha && (this.tileLayers[item.name].alpha = item.alpha);
-              }
-            });
-          }
           if (node.id && window.billboardMap[node.id]) {
             node.saveData
               ? this[node.saveData](this.saveDataMap[node.id])
               : null;
-            this.$bus.$emit("source-change", { value: node.id });
             window.billboardMap[node.id]._billboards.map(
               (v) => (v.show = true)
             );
@@ -110,7 +112,7 @@ export default {
               : window.whiteLabelMap[node.id].setAllLabelsVisible(true);
           } else {
             this.getPOIPickedFeature(node, () => {
-              this.$bus.$emit("source-change", { value: node.id });
+              this.setCurrentource(node.id);
             });
           }
         } else if (node.type == "model") {
@@ -129,84 +131,34 @@ export default {
                   name: node.id,
                 })
               ));
-        } else if (node.type == "cesium_town") {
-          console.log("cesium_town_on");
-          // this.$parent.removeAll(true);
-          this.$bus.$emit("remove-texiao", { value: true });
-        } else if (node.type == "cesium_lvdao") {
-          console.log("cesium_lvdao_on");
-          // this.$parent.switchLvdao(true);
-          this.$bus.$emit("switch-lvdao", { value: true });
-        } else if (node.type == "cesium_thfwm") {
-          console.log("cesium_thfwm_on");
-          // this.$parent.switchThfwmlayer(true);
-          this.$bus.$emit("switch-thfwm", { value: true });
-        } else if (node.type == "cesium_xzqx") {
-          console.log("cesium_xzqx_on");
-          // this.$parent.switchXzjxqxlayer(true);
-          this.$bus.$emit("switch-xzjxqx", { value: true });
-        } else if (node.type == "cesium_xzjd") {
-          console.log("cesium_xzjd_on");
-          // this.$parent.switchXzjxjdlayer(true);
-          this.$bus.$emit("switch-xzjxjd", { value: true });
         }
-        // else if (node.type == "cesium_thyx") {
-        //   console.log('cesium_thyx_on')
-        //   this.$parent.switchThyx(true);
-        // }
         //  有相机视角配置 -> 跳视角
         node.camera && window.earth.scene.camera.setView(node.camera);
       } else {
-        this.selectedSourceList.splice(this.selectedSourceList.indexOf(node.id), 1);
+        ~this.selectedSourceList.indexOf(node.id) && this.selectedSourceList.splice(this.selectedSourceList.indexOf(node.id), 1);
         const LAYER =
           node.type == "model"
             ? window.earth.scene.layers.find(node.id)
             : this.tileLayers[node.id];
         LAYER && (LAYER.show = false);
         if (
-          // this.entityMap[node.id] &&
-          // window.earth.dataSources.length
           window.billboardMap[node.id]
         ) {
           node.saveData && this[node.saveData]([]);
-          // this.entityMap[node.id].show = false;
-          // if (node.saveData) {
-          //   this[node.saveData]([]);
-          // }
           window.billboardMap[node.id]._billboards.map((v) => (v.show = false));
-          // window.labelMap[node.id].setAllLabelsVisible(false);
-          // window.currentMapType == "vectorwhite"
-          //   ? window.blackLabelMap[node.id].setAllLabelsVisible(false)
-          //   : window.whiteLabelMap[node.id].setAllLabelsVisible(false);
           window.blackLabelMap[node.id].setAllLabelsVisible(false)
           window.whiteLabelMap[node.id].setAllLabelsVisible(false)
         }
+        if (node.withImage) {
+          node.withImage.forEach((item) => {
+            const LAYER = this.tileLayers[item.name];
+            LAYER.show = false;
+          });
+        }
         node.componentEvent &&
           this.$bus.$emit(node.componentEvent, { value: null });
-        if (node.type == "cesium_town") {
-          console.log("cesium_town_off");
-          this.$bus.$emit("remove-texiao", { value: false });
-        }
-        if (node.type == "cesium_lvdao") {
-          console.log("cesium_lvdao_off");
-          this.$bus.$emit("switch-lvdao", { value: false });
-        }
-        if (node.type == "cesium_thfwm") {
-          console.log("cesium_thfwm_off");
-          this.$bus.$emit("switch-thfwm", { value: false });
-        }
-        if (node.type == "cesium_xzqx") {
-          console.log("cesium_xzqx_off");
-          this.$bus.$emit("switch-xzjxqx", { value: false });
-        }
-        if (node.type == "cesium_xzjd") {
-          console.log("cesium_xzjd_off");
-          this.$bus.$emit("switch-xzjxjd", { value: false });
-        }
-        // if (node.type == "cesium_thyx") {
-        //   console.log('cesium_thyx_off')
-        //   this.$parent.switchThyx(false);
-        // }
+        node.switchLayer &&
+          this.$bus.$emit(node.switchLayer, { value: false });
         if (node.id == '项目') this.$parent.showSign = false
       }
     },

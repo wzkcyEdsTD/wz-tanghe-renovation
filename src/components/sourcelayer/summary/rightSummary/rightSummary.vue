@@ -12,12 +12,7 @@
             <img src="./img/装饰.png" alt="" class="zs" />
           </div>
           <p class="lab">{{ temp || "暂无简介" }}</p>
-          <video
-            controls
-            class="sp"
-          >
-            <source src="static/video/温瑞塘河.mp4">
-          </video>
+          <video ref="video" controls class="sp" src="static/video/温瑞塘河.mp4"></video>
           <div class="jianju">
             <span class="xbt">流域</span>
             <img src="./img/装饰.png" alt="" class="zs" />
@@ -80,7 +75,7 @@
         </div>
         <div class="zsj">
           <div class="ssj">
-            <img src="./img/塘河航道(2).svg" class="hangdao"">
+            <img src="./img/塘河航道(2).svg" class="hangdao">
           </div>
         </div>
       </div>
@@ -94,9 +89,6 @@
     data() {
       return {
         showLarge:window.showLarge,
-        // showLarge: false,
-        // screenWidth: document.body.clientWidth,
-        // screeHeight: document.body.clientHeight,
         temp:
           "温瑞塘河位于瓯江以南、飞云江以北的温瑞平原，是温州市境内十分重要的河道水系，分属于鹿城、瓯海、龙湾、瑞安等“三区一市”管辖。",
         attributes: {},
@@ -112,23 +104,12 @@
     computed: {
     },
     methods:{
-      // getKuanGao(){
-      //   //4320*1280
-      //   console.log(this.screenWidth);
-      //   //大屏返回true
-      //   if(this.screenWidth>4000&this.screeHeight>1000){
-      //     console.log(true);
-      //     this.showLarge = true;
-      //   }else {
-      //     console.log(false);
-      //     this.showLarge = false;
-      //   };
-      // },
     },
     mounted() {
-      // this.getKuanGao();
+      this.$refs.video.addEventListener('play', (e) => {
+        this.showLarge && this.$bus.$emit("change-rightContent", { type: 'video', value: e.target.currentSrc });
+      });
     }
-
   };
 </script>
 

@@ -160,7 +160,7 @@ export default {
     transform: translateX(-50%);
     color: #fff;
     font-size: 1.5vh;
-    text-align: left;
+    /*text-align: left;*/
     line-height: 1.8vh;
     z-index: 3;
     font-family: DIN-Regular;

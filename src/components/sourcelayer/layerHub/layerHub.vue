@@ -1,7 +1,7 @@
 
 <template>
   <div class="layerhub-wrapper">
-    <div class="layer-wrapper" :style="{right: showLarge?'22%':'25%'}">
+    <div class="layer-wrapper" :style="{right: showLarge?'20%':'21%'}">
       <div class="hub-list">
         <div class="hub-item" :class="{selected: currentLayer=='yx'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
           <img v-if="currentLayer=='yx'" src="./images/yx-sel2.png">
@@ -65,7 +65,7 @@
         <RightSummary v-show="leftOrRight" />
       <!-- </div> -->
     </div>
-    <div class="sign-wrapper" :style="{right: showLarge?'22%':'25%'}" v-if="showSign">
+    <div class="sign-wrapper" :style="{right: showLarge?'20%':'21%'}" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div>
   </div>

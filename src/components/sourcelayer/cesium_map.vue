@@ -127,6 +127,8 @@ export default {
             const geometry = window.featureMap[_NODEID_][_SMID_].geometry;
             this.addLocationIcon(geometry, _NODEID_);
 
+            this.$refs.searchDetail.showZB = false;
+
             if (~_NODEID_.indexOf('项目') || _NODEID_ == '断点') {
 
               // 画圆查询
@@ -708,7 +710,7 @@ export default {
             locationEntity.billboard.scale = 1.2;
           }
           second++;
-        }  
+        }
       }, 300);
 
       datasource.entities.add(locationEntity);

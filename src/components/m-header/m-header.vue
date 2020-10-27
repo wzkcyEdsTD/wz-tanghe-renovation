@@ -5,6 +5,10 @@
       <img class="topLab" src="./images/topLab.png" alt="">
       <img class="shadow" src="./images/shadow.png" alt="">
     </div>
+    <div class="logoGroup">
+      <img src="./images/现代集团logo.png" >
+      <img src="./images/温州设计集团logo.png" >
+    </div>
     <div class="info">
       <span class="time">{{date}}</span>
     </div>
@@ -90,6 +94,19 @@ export default {
       height: 4vh;
     }
   }
+
+  .logoGroup {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 60%;
+    z-index: 2;
+
+    img {
+      height: 100%;
+    }
+  }
+
   .info {
     position: absolute;
     bottom: 10px;

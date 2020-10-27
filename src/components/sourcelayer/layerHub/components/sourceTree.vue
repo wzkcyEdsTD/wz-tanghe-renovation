@@ -157,6 +157,14 @@ export default {
         //  有相机视角配置 -> 跳视角
         node.camera && window.earth.scene.camera.setView(node.camera);
       } else {
+        // 去掉目录选中，清空定位
+        const datasource = window.earth.dataSources.getByName("location")[0];
+        const entity = datasource.entities.values[0];
+        if(node && entity && node.id == entity.id) {
+          datasource.entities.removeAll();
+          this.$parent.$parent.removeProjectCircle();
+        }
+
         this.selectedSourceList.splice(this.selectedSourceList.indexOf(node.id), 1);
         const LAYER =
           node.type == "model"

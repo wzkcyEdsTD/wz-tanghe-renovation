@@ -61,7 +61,7 @@
           </div>
           <div class="switch-menu-decorate"></div>
         </div>
-        <SourceTree v-show="!leftOrRight" />
+        <SourceTree ref="SourceTree" v-show="!leftOrRight" />
         <RightSummary v-show="leftOrRight" />
       <!-- </div> -->
     </div>

@@ -126,7 +126,7 @@ export default {
 
             // 定位图标
             const geometry = window.featureMap[_NODEID_][_SMID_].geometry;
-            this.addLocationIcon(geometry);
+            this.addLocationIcon(geometry, _NODEID_);
 
             if (~_NODEID_.indexOf('项目') || _NODEID_ == '断点') {
 
@@ -702,7 +702,7 @@ export default {
       const locationEntity = new Cesium.Entity({
         position: Cesium.Cartesian3.fromDegrees(x, y, 4),
         billboard: {
-          image: `/static/images/map-ico/定位.gif`,
+          image: `/static/images/map-ico/定位.png`,
           width: 24,
           height: 25,
           scaleByDistance:new Cesium.NearFarScalar(3000, 1.7, 6000, 1.5),
@@ -710,6 +710,29 @@ export default {
         },
         id,
       });
+
+      locationEntity.addProperty("imageClock");
+
+      let second = 0;
+      locationEntity.imageClock = setInterval(() => {
+        if(locationEntity != null) {
+          if(second % 6 == 0) {
+            locationEntity.billboard.scale = 1.3;
+          } else if(second % 6 == 1) {
+            locationEntity.billboard.scale = 1.2;
+          } else if(second % 6 == 2) {
+            locationEntity.billboard.scale = 1.1;
+          } else if(second % 6 == 3) {
+            locationEntity.billboard.scale = 1;
+          } else if(second % 6 == 4) {
+            locationEntity.billboard.scale = 1.1;
+          } else if(second % 6 == 5) {
+            locationEntity.billboard.scale = 1.2;
+          }
+          second++;
+        }  
+      }, 300);
+
       datasource.entities.add(locationEntity);
     },
 

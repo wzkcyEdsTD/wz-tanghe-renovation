@@ -252,10 +252,7 @@ export default {
     },
     itemClick(item){
       const { x, y } = item.geometry;
-      // const x = Number(item.attributes.JD);
-      // const y = Number(item.attributes.WD);
       window.earth.camera.flyTo({
-        //120.68369804064305 27.992073587314962
         destination: Cesium.Cartesian3.fromDegrees(x, y, 450),
         orientation: {
           heading: 0.01768860454315663,
@@ -263,6 +260,9 @@ export default {
           roll: 0.0,
         },
         maximumHeight: 450,
+        complete: () => {
+          this.$bus.$emit('clickFly');
+        }
       });
     },
     getForceEntity(forceEntity) {

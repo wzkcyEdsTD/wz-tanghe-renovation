@@ -191,11 +191,11 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.blackLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#010C27"),
-      font: node.id == '项目' ?"8px YouSheBiaoTiHei":"8px YouSheBiaoTiHei",
-      outlineColor:node.id == '项目' ? new Cesium.Color.fromCssColorString("#010C27") :'',
+      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#02FCDC"),
+      font: node.id == '项目' ?"8px PingFang":"8px PingFang",
+      outlineColor:node.id == '项目' ? new Cesium.Color.fromCssColorString("#010C27") :new Cesium.Color.fromCssColorString("#010C27"),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE ,
-      outlineWidth:node.id == '项目' ? '2' :'',
+      outlineWidth:node.id == '项目' ? '2' :'2',
       scaleByDistance: new Cesium.NearFarScalar(4000, 1.8, 6000, 1.8),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
       pixelOffset: new Cesium.Cartesian2(0, -34),
@@ -207,9 +207,9 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.billboardMap[node.id].add({
       id: `billboard@${item.attributes.SMID}@${node.id}`,
       image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
-      width: node.iconSize == 'small' ? 24 : 24,
-      height: node.iconSize == 'small' ? 24 : 25,
-      scaleByDistance:new Cesium.NearFarScalar(3000, 1.7, 6000, 1.5),
+      width: node.icon=='断点'? 33 : 24,
+      height: node.icon=='断点'? 33 : 25,
+      scaleByDistance:new Cesium.NearFarScalar(3000, 1.5, 6000, 1.2),
       // sizeInMeters:true,
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position

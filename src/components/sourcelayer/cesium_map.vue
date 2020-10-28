@@ -683,9 +683,9 @@ export default {
         position: Cesium.Cartesian3.fromDegrees(x, y, 4),
         billboard: {
           image: `/static/images/map-ico/定位.png`,
-          width: 24,
-          height: 25,
-          scaleByDistance:new Cesium.NearFarScalar(3000, 1.7, 6000, 1.5),
+          width: 25,
+          height: 26,
+          scaleByDistance:new Cesium.NearFarScalar(3000, 1.5, 6000, 1.2),
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
         },
         id,
@@ -726,8 +726,8 @@ export default {
       const circleEntity = new Cesium.Entity({
         position: Cesium.Cartesian3.fromDegrees(x, y, 0),
         ellipse: {
-          semiMinorAxis: 500,
-          semiMajorAxis: 500,
+          semiMinorAxis: 200,
+          semiMajorAxis: 200,
           height: 0,
           material: Cesium.Color.YELLOW.withAlpha(0.2),
           outline: true,
@@ -758,6 +758,7 @@ export default {
       this.singleQuery(geometryArgs, "项目");
       this.singleQuery(geometryArgs, "绿道断点");
       this.singleQuery(geometryArgs, "quanjin");
+      this.singleQuery(geometryArgs, "shipin");
 
       // 延时获取异步数据
       setTimeout(() => {
@@ -772,7 +773,7 @@ export default {
       let getFeatureParameter, getFeatureService;
       getFeatureParameter = new SuperMap.REST.GetFeaturesByBufferParameters({
         // 缓冲距离单位疑似十万米！！！图形单位米！！！
-        bufferDistance: 0.005,
+        bufferDistance: 0.002,
         toIndex: -1,
         datasetNames: [`172.168.3.181_thxm:${dataset}`],
         returnContent: true,

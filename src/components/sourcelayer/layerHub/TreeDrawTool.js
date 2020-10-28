@@ -169,19 +169,22 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       item.geometry.y,
       4
     );
-    let color
-    if (~node.id.indexOf('项目')) {
-      color = item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC")
-    } else if (node.id == '2021年重点项目') {
-      color = new Cesium.Color.fromCssColorString("#EE2D2D")
-    } else {
-      color = new Cesium.Color.fromCssColorString("#fff")
-    }
+    // let color
+    // if (~node.id.indexOf('项目')) {
+    //   color = item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC")
+    // } else if (node.id == '2021年重点项目') {
+    //   color = new Cesium.Color.fromCssColorString("#EE2D2D")
+    // } else {
+    //   color = new Cesium.Color.fromCssColorString("#fff")
+    // }
     window.whiteLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
       fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
-      font: node.id == '项目' ?"8px YouSheBiaoTiHei":"8px YouSheBiaoTiHei",
+      font: "8px YouSheBiaoTiHei",
+      outlineColor: ~node.id.indexOf('项目') ? new Cesium.Color.fromCssColorString("#010C27") :'',
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE ,
+      outlineWidth: ~node.id.indexOf('项目') ? '2' :'',
       scaleByDistance: new Cesium.NearFarScalar(4000, 1.8, 6000, 1.8),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
       pixelOffset: new Cesium.Cartesian2(0, -34),
@@ -192,17 +195,16 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
       fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#02FCDC"),
-      font: node.id == '项目' ?"8px PingFang":"8px PingFang",
-      outlineColor:node.id == '项目' ? new Cesium.Color.fromCssColorString("#010C27") :new Cesium.Color.fromCssColorString("#010C27"),
+      font: "8px PingFang",
+      outlineColor: new Cesium.Color.fromCssColorString("#010C27"),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE ,
-      outlineWidth:node.id == '项目' ? '2' :'2',
+      outlineWidth: '2',
       scaleByDistance: new Cesium.NearFarScalar(4000, 1.8, 6000, 1.8),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
       pixelOffset: new Cesium.Cartesian2(0, -34),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
-    console.log('window.currentMapType!!', window.currentMapType)
     window.currentMapType == 'vectorwhite' ? window.whiteLabelMap[node.id].setAllLabelsVisible(false) : window.blackLabelMap[node.id].setAllLabelsVisible(false)
     window.billboardMap[node.id].add({
       id: `billboard@${item.attributes.SMID}@${node.id}`,

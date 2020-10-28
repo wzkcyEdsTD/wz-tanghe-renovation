@@ -174,7 +174,28 @@
           // width: 7vh;
           flex: 1;
           height: 0.4vh;
+
         }
+        .progressEmpty {
+          height: 1.5vh;
+          //margin: 0.5vh auto;
+          position: relative;
+          .empty{
+            height: 1.5vh;
+          }
+          .progressFull{
+            transition: width .1s;
+            //background: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            .full{
+              height: 1.5vh;
+            }
+          }
+        }
+
         .blue {
           background-color: #0E5AF2;
         }
@@ -203,11 +224,11 @@
           font-size: 1.4vh;
         }
         .pop1 {
-          left: 10%;
+          left: 9%;
           .bg-image("./images/blue-pop");
         }
         .pop2 {
-          left: 30%;
+          left: 28%;
           .bg-image("./images/yellow-pop");
         }
         .pop3 {
@@ -215,7 +236,7 @@
           .bg-image("./images/pink-pop");
         }
         .pop4 {
-          left: 70%;
+          left: 69%;
           .bg-image("./images/red-pop");
         }
         .pop5 {

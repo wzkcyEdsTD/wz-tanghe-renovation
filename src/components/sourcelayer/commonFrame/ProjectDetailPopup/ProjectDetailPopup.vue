@@ -172,30 +172,43 @@
             <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '项目'"> -->
             <div class="time-line-wrapper" v-if="forceEntity.type == '项目'">
               <div class="time-line">
-                <div class="line-item blue"></div>
-                <div class="line-item yellow"></div>
-                <div class="line-item pink"></div>
-                <div class="line-item red"></div>
-                <div class="line-item green"></div>
+                <div class="progressEmpty">
+                  <img src="./images/计划时间轴底.png" class="empty">
+                  <div class="progressFull" v-if="forceEntity.attributes.CURRENT_STATE == '前期研究'">
+                    <img src="./images/前期研究.png" class="full">
+                  </div>
+                  <div class="progressFull" v-if="forceEntity.attributes.CURRENT_STATE == '前期(滞后)'">
+                    <img src="./images/前期滞后.png" class="full">
+                  </div>
+                  <div class="progressFull" v-if="forceEntity.attributes.CURRENT_STATE == '在建'">
+                    <img src="./images/正在建设.png" class="full">
+                  </div>
+                  <div class="progressFull" v-if="forceEntity.attributes.CURRENT_STATE == '在建(滞后)'">
+                    <img src="./images/建设滞后.png" class="full">
+                  </div>
+                  <div class="progressFull" v-if="forceEntity.attributes.CURRENT_STATE == '完工'">
+                    <img src="./images/完美建设.png" class="full">
+                  </div>
+                </div>
                 <div v-if="forceEntity.attributes.CURRENT_STATE == '前期研究'">
                   <div class="pop pop1">前期研究</div>
-                  <div class="circle circle1"></div>
+<!--                  <div class="circle circle1"></div>-->
                 </div>
                 <div v-if="forceEntity.attributes.CURRENT_STATE == '前期(滞后)'">
                   <div class="pop pop2">前期滞后</div>
-                  <div class="circle circle2"></div>
+<!--                  <div class="circle circle2"></div>-->
                 </div>
                 <div v-if="forceEntity.attributes.CURRENT_STATE == '在建'">
                   <div class="pop pop3">正在建设</div>
-                  <div class="circle circle3"></div>
+<!--                  <div class="circle circle3"></div>-->
                 </div>
                 <div v-if="forceEntity.attributes.CURRENT_STATE == '在建(滞后)'">
                   <div class="pop pop4">在建滞后</div>
-                  <div class="circle circle4"></div>
+<!--                  <div class="circle circle4"></div>-->
                 </div>
                 <div v-if="forceEntity.attributes.CURRENT_STATE == '完工'">
                   <div class="pop pop5">完工建设</div>
-                  <div class="circle circle5"></div>
+<!--                  <div class="circle circle5"></div>-->
                 </div>
               </div>
               <div class="time-desc">

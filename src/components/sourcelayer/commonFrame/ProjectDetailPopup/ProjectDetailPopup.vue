@@ -321,8 +321,7 @@
               </div>
             </div>
           </div>
-          <div v-show="qjList?qjList.length>0?true:false:false">
-          <div v-show="qjList&&currentPage=='sourcelayer'">
+          <div v-show="qjList&&currentPage=='sourcelayer'?qjList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -357,8 +356,7 @@
               </div>
             </div>
           </div>
-          <div v-show="spList?spList.length>0?true:false:false">
-          <div v-show="spList&&currentPage=='sourcelayer'">
+          <div v-show="spList&&currentPage=='sourcelayer'?spList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">

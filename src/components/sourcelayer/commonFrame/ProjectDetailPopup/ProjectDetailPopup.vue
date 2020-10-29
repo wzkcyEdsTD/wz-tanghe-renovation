@@ -286,7 +286,7 @@
               </div>
             </div>
           </div>
-          <div v-show="ddList?xmList.length>0?true:false:false">
+          <div v-show="ddList?ddList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -321,7 +321,7 @@
               </div>
             </div>
           </div>
-          <div v-show="qjList?xmList.length>0?true:false:false">
+          <div v-show="qjList?qjList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -356,7 +356,7 @@
               </div>
             </div>
           </div>
-          <div v-show="spList?xmList.length>0?true:false:false">
+          <div v-show="spList?spList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">

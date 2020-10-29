@@ -141,7 +141,7 @@ export default {
       this.pieEchart.setOption({
         legend: {
           orient: "horizontal",
-          top: "20%",
+          top: "25%",
           left: "34%",
           icon: "rect",
           itemWidth: 14,
@@ -165,8 +165,8 @@ export default {
           {
             name: "项目构成",
             type: "pie",
-            center: ["17%", "40%"],
-            radius: ["50%", "65%"],
+            center: ["17%", "45%"],
+            radius: ["60%", "75%"],
             avoidLabelOverlap: false,
             label: {
               show: false,

@@ -150,6 +150,10 @@ export const CESIUM_TREE_OPTION = [
         newdataset: `${SW_DATA_NAME}项目`,
         icon: false,
         type: "mvt",
+        withImage: [{
+          name: "xmfwm",
+          url: "http://172.168.3.183:8090/iserver/services/3D-fwm/rest/realspace/datas/xmfwm",
+        }]
         // saveData: "setProjectList"
       },
       {

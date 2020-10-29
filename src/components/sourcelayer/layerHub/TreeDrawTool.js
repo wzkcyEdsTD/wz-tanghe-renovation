@@ -161,6 +161,21 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       item.geometry.y,
       4
     );
+
+    window.billboardMap[node.id].add({
+      id: `billboard@${item.attributes.SMID}@${node.id}`,
+      image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
+      width: node.icon=='断点'? 33 : 24,
+      height: node.icon=='断点'? 33 : 25,
+      scaleByDistance:new Cesium.NearFarScalar(3000, 1.5, 6000, 1.2),
+      // sizeInMeters:true,
+      disableDepthTestDistance: Number.POSITIVE_INFINITY,
+      position
+    })
+
+    if(node.id == '十二景') return;
+
+
     // let color
     // if (~node.id.indexOf('项目')) {
     //   color = item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#EE2D2D") : new Cesium.Color.fromCssColorString("#02FCDC")
@@ -193,21 +208,12 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       outlineWidth: '2',
       scaleByDistance: new Cesium.NearFarScalar(4000, 1.8, 6000, 1.8),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-      pixelOffset: new Cesium.Cartesian2(0, -34),
+      pixelOffset: new Cesium.Cartesian2(0, 40),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
     window.currentMapType == 'vectorwhite' ? window.whiteLabelMap[node.id].setAllLabelsVisible(false) : window.blackLabelMap[node.id].setAllLabelsVisible(false)
-    window.billboardMap[node.id].add({
-      id: `billboard@${item.attributes.SMID}@${node.id}`,
-      image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
-      width: node.icon=='断点'? 33 : 24,
-      height: node.icon=='断点'? 33 : 25,
-      scaleByDistance:new Cesium.NearFarScalar(3000, 1.5, 6000, 1.2),
-      // sizeInMeters:true,
-      disableDepthTestDistance: Number.POSITIVE_INFINITY,
-      position
-    })
+
   });
   fn && fn();
 };

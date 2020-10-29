@@ -152,6 +152,7 @@ export default {
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
               });
+
               setTimeout(()=>{
                 this.$refs.projectDetailPopup.getdata(this.bufferQueryData);
               },500);
@@ -694,36 +695,15 @@ export default {
       const locationEntity = new Cesium.Entity({
         position: Cesium.Cartesian3.fromDegrees(x, y, 4),
         billboard: {
-          image: `/static/images/map-ico/定位.png`,
-          width: 25,
-          height: 26,
+          image: `/static/images/map-ico/location.png`,
+          width: 34,
+          height: 35,
           scaleByDistance:new Cesium.NearFarScalar(3000, 1.5, 6000, 1.2),
+          pixelOffset: new Cesium.Cartesian2(0, -15),
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
         },
         id,
       });
-
-      locationEntity.addProperty("imageClock");
-
-      let second = 0;
-      locationEntity.imageClock = setInterval(() => {
-        if(locationEntity != null) {
-          if(second % 6 == 0) {
-            locationEntity.billboard.scale = 1.3;
-          } else if(second % 6 == 1) {
-            locationEntity.billboard.scale = 1.2;
-          } else if(second % 6 == 2) {
-            locationEntity.billboard.scale = 1.1;
-          } else if(second % 6 == 3) {
-            locationEntity.billboard.scale = 1;
-          } else if(second % 6 == 4) {
-            locationEntity.billboard.scale = 1.1;
-          } else if(second % 6 == 5) {
-            locationEntity.billboard.scale = 1.2;
-          }
-          second++;
-        }
-      }, 300);
 
       datasource.entities.add(locationEntity);
     },

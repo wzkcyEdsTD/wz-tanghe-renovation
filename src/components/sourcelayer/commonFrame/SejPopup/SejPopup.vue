@@ -5,7 +5,7 @@
       :key="index"
       :id="`trackPopUpContent_${index}`"
       class="leaflet-popup-sej"
-      :style="{ transform: `translate3d(${item.x}px,${item.y + 5}px, 0)` }"
+      :style="{ transform: `translate3d(${item.x}px,${item.y + 84}px, 0)` }"
     >
       <div class="popup-name-container">
         {{item.name}}

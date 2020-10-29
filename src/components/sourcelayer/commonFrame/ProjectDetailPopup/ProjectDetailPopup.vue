@@ -32,8 +32,8 @@
                 v-show="currentShow=='qj'"
               >
                 <swiper-slide v-for="(item,i) in currentData.qjslt" :key="i" class="swiper-item">
-                  <!-- <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" :style="{height: showLarge?'35vh':'20vh'}" @click="openQJ(i)"> -->
-                  <img :src="`/static/images/VRPic/${forceEntity.type}/${item}`" style="object-fit:contain;" @click="openQJ(i)">
+                  <!-- <img :src="`/static/images/VRPic/${item}`" style="object-fit:contain;" :style="{height: showLarge?'35vh':'20vh'}" @click="openQJ(i)"> -->
+                  <img :src="`/static/images/VRPic/${item}`" style="object-fit:contain;" @click="openQJ(i)">
                 </swiper-slide>
                 <swiper-slide class="swiper-item" v-if="!currentData.qjslt">
                   <div class="no-tip">暂无数据</div>

@@ -86,7 +86,7 @@
           <div class="content-item video-wrapper" id="video">
             <div class="sub-title">视频</div>
             <div class="video-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.SP">
-              <video v-for="(item,index) in spList" :key="index" class="video" :src="`/static/video/${forceEntity.type}/${item}`" controls="controls"></video>
+              <video v-for="(item,index) in spList" :key="index" class="video" :src="`/static/video/${item}`" controls="controls"></video>
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
@@ -102,12 +102,12 @@
             <div class="sub-title">全景</div>
             <div class="overall-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.ZBQJ">
               <img v-for="(item,index) in zbOverallList" :key="index"
-                :src="`/static/images/VRPic/${forceEntity.type}/${item}`" @click="openQJ(index)"
+                :src="`/static/images/VRPic/${item}`" @click="openQJ(index)"
               >
             </div>
             <div class="overall-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.QJ">
               <img v-for="(item,index) in overallList" :key="index"
-                :src="`/static/images/VRPic/${forceEntity.type}/${item}`" @click="openQJ(index)"
+                :src="`/static/images/VRPic/${item}`" @click="openQJ(index)"
               >
             </div>
             <div class="no-tip" v-show="this.forceEntity.attributes && !this.forceEntity.attributes.QJ && !this.forceEntity.attributes.ZBQJ">暂无数据</div>

@@ -78,14 +78,14 @@ export default {
     height: 100%;
     background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }
-  .leftlarger {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 29vw;
-    height: 100%;
-    background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
-  }
+  // .leftlarger {
+  //   position: fixed;
+  //   top: 0;
+  //   left: 0;
+  //   width: 29vw;
+  //   height: 100%;
+  //   background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+  // }
   .bottom {
     position: fixed;
     bottom: 0;

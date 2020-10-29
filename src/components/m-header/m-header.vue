@@ -14,7 +14,6 @@
         <img src="./images/设计集团logo.png" class="sjlogo">
         <span class="logoText">设计集团</span>
       </div>
-
     </div>
     <div class="info">
       <p class="time">{{date}}</p>
@@ -24,7 +23,7 @@
       <div class="route-item" :class="{active: currentPage=='sourcelayer'}" @click="goRoute('sourcelayer')">
         资源一张图
       </div>
-      <div class="route-item" :class="{active: currentPage=='onemap'}" @click="goRoute('onemap')">互学互比</div>
+      <div class="route-item" :class="{active: currentPage=='compare'}" @click="goRoute('compare')">互学互比</div>
     </div>
   </div>
 </template>
@@ -37,16 +36,20 @@ export default {
     return {
       date: '',
       times:"",
-      currentPage: 'sourcelayer',
       showLarge: window.showLarge,
     };
   },
+  computed: {
+    currentPage () {
+      // vue中获取当前路由name
+      return this.$route.name
+    }
+  },
   mounted() {
-    console.log('currentPage!!!!!', this.currentPage, this.showLarge)
     const temp = getDate();
     this.date = temp.split("data")[0];
     this.times = temp.split("data")[1];
-    console.log("时间",this.data,this.times);
+    console.log("时间",this.date,this.times);
     setInterval(() => {
       const temp = getDate();
       this.date = temp.split("data")[0];
@@ -56,7 +59,7 @@ export default {
   methods: {
     goRoute(name) {
       if (this.currentPage != name) {
-        if (name == 'onemap') {
+        if (name == 'compare') {
           this.showLarge && this.$bus.$emit("change-screen", { value: false });
         } else {
           this.showLarge && this.$bus.$emit("change-screen", { value: true });
@@ -66,13 +69,6 @@ export default {
       }
     }
   },
-  // watch: {
-  //   $route(to) {
-  //     this.$nextTick(() => {
-  //       this.routerUrl = to.fullPath;
-  //     });
-  //   },
-  // },
 };
 </script>
 
@@ -149,8 +145,6 @@ export default {
         left: 3.5vh;
       }
     }
-
-
   }
 
   .info {
@@ -186,7 +180,6 @@ export default {
         background-size: 13vh 2.5vh;
         z-index: 10;
       }
-
     }
   }
 }

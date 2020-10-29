@@ -26,12 +26,12 @@ const router = new Router({
       component: resolve => require(["page/sourcelayer/sourcelayer"], resolve)
     },
     {
-      path: "/onemap",
-      name: "onemap",
+      path: "/compare",
+      name: "compare",
       meta: {
         title: "智慧塘河"
       },
-      component: resolve => require(["page/onemap/onemap"], resolve)
+      component: resolve => require(["page/compare/compare"], resolve)
     },
   ]
 })

@@ -43,6 +43,7 @@
         </div>
       </div>
     </div>
+<!--    <CalTools v-show="showTool"></CalTools>-->
     <!-- <div :class="showLarge?'left-menu-wrapperda':'left-menu-wrapper'" > -->
     <div class="left-menu-wrapper" >
       <!-- <div class="ulsda" v-if="showLarge">
@@ -76,7 +77,9 @@
 // import { treeDrawTool } from "./TreeDrawTool";
 // import { getIserverFields } from "api/iServerAPI";
 import RightSummary from"../summary/rightSummary/rightSummary";
-import SourceTree from "./components/sourceTree"
+import SourceTree from "./components/sourceTree";
+import CalTools from "../commonFrame/calTool/calTools";
+
 // import {
 //   CESIUM_TREE_OPTION,
 // } from "config/server/tangheTreeOption";
@@ -86,7 +89,8 @@ export default {
   name: "layerHub",
   components:{
     RightSummary,
-    SourceTree
+    SourceTree,
+    CalTools,
   },
   data() {
     return {
@@ -94,6 +98,7 @@ export default {
       showLarge:window.showLarge,
       showHub: false,
       currentMouse: '',
+      showTool:true,
       currentLayer: 'vector',
       yearList: [2018, 2019],
       currentYear: '',

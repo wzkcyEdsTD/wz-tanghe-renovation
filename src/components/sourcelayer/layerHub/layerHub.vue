@@ -16,20 +16,23 @@
       <img src="/static/images/common/sign@2x.png">
     </div>
     <MapTool />
+    <!-- <CalTool /> -->
   </div>
 </template>
 
 <script>
 import RightSummary from"../summary/rightSummary/rightSummary";
-import SourceTree from "./components/sourceTree"
-import MapTool from "./components/mapTool"
+import SourceTree from "./components/sourceTree";
+import MapTool from "./components/mapTool";
+import CalTool from "../commonFrame/calTool/calTools"
 
 export default {
   name: "layerHub",
   components:{
     RightSummary,
     SourceTree,
-    MapTool
+    MapTool,
+    // CalTool
   },
   data() {
     return {

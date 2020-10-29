@@ -18,7 +18,7 @@
         </li>
       </ul>
       <div class="xm-container" v-show="currentType=='xm'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">项目</span>
         </div>
@@ -66,7 +66,7 @@
         <div class="no-tip" v-show="currentXmList && !currentXmList.length">暂无数据</div>
       </div>
       <div class="dd-container" v-show="currentType=='dd'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">断点</span>
         </div>
@@ -117,7 +117,7 @@
     </div>
     <div class="right-content" v-show="changeType=='other'">
       <div class="kdtj-container" v-show="currentType=='dd'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">断点统计</span>
         </div>
@@ -178,7 +178,7 @@
         <div class="czwt-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">
-              存在问题<span class="number">(21个)</span>
+              存在问题<span class="number">{{'(' + questionDdListLength +')个'}}</span>
             </div>
             <div class="decorate"></div>
           </div>
@@ -205,7 +205,7 @@
         </div>
       </div>
       <div class="xmtj-container" v-show="currentType=='xm'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">项目统计</span>
         </div>
@@ -213,17 +213,17 @@
           <div class="base-item">
             <div class="leftPicture">
               <img src="./images/球-蓝.png" alt="" style="width: 13vh"/>
-              <div class="title" style="color: #2fc8e9">总数</div>
-              <div class="text">{{ret.project.sum}}<span class="unit">个</span></div>
             </div>
+            <div class="title" style="color: #2fc8e9">总数</div>
+            <div class="text">{{ret.project.sum}}<span class="unit">个</span></div>
             <img src="./images/台子-蓝.png" alt="" class="leftPictureBottom"/>
           </div>
           <div class="base-item">
             <div class="rightPicture">
               <img src="./images/球-红.png" alt="" style="width: 15vh"/>
-              <div class="titleRight" style="color: #ff8b4f">投资计划</div>
-              <div class="textRight">{{ret.project.plan}}<span class="unit">亿元</span></div>
             </div>
+            <div class="titleRight" style="color: #ff8b4f">投资计划</div>
+            <div class="textRight">{{ret.project.plan}}<span class="unit">亿元</span></div>
             <img src="./images/台子-红.png" alt="" class="rightPictureBottom"/>
           </div>
         </div>
@@ -269,7 +269,7 @@
         <div class="czwt-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">
-              滞后项目<span class="number">(21个)</span>
+              滞后项目<span class="number">{{"("+delayXmListLength+")个"}}</span>
             </div>
             <div class="decorate"></div>
           </div>
@@ -304,7 +304,7 @@
     </div>
     <div class="right-content" v-show="changeType=='all'">
       <div class="kdtj-container" v-show="currentType=='dd'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">断点统计</span>
         </div>
@@ -383,7 +383,7 @@
         </div>
       </div>
       <div class="xmtj-container" v-show="currentType=='xm'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">项目统计</span>
         </div>
@@ -727,6 +727,22 @@ export default {
         return result
       }
     },
+    delayXmListLength() {
+      let result
+      let alldata = this.sourceMap['项目']
+      if (alldata) {
+        if (this.currentZrdw != '指挥部') {
+          result = alldata.filter(item => {
+            return item.attributes.ZR_DEPTID == this.currentZrdw && ~item.attributes.CURRENT_STATE.indexOf('滞后')
+          })
+        } else {
+          result = alldata.filter(item => {
+            return ~item.attributes.CURRENT_STATE.indexOf('滞后')
+          })
+        }
+        return result.length
+      }
+    },
     questionDdList() {
       let result
       let alldata = this.sourceMap['断点']
@@ -741,6 +757,22 @@ export default {
           })
         }
         return result
+      }
+    },
+    questionDdListLength() {
+      let result
+      let alldata = this.sourceMap['断点']
+      if (alldata) {
+        if (this.currentZrdw != '指挥部') {
+          result = alldata.filter(item => {
+            return item.attributes.ZRDW == this.currentZrdw && item.attributes.CZWT != '无'
+          })
+        } else {
+          result = alldata.filter(item => {
+            return item.attributes.CZWT != '无'
+          })
+        }
+        return result.length
       }
     },
   },
@@ -912,7 +944,7 @@ export default {
             //网格线
             show: false,
           },
-          max: 50,
+          max: 20,
           axisTick: {
             //x轴刻度线
             show: false,

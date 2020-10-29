@@ -45,6 +45,7 @@
 
 <script>
 export default {
+  name: "mapTool",
   data() {
     return {
       showLarge:window.showLarge,

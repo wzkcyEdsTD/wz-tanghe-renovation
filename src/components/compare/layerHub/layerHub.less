@@ -731,18 +731,18 @@
       margin-top: 1.3vh;
       .base-item {
         .title {
-          top: 4vh;
+          top: 3vh;
           font-size: 1.2vh;
           white-space: nowrap;
           left: 6.5vh;
         }
         .text {
-          top: 6vh;
+          top: 5vh;
           left: 6.8vh;
         }
         .titleRight {
           position: absolute;
-          top: 5vh;
+          top: 3vh;
           width: max-content;
           left: 7.5vh;
           transform: translateX(-50%);
@@ -751,7 +751,7 @@
         .textRight {
           position: absolute;
           //top: 12px;
-          top: 7vh;
+          top: 5vh;
           left: 7.5vh;
           transform: translateX(-50%);
           font-family: YouSheBiaoTiHei;
@@ -796,28 +796,16 @@
           height: 7vh;
           position: relative;
           bottom:0;
-          animation: myMove 2s infinite;
-          -webkit-animation: myMove 2s infinite;
-          @keyframes myMove {
-            0% {
-              bottom: 1vh;
-            }
-            50% {
-              bottom: 3vh;
-            }
-            100% {
-              bottom: 1vh;
-            }
-          }
+          -webkit-animation: myMove 1.8s infinite;
           @-webkit-keyframes myMove {
             0% {
-              bottom: 1vh;
+              bottom: 1.1vh;
             }
             50% {
-              bottom: 3vh;
+              bottom: 1.5vh;
             }
             100% {
-              bottom: 1vh;
+              bottom: 1.1vh;
             }
           }
         }
@@ -833,25 +821,13 @@
           height: 7vh;
           position: relative;
           bottom:0;
-          animation: myMoveRight 2s infinite;
-          -webkit-animation: myMoveRight 2s infinite;
-          @keyframes myMoveRight {
-            0% {
-              bottom: 2.2vh;
-            }
-            50% {
-              bottom: 4vh;
-            }
-            100% {
-              bottom: 2.2vh;
-            }
-          }
+          -webkit-animation: myMoveRight 1.8s infinite;
           @-webkit-keyframes myMoveRight {
             0% {
               bottom: 2.2vh;
             }
             50% {
-              bottom: 4vh;
+              bottom: 2.62vh;
             }
             100% {
               bottom: 2.2vh;
@@ -1051,7 +1027,7 @@
     }
   }
 }
-.title-wrapper {
+.titleHxhb-wrapper {
   display: flex;
   align-items: flex-end;
   .pre {
@@ -1104,8 +1080,6 @@
     .bg-image('./images/decorate-line');
   }
 }
-
-
 
 .no-tip {
   padding: 5px;

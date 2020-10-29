@@ -277,7 +277,7 @@
           </div>
         </div>
         <div class="perimeterSearch">
-          <div v-show="xmList?true:false">
+          <div v-show="xmList?xmList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -308,7 +308,7 @@
               </div>
             </div>
           </div>
-          <div v-show="ddList?true:false">
+          <div v-show="ddList?ddList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -343,7 +343,7 @@
               </div>
             </div>
           </div>
-          <div v-show="qjList&&currentPage=='sourcelayer'">
+          <div v-show="qjList&&currentPage=='sourcelayer'?qjList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -378,7 +378,7 @@
               </div>
             </div>
           </div>
-          <div v-show="spList&&currentPage=='sourcelayer'">
+          <div v-show="spList&&currentPage=='sourcelayer'?spList.length>0?true:false:false">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -698,13 +698,32 @@ export default {
       });
     },
     getdata(temp){
-      // debugger;
+      let name = this.forceEntity.attributes.NAME;
       this.$nextTick(()=>{
         this.questionQjList = temp['quanjin'];
         this.questionXmList = temp['项目'];
         this.questionDdList = temp['绿道断点'];
         this.questionSpList = temp['shipin'];
-        // debugger;
+        if(this.questionQjList){
+          this.questionQjList = this.questionQjList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
+        if(this.questionXmList){
+          this.questionXmList = this.questionXmList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
+        if(this.questionDdList){
+          this.questionDdList = this.questionDdList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
+        if(this.questionSpList){
+          this.questionSpList = this.questionSpList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
         this.xmList = this.questionXmList;
         this.ddList = this.questionDdList;
         this.qjList = this.questionQjList;

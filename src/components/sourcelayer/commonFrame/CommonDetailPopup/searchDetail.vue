@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="result">
-      <div v-show="xmList?true:false">
+      <div v-show="xmList?xmList.length>0?true:false:false">
         <div class="fjxm">
           <div class="tp">
             <img src="./images/时间框.png" class="kuang">
@@ -44,7 +44,7 @@
           </div>
         </div>
       </div>
-      <div v-show="ddList?true:false">
+      <div v-show="ddList?ddList.length>0?true:false:false">
         <div class="fjxm">
           <div class="tp">
             <img src="./images/时间框.png" class="kuang">
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div v-show="qjList?true:false">
+      <div v-show="qjList?qjList.length>0?true:false:false">
         <div class="fjxm">
           <div class="tp">
             <img src="./images/时间框.png" class="kuang">
@@ -110,7 +110,7 @@
           </div>
         </div>
       </div>
-      <div v-show="spList?true:false">
+      <div v-show="spList?spList.length>0?true:false:false">
         <div class="fjxm">
           <div class="tp">
             <img src="./images/时间框.png" class="kuang">
@@ -240,6 +240,26 @@ export default {
       this.questionXmList = temp['项目'];
       this.questionDdList = temp['绿道断点'];
       this.questionSpList = temp['shipin'];
+      if(this.questionQjList){
+        this.questionQjList = this.questionQjList.filter((item) => {
+          return item.attributes.NAME != this.name ;
+        })
+      }
+      if(this.questionXmList){
+        this.questionXmList = this.questionXmList.filter((item) => {
+          return item.attributes.NAME != this.name ;
+        })
+      }
+      if(this.questionDdList){
+        this.questionDdList = this.questionDdList.filter((item) => {
+          return item.attributes.NAME != this.name ;
+        })
+      }
+      if(this.questionSpList){
+        this.questionSpList = this.questionSpList.filter((item) => {
+          return item.attributes.NAME != this.name ;
+        })
+      }
       this.xmList = this.questionXmList;
       this.ddList = this.questionDdList;
       this.qjList = this.questionQjList;

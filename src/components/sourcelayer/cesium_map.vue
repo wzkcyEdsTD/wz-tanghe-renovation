@@ -367,7 +367,6 @@ export default {
         })
       );
 
-
       /* this.datalayer.white = window.earth.imageryLayers.addImageryProvider(
         new Cesium.WebMapTileServiceImageryProvider({
           url: "http://61.164.104.154:80/iserver/services/3dmap/wmts/3dmap/default/Custom_3dmap/{TileMatrix}/{TileRow}/{TileCol}.png",

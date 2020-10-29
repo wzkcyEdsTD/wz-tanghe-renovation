@@ -322,6 +322,7 @@
             </div>
           </div>
           <div v-show="qjList?qjList.length>0?true:false:false">
+          <div v-show="qjList&&currentPage=='sourcelayer'">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -357,6 +358,7 @@
             </div>
           </div>
           <div v-show="spList?spList.length>0?true:false:false">
+          <div v-show="spList&&currentPage=='sourcelayer'">
             <div class="fjxm">
               <div class="tp">
                 <img src="./images/时间框.png" class="kuang">
@@ -463,6 +465,12 @@ export default {
       searchQJText:'',
       qjList:[],
       spList:[],
+    }
+  },
+  computed: {
+    currentPage () {
+      // vue中获取当前路由name
+      return this.$route.name
     }
   },
   mounted() {

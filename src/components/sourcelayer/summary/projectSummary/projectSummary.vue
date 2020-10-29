@@ -166,7 +166,7 @@ export default {
             name: "项目构成",
             type: "pie",
             center: ["17%", "40%"],
-            radius: ["40%", "55%"],
+            radius: ["50%", "65%"],
             avoidLabelOverlap: false,
             label: {
               show: false,

@@ -16,7 +16,7 @@ import mutations from "./mutations";
 import createLogger from "vuex/dist/logger";
 import login from "./modules/login";
 import map from "./modules/map";
-import stateM from "./modules/stateM/index";
+// import stateM from "./modules/stateM/index";
 
 Vue.use(Vuex);
 
@@ -32,6 +32,6 @@ export default new Vuex.Store({
   modules: {
     login,
     map,
-    stateM
+    // stateM
   }
 });

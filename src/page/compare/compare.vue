@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import CesiumMap from "components/onemap/cesium_map";
+import CesiumMap from "components/sourcelayer/cesium_map";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -61,7 +61,8 @@ export default {
     left: 0;
     width: 40vh;
     height: 100%;
-    background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+    // background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+    background-color: #040D33;
   }
   .right {
     position: fixed;
@@ -69,7 +70,8 @@ export default {
     right: 0;
     width: 40vh;
     height: 100%;
-    background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+    // background: linear-gradient(270deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
+    background-color: #040D33;
   }
   .bottom {
     position: fixed;

@@ -1,11 +1,3 @@
-/*
- * @Author: eds
- * @Date: 2020-09-03 15:04:37
- * @LastEditTime: 2020-09-11 17:05:49
- * @LastEditors: eds
- * @Description:
- * @FilePath: \wz-city-culture-tour\src\components\sourcelayer\treeTool\TreeDrawTool.js
- */
 /**
  * 取面中心点
  * @param {*} arr

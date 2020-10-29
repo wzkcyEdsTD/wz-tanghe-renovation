@@ -1,27 +1,33 @@
 <template>
   <div class="cesiumContainer">
     <div id="cesiumContainer" />
-    <div v-if="mapLoaded">
+    <div v-if="mapLoaded && currentPage=='sourcelayer'">
       <Summary />
-      <LayerHub ref="layerhub" />
+      <SourceLayerHub ref="sourceLayerHub" />
       <CommonDetailPopup ref="commonDetailPopup" />
       <ProjectDetailPopup ref="projectDetailPopup" />
-      <searchDetail ref="searchDetail" />
+      <SearchDetail ref="searchDetail" />
       <SejPopup ref="SejPopup" />
+    </div>
+    <div v-if="mapLoaded && currentPage=='compare'">
+      <CompareLayerHub ref="compareLayerHub" />
+      <CommonDetailPopup ref="commonDetailPopup" />
+      <ProjectDetailPopup ref="projectDetailPopup" />
     </div>
   </div>
 </template>
 
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
-import TotalTarget from "./totalTarget/totalTarget";
+// import TotalTarget from "./totalTarget/totalTarget";
 import Summary from "./summary/summary"
-import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
-import LayerHub from "./layerHub/layerHub";
+// import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
+import SourceLayerHub from "./layerHub/layerHub";
+import CompareLayerHub from "../compare/layerHub/layerHub";
 import CommonDetailPopup from "./commonFrame/CommonDetailPopup/CommonDetailPopup";
 import ProjectDetailPopup from "./commonFrame/ProjectDetailPopup/ProjectDetailPopup";
 import SejPopup from "./commonFrame/SejPopup/SejPopup";
-import searchDetail from "./commonFrame/CommonDetailPopup/searchDetail";
+import SearchDetail from "./commonFrame/CommonDetailPopup/searchDetail";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
@@ -29,14 +35,15 @@ const Cesium = window.Cesium;
 
 export default {
   components: {
-    TotalTarget,
-    RoadLine,
-    LayerHub,
+    // TotalTarget,
+    // RoadLine,
+    SourceLayerHub,
+    CompareLayerHub,
     CommonDetailPopup,
     ProjectDetailPopup,
     SejPopup,
     Summary,
-    searchDetail
+    SearchDetail
   },
   data() {
     return {
@@ -60,8 +67,8 @@ export default {
       xzjxjdlayer: undefined,
       handdrawnlayer: undefined,
       handler: undefined,
-      isTotalTarget: true,
-      showSummary: 'total',
+      // isTotalTarget: true,
+      // showSummary: 'total',
       sceneLayers: [],
       cameraHeight: 5000,
       showLarge: window.showLarge,
@@ -69,6 +76,10 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["bufferQueryData"]),
+    currentPage () {
+      // vue中获取当前路由name
+      return this.$route.name
+    }
   },
   created() {
     //  点位信息 hash

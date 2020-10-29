@@ -13,6 +13,7 @@
       <CompareLayerHub ref="compareLayerHub" />
       <CommonDetailPopup ref="commonDetailPopup" />
       <ProjectDetailPopup ref="projectDetailPopup" />
+      <SearchDetail ref="searchDetail" />
     </div>
   </div>
 </template>

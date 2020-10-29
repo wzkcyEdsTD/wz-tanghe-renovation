@@ -17,7 +17,7 @@
         </li>
       </ul>
       <div class="xm-container" v-show="currentType=='xm'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">项目</span>
         </div>
@@ -65,7 +65,7 @@
         <div class="no-tip" v-show="currentXmList && !currentXmList.length">暂无数据</div>
       </div>
       <div class="dd-container" v-show="currentType=='dd'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">断点</span>
         </div>
@@ -116,7 +116,7 @@
     </div>
     <div class="right-content" v-show="changeType=='other'">
       <div class="kdtj-container" v-show="currentType=='dd'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">断点统计</span>
         </div>
@@ -204,7 +204,7 @@
         </div>
       </div>
       <div class="xmtj-container" v-show="currentType=='xm'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">项目统计</span>
         </div>
@@ -303,7 +303,7 @@
     </div>
     <div class="right-content" v-show="changeType=='all'">
       <div class="kdtj-container" v-show="currentType=='dd'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">断点统计</span>
         </div>
@@ -382,7 +382,7 @@
         </div>
       </div>
       <div class="xmtj-container" v-show="currentType=='xm'">
-        <div class="title-wrapper">
+        <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">项目统计</span>
         </div>

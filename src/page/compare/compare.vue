@@ -5,8 +5,8 @@
     </div>
     <div class="mask-wrapper">
       <div class="top"></div>
-      <div class="left"></div>
-      <div class="right"></div>
+      <!-- <div class="left"></div> -->
+      <!-- <div class="right"></div> -->
     </div>
   </div>
 </template>

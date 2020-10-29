@@ -732,6 +732,15 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url("./ProjectDetailPopup.less");
+</style>
+<style>
+.el-image-viewer__img {
+  max-height: 80% !important;
+  max-width: 90% !important;
+}
+.el-icon-circle-close {
+  color: #fff !important;
+}
 </style>

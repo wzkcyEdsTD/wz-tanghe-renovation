@@ -270,6 +270,14 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url("./searchDetail.less");
+</style>
+<style>
+.el-input__inner {
+  background: transparent !important;
+  border    : none;
+  color     : white;
+  font-size: 1.2vh;
+}
 </style>

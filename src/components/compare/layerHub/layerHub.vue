@@ -1,118 +1,120 @@
 <template>
   <div class="layerhub-wrapper">
-    <!-- <div class="sign-wrapper">
+  <div class="sign-wrapper" :style="{right: showLarge?'20%':'21%'}">
       <img src="/static/images/common/sign@2x.png">
-    </div> -->
-    <MapTool />
-    <div class="switch-menu-wrapper-onemap">
-      <div class="switch-menu-container">
-        <span :class="{active: currentType=='xm'}" @click="currentType='xm'">项目</span>
-        <span :class="{active: currentType=='dd'}" @click="currentType='dd'">断点</span>
-      </div>
-      <div class="switch-menu-decorate"></div>
     </div>
-    <div class="left-content">
-      <ul class="zrdw-list">
-        <li class="zrdw-item" :class="{active: currentZrdw==item}" v-for="(item, index) in zrdwList" :key="index" @click="getData(item)">
-          {{ item }}
-        </li>
-      </ul>
-      <div class="xm-container" v-show="currentType=='xm'">
-        <div class="titleHxhb-wrapper">
-          <span class="pre"></span>
-          <span class="title">项目</span>
+    <MapTool />
+    <div class="left-wrapper">
+      <div class="switch-menu-wrapper-onemap">
+        <div class="switch-menu-container">
+          <span :class="{active: currentType=='xm'}" @click="currentType='xm'">项目</span>
+          <span :class="{active: currentType=='dd'}" @click="currentType='dd'">断点</span>
         </div>
-        <div class="search-header">
-          <el-input
-            v-model="searchXMText"
-            class="searchFilterInput"
-            placeholder="查找项目"
-            size="small"
-            @keyup.enter.native="searchXMFilter"
-          />
-          <div class="button-container">
-            <div class="button-item">
-              <i class="icon-common icon-clear" @click="searchXMClear"></i>
-            </div>
-            <div class="button-item">
-              <i class="icon-common icon-search" @click="searchXMFilter"></i>
-            </div>
-          </div>
-        </div>
-        <div class="xm-list">
-          <div v-for="(item, index) in xmList" :key="index">
-            <div class="xm-item" @click="itemClick(item)">
-              <div class="name">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
-              <div class="info-box">
-                <div class="info-item">
-                  <div class="key">建设状态</div>
-                  <div class="value">{{ item.attributes.CURRENT_STATE }}</div>
-                </div>
-                <div class="split"></div>
-                <div class="info-item">
-                  <div class="key">投资计划</div>
-                  <div class="value">{{ item.attributes.TOTALAMOUNT }}万元</div>
-                </div>
-                <div class="split"></div>
-                <div class="info-item jcsj">
-                  <div class="key">计划建成时间</div>
-                  <div class="value">{{ item.attributes.CONSYEARE }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="split-line"></div>
-          </div>
-        </div>
-        <div class="no-tip" v-show="currentXmList && !currentXmList.length">暂无数据</div>
+        <div class="switch-menu-decorate"></div>
       </div>
-      <div class="dd-container" v-show="currentType=='dd'">
-        <div class="titleHxhb-wrapper">
-          <span class="pre"></span>
-          <span class="title">断点</span>
-        </div>
-        <div class="search-header">
-          <el-input
-            v-model="searchDDText"
-            class="searchFilterInput"
-            placeholder="查找断点"
-            size="small"
-            @keyup.enter.native="searchDDFilter"
-          />
-          <div class="button-container">
-            <div class="button-item">
-              <i class="icon-common icon-clear" @click="searchDDClear"></i>
-            </div>
-            <div class="button-item">
-              <i class="icon-common icon-search" @click="searchDDFilter"></i>
-            </div>
-          </div>
-        </div>
-        <div class="dd-list">
-          <div v-for="(item, index) in ddList" :key="index">
-            <div class="dd-item" @click="itemClick(item)">
-              <img
-                :src="`/static/images/断点/${
-                  item.attributes.PHOTO.split(';')[0]
-                }`"
-              />
-              <div class="info-box">
-                <div class="name">
-                  {{ index + 1 }}.{{ item.attributes.NAME }}
-                </div>
-                <div class="info-item">
-                  <div class="key">计划贯穿时间</div>
-                  <div class="value">{{ item.attributes.JHGTSJ }}</div>
-                </div>
-                <div class="info-item">
-                  <div class="key">长度（米）</div>
-                  <div class="value">{{ item.attributes.LENGTH }}</div>
-                </div>
+      <div class="left-content">
+        <ul class="zrdw-list">
+          <li class="zrdw-item" :class="{active: currentZrdw==item}" v-for="(item, index) in zrdwList" :key="index" @click="getData(item)">
+            {{ item }}
+          </li>
+        </ul>
+        <div class="xm-container" v-show="currentType=='xm'">
+          <!-- <div class="titleHxhb-wrapper">
+            <span class="pre"></span>
+            <span class="title">项目</span>
+          </div> -->
+          <div class="search-header">
+            <el-input
+              v-model="searchXMText"
+              class="searchFilterInput"
+              placeholder="查找项目"
+              size="small"
+              @keyup.enter.native="searchXMFilter"
+            />
+            <div class="button-container">
+              <div class="button-item">
+                <i class="icon-common icon-clear" @click="searchXMClear"></i>
+              </div>
+              <div class="button-item">
+                <i class="icon-common icon-search" @click="searchXMFilter"></i>
               </div>
             </div>
-            <div class="split-line"></div>
           </div>
+          <div class="xm-list">
+            <div v-for="(item, index) in xmList" :key="index">
+              <div class="xm-item" @click="itemClick(item)">
+                <div class="name">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
+                <div class="info-box">
+                  <div class="info-item">
+                    <div class="key">建设状态</div>
+                    <div class="value">{{ item.attributes.CURRENT_STATE }}</div>
+                  </div>
+                  <div class="split"></div>
+                  <div class="info-item">
+                    <div class="key">投资计划</div>
+                    <div class="value">{{ item.attributes.TOTALAMOUNT }}万元</div>
+                  </div>
+                  <div class="split"></div>
+                  <div class="info-item jcsj">
+                    <div class="key">计划建成时间</div>
+                    <div class="value">{{ item.attributes.CONSYEARE }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="split-line"></div>
+            </div>
+          </div>
+          <div class="no-tip" v-show="currentXmList && !currentXmList.length">暂无数据</div>
         </div>
-        <div class="no-tip" v-show="currentDdList && !currentDdList.length">暂无数据</div>
+        <div class="dd-container" v-show="currentType=='dd'">
+          <!-- <div class="titleHxhb-wrapper">
+            <span class="pre"></span>
+            <span class="title">断点</span>
+          </div> -->
+          <div class="search-header">
+            <el-input
+              v-model="searchDDText"
+              class="searchFilterInput"
+              placeholder="查找断点"
+              size="small"
+              @keyup.enter.native="searchDDFilter"
+            />
+            <div class="button-container">
+              <div class="button-item">
+                <i class="icon-common icon-clear" @click="searchDDClear"></i>
+              </div>
+              <div class="button-item">
+                <i class="icon-common icon-search" @click="searchDDFilter"></i>
+              </div>
+            </div>
+          </div>
+          <div class="dd-list">
+            <div v-for="(item, index) in ddList" :key="index">
+              <div class="dd-item" @click="itemClick(item)">
+                <img
+                  :src="`/static/images/断点/${
+                    item.attributes.PHOTO.split(';')[0]
+                  }`"
+                />
+                <div class="info-box">
+                  <div class="name">
+                    {{ index + 1 }}.{{ item.attributes.NAME }}
+                  </div>
+                  <div class="info-item">
+                    <div class="key">计划贯穿时间</div>
+                    <div class="value">{{ item.attributes.JHGTSJ }}</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="key">长度（米）</div>
+                    <div class="value">{{ item.attributes.LENGTH }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="split-line"></div>
+            </div>
+          </div>
+          <div class="no-tip" v-show="currentDdList && !currentDdList.length">暂无数据</div>
+        </div>
       </div>
     </div>
     <div class="right-content" v-show="changeType=='other'">
@@ -584,6 +586,7 @@ export default {
   },
   data() {
     return {
+      showLarge:window.showLarge,
       screenWidth: document.body.clientWidth,
       currentType: 'xm',
       changeType:'all',
@@ -1312,6 +1315,13 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url("./layerHub.less");
+</style>
+<style>
+.el-input__inner {
+  background: transparent !important;
+  border: none;
+  color: white;
+}
 </style>

@@ -36,6 +36,7 @@ export default {
   },
   data() {
     return {
+      showLarge:window.showLarge,
       leftOrRight:true,
       showSign: true,
       showMenu: true,

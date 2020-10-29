@@ -165,6 +165,28 @@
             </div>
             <div class="base-item">
               <div class="title">
+                <img src="./images/question-icon.png" />
+                <span>规模：</span>
+              </div>
+              <div class="value">
+                {{
+                forceEntity.attributes.CONTENTGM ? forceEntity.attributes.CONTENTGM : "无"
+                }}
+              </div>
+            </div>
+            <div class="base-item bg">
+              <div class="title">
+                <img src="./images/question-icon.png" />
+                <span>最新进展：</span>
+              </div>
+              <div class="value">
+                {{
+                forceEntity.attributes.ZXJZ ? forceEntity.attributes.ZXJZ : "无"
+                }}
+              </div>
+            </div>
+            <div class="base-item">
+              <div class="title">
                 <img src="./images/plan-icon.png" />
                 <span>计划时间：</span>
               </div>

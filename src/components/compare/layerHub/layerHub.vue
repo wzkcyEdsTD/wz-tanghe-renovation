@@ -391,7 +391,7 @@
         </div>
         <div class="xmtzjh-info">
           <div class="sub-title-wrapper">
-            <div class="sub-title">项目投资计划完成率排行</div>
+            <div class="sub-title">当年项目投资计划完成率排行</div>
             <div class="decorate"></div>
           </div>
           <div class="mxph">
@@ -694,7 +694,7 @@ export default {
       console.log(alldata)
       if (this.currentZrdw != '指挥部') {
         result = alldata.filter(item => {
-          return item.attributes.ZR_DEPTID == this.currentZrdw
+          return ~item.attributes.ZR_DEPTID.indexOf(this.currentZrdw)
         })
       } else {
         result = alldata
@@ -707,7 +707,7 @@ export default {
       let alldata = this.sourceMap['断点']
       if (this.currentZrdw != '指挥部') {
         result = alldata.filter(item => {
-          return item.attributes.ZRDW == this.currentZrdw
+          return ~item.attributes.ZRDW.indexOf(this.currentZrdw)
         })
       } else {
         result = alldata

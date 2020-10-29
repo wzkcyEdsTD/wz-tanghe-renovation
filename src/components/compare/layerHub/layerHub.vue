@@ -3,6 +3,7 @@
     <!-- <div class="sign-wrapper">
       <img src="/static/images/common/sign@2x.png">
     </div> -->
+    <MapTool />
     <div class="switch-menu-wrapper-onemap">
       <div class="switch-menu-container">
         <span :class="{active: currentType=='xm'}" @click="currentType='xm'">项目</span>
@@ -576,7 +577,11 @@
 import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "../../sourcelayer/layerHub/TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
+import MapTool from "../../sourcelayer/layerHub/components/mapTool"
 export default {
+  components:{
+    MapTool
+  },
   data() {
     return {
       screenWidth: document.body.clientWidth,

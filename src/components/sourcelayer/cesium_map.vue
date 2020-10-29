@@ -139,7 +139,7 @@ export default {
             const geometry = window.featureMap[_NODEID_][_SMID_].geometry;
             this.addLocationIcon(geometry, _NODEID_);
 
-            this.$refs.searchDetail.showZB = false;
+            this.$refs.searchDetail && (this.$refs.searchDetail.showZB = false);
 
             if (~_NODEID_.indexOf('项目') || _NODEID_ == '断点') {
 

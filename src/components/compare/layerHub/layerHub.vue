@@ -43,21 +43,21 @@
           <div class="xm-list">
             <div v-for="(item, index) in xmList" :key="index">
               <div class="xm-item" @click="itemClick(item)">
-                <div class="name">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
+                <div class="name" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
                 <div class="info-box">
                   <div class="info-item">
                     <div class="key">建设状态</div>
-                    <div class="value">{{ item.attributes.CURRENT_STATE }}</div>
+                    <div class="value" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.CURRENT_STATE }}</div>
                   </div>
                   <div class="split"></div>
                   <div class="info-item">
                     <div class="key">投资计划</div>
-                    <div class="value">{{ item.attributes.TOTALAMOUNT }}万元</div>
+                    <div class="value" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.TOTALAMOUNT }}万元</div>
                   </div>
                   <div class="split"></div>
                   <div class="info-item jcsj">
                     <div class="key">计划建成时间</div>
-                    <div class="value">{{ item.attributes.CONSYEARE }}</div>
+                    <div class="value" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.CONSYEARE }}</div>
                   </div>
                 </div>
               </div>
@@ -97,16 +97,16 @@
                   }`:`/static/images/断点/1_20200928.jpg`"
                 />
                 <div class="info-box">
-                  <div class="name">
+                  <div class="name" :style="{color:item.attributes.YS==1?'#20D38E':item.attributes.YS==2?'#FF9124':'#14D1D1'}">
                     {{ index + 1 }}.{{ item.attributes.NAME }}
                   </div>
                   <div class="info-item">
                     <div class="key">计划贯穿时间</div>
-                    <div class="value">{{ item.attributes.JHGTSJ }}</div>
+                    <div class="value" :style="{color:item.attributes.YS==1?'#20D38E':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.JHGTSJ }}</div>
                   </div>
                   <div class="info-item">
                     <div class="key">长度（米）</div>
-                    <div class="value">{{ item.attributes.LENGTH }}</div>
+                    <div class="value" :style="{color:item.attributes.YS==1?'#20D38E':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.LENGTH }}</div>
                   </div>
                 </div>
               </div>
@@ -718,6 +718,7 @@ export default {
     delayXmList() {
       let result
       let alldata = this.sourceMap['项目']
+      console.log(alldata);
       if (alldata) {
         if (this.currentZrdw != '指挥部') {
           result = alldata.filter(item => {

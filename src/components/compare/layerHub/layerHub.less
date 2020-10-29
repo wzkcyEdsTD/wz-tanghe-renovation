@@ -384,17 +384,19 @@
         position: relative;
         left: 1vh;
         top: 0vh;
+        display: flex;
+        align-items: center;
         .squareIn {
           height: 100%;
-          position: absolute;
+          // position: absolute;
           background: #52D1FE;
         }
         .squareInText {
-          position:absolute;
+          // position:absolute;
           color: #52D1FE;
           font-size: 1vh;
-          top: -0.1vh;
-          left: inherit
+          // top: -0.1vh;
+          // left: inherit
         }
       }
       .yhsxText{
@@ -988,7 +990,8 @@
     }
   }
   .decorate {
-    width: 17vh;
+    // width: 17vh;
+    flex: 1;
     height: 0.5vh;
     .bg-image('./images/decorate-line');
   }

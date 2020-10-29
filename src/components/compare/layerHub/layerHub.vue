@@ -141,14 +141,14 @@
             </div>
           </div>
         </div>
-        <div class="base-info">
+        <!-- <div class="base-info">
           <div class="base-item">
             <div class="progressEmpty">
               <img src="./images/0%（蓝）.png" class="empty">
               <div class="progressFull" style="width: 1.00vh">
                 <img src="./images/100%（蓝）.png" class="full">
               </div>
-              <span class="progressTitle">10%</span>
+              <span class="progressTitle">20%</span>
             </div>
           </div>
           <div class="base-item">
@@ -157,10 +157,10 @@
               <div class="progressFull" style="width: 1.00vh">
                 <img src="./images/100%（橙）.png" class="full">
               </div>
-              <span class="progressTitleRight">10%</span>
+              <span class="progressTitleRight">20%</span>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="kdfb-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">断点分布</div>
@@ -233,19 +233,20 @@
           <div class="base-item">
             <div class="progressEmpty">
               <img src="./images/0%（蓝）.png" class="empty">
-              <div class="progressFull" style="width: 1.00vh">
+              <div class="progressFull" :style="{width: `${ret.speed.finish/10}vh`}">
                 <img src="./images/100%（蓝）.png" class="full">
               </div>
-              <span class="progressTitle">10%</span>
+              <!-- <span class="progressTitle">{{(ret.situation.finish/ret.project.sum).toFixed(2)}}%</span> -->
+              <span class="progressTitle">{{ret.speed.finish}}%</span>
             </div>
           </div>
           <div class="base-item">
             <div class="progressEmpty">
               <img src="./images/0%（红）.png" class="empty">
-              <div class="progressFull" style="width: 1.00vh">
+              <div class="progressFull" :style="{width: `${ret.speed.Completion/10}vh`}">
                 <img src="./images/100%（红）.png" class="full">
               </div>
-              <span class="progressTitleRight">10%</span>
+              <span class="progressTitleRight">{{ret.speed.Completion}}%</span>
             </div>
           </div>
         </div>
@@ -318,26 +319,26 @@
           <div class="progressFlex">
             <span class="yhsxText">瓯海区</span>
             <div class = "square">
-              <div class="squareIn" style="width: 0.4vh"></div>
-              <div class="squareInText">1%</div>
+              <div class="squareIn" style="width: 46.7%"></div>
+              <div class="squareInText">46.7%</div>
             </div>
-            <span class="yhsxTextRight">62米</span>
+            <span class="yhsxTextRight">8910米</span>
           </div>
           <div class="progressFlex">
             <span class="yhsxText">鹿城区</span>
             <div class = "square">
-              <div class="squareIn" style="width: 0.8vh"></div>
-              <div class="squareInText">2%</div>
+              <div class="squareIn" style="width: 45.9%"></div>
+              <div class="squareInText">45.9%</div>
             </div>
-            <span class="yhsxTextRight">62米</span>
+            <span class="yhsxTextRight">8752米</span>
           </div>
           <div class="progressFlex">
             <span class="yhsxText">龙湾区</span>
             <div class = "square">
-              <div class="squareIn" style="width: 0.8vh"></div>
-              <div class="squareInText">2%</div>
+              <div class="squareIn" style="width: 7.4%"></div>
+              <div class="squareInText">7.4%</div>
             </div>
-            <span class="yhsxTextRight">62米</span>
+            <span class="yhsxTextRight">1412米</span>
           </div>
         </div>
         <div class="yhsx-info">
@@ -396,48 +397,48 @@
           </div>
           <div class="mxph">
             <img src="./images/xmtzjh.png" class="xmtzPicture">
-            <div class="second">65%</div>
-            <div class="secondText">总 39亿元</div>
-            <div class="first">75%</div>
-            <div class="firstText">总 39亿元</div>
-            <div class="third">35%</div>
-            <div class="thirdText">总 39亿元</div>
+            <div class="second">111%</div>
+            <div class="secondText">总 15.7亿元</div>
+            <div class="first">154%</div>
+            <div class="firstText">总 1.5亿元</div>
+            <div class="third">109%</div>
+            <div class="thirdText">总 0.2亿元</div>
           </div>
           <div class="progressFlex">
             <span class="xmtzOH">瓯海区</span>
-            <span class="xmtzLC">鹿城区</span>
-            <span class="xmtzLW">龙湾区</span>
+            <span class="xmtzLC">瑞安市</span>
+            <span class="xmtzLW">浙南产业区</span>
           </div>
           <ul>
             <li class="info-item-right">
-              <span class="value">瑞安市</span>
-              <span class="value">浙江产业区</span>
-              <span class="value">温州现代集团</span>
               <span class="value">温州城发集团</span>
+              <span class="value">龙湾区</span>
+              <span class="value">鹿城区</span>
+              <span class="value">温州现代集团</span>
             </li>
             <li class="info-item-right">
               <div class="key">
                 <div class="keyAllText">
-                  <p class="firstKeyText">45%</p>
-                  <p class="secondKeyText">39亿元</p>
+                  <p class="firstKeyText">103%</p>
+                  <p class="secondKeyText">4.6亿元</p>
                 </div>
               </div>
               <div class="key">
                 <div class="keyAllText">
-                  <p class="firstKeyText">35%</p>
-                  <p class="secondKeyText">39亿元</p>
+                  <p class="firstKeyText">100%</p>
+                  <p class="secondKeyText">4.1亿元</p>
                 </div>
               </div>
               <div class="key">
                 <div class="keyAllText">
-                  <p class="firstKeyText">25%</p>
-                  <p class="secondKeyText">39亿元</p>
+                  <p class="firstKeyText">67%</p>
+                  <p class="secondKeyText">6.3亿元</p>
                 </div>
               </div>
               <div class="key">
                 <div class="keyAllText">
-                  <p class="firstKeyText">15%</p>
-                  <p class="secondKeyText">39亿元</p>
+                  <p class="firstKeyText">2.6%</p>
+                  <p class="secondKeyText">2.6亿元</p>
                 </div>
               </div>
             </li>
@@ -605,55 +606,55 @@ export default {
             {   "name":"指挥部",
                 "project":{"sum":"67","plan":"275"},
                 "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
-                "speed":{"Completion":"2","finish":"18"},
+                "speed":{"Completion":"1.53","finish":"12.9"},
                 "pointStat":{"sum":"40","length":"19074"},
                 "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
             },
             {   "name":"鹿城区政府",
-                "project":{"sum":"18","plan":"50.5"},
-                "situation":{"pre":"4","preLag":"2","finish":"3","build":"3","buildLag":"6"},
+                "project":{"sum":"22","plan":"50.5"},
+                "situation":{"pre":"4","preLag":"2","finish":"3","build":"7","buildLag":"6"},
                 "speed":{"Completion":"1.3","finish":"16.7"},
                 "pointStat":{"sum":"21","length":"8752"},
                 "pointDist":{"east":{"number":"4","length":"1380"},"south":{"number":"","length":""},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"1","length":"310"},}
             },
             {   "name":"瓯海区政府",
-                "project":{"sum":"17","plan":"109"},
-                "situation":{"pre":"0","preLag":"0","finish":"4","build":"7","buildLag":"6"},
-                "speed":{"Completion":"1.5","finish":"23.5"},
+                "project":{"sum":"23","plan":"115"},
+                "situation":{"pre":"0","preLag":"0","finish":"4","build":"13","buildLag":"6"},
+                "speed":{"Completion":"1.43","finish":"17.4"},
                 "pointStat":{"sum":"11","length":"8910"},
                 "pointDist":{"east":{"number":"","length":""},"south":{"number":"9","length":"7030"},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"2","length":"1880"},}
             },
             {   "name":"龙湾区政府",
-                "project":{"sum":"8","plan":"45"},
-                "situation":{"pre":"0","preLag":"0","finish":"2","build":"4","buildLag":"2"},
-                "speed":{"Completion":"2.2","finish":"25"},
+                "project":{"sum":"10","plan":"45"},
+                "situation":{"pre":"0","preLag":"0","finish":"1","build":"7","buildLag":"2"},
+                "speed":{"Completion":"0.03","finish":"10"},
                 "pointStat":{"sum":"8","length":"1412"},
                 "pointDist":{"east":{"number":"8","length":"1412"},"south":{"number":"","length":""},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"","length":""},}
             },
             {   "name":"瑞安市政府",
-                "project":{"sum":"7","plan":"18.4"},
-                "situation":{"pre":"0","preLag":"0","finish":"0","build":"5","buildLag":"2"},
+                "project":{"sum":"11","plan":"20"},
+                "situation":{"pre":"0","preLag":"0","finish":"0","build":"9","buildLag":"2"},
                 "speed":{"Completion":"0","finish":"0"},
                 "pointStat":{"sum":"","length":""},
                 "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
             },
             {   "name":"温州现代集团",
-                "project":{"sum":"4","plan":"6"},
-                "situation":{"pre":"0","preLag":"0","finish":"2","build":"2","buildLag":"0"},
-                "speed":{"Completion":"32.4","finish":"50"},
+                "project":{"sum":"5","plan":"6"},
+                "situation":{"pre":"0","preLag":"0","finish":"2","build":"3","buildLag":"0"},
+                "speed":{"Completion":"32.15","finish":"40"},
                 "pointStat":{"sum":"","length":""},
                 "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
             },
             {   "name":"温州城发集团",
                 "project":{"sum":"12","plan":"3.5"},
-                "situation":{"pre":"0","preLag":"0","finish":"1","build":"4","buildLag":"7"},
+                "situation":{"pre":"1","preLag":"0","finish":"1","build":"9","buildLag":"1"},
                 "speed":{"Completion":"0.03","finish":"8.3"},
-                "pointStat":{"sum":"","length":""},
+                "pointStat":{"sum":"1","length":"157"},
                 "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
             },
             {   "name":"浙南产业区",
-                "project":{"sum":"1","plan":"11.5"},
-                "situation":{"pre":"0","preLag":"0","finish":"0","build":"1","buildLag":"0"},
+                "project":{"sum":"2","plan":"11.8"},
+                "situation":{"pre":"0","preLag":"0","finish":"0","build":"2","buildLag":"0"},
                 "speed":{"Completion":"0","finish":"0"},
                 "pointStat":{"sum":"","length":""},
                 "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}

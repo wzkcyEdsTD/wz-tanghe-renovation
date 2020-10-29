@@ -102,12 +102,12 @@
             <div class="sub-title">全景</div>
             <div class="overall-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.ZBQJ">
               <img v-for="(item,index) in zbOverallList" :key="index"
-                :src="`/static/images/VRPic/${forceEntity.type}/${item}`" @click="openQJ(index)"
+                :src="`/static/images/VRPic/${item}`" @click="openQJ(index)"
               >
             </div>
             <div class="overall-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.QJ">
               <img v-for="(item,index) in overallList" :key="index"
-                :src="`/static/images/VRPic/${forceEntity.type}/${item}`" @click="openQJ(index)"
+                :src="`/static/images/VRPic/${item}`" @click="openQJ(index)"
               >
             </div>
             <div class="no-tip" v-show="this.forceEntity.attributes && !this.forceEntity.attributes.QJ && !this.forceEntity.attributes.ZBQJ">暂无数据</div>

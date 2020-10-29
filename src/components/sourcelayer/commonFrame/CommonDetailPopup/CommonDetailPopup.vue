@@ -86,7 +86,7 @@
           <div class="content-item video-wrapper" id="video">
             <div class="sub-title">视频</div>
             <div class="video-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.SP">
-              <video v-for="(item,index) in spList" :key="index" class="video" :src="`/static/video/${forceEntity.type}/${item}`" controls="controls"></video>
+              <video v-for="(item,index) in spList" :key="index" class="video" :src="`/static/video/${item}`" controls="controls"></video>
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>

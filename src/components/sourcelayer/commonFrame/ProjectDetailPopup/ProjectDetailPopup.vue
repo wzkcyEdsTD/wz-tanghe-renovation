@@ -163,7 +163,7 @@
                 }}
               </div>
             </div>
-            <div class="base-item">
+            <div class="base-item" v-if="forceEntity.type == '项目'">
               <div class="title">
                 <img src="./images/question-icon.png" />
                 <span>规模：</span>

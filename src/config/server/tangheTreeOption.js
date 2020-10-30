@@ -219,6 +219,14 @@ export const CESIUM_TREE_OPTION = [
         newdataset: `${SW_DATA_NAME}quanjin`,
         type: "mvt"
       },
+      {
+        id:'监控',
+        icon:'监控',
+        label: "监控",
+        url: SERVER_DEFAULT_DATA,
+        newdataset: `${SW_DATA_NAME}jiankong`,
+        type: "mvt"
+      },
     ]
   },
   // {

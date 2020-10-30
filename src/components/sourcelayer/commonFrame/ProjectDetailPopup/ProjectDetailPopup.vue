@@ -417,6 +417,7 @@
       </div>
     </transition>
     <el-image-viewer
+      :style="{left:showLarge?'60%':'0'}"
       v-if="showViewer"
       :on-close="closeViewer"
       :url-list="srcList"

@@ -65,7 +65,7 @@ export const ServiceUrl = {
   LVDAOImage: {
     BOLD: "http://172.168.3.183:8090/iserver/services/3D-ldc/rest/realspace/datas/ld1.59t19",
     // THIN: "http://172.168.3.183:8090/iserver/services/3D-ld_0-55t19/rest/realspace/datas/ld_0.55t19",
-    THIN: "http://172.168.3.183:8090/iserver/services/3D-ld1/rest/realspace/datas/LD1"
+    THIN: "http://172.168.3.183:8090/iserver/services/3D-ld1/rest/realspace/datas/ld1"
   },
   // 行政区县
   XZJXQX:

@@ -393,6 +393,10 @@ export default {
           this.showVideo = true;
           this.isShow = false;
         }
+      } else if(entity.type === "监控") {
+        if (this.showLarge) {
+          this.$bus.$emit("change-rightContent", { type: 'jk', value: entity.attributes.URL });
+        }
       } else {
         this.forceEntity = entity;
         this.isShow = true;

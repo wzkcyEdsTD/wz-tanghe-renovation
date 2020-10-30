@@ -9,6 +9,7 @@
       <div class="player-wrapper">
         <video class="video" v-show="showType=='video'" :src="showSrc" controls="controls" autoplay muted></video>
         <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
+        <div v-show="showType=='jk'" id="player" class="frequency-pic type1" />
       </div>
     </div>
   </div>
@@ -19,6 +20,8 @@ import MHeader from "components/m-header/m-header";
 import Loading from "components/loading/loading";
 import { getUserInfo } from "./api/public/public";
 import { mapGetters, mapActions, mapState } from "vuex";
+
+const Aliplayer = window.Aliplayer;
 export default {
   name: "App",
   components: {
@@ -35,6 +38,7 @@ export default {
       // qjSrc: ''
       screenWidth: document.body.clientWidth,
       screeHeight: document.body.clientHeight,
+      video: undefined,
     };
   },
   computed: {
@@ -70,18 +74,38 @@ export default {
         this.showRightScreen = true
       }
     },
+    initRtmp() {
+      console.log('initRtmp')
+      this.video = undefined;
+      this.video = new Aliplayer(
+        {
+          id: 'player',
+          source: this.showSrc,
+          // source: 'http://video-surveillance.ousutec.com.cn:6713/mag/hls/17190cca40ba4a7cab6d61c58bf56312/2/live.m3u8',
+          width: "100%",
+          height: "100%",
+          autoplay: true,
+          controlBarVisibility: "hover",
+          useH5Prism: true,
+          isLive: true,
+        },
+        (player) => {
+          console.log("播放器创建");
+          player.mute();
+          player.play();
+        }
+      );
+    },
     eventRegsiter() {
       this.$bus.$off("change-screen");
       this.$bus.$on("change-screen", ({ value }) => {
         console.log('changeScreen!!!!!!!!', value)
         if (value) {
-          console.log('aaaaaaaaaaaa')
           document.getElementById('header').style.width = '60%'
           document.getElementById('content').style.width = '60%'
           // document.getElementById('leftHide').style.display = 'none'
           // document.getElementById('rightHide').style.display = 'none'
         } else {
-          console.log('bbbbbbbbbbbbbbb')
           document.getElementById('header').style.width = '100%'
           document.getElementById('content').style.width = '100%'
         }
@@ -89,9 +113,11 @@ export default {
       })
       this.$bus.$off("change-rightContent");
       this.$bus.$on("change-rightContent", ({ type, value }) => {
-        console.log('gogogo')
         this.showType = type
         this.showSrc = value
+        if (type == 'jk') {
+          this.initRtmp()
+        }
       })
     }
   },
@@ -147,6 +173,7 @@ body {
     align-items: center;
     .video, .iframe {
       width: 100%;
+      height: 100%;
       border: 1px solid #165FEA;
     }
     .iframe {

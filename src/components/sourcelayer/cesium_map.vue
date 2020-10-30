@@ -165,7 +165,7 @@ export default {
                 position: pick.primitive.position,
               });
 
-              if(~_NODEID_.indexOf('视频') || _NODEID_ == '全景'){
+              if(~_NODEID_.indexOf('视频') || _NODEID_ == '全景' || _NODEID_ == '监控'){
                 this.drawProjectCircle({
                   ...window.featureMap[_NODEID_][_SMID_]
                 }, pick.id);
@@ -235,16 +235,17 @@ export default {
           window.earth.imageryLayers.lowerToBottom(this.datalayer[value])
           window.currentMapType = `vector${value}`
         }
+        // 切换底图时，当前选中资源的label标签颜色切换
         if (window.currentMapType == 'vectorwhite') {
           for (let key in window.whiteLabelMap) {
-            if (window.whiteLabelMap[key]._labels[0].show) {
+            if (window.whiteLabelMap[key]._labels.length && window.whiteLabelMap[key]._labels[0].show) {
               window.blackLabelMap[key].setAllLabelsVisible(true)
             }
             window.whiteLabelMap[key].setAllLabelsVisible(false)
           }
         } else {
-          for (let key in window.whiteLabelMap) {
-            if (window.blackLabelMap[key]._labels[0].show) {
+          for (let key in window.blackLabelMap) {
+            if (window.blackLabelMap[key]._labels.length && window.blackLabelMap[key]._labels[0].show) {
               window.whiteLabelMap[key].setAllLabelsVisible(true)
             }
             window.blackLabelMap[key].setAllLabelsVisible(false)

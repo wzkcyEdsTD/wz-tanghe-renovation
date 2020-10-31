@@ -142,20 +142,11 @@ export default {
             this.$refs.searchDetail && (this.$refs.searchDetail.showZB = false);
 
             if (~_NODEID_.indexOf('项目') || _NODEID_ == '断点') {
-
-              // 画圆查询
-              this.drawProjectCircle({
-                ...window.featureMap[_NODEID_][_SMID_]
-              }, pick.id);
-
               this.$refs.projectDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
+                id: pick.id
               });
-
-              setTimeout(()=>{
-                this.$refs.projectDetailPopup.getdata(this.bufferQueryData);
-              },500);
               this.$refs.commonDetailPopup.closePopup()
             } else {
 
@@ -754,8 +745,8 @@ export default {
 
       // 延时获取异步数据
       setTimeout(() => {
-        console.log("bufferQueryData", this.bufferQueryData)
-      }, 30);
+        this.$refs.projectDetailPopup.getdata(this.bufferQueryData);
+      }, 500);
     },
 
 

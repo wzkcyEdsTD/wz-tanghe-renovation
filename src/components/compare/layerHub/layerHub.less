@@ -79,6 +79,13 @@
           background: linear-gradient(180deg, #10254B 0%, #03070F 100%);
           border: 0.1vh solid #165FEA;
           padding: 0.5vh 1vh;
+          cursor: pointer;
+          position: relative;         
+
+          >div >div {
+            z-index: 4;
+          }
+
           .name {
             width: 16vh;
             font-family: YouSheBiaoTiHei;
@@ -129,6 +136,18 @@
             top: 0vh;
           }
         }
+
+        .xmActive::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 38%;
+          left: 0;
+          bottom: 0;
+          background: linear-gradient(180deg, rgba(21, 56, 98, 0) 0%, #3BF1FF 100%);
+          z-index: 0;
+        }
+
         .split-line {
           margin: 1vh auto;
           width: 95%;
@@ -146,6 +165,13 @@
         .dd-item {
           display: flex;
           align-items: center;
+          cursor: pointer;
+          position: relative;         
+
+          >div >div {
+            z-index: 4;
+          }
+          
           >img {
             width: 7vh;
             height: 5.8vh;
@@ -187,6 +213,18 @@
             }
           }
         }
+
+        .ddActive::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 38%;
+          left: 0;
+          bottom: 0;
+          background: linear-gradient(180deg, rgba(21, 56, 98, 0) 0%, #3BF1FF 100%);
+          z-index: 0;
+        }
+
         .split-line {
           margin: 1vh auto;
           width: 95%;

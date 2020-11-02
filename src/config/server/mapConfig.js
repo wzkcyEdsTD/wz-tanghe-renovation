@@ -72,7 +72,8 @@ export const ServiceUrl = {
     "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/qx",
   // 行政街道
   XZJXJD:
-    "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/jd",
+    // "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/jd",
+    "http://172.168.3.183:8090/iserver/services/3D-jd/rest/realspace/datas/jd",
   HANDDRAWN: 
     "http://172.168.3.183:8090/iserver/services/3D-nt_map/rest/realspace/datas/nt_map",
   // 绿道场景

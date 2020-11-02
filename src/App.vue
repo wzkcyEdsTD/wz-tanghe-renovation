@@ -10,6 +10,7 @@
         <video class="video" v-show="showType=='video'" :src="showSrc" controls="controls" autoplay muted></video>
         <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
         <div v-show="showType=='jk'" id="player" class="frequency-pic type1" />
+        <!-- <video-player v-show="showType=='jk'" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" controls></video-player> -->
       </div>
     </div>
   </div>
@@ -39,6 +40,23 @@ export default {
       screenWidth: document.body.clientWidth,
       screeHeight: document.body.clientHeight,
       video: undefined,
+      // playerOptions: {  // vue-video-player方式
+      //   // videojs and plugin options
+      //   autoplay: true,
+      //   fluid: true,
+      //   aspectRatio: '16:9',
+      //   sources: [{
+      //     withCredentials: false,
+      //     type: "application/x-mpegURL",
+      //     src: ""
+      //   }],
+      //   controlBar: {
+      //     timeDivider: false,
+      //     durationDisplay: false,
+      //   },
+      //   flash: { hls: { withCredentials: false }},
+      //   html5: { hls: { withCredentials: false }},
+      // }
     };
   },
   computed: {
@@ -46,6 +64,9 @@ export default {
     ...mapState({
       isLoading: "isLoading",
     }),
+    // player() {
+    //   return this.$refs.videoPlayer.player
+    // }
   },
   watch: {
   },
@@ -74,7 +95,7 @@ export default {
         this.showRightScreen = true
       }
     },
-    initRtmp() {
+    initRtmp() {  // aliplayer方式
       console.log('initRtmp')
       this.video = undefined;
       this.video = new Aliplayer(
@@ -117,6 +138,9 @@ export default {
         this.showSrc = value
         if (type == 'jk') {
           this.initRtmp()
+          // this.playerOptions.sources[0].src = this.showSrc
+          // console.log('fuckplayer', this.player)
+          // this.player.play()
         }
       })
     }
@@ -171,14 +195,14 @@ body {
     height: 100%;
     display: flex;
     align-items: center;
-    .video, .iframe {
+    .video, .iframe, .vjs-custom-skin {
       width: 100%;
-      height: 100%;
+      // height: 100%;
       border: 1px solid #165FEA;
     }
-    .iframe {
-      height: 100%;
-    }
+    // .iframe {
+    //   height: 100%;
+    // }
   }
 }
 </style>

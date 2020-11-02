@@ -418,7 +418,7 @@ export default {
           url: ServiceUrl.XZJXJD,
         })
       )
-      this.xzjxjdlayer.alpha = 0.5;
+      // this.xzjxjdlayer.alpha = 0.5;
       this.xzjxjdlayer.show = false
 
       this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(

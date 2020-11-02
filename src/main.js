@@ -24,6 +24,10 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
+// import VueVideoPlayer from 'vue-video-player'
+// import 'video.js/dist/video-js.css'
+// import 'vue-video-player/src/custom-theme.css'
+// const hls =require("videojs-contrib-hls")
 
 Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 Vue.use(Viewer, {
@@ -31,6 +35,8 @@ Vue.use(Viewer, {
     zIndex: 9999
   }
 })
+// Vue.use(VueVideoPlayer)
+// Vue.use(hls)
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);

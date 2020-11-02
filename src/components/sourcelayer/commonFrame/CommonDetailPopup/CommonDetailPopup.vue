@@ -123,6 +123,10 @@
       <i class="close" @click="closeVideo"></i>
       <video :src="VideoURL" controls="controls"></video>
     </div>
+    <div class="JKFrame" v-show="showJK">
+      <i class="close" @click="closeJK"></i>
+      <div id="jkplayer" class="jkplayer" />
+    </div>
     <searchDetail ref="searchDetail"  v-show="showDetail"></searchDetail>
   </div>
 </template>
@@ -162,7 +166,9 @@ export default {
       QJURL: '',
       hideField: ["名称", "标签", "备注", "形象进度", "目录分类", "数据来源", "经度", "纬度", "建设地点1", "建设地点2", "建设地点3", "是否属于67个里面的", "类型", "统计", "唯一码", "更新参考数据源", "照片编号", "类型1", "类型2", "类型3", "显示级别", "类型编码", "马克", "照片", "颜色", "全景", "视频", "语音", "现场记录", "景观图", "周边全景", "全景缩略图", "原表唯一码"],
       showVideo: false,
+      showJK: false,
       VideoURL: '',
+      JKVideo: undefined,
       showDetail:false,
       list:[],
     };
@@ -375,6 +381,12 @@ export default {
       this.VideoURL = '';
     },
 
+    // 关闭监控
+    closeJK() {
+      this.showJK = false;
+      this.JKVideo = undefined;;
+    },
+
     // 跳转详情
     goDetail(entity) {
       if(entity.type === "全景") {
@@ -396,6 +408,10 @@ export default {
       } else if(entity.type === "监控") {
         if (this.showLarge) {
           this.$bus.$emit("change-rightContent", { type: 'jk', value: entity.attributes.URL });
+        } else {
+          this.initRtmp(entity.attributes.URL)
+          this.showJK = true;
+          this.isShow = false;
         }
       } else {
         this.forceEntity = entity;
@@ -409,6 +425,28 @@ export default {
       this.$refs.searchDetail.getdata(this.list,forceEntity);
     },
 
+    initRtmp(src) {
+      console.log('initRtmp')
+      this.JKVideo = undefined;
+      this.JKVideo = new Aliplayer(
+        {
+          id: 'jkplayer',
+          source: src,
+          // source: 'http://video-surveillance.ousutec.com.cn:6713/mag/hls/17190cca40ba4a7cab6d61c58bf56312/2/live.m3u8',
+          width: "100%",
+          height: "100%",
+          autoplay: true,
+          controlBarVisibility: "hover",
+          useH5Prism: true,
+          isLive: true,
+        },
+        (player) => {
+          console.log("播放器创建");
+          player.mute();
+          player.play();
+        }
+      );
+    },
   },
 };
 </script>

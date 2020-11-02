@@ -276,144 +276,153 @@
             </div>
           </div>
         </div>
-        <div class="perimeterSearch">
-          <div v-show="xmList?xmList.length>0?true:false:false">
-            <div class="fjxm">
-              <div class="tp">
-                <img src="./images/时间框.png" class="kuang">
-                <span class="text">附近项目</span>
+        <el-collapse v-model="activeNames" @change="collapseChange">
+          <el-collapse-item title="查看周边" name="查看周边">
+            <div class="perimeterSearch">     
+              <div v-show="xmList?xmList.length>0?true:false:false">
+                <div class="fjxm">
+                  <div class="tp">
+                    <img src="./images/时间框.png" class="kuang">
+                    <span class="text">附近项目</span>
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="result-wrapper">
+                    <ul class="result-list">
+                      <li class="result-item header">
+                        <span class="index">序号</span>
+                        <span class="name">项目名称</span>
+                        <span class="content">所属街道</span>
+                      </li>
+                      <li
+                        class="result-item"
+                        v-for="(item, index) in xmList"
+                        :key="index"
+                        @click="itemClick(item)"
+                      >
+                        <span class="index">{{ index + 1 }}</span>
+                        <span class="name" :title="item.attributes.NAME">{{
+                      item.attributes.NAME
+                    }}</span>
+                        <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="list">
-              <div class="result-wrapper">
-                <ul class="result-list">
-                  <li class="result-item header">
-                    <span class="index">序号</span>
-                    <span class="name">项目名称</span>
-                    <span class="content">所属街道</span>
-                  </li>
-                  <li
-                    class="result-item"
-                    v-for="(item, index) in xmList"
-                    :key="index"
-                    @click="itemClick(item)"
-                  >
-                    <span class="index">{{ index + 1 }}</span>
-                    <span class="name" :title="item.attributes.NAME">{{
-                  item.attributes.NAME
-                }}</span>
-                    <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div v-show="ddList?ddList.length>0?true:false:false">
-            <div class="fjxm">
-              <div class="tp">
-                <img src="./images/时间框.png" class="kuang">
-                <span class="text">附近断点</span>
-              </div>
-            </div>
-            <div class="list">
-              <div class="result-wrapper">
-                <ul class="result-list">
-                  <li class="result-item header">
-                    <span class="index">序号</span>
-                    <span class="name">断点名称</span>
-                    <span class="content">所属街道</span>
-                  </li>
-                  <li
-                    class="result-item"
-                    v-for="(item, index) in ddList"
-                    :key="index"
-                    @click="itemClick(item)"
-                  >
-                    <span class="index">{{ index + 1 }}</span>
-                    <!--            <div class="icon">-->
-                    <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
-                    <!--            </div>-->
+              <div v-show="ddList?ddList.length>0?true:false:false">
+                <div class="fjxm">
+                  <div class="tp">
+                    <img src="./images/时间框.png" class="kuang">
+                    <span class="text">附近断点</span>
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="result-wrapper">
+                    <ul class="result-list">
+                      <li class="result-item header">
+                        <span class="index">序号</span>
+                        <span class="name">断点名称</span>
+                        <span class="content">所属街道</span>
+                      </li>
+                      <li
+                        class="result-item"
+                        v-for="(item, index) in ddList"
+                        :key="index"
+                        @click="itemClick(item)"
+                      >
+                        <span class="index">{{ index + 1 }}</span>
+                        <!--            <div class="icon">-->
+                        <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
+                        <!--            </div>-->
 
-                    <span class="name" :title="item.attributes.NAME">{{
-                  item.attributes.NAME
-                }}</span>
-                    <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
-                  </li>
-                </ul>
+                        <span class="name" :title="item.attributes.NAME">{{
+                      item.attributes.NAME
+                    }}</span>
+                        <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div v-show="qjList&&currentPage=='sourcelayer'?qjList.length>0?true:false:false">
-            <div class="fjxm">
-              <div class="tp">
-                <img src="./images/时间框.png" class="kuang">
-                <span class="text">附近全景</span>
-              </div>
-            </div>
-            <div class="list">
-              <div class="result-wrapper">
-                <ul class="result-list">
-                  <li class="result-item header">
-                    <span class="index">序号</span>
-                    <span class="name">全景名称</span>
-                    <span class="content">所属街道</span>
-                  </li>
-                  <li
-                    class="result-item"
-                    v-for="(item, index) in qjList"
-                    :key="index"
-                    @click="itemClick(item)"
-                  >
-                    <span class="index">{{ index + 1 }}</span>
-                    <!--            <div class="icon">-->
-                    <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
-                    <!--            </div>-->
+              <div v-show="qjList&&currentPage=='sourcelayer'?qjList.length>0?true:false:false">
+                <div class="fjxm">
+                  <div class="tp">
+                    <img src="./images/时间框.png" class="kuang">
+                    <span class="text">附近全景</span>
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="result-wrapper">
+                    <ul class="result-list">
+                      <li class="result-item header">
+                        <span class="index">序号</span>
+                        <span class="name">全景名称</span>
+                        <span class="content">所属街道</span>
+                      </li>
+                      <li
+                        class="result-item"
+                        v-for="(item, index) in qjList"
+                        :key="index"
+                        @click="itemClick(item)"
+                      >
+                        <span class="index">{{ index + 1 }}</span>
+                        <!--            <div class="icon">-->
+                        <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
+                        <!--            </div>-->
 
-                    <span class="name" :title="item.attributes.NAME">{{
-                  item.attributes.NAME
-                }}</span>
-                    <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
-                  </li>
-                </ul>
+                        <span class="name" :title="item.attributes.NAME">{{
+                      item.attributes.NAME
+                    }}</span>
+                        <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div v-show="spList&&currentPage=='sourcelayer'?spList.length>0?true:false:false">
-            <div class="fjxm">
-              <div class="tp">
-                <img src="./images/时间框.png" class="kuang">
-                <span class="text">附近视频</span>
-              </div>
-            </div>
-            <div class="list">
-              <div class="result-wrapper">
-                <ul class="result-list">
-                  <li class="result-item header">
-                    <span class="index">序号</span>
-                    <span class="name">视频名称</span>
-                    <span class="content">所属街道</span>
-                  </li>
-                  <li
-                    class="result-item"
-                    v-for="(item, index) in spList"
-                    :key="index"
-                    @click="itemClick(item)"
-                  >
-                    <span class="index">{{ index + 1 }}</span>
-                    <!--            <div class="icon">-->
-                    <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
-                    <!--            </div>-->
+              <div v-show="spList&&currentPage=='sourcelayer'?spList.length>0?true:false:false">
+                <div class="fjxm">
+                  <div class="tp">
+                    <img src="./images/时间框.png" class="kuang">
+                    <span class="text">附近视频</span>
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="result-wrapper">
+                    <ul class="result-list">
+                      <li class="result-item header">
+                        <span class="index">序号</span>
+                        <span class="name">视频名称</span>
+                        <span class="content">所属街道</span>
+                      </li>
+                      <li
+                        class="result-item"
+                        v-for="(item, index) in spList"
+                        :key="index"
+                        @click="itemClick(item)"
+                      >
+                        <span class="index">{{ index + 1 }}</span>
+                        <!--            <div class="icon">-->
+                        <!--              <img src="static/images/source-icon/项目icon@2x.png" style="width: 2vh;">-->
+                        <!--            </div>-->
 
-                    <span class="name" :title="item.attributes.NAME">{{
-                  item.attributes.NAME
-                }}</span>
-                    <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
-                  </li>
-                </ul>
+                        <span class="name" :title="item.attributes.NAME">{{
+                      item.attributes.NAME
+                    }}</span>
+                        <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
+
+              <div v-show="(!isListEmpty(xmList) && !isListEmpty(ddList) && !isListEmpty(qjList) && !isListEmpty(spList)) || (!isListEmpty(xmList) && !isListEmpty(ddList))" class="description">
+                暂无周边信息
+              </div>
+            
             </div>
-          </div>
-        </div>
+          </el-collapse-item>
+        </el-collapse>
       </div>
     </transition>
     <el-image-viewer
@@ -486,6 +495,7 @@ export default {
       searchQJText:'',
       qjList:[],
       spList:[],
+      activeNames: []
     }
   },
   computed: {
@@ -498,6 +508,15 @@ export default {
     this.getNowFormatDate()
   },
   methods: {
+    // 折叠面板事件监听
+    collapseChange(val) {
+      // 展开画圆，收起清除
+      if(val.length) {
+        this.$parent.drawProjectCircle(this.forceEntity, this.forceEntity.id);
+      } else {
+        this.$parent.removeProjectCircle();
+      }
+    },
     getForceEntity(forceEntity) {
       this.forceEntity = forceEntity;
       this.isShow = true
@@ -729,12 +748,18 @@ export default {
         this.ddList = this.questionDdList;
         this.qjList = this.questionQjList;
         this.spList = this.questionSpList;
-        // console.log("项目",this.xmList);
       })
-
-
-
     },
+
+    // 判断数组是否为空
+    isListEmpty(list) {
+      if(!list) return false;
+      if(list instanceof Array) {
+        if(list.length) return true;
+      }
+      return false;
+    }
+
   },
   watch: {
     currentIndex(val) {

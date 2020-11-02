@@ -438,6 +438,11 @@ export default {
           this.$bus.$emit('clickFly');
         }
       });
+
+      // 定位图标
+      this.$parent.$parent.addLocationIcon(item.geometry, item.id);
+      this.$parent.$parent.$refs.projectDetailPopup.getForceEntity(item);
+      this.$parent.$parent.$refs.commonDetailPopup.closePopup();  
     }
   },
 };

@@ -40,9 +40,12 @@ export default {
     };
   },
   computed: {
-    currentPage () {
-      // vue中获取当前路由name
-      return this.$route.name
+    currentPage: {
+      get() {
+        // vue中获取当前路由name
+        return this.$route.name
+      },
+      set(val) {}
     }
   },
   mounted() {

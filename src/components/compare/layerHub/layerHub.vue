@@ -40,9 +40,9 @@
               </div>
             </div>
           </div>
-          <div class="xm-list">
+          <div id="xm-list" class="xm-list">
             <div v-for="(item, index) in xmList" :key="index">
-              <div class="xm-item" @click="itemClick(item)">
+              <div class="xm-item" :class="{ xmActive: xmActive == item.attributes.GUID }" @click="itemClick(item)">
                 <div class="name" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
                 <div class="info-box">
                   <div class="info-item">
@@ -88,9 +88,9 @@
               </div>
             </div>
           </div>
-          <div class="dd-list">
+          <div id="dd-list"  class="dd-list">
             <div v-for="(item, index) in ddList" :key="index">
-              <div class="dd-item" @click="itemClick(item)">
+              <div class="dd-item" :class="{ ddActive: ddActive == item.attributes.GUID }" @click="itemClick(item)">
                 <img
                   :src="item.attributes.PHOTO?`/static/images/断点/${
                     item.attributes.PHOTO.split(';')[0]
@@ -180,7 +180,7 @@
         <div class="czwt-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">
-              存在问题<span class="number">{{'(' + questionDdListLength +')个'}}</span>
+              存在问题<span class="number">{{'(' + questionDdList.length +')个'}}</span>
             </div>
             <div class="decorate"></div>
           </div>
@@ -272,7 +272,7 @@
         <div class="czwt-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">
-              滞后项目<span class="number">{{"("+delayXmListLength+")个"}}</span>
+              滞后项目<span class="number">{{"("+delayXmList.length+")个"}}</span>
             </div>
             <div class="decorate"></div>
           </div>
@@ -681,6 +681,8 @@ export default {
       pieEchart: null,
       barEchart: null,
       lineEchart: null,
+      xmActive: "",
+      ddActive: "",
       // xiaEchart: null,
     };
   },
@@ -701,7 +703,7 @@ export default {
         result = alldata
       }
       this.xmList = result;
-      // return result
+      return result
     },
     currentDdList() {
       let result = []
@@ -714,6 +716,7 @@ export default {
         result = alldata
       }
       this.ddList = result;
+      return result;
     },
     delayXmList() {
       let result
@@ -732,22 +735,6 @@ export default {
         return result
       }
     },
-    delayXmListLength() {
-      let result
-      let alldata = this.sourceMap['项目']
-      if (alldata) {
-        if (this.currentZrdw != '指挥部') {
-          result = alldata.filter(item => {
-            return item.attributes.ZR_DEPTID == this.currentZrdw && ~item.attributes.CURRENT_STATE.indexOf('滞后')
-          })
-        } else {
-          result = alldata.filter(item => {
-            return ~item.attributes.CURRENT_STATE.indexOf('滞后')
-          })
-        }
-        return result.length
-      }
-    },
     questionDdList() {
       let result
       let alldata = this.sourceMap['断点']
@@ -762,22 +749,6 @@ export default {
           })
         }
         return result
-      }
-    },
-    questionDdListLength() {
-      let result
-      let alldata = this.sourceMap['断点']
-      if (alldata) {
-        if (this.currentZrdw != '指挥部') {
-          result = alldata.filter(item => {
-            return item.attributes.ZRDW == this.currentZrdw && item.attributes.CZWT != '无'
-          })
-        } else {
-          result = alldata.filter(item => {
-            return item.attributes.CZWT != '无'
-          })
-        }
-        return result.length
       }
     },
   },
@@ -1216,6 +1187,13 @@ export default {
       });
     },
     getData(name){
+      // 点击，列表回到顶部
+      $("#xm-list").scrollTop(0);
+      $("#dd-list").scrollTop(0);
+
+      // 不再重复操作
+      if(this.currentZrdw == name) return;
+
       this.currentZrdw = name;
       if (name==='指挥部'){
         this.changeType = 'all';
@@ -1239,6 +1217,13 @@ export default {
       });
     },
     itemClick(item) {
+      console.log(item, this.currentType)
+      if(this.currentType == "xm") {
+        this.xmActive = item.attributes.GUID;
+      } else {
+        this.ddActive = item.attributes.GUID;
+      }
+
       const { x, y } = item.geometry;
       window.earth.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(x, y, 450),
@@ -1316,6 +1301,15 @@ export default {
     drawData(val) {
       console.log("drawData", val);
     },
+    currentType(val) {
+      // 点击，列表回到顶部
+      $("#xm-list").scrollTop(0);
+      $("#dd-list").scrollTop(0);
+
+      // 选中置空
+      this.xmActive = "";
+      this.ddActive = "";
+    }
   },
 };
 </script>

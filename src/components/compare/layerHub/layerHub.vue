@@ -180,7 +180,7 @@
         <div class="czwt-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">
-              存在问题<span class="number">{{'(' + questionDdListLength +')个'}}</span>
+              存在问题<span class="number">{{'(' + questionDdList.length +')个'}}</span>
             </div>
             <div class="decorate"></div>
           </div>
@@ -272,7 +272,7 @@
         <div class="czwt-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">
-              滞后项目<span class="number">{{"("+delayXmListLength+")个"}}</span>
+              滞后项目<span class="number">{{"("+delayXmList.length+")个"}}</span>
             </div>
             <div class="decorate"></div>
           </div>
@@ -703,7 +703,7 @@ export default {
         result = alldata
       }
       this.xmList = result;
-      // return result
+      return result
     },
     currentDdList() {
       let result = []
@@ -716,6 +716,7 @@ export default {
         result = alldata
       }
       this.ddList = result;
+      return result;
     },
     delayXmList() {
       let result
@@ -734,22 +735,6 @@ export default {
         return result
       }
     },
-    delayXmListLength() {
-      let result
-      let alldata = this.sourceMap['项目']
-      if (alldata) {
-        if (this.currentZrdw != '指挥部') {
-          result = alldata.filter(item => {
-            return item.attributes.ZR_DEPTID == this.currentZrdw && ~item.attributes.CURRENT_STATE.indexOf('滞后')
-          })
-        } else {
-          result = alldata.filter(item => {
-            return ~item.attributes.CURRENT_STATE.indexOf('滞后')
-          })
-        }
-        return result.length
-      }
-    },
     questionDdList() {
       let result
       let alldata = this.sourceMap['断点']
@@ -764,22 +749,6 @@ export default {
           })
         }
         return result
-      }
-    },
-    questionDdListLength() {
-      let result
-      let alldata = this.sourceMap['断点']
-      if (alldata) {
-        if (this.currentZrdw != '指挥部') {
-          result = alldata.filter(item => {
-            return item.attributes.ZRDW == this.currentZrdw && item.attributes.CZWT != '无'
-          })
-        } else {
-          result = alldata.filter(item => {
-            return item.attributes.CZWT != '无'
-          })
-        }
-        return result.length
       }
     },
   },
@@ -1254,7 +1223,7 @@ export default {
       } else {
         this.ddActive = item.attributes.GUID;
       }
-      
+
       const { x, y } = item.geometry;
       window.earth.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(x, y, 450),

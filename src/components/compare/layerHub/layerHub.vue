@@ -1225,16 +1225,21 @@ export default {
       }
 
       const { x, y } = item.geometry;
+
+      // 定位图标，详情变换
+      this.$parent.addLocationIcon(item.geometry, item.id);
+      this.$parent.$refs.projectDetailPopup.getForceEntity(item);
+      this.$parent.$refs.commonDetailPopup.closePopup();  
+
       window.earth.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(x, y, 450),
+        destination: Cesium.Cartesian3.fromDegrees(x, y, 1200),
         orientation: {
           heading: 0.01768860454315663,
           pitch: Cesium.Math.toRadians(-90),
           roll: 0.0,
         },
-        maximumHeight: 450,
         complete: () => {
-          this.$bus.$emit('clickFly');
+          this.$bus.$emit('clickFly');  
         }
       });
     },

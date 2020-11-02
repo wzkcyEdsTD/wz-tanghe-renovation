@@ -147,6 +147,9 @@ export default {
                 position: pick.primitive.position,
                 id: pick.id
               });
+              
+              // 关闭详情的查看周边面板
+              this.$refs.projectDetailPopup.closeCollapse();
               this.$refs.commonDetailPopup.closePopup()
             } else {
 

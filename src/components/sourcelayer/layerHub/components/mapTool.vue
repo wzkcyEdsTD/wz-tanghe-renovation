@@ -137,9 +137,10 @@ export default {
     changeVector(item) {
       this.currentYear = ''
       this.currentLayer = 'vector'
+      // debugger;
       if (item.value == 'handdrawn') {
         item.selected = !item.selected
-        this.$parent.switchHanddrawn(item.selected);
+        this.$parent.$parent.switchHanddrawn(item.selected);
       } else {
         this.currentVector = item.value
       }

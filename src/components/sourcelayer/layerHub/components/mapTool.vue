@@ -2,28 +2,28 @@
   <div class="map-tool" :style="{right: showLarge?'20%':'21%'}">
     <div class="box">
       <div class="sub-container" :style="{visibility: currentMouse=='yx' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
-        <div class="sub-item" :class="{selected: currentYear==item}"
+        <div class="sub-item" :class="{selected: currentYear==item}" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}"
              v-for="(item, index) in yearList" :key="index"
              @click="changeYear(item)">
           {{item}}
         </div>
       </div>
       <div class="sub-container" :style="{visibility: currentMouse=='vector' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='vector'" @mouseleave="currentMouse=''">
-        <div class="sub-item" :class="{selected: currentVector==item.value || item.selected}"
+        <div class="sub-item" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}" :class="{selected: currentVector==item.value || item.selected}"
              v-for="(item, index) in vectorList" :key="index"
              @click="changeVector(item)">
           {{item.label}}
         </div>
       </div>
       <div class="sub-container" :style="{visibility: currentMouse=='3d' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='3d'" @mouseleave="currentMouse=''">
-        <div class="sub-item" :class="{selected: item.selected}"
+        <div class="sub-item" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}" :class="{selected: item.selected}"
              v-for="(item, index) in threeDList" :key="index"
              @click="change3d(item)">
           {{item.label}}
         </div>
       </div>
       <div class="sub-container" :style="{visibility: currentMouse=='tool' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='tool'" @mouseleave="currentMouse=''">
-        <div class="sub-item" :class="{selected: currentTool==item}"
+        <div class="sub-item"  :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}" :class="{selected: currentTool==item}"
              v-for="(item, index) in toolList" :key="index"
              @click="changeTool(item)">
           {{item.label}}
@@ -32,24 +32,24 @@
     </div>
     <div class="hub-list">
       <div class="hub-item" :class="{selected: currentLayer=='yx'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
-        <img v-if="currentLayer=='yx'" src="../images/yx-sel2.png">
-        <img v-else src="../images/yx-unsel2.png">
+        <img v-if="currentLayer=='yx'" src="../images/yx-sel2.png" class="otherIcon">
+        <img v-else src="../images/yx-unsel2.png" class="otherIcon">
         <span>影像图</span>
       </div>
       <div class="hub-item" :class="{selected: currentLayer=='vector'}" @mouseenter="currentMouse='vector'" @mouseleave="currentMouse=''">
-        <img v-if="currentLayer=='vector'" src="../images/vector-sel2.png">
-        <img v-else src="../images/vector-unsel2.png">
+        <img v-if="currentLayer=='vector'" src="../images/vector-sel2.png" class="otherIcon">
+        <img v-else src="../images/vector-unsel2.png" class="otherIcon">
         <span>矢量图</span>
       </div>
       <div class="hub-item" :class="{selected: currentLayer=='3d'}" @mouseenter="currentMouse='3d'" @mouseleave="currentMouse=''">
-        <img v-if="currentLayer=='3d'" src="../images/3d-sel2.png">
-        <img v-else src="../images/3d-unsel2.png">
+        <img v-if="currentLayer=='3d'" src="../images/3d-sel2.png" class="otherIcon">
+        <img v-else src="../images/3d-unsel2.png" class="otherIcon">
         <span>三维图</span>
       </div>
       <div class="hub-item" :class="{selected: tools=='tool'}" @mouseenter="currentMouse='tool'" @mouseleave="currentMouse=''">
         <img v-if="tools=='tool'" src="../images/tool-sel.png" class="toolIcon">
         <img v-else src="../images/tool-unsel.png" class="toolIcon">
-        <span style="padding-left: 1vh">工具</span>
+        <span style="padding-left: 0.5vh">工具</span>
       </div>
     </div>
   </div>
@@ -183,6 +183,9 @@ export default {
     .toolIcon{
       width:2.7vh;
       padding-left: 0.5vh
+    }
+    .otherIcon{
+      width:3vh;
     }
     .hub-item {
       display: flex;

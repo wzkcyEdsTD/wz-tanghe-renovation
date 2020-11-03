@@ -1,6 +1,6 @@
 <template>
   <div class="ThreeDContainer">
-    <div class="calTools tframe">
+    <div class="tframe">
       <el-form label-width="100px" :rules="toolTypeRules">
         <el-row>
           <el-col :span="8">

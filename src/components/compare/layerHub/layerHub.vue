@@ -581,9 +581,11 @@ import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "../../sourcelayer/layerHub/TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
 import MapTool from "../../sourcelayer/layerHub/components/mapTool"
+import CalTool from "../../sourcelayer/commonFrame/calTool/calTools";
 export default {
   components:{
-    MapTool
+    MapTool,
+    CalTool
   },
   data() {
     return {
@@ -1229,7 +1231,7 @@ export default {
       // 定位图标，详情变换
       this.$parent.addLocationIcon(item.geometry, item.id);
       this.$parent.$refs.projectDetailPopup.getForceEntity(item);
-      this.$parent.$refs.commonDetailPopup.closePopup();  
+      this.$parent.$refs.commonDetailPopup.closePopup();
 
       window.earth.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(x, y, 1200),
@@ -1239,7 +1241,7 @@ export default {
           roll: 0.0,
         },
         complete: () => {
-          this.$bus.$emit('clickFly');  
+          this.$bus.$emit('clickFly');
         }
       });
     },

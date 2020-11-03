@@ -93,6 +93,7 @@
         <div class="base-info">
           <div class="title-wrapper">
             <span class="title">信息详情</span>
+            <span class="more" @click="openInfo()">查看更多>></span>
           </div>
           <div class="base-content">
             <div class="base-item">
@@ -435,15 +436,18 @@
       <i class="close" @click="closeQJ"></i>
       <iframe id="content" :src="QJURL"></iframe>
     </div>
+    <!-- <ProjectInfoPopup v-show="showInfo" :id="projectId" /> -->
   </div>
 </template>
 
 <script>
 import ElImageViewer from 'element-ui/packages/image/src/image-viewer'
 import {mapGetters} from "vuex";
+import ProjectInfoPopup from './ProjectInfoPopup'
 export default {
   components: {
-    ElImageViewer
+    ElImageViewer,
+    ProjectInfoPopup
   },
   computed:{
     ...mapGetters("map", ["bufferQueryData"]),
@@ -495,7 +499,9 @@ export default {
       searchQJText:'',
       qjList:[],
       spList:[],
-      activeNames: []
+      activeNames: [],
+      projectId: '',
+      showInfo: false
     }
   },
   computed: {
@@ -770,6 +776,11 @@ export default {
         if(list.length) return true;
       }
       return false;
+    },
+
+    openInfo() {
+      this.projectId = this.forceEntity.attributes.XMID
+      this.showInfo = true
     }
 
   },

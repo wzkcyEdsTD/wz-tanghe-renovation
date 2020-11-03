@@ -615,6 +615,7 @@ export default {
       this.isShow = false
     },
     openQJ(index) {
+      this.closeViewer()
       if (this.showLarge) {
         this.$bus.$emit("change-rightContent", { type: 'qj', value: this.currentData.qj[index] });
       } else {
@@ -638,6 +639,7 @@ export default {
      this.showViewer = false
     },
     handlePlay(e) {
+      this.closeViewer()
       console.log('handlePlay', e)
       this.$bus.$emit("change-rightContent", { type: 'video', value: e.target.currentSrc });
     },
@@ -790,10 +792,8 @@ export default {
     },
     currentShow(val) {
       if (val == 'sp' && this.showLarge) {
-        console.log('haveSP', this.$refs.video)
         this.$refs.video.forEach(item => {
           item.addEventListener('play', (e) => {
-            console.log('eeee', e)
             this.handlePlay(e)
           });
         })

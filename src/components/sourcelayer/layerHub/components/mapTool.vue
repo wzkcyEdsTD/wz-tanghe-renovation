@@ -192,7 +192,7 @@ export default {
       align-items: center;
       width: 11vh;
       padding: 0.5vh 1vh;
-      /*border-right: 0.1vh solid #2283FC;*/
+      border-bottom: 0.1vh solid #2283FC;
       font-family: PingFang;
       color: #2283FC;
       height: 3.5vh;
@@ -225,15 +225,15 @@ export default {
         padding-right: 0.5vh;
         padding-top: 0.9vh;
         flex: 1;
-        /*border-bottom: 1px solid #2283FC;*/
+        border-right: 1px solid #2283FC;
         cursor: pointer;
         &.selected {
           color: #69FEE5;
           background-color: rgba(0, 206, 136, 0.4);
         }
-        &:last-child {
-          border: none;
-        }
+        /*&:last-child {*/
+        /*  border: none;*/
+        /*}*/
       }
     }
   }

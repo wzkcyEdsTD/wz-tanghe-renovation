@@ -176,7 +176,7 @@ export default {
       height: 2.5vh;
       font-size: 2.3vh;
       font-family: YouSheBiaoTiHei;
-      color:#0E5AF2;
+      color:#5E91F6;
       &.active {
         color: #FFFFFF;
         background: url("./images/选中光.png");

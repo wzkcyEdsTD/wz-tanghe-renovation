@@ -508,6 +508,11 @@ export default {
     this.getNowFormatDate()
   },
   methods: {
+    // 关闭面板
+    closeCollapse() {
+      this.activeNames = [];
+      this.collapseChange([]);
+    },
     // 折叠面板事件监听
     collapseChange(val) {
       // 展开画圆，收起清除
@@ -704,14 +709,19 @@ export default {
     },
     itemClick(item){
       const { x, y } = item.geometry;
+
+      // 定位图标，详情变换
+      this.$parent.addLocationIcon(item.geometry, item.id);
+      this.getForceEntity(item);
+      this.closeCollapse();
+
       window.earth.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(x, y, 450),
+        destination: Cesium.Cartesian3.fromDegrees(x, y, 1200),
         orientation: {
           heading: 0.01768860454315663,
           pitch: Cesium.Math.toRadians(-90),
           roll: 0.0,
         },
-        maximumHeight: 450,
         complete: () => {
           this.$bus.$emit('clickFly');
         }

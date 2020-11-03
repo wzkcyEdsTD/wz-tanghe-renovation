@@ -52,14 +52,15 @@
         <span style="padding-left: 0.5vh">工具</span>
       </div>
     </div>
+    <calTools  ref="tools" v-show="false"/>
   </div>
 </template>
 
 <script>
-import CalTools from "../../commonFrame/calTool/calTools";
+  import calTools from "../../commonFrame/calTool/calTools";
 export default {
   name: "mapTool",
-  components: {CalTools},
+  components: {calTools},
   data() {
     return {
       showLarge:window.showLarge,
@@ -122,15 +123,15 @@ export default {
       this.currentVector = ''
       this.currentTool = item;
       if (item.value == 'ju'){
-        this.$parent.$refs.caltool.gaugeDistance();
+        this.$refs.tools.gaugeDistance();
       }else if (item.value == 'mian'){
-        this.$parent.$refs.caltool.gaugeArea();
+        this.$refs.tools.gaugeArea();
       }else if (item.value == 'gao'){
-        this.$parent.$refs.caltool.gaugeHeight();
+        this.$refs.tools.gaugeHeight();
       }else if (item.value == 'clear'){
         this.currentTool = '';
         this.tools = '';
-        this.$parent.$refs.caltool.clearGauge();
+        this.$refs.tools.clearGauge();
       }
     },
     changeVector(item) {

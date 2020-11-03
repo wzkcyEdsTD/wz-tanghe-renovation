@@ -16,7 +16,6 @@
       <img src="/static/images/common/sign@2x.png">
     </div>
     <MapTool />
-    <CalTool  ref="caltool" v-show="false"/>
   </div>
 </template>
 

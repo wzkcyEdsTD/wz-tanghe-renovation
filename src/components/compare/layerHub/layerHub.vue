@@ -573,7 +573,6 @@
         </div>
       </div>
     </div>
-    <CalTool  ref="caltool" v-show="false"/>
   </div>
 </template>
 

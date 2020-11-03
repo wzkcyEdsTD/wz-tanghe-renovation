@@ -16,7 +16,7 @@
       <img src="/static/images/common/sign@2x.png">
     </div>
     <MapTool />
-    <!-- <CalTool /> -->
+    <CalTool  ref="caltool" v-show="false"/>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
     RightSummary,
     SourceTree,
     MapTool,
-    // CalTool
+    CalTool
   },
   data() {
     return {
@@ -40,6 +40,7 @@ export default {
       leftOrRight:true,
       showSign: true,
       showMenu: true,
+      showTool:true
     };
   },
   computed: {

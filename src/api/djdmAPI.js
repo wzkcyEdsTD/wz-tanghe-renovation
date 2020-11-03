@@ -19,6 +19,6 @@ const getAxios = (url = "", data = {}) => {
  * @param {*} dataset
  */
 export const queryDetailByid = (id) => {
-  const URL = `https://wzdjdm.wzcitybrain.com:8888/api/onemap/aitivity/project/queryDetailByid?projectId=${id}`;
+  const URL = `http://172.168.3.182:9000/details/${id}`;
   return getAxios(URL);
 };

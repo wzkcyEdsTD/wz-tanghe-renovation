@@ -93,7 +93,7 @@
         <div class="base-info">
           <div class="title-wrapper">
             <span class="title">信息详情</span>
-            <span class="more" @click="openInfo()">查看更多>></span>
+            <span class="more" v-show="forceEntity.type == '项目'" @click="openInfo()">查看更多>></span>
           </div>
           <div class="base-content">
             <div class="base-item">
@@ -436,7 +436,7 @@
       <i class="close" @click="closeQJ"></i>
       <iframe id="content" :src="QJURL"></iframe>
     </div>
-    <!-- <ProjectInfoPopup v-show="showInfo" :id="projectId" /> -->
+    <ProjectInfoPopup v-if="showInfo" :id="projectId" />
   </div>
 </template>
 
@@ -530,6 +530,7 @@ export default {
     },
     getForceEntity(forceEntity) {
       this.forceEntity = forceEntity;
+      this.projectId = this.forceEntity.attributes.XMID
       this.isShow = true
       console.log('aaa', forceEntity)
       this.initData()
@@ -779,7 +780,6 @@ export default {
     },
 
     openInfo() {
-      this.projectId = this.forceEntity.attributes.XMID
       this.showInfo = true
     }
 

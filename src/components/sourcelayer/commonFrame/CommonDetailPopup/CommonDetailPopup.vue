@@ -114,7 +114,7 @@
           </div>
         </div>
       </div>
-    </transition>c
+    </transition>
     <div class="QJFrame" v-show="showQJ">
       <i class="close" @click="closeQJ"></i>
       <iframe id="content" :src="QJURL"></iframe>

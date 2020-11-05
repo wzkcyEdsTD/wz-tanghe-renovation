@@ -5,7 +5,7 @@
     <div id="content" class="content">
       <router-view />
     </div>
-    <div class="rightScreen-wrapper" v-if="showRightScreen">
+    <div class="rightScreen-wrapper" v-if="showRightScreen && currentPage=='sourcelayer'">
       <div class="player-wrapper">
         <video class="video" v-show="showType=='video'" :src="showSrc" controls="controls" autoplay muted></video>
         <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
@@ -13,12 +13,16 @@
         <!-- <video-player v-show="showType=='jk'" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" controls></video-player> -->
       </div>
     </div>
+    <div class="rightScreen-wrapper" v-if="showRightScreen && currentPage=='compare'">
+      <RightChart />
+    </div>
   </div>
 </template>
 
 <script>
 import MHeader from "components/m-header/m-header";
 import Loading from "components/loading/loading";
+import RightChart from "components/compare/rightChart/rightChart";
 import { getUserInfo } from "./api/public/public";
 import { mapGetters, mapActions, mapState } from "vuex";
 
@@ -28,6 +32,7 @@ export default {
   components: {
     MHeader,
     Loading,
+    RightChart
   },
   data() {
     return {
@@ -64,6 +69,9 @@ export default {
     ...mapState({
       isLoading: "isLoading",
     }),
+    currentPage () {
+      return this.$route.name
+    }
     // player() {
     //   return this.$refs.videoPlayer.player
     // }

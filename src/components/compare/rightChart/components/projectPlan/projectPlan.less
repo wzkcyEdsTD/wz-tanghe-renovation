@@ -1,8 +1,5 @@
-.rightChart{
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-  display: flex;
+.projectPlan{
+  padding: 1vh;
   .title-wrapper {
     display: flex;
     align-items: flex-end;
@@ -44,27 +41,49 @@
       opacity: .8;
     }
   }
-  .titleFlex{
+  .info-item-right {
     display: flex;
-    >span{
-      align-self: center;
-      padding-right: 25vh;
+    // margin-top: 8px;
+    font-family: PingFang;
+    background-color: #091237;
+    height: 6vh;
+    //border-bottom: 1px solid rgba(22, 95, 234, 0.4);
+    .key {
+      width: 10vh;
+      line-height: 6vh;
+      font-size: 1.35vh;
+      background-color: rgba(10,36,86,0.5);
+      text-align: center;
+      border:1px solid #707070;
+      color:#fff;
+      .keyAllText{
+        display: flex;
+        >p{
+          width: 5vh;
+          line-height: 3vh;
+          align-self: center;
+        }
+        .text{
+          text-align : right;
+          width: 4vh;
+        }
+      }
     }
-  }
-  .leftAndRight{
-    width: 33%;
-  }
-  .middle{
-    flex: 1;
-    padding-left: 2vh
-  }
-}
-.rightChart {
-  position: relative;
-  .center-box {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
+    .value {
+      //font-size: 1.4vh;
+      color: #fff;
+      border:1px solid #707070;
+      width: 30vh;
+      background: rgba(22,95,234,0.24);
+      //line-height:3vh;
+      //text-align: center;
+      font-size: 1.35vh;
+      line-height: 2vh;
+      display: flex;
+      font-family: PingFang SC;
+      >p{
+        align-self: center;
+      }
+    }
   }
 }

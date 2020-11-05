@@ -1,5 +1,16 @@
 <template>
   <div class="rightChart">
+    <div class="leftAndRight">
+      <regionAnalysis></regionAnalysis>
+      <projectPlan></projectPlan>
+    </div>
+    <div class="middle">
+      <projectProcess></projectProcess>
+    </div>
+    <div class="leftAndRight">
+      <KeyProjects></KeyProjects>
+      <HightlightProject></HightlightProject>
+    </div>
     <div class="center-box">
       <Swivel />
     </div>
@@ -7,14 +18,28 @@
 </template>
 
 <script>
-import Swivel from "./components/Swivel/Swivel";
+  import projectProcess from "./components/projectProcess/projectProcess";
+  import regionAnalysis from "./components/regionAnalysis/regionAnalysis";
+  import projectPlan from "./components/projectPlan/projectPlan";
+  import KeyProjects from "./components/keyProjects/keyProjects";
+  import HightlightProject from "./components/highlightProject/hightlightProject";
+  import Swivel from "./components/Swivel/Swivel";
 export default {
-  components: {
+  components:{
+    HightlightProject,
+    KeyProjects,
+    projectProcess,
+    regionAnalysis,
+    projectPlan,
     Swivel
+  },
+  data(){
+    return{
+    };
   }
 }
 </script>
 
 <style lang="less" scoped>
-@import url("./rightChart.less");
+  @import url("./rightChart.less");
 </style>

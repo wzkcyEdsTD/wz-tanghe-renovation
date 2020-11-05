@@ -1,8 +1,5 @@
-.rightChart{
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-  display: flex;
+.keyProjects{
+  padding-left: 1vh;
   .title-wrapper {
     display: flex;
     align-items: flex-end;
@@ -44,27 +41,44 @@
       opacity: .8;
     }
   }
-  .titleFlex{
+  .allFlex{
     display: flex;
-    >span{
-      align-self: center;
-      padding-right: 25vh;
+    padding-left: 1vh;
+    padding-top: 2vh;
+    .childFlex{
+      display: flex;
+      width: 25vh;
+      .icon{
+        width: 7vh;
+        height: 7vh;
+      }
+      .otherFlex{
+        display: flex;
+        height: 2vh;
+      }
+      .allText{
+        align-self: center;
+        .title{
+          color: #56F1F1;
+          font-family: "PingFang SC";
+          font-size: 1.7vh;
+          height: 2vh;
+        }
+        .text{
+          font-size: 1.7vh;
+          color: #FFFFFF;
+          font-family: "PingFang SC";
+        }
+        .textSmall{
+          font-size: 1.1vh;
+          color: #FFFFFF;
+          font-family: "PingFang SC";
+          align-self: center;
+
+        }
+      }
+
     }
   }
-  .leftAndRight{
-    width: 33%;
-  }
-  .middle{
-    flex: 1;
-    padding-left: 2vh
-  }
-}
-.rightChart {
-  position: relative;
-  .center-box {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+
 }

@@ -64,7 +64,7 @@
               <div class="split-line"></div>
             </div>
           </div>
-          <div class="no-tip" v-show="currentXmList && !currentXmList.length">暂无数据</div>
+          <div class="no-tip" v-show="!xmList.length">暂无数据</div>
         </div>
         <div class="dd-container" v-show="currentType=='dd'">
           <!-- <div class="titleHxhb-wrapper">
@@ -113,7 +113,7 @@
               <div class="split-line"></div>
             </div>
           </div>
-          <div class="no-tip" v-show="currentDdList && !currentDdList.length">暂无数据</div>
+          <div class="no-tip" v-show="!ddList.length">暂无数据</div>
         </div>
       </div>
     </div>
@@ -693,35 +693,8 @@ export default {
     drawData() {
       return this.$store.state.map.sourceMap;
     },
-    currentXmList() {
-      let result
-      let alldata = this.sourceMap['项目']
-      console.log(alldata)
-      if (this.currentZrdw != '指挥部') {
-        result = alldata.filter(item => {
-          return ~item.attributes.ZR_DEPTID.indexOf(this.currentZrdw)
-        })
-      } else {
-        result = alldata
-      }
-      this.xmList = result;
-      return result
-    },
-    currentDdList() {
-      let result = []
-      let alldata = this.sourceMap['断点']
-      if (this.currentZrdw != '指挥部') {
-        result = alldata.filter(item => {
-          return ~item.attributes.ZRDW.indexOf(this.currentZrdw)
-        })
-      } else {
-        result = alldata
-      }
-      this.ddList = result;
-      return result;
-    },
     delayXmList() {
-      let result
+      let result = []
       let alldata = this.sourceMap['项目']
       console.log(alldata);
       if (alldata) {
@@ -734,11 +707,11 @@ export default {
             return ~item.attributes.CURRENT_STATE.indexOf('滞后')
           })
         }
-        return result
       }
+      return result
     },
     questionDdList() {
-      let result
+      let result = []
       let alldata = this.sourceMap['断点']
       if (alldata) {
         if (this.currentZrdw != '指挥部') {
@@ -750,8 +723,8 @@ export default {
             return item.attributes.CZWT != '无'
           })
         }
-        return result
       }
+      return result
     },
   },
   methods: {
@@ -1197,6 +1170,8 @@ export default {
       if(this.currentZrdw == name) return;
 
       this.currentZrdw = name;
+      this.searchXMText = '';
+      this.searchDDText = '';
       if (name==='指挥部'){
         this.changeType = 'all';
       }else{
@@ -1245,39 +1220,41 @@ export default {
         }
       });
     },
-    searchXMClear() {
-      this.searchXMText = "";
-      this.xmList = [];
-      this.searchXMFilter();
+    filterData () {
+      if (this.currentZrdw != '指挥部') {
+        this.xmList = this.sourceMap['项目'].filter(item => {
+          return ~item.attributes.ZR_DEPTID.indexOf(this.currentZrdw)
+        })
+        this.ddList = this.sourceMap['断点'].filter(item => {
+          return ~item.attributes.ZRDW.indexOf(this.currentZrdw)
+        })
+      } else {
+        this.xmList = this.sourceMap['项目']
+        this.ddList = this.sourceMap['断点']
+      }
     },
     searchXMFilter() {
-      // console.log(this.currentXmList);
-      let allSearchList = this.sourceMap['项目'];
-      allSearchList = allSearchList.filter(item => {
-        return item.attributes.NAME.length
-      })
+      console.log('searchXMFilter', this.searchXMText)
       this.xmList = this.searchXMText
-        ? allSearchList.filter((item) => {
+        ? this.sourceMap['项目'].filter((item) => {
           return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
         })
-        : allSearchList;
+        : this.xmList
+    },
+    searchXMClear() {
+      this.searchXMText = "";
+      this.filterData()
     },
     searchDDFilter() {
-      // console.log(this.currentXmList);
-      let allSearchList = this.sourceMap['断点'];
-      allSearchList = allSearchList.filter(item => {
-        return item.attributes.NAME.length
-      })
       this.ddList = this.searchDDText
-        ? allSearchList.filter((item) => {
+        ? this.sourceMap['断点'].filter((item) => {
           return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
         })
-        : allSearchList;
+        : this.ddList
     },
     searchDDClear() {
       this.searchDDText = "";
-      this.ddList = [];
-      this.searchDDFilter();
+      this.filterData()
     },
   },
   mounted() {
@@ -1300,13 +1277,18 @@ export default {
       icon: "断点",
       iconSize: "small",
     });
-    this.drawPies();
-    this.drawBars();
-    this.drawLines();
+    // this.drawPies();
+    // this.drawBars();
+    // this.drawLines();
   },
   watch: {
     drawData(val) {
       console.log("drawData", val);
+      this.sourceMap['项目'] && (this.xmList = this.sourceMap['项目'])
+      this.sourceMap['断点'] && (this.ddList = this.sourceMap['断点'])
+    },
+    currentZrdw(val) {
+      this.filterData()
     },
     currentType(val) {
       // 点击，列表回到顶部
@@ -1316,7 +1298,8 @@ export default {
       // 选中置空
       this.xmActive = "";
       this.ddActive = "";
-    }
+    },
+
   },
 };
 </script>

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import RightSummary from"../summary/rightSummary/rightSummary";
+import RightSummary from "../summary/rightSummary/rightSummary";
 import SourceTree from "./components/sourceTree";
 import MapTool from "./components/mapTool";
 import CalTool from "../commonFrame/calTool/calTools"

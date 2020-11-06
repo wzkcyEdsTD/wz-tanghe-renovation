@@ -7,7 +7,7 @@
     <div class="middle">
       <projectProcess></projectProcess>
     </div>
-    <div class="leftAndRight">
+    <div class="leftAndRight" :style="{width:'28%'}">
       <KeyProjects></KeyProjects>
       <HightlightProject></HightlightProject>
     </div>

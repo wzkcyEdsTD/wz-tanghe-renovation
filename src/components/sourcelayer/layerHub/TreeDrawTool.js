@@ -178,7 +178,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.whiteLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#61F5F5") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
+      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
       font: "bold 14px Microsoft YaHei",
       outlineColor: Cesium.Color.BLACK,
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
@@ -192,7 +192,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.blackLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#61F5F5") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#010C27"),
+      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
       font: "bold 14px Microsoft YaHei",
       outlineColor: Cesium.Color.WHITE,
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,

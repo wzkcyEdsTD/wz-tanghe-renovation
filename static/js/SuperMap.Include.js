@@ -63,9 +63,9 @@
     inputScript(baseurl + "SuperMap-7.1-11828.js");
   }
   //引入汉化资源文件
-  function loadLocalization() {
-    inputScript(baseurl + "Lang/zh-CN.js");
-  }
+  // function loadLocalization() {
+  //   inputScript(baseurl + "Lang/zh-CN.js");
+  // }
   loadSMLibs();
-  loadLocalization();
+  // loadLocalization();
 })();

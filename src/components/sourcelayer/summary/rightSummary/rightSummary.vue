@@ -187,14 +187,14 @@
   }
   .lywz {
     font-size: 1.7vh;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     line-height: 2vh;
     color: #ffffff;
     margin-bottom: 1vh;
   }
   .lywzda {
     font-size: 14px;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     line-height: 20px;
     color: #ffffff;
     // margin-bottom: 5%;
@@ -228,7 +228,7 @@
   }
 
   .lab {
-    font-family: PingFang SC;
+    // font-family: PingFang;
     font-size: 1.5vh;
     width: 35vh;
     color: #dedede;
@@ -239,7 +239,7 @@
     padding-left: 1vh;
   }
   .labda {
-    font-family: PingFang SC;
+    // font-family: PingFang;
     font-size: 1.6vh;
     width: 35vh;
     color: #dedede;
@@ -250,7 +250,7 @@
     padding-left: 1vh;
   }
   .yxwz {
-    font-family: PingFang SC;
+    // font-family: PingFang;
     font-size: 11px;
     //line-height: 18px;
     //max-height: 140px;
@@ -275,14 +275,14 @@
   }
   .kdwzleft {
     font-size: 14px;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     line-height: 20px;
     color: #16eaea;
     /*padding-left: 4px;*/
   }
   .kdwzright {
     font-size: 14px;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     line-height: 20px;
     color: #00ffd4;
     /*padding-left: 25px;*/

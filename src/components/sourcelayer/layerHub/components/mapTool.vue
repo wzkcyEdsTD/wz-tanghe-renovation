@@ -195,7 +195,7 @@ export default {
       width: 11vh;
       padding: 0.5vh 1vh;
       border-bottom: 0.1vh solid #2283FC;
-      font-family: PingFang;
+      // font-family: PingFang;
       color: #2283FC;
       height: 3.5vh;
       img {

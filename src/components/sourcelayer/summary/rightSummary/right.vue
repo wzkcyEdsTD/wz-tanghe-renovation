@@ -333,14 +333,14 @@
               textStyle:{
                 color: '#FAFAFA',
                 fontSize: 13,
-                fontFamily:"PingFang SC",
+                // fontFamily:"PingFang",
               },
               yAxis: {
                 axisLabel: {
                   textStyle: {
                     color: '#FAFAFA',
                     fontSize: 13,
-                    fontFamily:"PingFang SC",
+                    // fontFamily:"PingFang",
                   }
                 },
                 data: [''],
@@ -409,7 +409,7 @@
               textStyle:{
                 color: '#FAFAFA',
                 fontSize: 13,
-                fontFamily:"PingFang SC",
+                // fontFamily:"PingFang",
 
               },
               yAxis: {
@@ -417,7 +417,7 @@
                   textStyle: {
                     color: '#FAFAFA',
                     fontSize: 13,
-                    fontFamily:"PingFang SC",
+                    // fontFamily:"PingFang",
                   }
                 },
                 data: [''],
@@ -541,17 +541,17 @@
   .sejdx{
     color:#16EAEA;
     font-size: 1.6vh;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     /*padding-left: 3%;*/
   }
   .sejxx{
     font-size: 1.6vh;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     color:#00FFD4;
   }
   .sejnx{
     font-size: 1.6vh;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     color:#A2F6B6;
   }
   .jz1{
@@ -611,7 +611,7 @@
     font-size: 1vh;
     color: #FAFAFA;
     line-height: 1vh;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     align-self:center;
     width:9vh;
     /*padding-right: 10px*/
@@ -626,7 +626,7 @@
     color: #26bce5;
   }
   .yxwz {
-    font-family: PingFang SC;
+    // font-family: PingFang;
     font-size: 1vh;
     //line-height: 18px;
     //max-height: 140px;
@@ -640,7 +640,7 @@
   }
   .smalls{
     font-size: 1vh;
-    font-family: PingFang SC;
+    // font-family: PingFang;
     line-height: 1vh;
     color: #ffffff;
   }

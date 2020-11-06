@@ -181,7 +181,7 @@ export default {
     }
 
     .duration {
-      font-family: PingFang;
+      // font-family: PingFang;
       font-size: 1.4vh;
       color: #fff;
       opacity: 0.7;

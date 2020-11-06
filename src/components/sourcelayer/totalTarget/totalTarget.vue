@@ -212,7 +212,7 @@ export default {
             font-size: 12px;
             .text {
               color: #c9c9c9;
-              font-family: PingFang;
+              // font-family: PingFang;
             }
             .content {
               display: flex;
@@ -240,7 +240,7 @@ export default {
         }
         .small {
           font-size: 11px;
-          font-family: PingFang;
+          // font-family: PingFang;
           color: #fff;
           opacity: 0.81;
         }

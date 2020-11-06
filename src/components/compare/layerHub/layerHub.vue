@@ -985,7 +985,7 @@ export default {
               textStyle: {
                 fontSize: e,
                 color: "#fff",
-                fontFamily: "PingFang SC",
+                // fontFamily: "PingFang",
               },
               formatter: function (params) {
                 let temp = params.name;
@@ -1008,17 +1008,17 @@ export default {
               rich: {
                 a: {
                   fontSize: e,
-                  fontFamily: "PingFang SC",
+                  // fontFamily: "PingFang",
                   color: "#ffffff",
                 },
                 b:{
                   fontSize: e,
-                  fontFamily: "PingFang SC",
+                  // fontFamily: "PingFang",
                   color: "#FF0059",
                 },
                 c:{
                   fontSize: e,
-                  fontFamily: "PingFang SC",
+                  // fontFamily: "PingFang",
                   color: "#FF21D4",
 
                 }

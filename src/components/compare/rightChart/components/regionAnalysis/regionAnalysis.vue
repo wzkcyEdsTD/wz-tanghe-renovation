@@ -78,6 +78,7 @@
 
             },
             yAxis: {
+              max:70,
               axisLine: {
                 show:true,
                 lineStyle:{

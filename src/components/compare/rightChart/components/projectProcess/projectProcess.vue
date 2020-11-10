@@ -4,7 +4,7 @@
       <span class="pre"></span>
       <span class="title">项目全过程分析占比</span>
     </div>
-    <div style="height: 32vh; width: 48vh;padding-top: 2vh;" ref="barEchart"></div>
+    <div style="height: 32vh; width: 100%;padding-top: 2vh;" ref="barEchart"></div>
   </div>
 </template>
 

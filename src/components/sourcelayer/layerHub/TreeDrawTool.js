@@ -165,9 +165,9 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.billboardMap[node.id].add({
       id: `billboard@${item.attributes.SMID}@${node.id}`,
       image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
-      width: node.icon=='断点'? 33 : 24,
-      height: node.icon=='断点'? 33 : 25,
-      scaleByDistance:new Cesium.NearFarScalar(500, 1.5, 6000, 1),
+      width: node.icon=='断点'? 33 : 32,
+      height: node.icon=='断点'? 33 : 32,
+      scaleByDistance:new Cesium.NearFarScalar(1000, 2, 6000, 1),
       // sizeInMeters:true,
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
@@ -185,7 +185,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       outlineWidth: '2',
       scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-      pixelOffset: new Cesium.Cartesian2(0, 32),
+      pixelOffset: new Cesium.Cartesian2(0, 42),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
@@ -199,7 +199,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       outlineWidth: '2',
       scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-      pixelOffset: new Cesium.Cartesian2(0, 32),
+      pixelOffset: new Cesium.Cartesian2(0, 42),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });

@@ -56,12 +56,14 @@
         display        : flex;
         justify-content: space-between;
         align-items    : center;
-        padding        : 0.5vh 0 0.5vh 1.5vh;
+        padding        : 0.5vh 1vh 0.5vh 1vh;
         height: 3.2vh;
-        line-height: 3.2vh;
+        line-height: 2vh;
         font-size: 1.2vh;
+        text-align: center;
         .index {
           flex: 1;
+          border-radius: 5px;
         }
         .name {
           flex: 3;
@@ -78,6 +80,21 @@
         // &.header {
         // font-size: 16px;
         // }
+        &.first {
+          .index {
+            background: #6852FE;
+          }
+        }
+        &.second {
+          .index {
+            background: #1D47F1;
+          }
+        }
+        &.third {
+          .index {
+            background: #5286FE;
+          }
+        }
       }
       li:nth-child(odd) {
         background: rgba(0, 12, 34, 0.69);

@@ -98,8 +98,9 @@ export default {
     },
     initScreen() {
       if (window.showLarge) {
-        document.getElementById('header').style.width = '60%'
-        document.getElementById('content').style.width = '60%'
+        document.getElementById('header').style.width = '55%'
+        document.getElementById('content').style.width = '55%'
+        // document.getElementById('content').style.display = 'none'
         this.showRightScreen = true
       }
     },
@@ -130,8 +131,8 @@ export default {
       this.$bus.$on("change-screen", ({ value }) => {
         console.log('changeScreen!!!!!!!!', value)
         if (value) {
-          document.getElementById('header').style.width = '60%'
-          document.getElementById('content').style.width = '60%'
+          document.getElementById('header').style.width = '55%'
+          document.getElementById('content').style.width = '55%'
           // document.getElementById('leftHide').style.display = 'none'
           // document.getElementById('rightHide').style.display = 'none'
         } else {
@@ -190,11 +191,12 @@ body {
   }
 }
 .rightScreen-wrapper {
+  z-index: 1;
   position: absolute;
   top: 5vh;
   bottom: 0;
-  left: 60%;
-  width: 40%;
+  left: 55%;
+  width: 45%;
   padding: 1%;
   background-color: #040D33;
   color: #fff;

@@ -1,8 +1,6 @@
-.rightChart{
-  width: 100%;
+.partMiddle {
+  position: relative;
   height: 100%;
-  z-index: 999;
-  display: flex;
   .title-wrapper {
     display: flex;
     align-items: flex-end;
@@ -44,28 +42,15 @@
       opacity: .8;
     }
   }
-  .titleFlex{
-    display: flex;
-    >span{
-      align-self: center;
-      padding-right: 25vh;
+  .top {
+    padding-top: 2vh;
+    >img {
+      width: 100%;
     }
   }
-  .left{
-    width: 30%;
-  }
-  .right {
-    width: 30%;
-  }
-  .middle{
-    position: relative;
-    flex: 1;
-    margin: 0 2vh;
-    .center-box {
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+  .bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
 }

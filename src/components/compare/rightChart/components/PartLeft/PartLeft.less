@@ -1,0 +1,134 @@
+.partLeft {
+  position: relative;
+  height: 100%;
+  .title-wrapper {
+    display: flex;
+    align-items: flex-end;
+    .pre {
+      display: block;
+      width: 1vh;
+      height: 2.5vh;
+      background: linear-gradient(180deg, #16EAEA 0%, rgba(11, 48, 117, 0) 100%);
+      transform: skewX(-30deg);
+    }
+    .title {
+      display: block;
+      height: 3.6vh;
+      line-height: 3.6vh;
+      font-family: YouSheBiaoTiHei;
+      font-size: 3vh;
+      letter-spacing: 0vh;
+      color: #ffffff;
+      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.64);
+      position: relative;
+      padding-left: 1.2vh;
+    }
+    .title::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0.2vh;
+      width: 30vh;
+      height: 1.5vh;
+      z-index: -1;
+      background-image: linear-gradient(90deg, #1950B9 0%, transparent 100%);
+      transform: skewX(-30deg);
+    }
+    .desc {
+      margin-left: 4px;
+      font-size: 11px;
+      // font-family: PingFang;
+      color: #fff;
+      opacity: .8;
+    }
+  }
+  .top {
+    .content {
+      margin-top: 3vh;
+      margin-left: 3vh;
+      display: flex;
+      .item {
+        position: relative;
+        margin-left: 4vh;
+        .number {
+          position: absolute;
+          top: 30%;
+          left: 50%;
+          transform: translateX(-50%);
+          font-family: YouSheBiaoTiHei;
+          font-size: 3vh;
+          color: #00FFEB;
+          .small {
+            font-size: 1vh;
+          }
+        }
+        .desc {
+          position: absolute;
+          top: 65%;
+          left: 50%;
+          transform: translateX(-50%);
+          font-family: YouSheBiaoTiHei;
+          font-size: 1.8vh;
+          color: #fff;
+          white-space: nowrap;
+        }
+      }
+    }
+    .complete-rate {
+      margin-top: 3vh;
+      .desc {
+        vertical-align: middle;
+        color: #FAFAFA;
+      }
+    }
+  }
+  .middle {
+    margin-top: 3vh;
+    .content {
+      .item {
+        display: flex;
+        align-items: center;
+        margin-top: 0.6vh;
+        .title {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          width: 15vh;
+          text-align: right;
+          font-size: 2vh;
+          .number {
+            font-family: YouSheBiaoTiHei;
+            font-size: 3vh;
+          }
+          .number1 {
+            color: #183BB8;
+          }
+          .number2 {
+            color: #2CB0D8;
+          }
+          .number3 {
+            color: #2BCADE;
+          }
+          .number4 {
+            color: #371A98;
+          }
+        }
+        .dash {
+          flex: 1;
+          height: 1vh;
+          border-bottom: 2px dashed #707070;
+          margin: 0 1vh;
+        }
+        .img-box {
+          // width: 264px;
+          // text-align: center;
+        }
+      }
+    }
+  }
+  .bottom {
+    // margin-top: 2vh;
+    position: absolute;
+    bottom: 0;
+  }
+}

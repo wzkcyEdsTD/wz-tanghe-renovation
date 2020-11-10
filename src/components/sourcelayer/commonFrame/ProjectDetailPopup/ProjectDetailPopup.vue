@@ -93,7 +93,7 @@
         <div class="base-info">
           <div class="title-wrapper">
             <span class="title">信息详情</span>
-            <span class="more" v-show="forceEntity.type == '项目'" @click="openInfo()">查看更多>></span>
+            <span class="more" v-show="~forceEntity.type == '项目'" @click="openInfo()">查看更多>></span>
           </div>
           <div class="base-content">
             <div class="base-item">
@@ -104,7 +104,7 @@
               <div class="value">{{ forceEntity.attributes.NAME }}</div>
             </div>
             <div class="inline bg">
-              <div class="base-item" v-if="forceEntity.type == '项目'">
+              <div class="base-item" v-if="~forceEntity.type == '项目'">
                 <div class="title">
                   <img src="./images/type-icon.png" />
                   <span>类型：</span>
@@ -164,7 +164,7 @@
                 }}
               </div>
             </div>
-            <div class="base-item" v-if="forceEntity.type == '项目'">
+            <div class="base-item" v-if="~forceEntity.type == '项目'">
               <div class="title">
                 <img src="./images/question-icon.png" />
                 <span>规模：</span>
@@ -193,7 +193,7 @@
               </div>
             </div>
             <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '项目'"> -->
-            <div class="time-line-wrapper" v-if="forceEntity.type == '项目'">
+            <div class="time-line-wrapper" v-if="~forceEntity.type == '项目'">
               <div class="time-line">
                 <div class="progressEmpty">
                   <img src="./images/计划时间轴底.png" class="empty">

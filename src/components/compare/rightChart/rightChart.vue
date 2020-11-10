@@ -1,18 +1,21 @@
 <template>
   <div class="rightChart">
-    <div class="leftAndRight">
-      <regionAnalysis></regionAnalysis>
-      <projectPlan></projectPlan>
+    <div class="left">
+      <regionAnalysis v-show="showType=='all'"></regionAnalysis>
+      <projectPlan v-show="showType=='all'"></projectPlan>
+      <PartLeft v-show="showType=='other'" />
     </div>
     <div class="middle">
-      <projectProcess></projectProcess>
+      <div class="center-box" v-show="showType=='all'">
+        <Swivel />
+      </div>
+      <projectProcess v-show="showType=='all'"></projectProcess>
+      <PartMiddle v-if="showType=='other'" />
     </div>
-    <div class="leftAndRight" :style="{width:'28%'}">
-      <KeyProjects></KeyProjects>
-      <HightlightProject></HightlightProject>
-    </div>
-    <div class="center-box">
-      <Swivel />
+    <div class="right">
+      <KeyProjects v-show="showType=='all'"></KeyProjects>
+      <HightlightProject v-show="showType=='all'"></HightlightProject>
+      <PartRight v-show="showType=='other'" />
     </div>
   </div>
 </template>
@@ -24,20 +27,34 @@
   import KeyProjects from "./components/keyProjects/keyProjects";
   import HightlightProject from "./components/highlightProject/hightlightProject";
   import Swivel from "./components/Swivel/Swivel";
-export default {
-  components:{
-    HightlightProject,
-    KeyProjects,
-    projectProcess,
-    regionAnalysis,
-    projectPlan,
-    Swivel
-  },
-  data(){
-    return{
-    };
+  import PartLeft from "./components/PartLeft/PartLeft";
+  import PartMiddle from "./components/PartMiddle/PartMiddle";
+  import PartRight from "./components/PartRight/PartRight"
+  export default {
+    components:{
+      HightlightProject,
+      KeyProjects,
+      projectProcess,
+      regionAnalysis,
+      projectPlan,
+      Swivel,
+      PartLeft,
+      PartMiddle,
+      PartRight
+    },
+    data(){
+      return{
+        showType: 'all'
+      };
+    },
+    mounted() {
+      this.$bus.$off("change-showtype");
+      this.$bus.$on("change-showtype", ({ value }) => {
+        console.log('showType???????', value)
+        this.showType = value
+      })
+    }
   }
-}
 </script>
 
 <style lang="less" scoped>

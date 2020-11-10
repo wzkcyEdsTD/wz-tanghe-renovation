@@ -1174,8 +1174,10 @@ export default {
       this.searchDDText = '';
       if (name==='指挥部'){
         this.changeType = 'all';
+        this.$bus.$emit("change-showtype", { value: 'all' });
       }else{
         this.changeType = 'other';
+        this.$bus.$emit("change-showtype", { value: 'other' });
       }
       console.log(this.changeType);
       let rets = [];

@@ -5,8 +5,8 @@
       <span class="title">区域分析统计</span>
     </div>
     <div class="titleFlex">
-      <span>单位：个</span>
-      <el-select v-model="value" placeholder="鹿城区" class="select">
+      <span>项目统计（个）</span>
+      <el-select v-model="value" class="select" @change="selectChange">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -26,40 +26,74 @@ export default {
     return {
       options: [
         {
-          value: "选项1",
+          value: "lucheng",
           label: "鹿城区",
         },
         {
-          value: "选项2",
+          value: "longwan",
           label: "龙湾区",
         },
         {
-          value: "选项3",
+          value: "ouhai",
           label: "瓯海区",
         },
         {
-          value: "选项4",
-          label: "瑞安市政府",
+          value: "ruian",
+          label: "瑞安市",
         },
         {
-          value: "选项5",
+          value: "zhenan",
           label: "浙南产业区",
         },
         {
-          value: "选项6",
+          value: "xiandai",
           label: "现代集团",
         },
         {
-          value: "选项7",
+          value: "chengfa",
           label: "城发集团",
         },
       ],
-      value: "",
+      regionData: {
+        longwan: {
+          street: ['海滨街道', '蒲州街道', '瑶溪街道', '永兴街道', '永中街道', '状元街道'],
+          number: [2, 3, 1, 1, 2, 1]
+        },
+        lucheng: {
+          street: ['滨江街道', '大南街道', '广化街道', '南汇街道', '南郊街道', '蒲鞋市街道', '松台街道'],
+          number: [1, 2, 1, 5, 7, 4, 2]
+        },
+        ouhai: {
+          street: ['景山街道', '南白象街道', '梧田街道', '新桥街道'],
+          number: [3, 11, 6, 3]
+        },
+        ruian: {
+          street: ['安阳街道', '东山街道', '上望街道', '莘塍街道', '塘下镇', '汀田街道'],
+          number: [2, 1, 2, 2, 1, 3]
+        },
+        chengfa: {
+          street: ['大南街道', '南汇街道', '南郊街道', '蒲鞋市街道', '蒲州街道', '梧埏镇', '梧田街道', '永中街道'],
+          number: [1, 3, 1, 2, 2, 1, 1, 1]
+        },
+        xiandai: {
+          street: ['大南街道', '丽岙街道', '南白象街道', '新桥街道'],
+          number: [4, 1, 1, 1]
+        },
+        zhenan: {
+          street: ['海城街道', '永中街道'],
+          number: [1, 1]
+        }
+      },
+      value: "lucheng",
       barEchart: null,
     };
   },
   methods: {
-    drawBar() {
+    selectChange(e) {
+      console.log('selectChange', e)
+      this.drawBar(e)
+    },
+    drawBar(region) {
       const that = this;
       this.barEchart = this.$echarts.init(this.$refs.barEchart);
       this.barEchart.setOption({
@@ -67,15 +101,16 @@ export default {
           top: 10,
         },
         xAxis: {
-          data: [
-            "滨江街道",
-            "大南街道",
-            "广化街道",
-            "南郊街道",
-            "南汇街道",
-            "松台街道",
-            "蒲鞋市街道",
-          ],
+          // data: [
+          //   "滨江街道",
+          //   "大南街道",
+          //   "广化街道",
+          //   "南郊街道",
+          //   "南汇街道",
+          //   "松台街道",
+          //   "蒲鞋市街道",
+          // ],
+          data: this.regionData[region].street,
           axisTick: {
             show: false,
           },
@@ -92,7 +127,7 @@ export default {
           },
         },
         yAxis: {
-          max: 70,
+          // max: 70,
           axisLine: {
             show: true,
             lineStyle: {
@@ -117,7 +152,8 @@ export default {
             name: "分布",
             type: "bar",
             barWidth: "11",
-            data: [45, 37, 26, 32, 50, 19, 22],
+            // data: [45, 37, 26, 32, 50, 19, 22],
+            data: this.regionData[region].number,
             itemStyle: {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -135,7 +171,7 @@ export default {
     },
   },
   mounted() {
-    this.drawBar();
+    this.drawBar(this.value);
   },
 };
 </script>

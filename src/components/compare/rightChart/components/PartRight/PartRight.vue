@@ -8,33 +8,33 @@
       <div class="content">
         <div class="item">
           <div class="decorate"></div>
-          <div class="number"><span>360&nbsp;</span>万元</div>
+          <div class="number"><span>{{keyData[zrdw].amount}}&nbsp;</span>亿元</div>
           <div class="text">金额</div>
         </div>
         <div class="item">
           <div class="decorate"></div>
-          <div class="number"><span>67&nbsp;</span>个</div>
+          <div class="number"><span>{{keyData[zrdw].total}}&nbsp;</span>个</div>
           <div class="text">个数</div>
         </div>
         <div class="item">
           <div class="decorate"></div>
-          <div class="number"><span>4&nbsp;</span>点</div>
+          <div class="number"><span>{{keyData[zrdw].hard}}&nbsp;</span>点</div>
           <div class="text">困难</div>
         </div>
       </div>
       <div class="time-wrapper">
         <div class="desc-box">
           <div class="time-box">
-            <span class="number">2</span>
-            <span class="number">0</span>
-            <span class="number">2</span>
-            <span class="number">0</span>
+            <span class="number">{{keyData[zrdw].time.substr(0,1)}}</span>
+            <span class="number">{{keyData[zrdw].time.substr(1,1)}}</span>
+            <span class="number">{{keyData[zrdw].time.substr(2,1)}}</span>
+            <span class="number">{{keyData[zrdw].time.substr(3,1)}}</span>
             <span>年</span>
-            <span class="number">1</span>
-            <span class="number">1</span>
+            <span class="number">{{keyData[zrdw].time.substr(5,1)}}</span>
+            <span class="number">{{keyData[zrdw].time.substr(6,1)}}</span>
             <span>月</span>
-            <span class="number">1</span>
-            <span class="number">0</span>
+            <span class="number">{{keyData[zrdw].time.substr(8,1)}}</span>
+            <span class="number">{{keyData[zrdw].time.substr(9,1)}}</span>
             <span>日</span>
           </div>
           <div class="text-box">最晚完成时间</div>
@@ -221,7 +221,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["zrdw"],
+  data() {
+    return {
+      keyData: {
+        lucheng: {amount: 1.2, total: 3, hard: 0, time: '2021-12-30'},
+        longwan: {amount: 0.66, total: 7, hard: 0, time: '2021-09-30'},
+        ouhai: {amount: 11.72, total: 9, hard: 0, time: '2021-10-01'},
+        ruian: {amount: 1.7, total: 6, hard: 0, time: '2021-09-30'},
+        zhenan: {amount: 0.3, total: 1, hard: 0, time: '2021-12-01'},
+        chengfa: {amount: 0, total: 0, hard: 0, time: '0000-00-00'},
+        xiandai: {amount: 5, total: 4, hard: 0, time: '2021-09-01'},
+      }
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>

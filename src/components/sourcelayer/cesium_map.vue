@@ -188,7 +188,6 @@ export default {
           console.log("yx", value, ServiceUrl.SWImage,this.imagelayer);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
-
           this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
@@ -331,8 +330,8 @@ export default {
 
       this.$bus.$off("clickFly");
       this.$bus.$on("clickFly", () => {
-        // this.tangheFG.show = false
-        // this.tanghe.show = true
+        this.tangheFG.show = false
+        this.tanghe.show = true
         this.lvdaolayerThin.show = false
         this.lvdaolayerBold.show = true
       })
@@ -436,13 +435,13 @@ export default {
           url: ServiceUrl.TANGHE2D,
         })
       )
-      // this.tanghe.show = false
+      this.tanghe.show = false
 
-      // this.tangheFG = window.earth.imageryLayers.addImageryProvider(
-      //   new Cesium.SuperMapImageryProvider({
-      //     url: ServiceUrl.TANGHEFG,
-      //   })
-      // )
+      this.tangheFG = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.TANGHEFG,
+        })
+      )
 
       this.lvdaolayerBold = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
@@ -634,13 +633,13 @@ export default {
         this.cameraHeight = viewer.camera.positionCartographic.height;
         if (this.lvdaoShow) {
           if (this.cameraHeight >= 5000) {
-            // this.tangheFG.show = true
-            // this.tanghe.show = false
+            this.tangheFG.show = true
+            this.tanghe.show = false
             this.lvdaolayerThin.show = true
             this.lvdaolayerBold.show = false
           } else {
-            // this.tangheFG.show = false
-            // this.tanghe.show = true
+            this.tangheFG.show = false
+            this.tanghe.show = true
             this.lvdaolayerThin.show = false
             this.lvdaolayerBold.show = true
           }

@@ -12,7 +12,7 @@
       <SourceTree ref="SourceTree" v-show="!leftOrRight" />
       <RightSummary v-show="leftOrRight" />
     </div>
-    <div class="sign-wrapper" :style="{right: showLarge?'20%':'21%'}" v-if="showSign">
+    <div class="sign-wrapper" :style="{right: showLarge?'22%':'21%'}" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div>
     <MapTool />

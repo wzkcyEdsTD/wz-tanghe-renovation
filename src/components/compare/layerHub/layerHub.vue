@@ -1,6 +1,6 @@
 <template>
   <div class="layerhub-wrapper">
-  <div class="sign-wrapper" :style="{right: showLarge?'20%':'21%'}">
+  <div class="sign-wrapper" :style="{right: showLarge?'22%':'21%'}">
       <img src="/static/images/common/sign@2x.png">
     </div>
     <MapTool />
@@ -14,8 +14,8 @@
       </div>
       <div class="left-content">
         <ul class="zrdw-list">
-          <li class="zrdw-item" :class="{active: currentZrdw==item}" v-for="(item, index) in zrdwList" :key="index" @click="getData(item)">
-            {{ item }}
+          <li class="zrdw-item" :class="{active: currentZrdw==item.title}" v-for="(item, index) in zrdwList" :key="index" @click="getData(item)">
+            {{ item.title }}
           </li>
         </ul>
         <div class="xm-container" v-show="currentType=='xm'">
@@ -255,7 +255,7 @@
             <div class="sub-title">建设情况</div>
             <div class="decorate"></div>
           </div>
-          <div style="height: 16vh;  width: 35vh;" class="echart" ref="barEchart"></div>
+          <div style="height: 16vh;  width: 36vh;" class="echart" ref="barEchart"></div>
         </div>
         <div class="jd-info">
           <div class="sub-title-wrapper">
@@ -594,14 +594,14 @@ export default {
       currentType: 'xm',
       changeType:'all',
       zrdwList: [
-        '指挥部',
-        '鹿城区政府',
-        '龙湾区政府',
-        '瓯海区政府',
-        "瑞安市政府",
-        "浙南产业区",
-        "温州城发集团",
-        "温州现代集团",
+        {title: '指挥部', value: 'all'},
+        {title: '鹿城区政府', value: 'lucheng'},
+        {title: '龙湾区政府', value: 'longwan'},
+        {title: '瓯海区政府', value: 'ouhai'},
+        {title: "瑞安市政府", value: 'ruian'},
+        {title: "浙南产业区", value: 'zhenan'},
+        {title: "温州城发集团", value: 'chengfa'},
+        {title: "温州现代集团", value: 'xiandai'},
       ],
       currentZrdw: '指挥部',
       list:[
@@ -861,7 +861,7 @@ export default {
       if (e>4000){
         e = 18;
       }else {
-        e = 10;
+        e = 14;
       }
       return e;
     },
@@ -922,14 +922,14 @@ export default {
             show: true,
             textStyle: {
               fontSize: e,
-              color: "#ffffff",
+              color: "#98BBFF",
             },
             formatter: function (name) {
               return name === "在建项目"
-                ? name + " {b|(滞后)}"
+                ? name + "\n" + "{b|(滞后)}"
                 : name === "完工项目"
-                ? "完工项目 "
-                : name + " {a|(滞后)}";
+                ? "完工项目"
+                : name + "\n" + " {a|(滞后)}";
             },
             rich: {
               a: {
@@ -1161,28 +1161,27 @@ export default {
         that.lineEchart.resize();
       });
     },
-    getData(name){
+    getData(item){
       // 点击，列表回到顶部
       $("#xm-list").scrollTop(0);
       $("#dd-list").scrollTop(0);
 
       // 不再重复操作
-      if(this.currentZrdw == name) return;
+      if(this.currentZrdw == item.title) return;
 
-      this.currentZrdw = name;
+      this.currentZrdw = item.title;
       this.searchXMText = '';
       this.searchDDText = '';
-      if (name==='指挥部'){
+      if (item.title==='指挥部'){
         this.changeType = 'all';
-        this.$bus.$emit("change-showtype", { value: 'all' });
       }else{
         this.changeType = 'other';
-        this.$bus.$emit("change-showtype", { value: 'other' });
       }
       console.log(this.changeType);
+      this.$bus.$emit("change-zrdw", { value: item.value });
       let rets = [];
       this.list.forEach(function (element) {
-        if(element.name==name){
+        if(element.name==item.title){
           rets.push(element);
         }
       });

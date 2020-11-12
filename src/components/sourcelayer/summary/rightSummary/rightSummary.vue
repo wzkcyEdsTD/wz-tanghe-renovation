@@ -75,7 +75,7 @@
         </div>
         <div class="zsj">
           <div class="ssj">
-            <img src="./img/塘河航道(2).svg" class="hangdao">
+            <img src="./img/塘河示意图.gif" class="hangdao">
           </div>
         </div>
       </div>

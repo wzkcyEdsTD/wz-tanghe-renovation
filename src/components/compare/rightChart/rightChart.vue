@@ -1,21 +1,21 @@
 <template>
   <div class="rightChart">
     <div class="left">
-      <regionAnalysis v-show="showType=='all'"></regionAnalysis>
-      <projectPlan v-show="showType=='all'"></projectPlan>
-      <PartLeft v-show="showType=='other'" />
+      <regionAnalysis v-show="zrdw=='all'"></regionAnalysis>
+      <projectPlan v-show="zrdw=='all'"></projectPlan>
+      <PartLeft :zrdw="zrdw" v-if="zrdw!='all'" />
     </div>
     <div class="middle">
-      <div class="center-box" v-show="showType=='all'">
+      <div class="center-box" v-show="zrdw=='all'">
         <Swivel />
       </div>
-      <projectProcess v-show="showType=='all'"></projectProcess>
-      <PartMiddle v-if="showType=='other'" />
+      <projectProcess v-show="zrdw=='all'"></projectProcess>
+      <PartMiddle v-if="zrdw!='all'" />
     </div>
     <div class="right">
-      <KeyProjects v-show="showType=='all'"></KeyProjects>
-      <HightlightProject v-show="showType=='all'"></HightlightProject>
-      <PartRight v-show="showType=='other'" />
+      <KeyProjects v-show="zrdw=='all'"></KeyProjects>
+      <HightlightProject v-show="zrdw=='all'"></HightlightProject>
+      <PartRight :zrdw="zrdw" v-if="zrdw!='all'" />
     </div>
   </div>
 </template>
@@ -44,14 +44,13 @@
     },
     data(){
       return{
-        showType: 'all'
+        zrdw: 'all'
       };
     },
     mounted() {
-      this.$bus.$off("change-showtype");
-      this.$bus.$on("change-showtype", ({ value }) => {
-        console.log('showType???????', value)
-        this.showType = value
+      this.$bus.$off("change-zrdw");
+      this.$bus.$on("change-zrdw", ({ value }) => {
+        this.zrdw = value
       })
     }
   }

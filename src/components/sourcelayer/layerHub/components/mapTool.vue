@@ -1,5 +1,5 @@
 <template>
-  <div class="map-tool" :style="{right: showLarge?'20%':'21%'}">
+  <div class="map-tool" :style="{right: showLarge?'22%':'21%'}">
     <div class="box">
       <div class="sub-container" :style="{visibility: currentMouse=='yx' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
         <div class="sub-item" :class="{selected: currentYear==item}" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}"

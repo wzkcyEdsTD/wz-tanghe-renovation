@@ -155,78 +155,78 @@ import {mapGetters} from "vuex";
 export default {
   data() {
     return {
-      showLarge: window.showLarge,
+      // showLarge: window.showLarge,
       questionXmList:null,
       questionDdList:null,
       questionQjList:null,
       questionSpList:null,
-      searchXMText:'',
+      // searchXMText:'',
       xmList:[],
-      searchDDText:'',
+      // searchDDText:'',
       ddList:[],
-      searchQJText:'',
+      // searchQJText:'',
       qjList:[],
       spList:[],
       showZB:false,
       name:'',
       forceEntity: {},
-      }
+    }
   },
   computed:{
     ...mapGetters("map", ["bufferQueryData"]),
   },
   methods:{
-    searchXMClear() {
-      this.searchXMText = "";
-      this.xmList = [];
-      this.searchXMFilter();
-    },
-    searchXMFilter() {
-      // console.log(this.currentXmList);
-      let allSearchList = this.questionXmList;
-      allSearchList = allSearchList.filter(item => {
-        return item.attributes.NAME.length
-      })
-      this.xmList = this.searchXMText
-        ? allSearchList.filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
-        })
-        : allSearchList;
-    },
-    searchDDClear() {
-      this.searchDDText = "";
-      this.ddList = [];
-      this.searchDDFilter();
-    },
-    searchDDFilter() {
-      // console.log(this.currentXmList);
-      let allSearchList = this.questionDdList;
-      allSearchList = allSearchList.filter(item => {
-        return item.attributes.NAME.length
-      })
-      this.ddList = this.searchDDText
-        ? allSearchList.filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
-        })
-        : allSearchList;
-    },
-    searchQJClear() {
-      this.searchQJText = "";
-      this.qjList = [];
-      this.searchQJFilter();
-    },
-    searchQJFilter() {
-      // console.log(this.currentXmList);
-      let allSearchList = this.questionQjList;
-      allSearchList = allSearchList.filter(item => {
-        return item.attributes.NAME.length
-      })
-      this.qjList = this.searchQJText
-        ? allSearchList.filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchQJText) >= 0;
-        })
-        : allSearchList;
-    },
+    // searchXMClear() {
+    //   this.searchXMText = "";
+    //   this.xmList = [];
+    //   this.searchXMFilter();
+    // },
+    // searchXMFilter() {
+    //   // console.log(this.currentXmList);
+    //   let allSearchList = this.questionXmList;
+    //   allSearchList = allSearchList.filter(item => {
+    //     return item.attributes.NAME.length
+    //   })
+    //   this.xmList = this.searchXMText
+    //     ? allSearchList.filter((item) => {
+    //       return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
+    //     })
+    //     : allSearchList;
+    // },
+    // searchDDClear() {
+    //   this.searchDDText = "";
+    //   this.ddList = [];
+    //   this.searchDDFilter();
+    // },
+    // searchDDFilter() {
+    //   // console.log(this.currentXmList);
+    //   let allSearchList = this.questionDdList;
+    //   allSearchList = allSearchList.filter(item => {
+    //     return item.attributes.NAME.length
+    //   })
+    //   this.ddList = this.searchDDText
+    //     ? allSearchList.filter((item) => {
+    //       return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
+    //     })
+    //     : allSearchList;
+    // },
+    // searchQJClear() {
+    //   this.searchQJText = "";
+    //   this.qjList = [];
+    //   this.searchQJFilter();
+    // },
+    // searchQJFilter() {
+    //   // console.log(this.currentXmList);
+    //   let allSearchList = this.questionQjList;
+    //   allSearchList = allSearchList.filter(item => {
+    //     return item.attributes.NAME.length
+    //   })
+    //   this.qjList = this.searchQJText
+    //     ? allSearchList.filter((item) => {
+    //       return item.attributes.NAME.indexOf(this.searchQJText) >= 0;
+    //     })
+    //     : allSearchList;
+    // },
     closeSearch(){
       this.showZB = false;
       this.questionQjList=[];
@@ -292,12 +292,4 @@ export default {
 
 <style lang="less" scoped>
 @import url("./searchDetail.less");
-</style>
-<style>
-.el-input__inner {
-  background: transparent !important;
-  border    : none;
-  color     : white;
-  font-size: 1.2vh;
-}
 </style>

@@ -1,28 +1,28 @@
 <template>
-  <div class="map-tool" :style="{right: showLarge?'22%':'21%'}">
+  <div class="map-tool" :style="{right: currentPage=='sourcelayer'?'22%':'24%'}">
     <div class="box">
-      <div class="sub-container" :style="{visibility: currentMouse=='yx' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
+      <div class="sub-container" :class="{light: currentVector=='black'}" :style="{visibility: currentMouse=='yx' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
         <div class="sub-item" :class="{selected: currentYear==item}" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}"
              v-for="(item, index) in yearList" :key="index"
              @click="changeYear(item)">
           {{item}}
         </div>
       </div>
-      <div class="sub-container" :style="{visibility: currentMouse=='vector' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='vector'" @mouseleave="currentMouse=''">
+      <div class="sub-container" :class="{light: currentVector=='black'}" :style="{visibility: currentMouse=='vector' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='vector'" @mouseleave="currentMouse=''">
         <div class="sub-item" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}" :class="{selected: currentVector==item.value || item.selected}"
              v-for="(item, index) in vectorList" :key="index"
              @click="changeVector(item)">
           {{item.label}}
         </div>
       </div>
-      <div class="sub-container" :style="{visibility: currentMouse=='3d' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='3d'" @mouseleave="currentMouse=''">
+      <div class="sub-container" :class="{light: currentVector=='black'}" :style="{visibility: currentMouse=='3d' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='3d'" @mouseleave="currentMouse=''">
         <div class="sub-item" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}" :class="{selected: item.selected}"
              v-for="(item, index) in threeDList" :key="index"
              @click="change3d(item)">
           {{item.label}}
         </div>
       </div>
-      <div class="sub-container" :style="{visibility: currentMouse=='tool' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='tool'" @mouseleave="currentMouse=''">
+      <div class="sub-container" :class="{light: currentVector=='black'}" :style="{visibility: currentMouse=='tool' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='tool'" @mouseleave="currentMouse=''">
         <div class="sub-item"  :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}" :class="{selected: currentTool==item}"
              v-for="(item, index) in toolList" :key="index"
              @click="changeTool(item)">
@@ -30,29 +30,51 @@
         </div>
       </div>
     </div>
-    <div class="hub-list">
-      <div class="hub-item" :class="{selected: currentLayer=='yx'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
+    <div class="hub-list light" v-if="currentVector=='black'">
+      <div class="hub-item light" :class="{selected: currentLayer=='yx'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
         <img v-if="currentLayer=='yx'" src="../images/yx-sel2.png" class="otherIcon">
-        <img v-else src="../images/yx-unsel2.png" class="otherIcon">
+        <img v-else src="../images/yx-unsel.png" class="otherIcon">
         <span>影像图</span>
       </div>
-      <div class="hub-item" :class="{selected: currentLayer=='vector'}" @mouseenter="currentMouse='vector'" @mouseleave="currentMouse=''">
+      <div class="hub-item light" :class="{selected: currentLayer=='vector'}" @mouseenter="currentMouse='vector'" @mouseleave="currentMouse=''">
         <img v-if="currentLayer=='vector'" src="../images/vector-sel2.png" class="otherIcon">
-        <img v-else src="../images/vector-unsel2.png" class="otherIcon">
+        <img v-else src="../images/vector-unsel.png" class="otherIcon">
         <span>矢量图</span>
       </div>
-      <div class="hub-item" :class="{selected: currentLayer=='3d'}" @mouseenter="currentMouse='3d'" @mouseleave="currentMouse=''">
-        <img v-if="currentLayer=='3d'" src="../images/3d-sel2.png" class="otherIcon">
-        <img v-else src="../images/3d-unsel2.png" class="otherIcon">
+      <div class="hub-item light" :class="{selected: is3D}" @mouseenter="currentMouse='3d'" @mouseleave="currentMouse=''">
+        <img v-if="is3D" src="../images/3d-sel2.png" class="otherIcon">
+        <img v-else src="../images/3d-unsel.png" class="otherIcon">
         <span>三维图</span>
       </div>
-      <div class="hub-item" :class="{selected: tools=='tool'}" @mouseenter="currentMouse='tool'" @mouseleave="currentMouse=''">
-        <img v-if="tools=='tool'" src="../images/tool-sel.png" class="toolIcon">
+      <div class="hub-item light" :class="{selected: isTool}" @mouseenter="currentMouse='tool'" @mouseleave="currentMouse=''">
+        <img v-if="isTool" src="../images/tool-sel2.png" class="toolIcon">
         <img v-else src="../images/tool-unsel.png" class="toolIcon">
         <span style="padding-left: 0.5vh">工具</span>
       </div>
     </div>
-    <calTools  ref="tools" v-show="false"/>
+    <div class="hub-list" v-else>
+      <div class="hub-item" :class="{selected: currentLayer=='yx'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
+        <img v-if="currentLayer=='yx'" src="../images/yx-sel.png" class="otherIcon">
+        <img v-else src="../images/yx-unsel.png" class="otherIcon">
+        <span>影像图</span>
+      </div>
+      <div class="hub-item" :class="{selected: currentLayer=='vector'}" @mouseenter="currentMouse='vector'" @mouseleave="currentMouse=''">
+        <img v-if="currentLayer=='vector'" src="../images/vector-sel.png" class="otherIcon">
+        <img v-else src="../images/vector-unsel.png" class="otherIcon">
+        <span>矢量图</span>
+      </div>
+      <div class="hub-item" :class="{selected: is3D}" @mouseenter="currentMouse='3d'" @mouseleave="currentMouse=''">
+        <img v-if="is3D" src="../images/3d-sel.png" class="otherIcon">
+        <img v-else src="../images/3d-unsel.png" class="otherIcon">
+        <span>三维图</span>
+      </div>
+      <div class="hub-item" :class="{selected: isTool}" @mouseenter="currentMouse='tool'" @mouseleave="currentMouse=''">
+        <img v-if="isTool" src="../images/tool-sel.png" class="toolIcon">
+        <img v-else src="../images/tool-unsel.png" class="toolIcon">
+        <span style="padding-left: 0.5vh">工具</span>
+      </div>
+    </div>
+    <calTools ref="tools" v-show="false"/>
   </div>
 </template>
 
@@ -69,7 +91,8 @@ export default {
       yearList: [2018, 2019],
       currentYear: '',
       currentTool:'',
-      tools:"",
+      isTool: false,
+      is3D: false,
       toolList:[{
         label: '测距',
         value: 'ju',
@@ -111,6 +134,11 @@ export default {
       current3d: '',
     }
   },
+  computed: {
+    currentPage () {
+      return this.$route.name
+    }
+  },
   methods: {
     changeYear(item) {
       this.currentVector = ''
@@ -118,9 +146,9 @@ export default {
       this.currentLayer = 'yx'
     },
     changeTool(item) {
-      this.tools = 'tool'
-      this.currentYear = ''
-      this.currentVector = ''
+      this.isTool = true
+      // this.currentYear = ''
+      // this.currentVector = ''
       this.currentTool = item;
       if (item.value == 'ju'){
         this.$refs.tools.gaugeDistance();
@@ -130,7 +158,7 @@ export default {
         this.$refs.tools.gaugeHeight();
       }else if (item.value == 'clear'){
         this.currentTool = '';
-        this.tools = '';
+        this.isTool = false;
         this.$refs.tools.clearGauge();
       }
     },
@@ -146,8 +174,9 @@ export default {
       }
     },
     change3d(item) {
-      this.currentLayer = '3d'
+      // this.currentLayer = '3d'
       item.selected = !item.selected
+      item.selected ? this.is3D = true : this.is3D = false
       this.current3d = item.value
       this.$bus.$emit("cesium-3d-switch", { type: item.value , value: item.selected });
     },
@@ -172,16 +201,15 @@ export default {
   z-index: 999;
   position: absolute;
   top: 9vh;
-  /*width: 11vh;*/
   display: flex;
-  /*height: 10vh;*/
-  // right: 25%;
   text-align: center;
   .hub-list {
     display: flex;
     flex-direction: column;
-    /*height: 100%;*/
     background-color: rgba(4,13,51,0.8);
+    &.light {
+      background-color: #E2F6FF;
+    }
     .toolIcon{
       width:2.7vh;
       padding-left: 0.5vh
@@ -195,16 +223,20 @@ export default {
       width: 11vh;
       padding: 0.5vh 1vh;
       border-bottom: 0.1vh solid #2283FC;
-      // font-family: PingFang;
       color: #2283FC;
       height: 3.5vh;
       img {
         padding-right: 0.3vh;
       }
+      &.light {
+        &.selected {
+          color: #FFFFFF;
+          background-color: #2283FC;
+        }
+      }
       &.selected {
         color: #69FEE5;
         background-color: rgba(0, 206, 136, 0.4);
-        border: 0.1vh solid;
       }
       &:last-child {
         border: none;
@@ -214,15 +246,12 @@ export default {
   .box {
     display: flex;
     flex-direction: column;
-
     .sub-container {
-      /*width: 11vh;*/
       height: 100%;
       background-color: rgba(4,13,51,0.8);
       color: #2283FC;
       display: flex;
       .sub-item {
-        /*padding-bottom: 0.3vh;*/
         padding-left: 0.5vh;
         padding-right: 0.5vh;
         padding-top: 0.9vh;
@@ -233,9 +262,15 @@ export default {
           color: #69FEE5;
           background-color: rgba(0, 206, 136, 0.4);
         }
-        /*&:last-child {*/
-        /*  border: none;*/
-        /*}*/
+      }
+      &.light {
+        background-color: #E2F6FF;
+        .sub-item {
+          &.selected {
+            color: #FFFFFF;
+            background-color: #2283FC;
+          }
+        }
       }
     }
   }

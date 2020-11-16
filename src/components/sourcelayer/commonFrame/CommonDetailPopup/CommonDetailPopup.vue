@@ -53,9 +53,13 @@
             <div class="sub-title">基本信息</div>
             <ul>
               <li v-for="(item,key,index) in fixData" :key="index" class="info-item">
-                  <span class="key">{{key}}</span>
-                  <span class="value">{{item}}</span>
-                </li>
+                <span class="key">{{key}}</span>
+                <span class="value">{{item}}</span>
+              </li>
+              <li class="info-item" style="line-height:2vh;" v-if="forceEntity.attributes&&forceEntity.attributes.XQ">
+                <span class="key">详情</span>
+                <span class="value">{{forceEntity.attributes.XQ}}</span>
+              </li>
             </ul>
           </div>
           <div id="spot" class="content-item">
@@ -164,7 +168,7 @@ export default {
       activeStep: 0,
       showQJ: false,
       QJURL: '',
-      hideField: ["名称", "标签", "备注", "形象进度", "目录分类", "数据来源", "经度", "纬度", "建设地点1", "建设地点2", "建设地点3", "是否属于67个里面的", "类型", "统计", "唯一码", "更新参考数据源", "照片编号", "类型1", "类型2", "类型3", "显示级别", "类型编码", "马克", "照片", "颜色", "全景", "视频", "语音", "现场记录", "景观图", "周边全景", "全景缩略图", "原表唯一码"],
+      hideField: ["名称", "标签", "备注", "形象进度", "目录分类", "数据来源", "经度", "纬度", "建设地点1", "建设地点2", "建设地点3", "是否属于67个里面的", "类型", "统计", "唯一码", "更新参考数据源", "照片编号", "类型1", "类型2", "类型3", "显示级别", "类型编码", "马克", "照片", "颜色", "全景", "视频", "语音", "现场记录", "景观图", "周边全景", "全景缩略图", "原表唯一码", "详情"],
       showVideo: false,
       showJK: false,
       VideoURL: '',

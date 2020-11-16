@@ -64,12 +64,8 @@ export default {
   data() {
     return {
       showLarge:window.showLarge,
-      // showLarge: false,
-      // screenWidth: document.body.clientWidth,
-      // screeHeight: document.body.clientHeight,
       searchText: "",
       searchList: [],
-      // currentSource: '断点',
       pieEchart: null, // 饼状图
       barEchart: null, // 树状图
       lineEchart: null, // 折线图
@@ -85,7 +81,6 @@ export default {
     console.log('mounted???', this.currentSource)
   },
   created() {
-    // this.getKuanGao();
   },
   watch:{
     'drawScouce'(val) {
@@ -95,18 +90,6 @@ export default {
     }
   },
   methods: {
-    // getKuanGao(){
-    //   //4320*1280
-    //   console.log(this.screenWidth);
-    //   //大屏返回true
-    //   if(this.screenWidth>4000&this.screeHeight>1000){
-    //     console.log(true);
-    //     this.showLarge = true;
-    //   }else {
-    //     console.log(false);
-    //     this.showLarge = false;
-    //   };
-    // },
     drawPie() {
       // let e = this.screeHeight;
       // e = (e/1000*12);
@@ -451,6 +434,4 @@ export default {
 
 <style lang="less">
 @import url("./projectSummary.less");
-
-
 </style>

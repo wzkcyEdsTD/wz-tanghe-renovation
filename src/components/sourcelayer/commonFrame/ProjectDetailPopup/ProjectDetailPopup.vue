@@ -244,7 +244,7 @@
               </div>
             </div>
             <!-- <div class="time-line-wrapper" :class="{'large':showLarge}" v-if="forceEntity.type == '断点'"> -->
-            <div class="time-line-wrapper" v-if="forceEntity.type == '断点'">
+            <div class="time-line-wrapper" v-if="forceEntity.type == '绿道断点'">
               <div class="time-line">
                 <div class="line-item green"
                   :style="{flex:forceEntity.attributes.JHGTSJ.substring(0, 4) > 2021? 0.5: 3,}"
@@ -665,58 +665,59 @@ export default {
       let currentdate = year + seperator1 + month + seperator1 + strDate;
       this.date =  currentdate;
     },
-    searchXMClear() {
-      this.searchXMText = "";
-      this.xmList = [];
-      this.searchXMFilter();
-    },
-    searchXMFilter() {
-      // console.log(this.currentXmList);
-      let allSearchList = this.questionXmList;
-      allSearchList = allSearchList.filter(item => {
-        return item.attributes.NAME.length
-      })
-      this.xmList = this.searchXMText
-        ? allSearchList.filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
-        })
-        : allSearchList;
-    },
-    searchDDClear() {
-      this.searchDDText = "";
-      this.ddList = [];
-      this.searchDDFilter();
-    },
-    searchDDFilter() {
-      // console.log(this.currentXmList);
-      let allSearchList = this.questionDdList;
-      allSearchList = allSearchList.filter(item => {
-        return item.attributes.NAME.length
-      })
-      this.ddList = this.searchDDText
-        ? allSearchList.filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
-        })
-        : allSearchList;
-    },
-    searchQJClear() {
-      this.searchQJText = "";
-      this.qjList = [];
-      this.searchQJFilter();
-    },
-    searchQJFilter() {
-      // console.log(this.currentXmList);
-      let allSearchList = this.questionQjList;
-      allSearchList = allSearchList.filter(item => {
-        return item.attributes.NAME.length
-      })
-      this.qjList = this.searchQJText
-        ? allSearchList.filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchQJText) >= 0;
-        })
-        : allSearchList;
-    },
+    // searchXMClear() {
+    //   this.searchXMText = "";
+    //   this.xmList = [];
+    //   this.searchXMFilter();
+    // },
+    // searchXMFilter() {
+    //   // console.log(this.currentXmList);
+    //   let allSearchList = this.questionXmList;
+    //   allSearchList = allSearchList.filter(item => {
+    //     return item.attributes.NAME.length
+    //   })
+    //   this.xmList = this.searchXMText
+    //     ? allSearchList.filter((item) => {
+    //       return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
+    //     })
+    //     : allSearchList;
+    // },
+    // searchDDClear() {
+    //   this.searchDDText = "";
+    //   this.ddList = [];
+    //   this.searchDDFilter();
+    // },
+    // searchDDFilter() {
+    //   // console.log(this.currentXmList);
+    //   let allSearchList = this.questionDdList;
+    //   allSearchList = allSearchList.filter(item => {
+    //     return item.attributes.NAME.length
+    //   })
+    //   this.ddList = this.searchDDText
+    //     ? allSearchList.filter((item) => {
+    //       return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
+    //     })
+    //     : allSearchList;
+    // },
+    // searchQJClear() {
+    //   this.searchQJText = "";
+    //   this.qjList = [];
+    //   this.searchQJFilter();
+    // },
+    // searchQJFilter() {
+    //   // console.log(this.currentXmList);
+    //   let allSearchList = this.questionQjList;
+    //   allSearchList = allSearchList.filter(item => {
+    //     return item.attributes.NAME.length
+    //   })
+    //   this.qjList = this.searchQJText
+    //     ? allSearchList.filter((item) => {
+    //       return item.attributes.NAME.indexOf(this.searchQJText) >= 0;
+    //     })
+    //     : allSearchList;
+    // },
     itemClick(item){
+      console.log('itemClick!!!???', item)
       const { x, y } = item.geometry;
 
       // 定位图标，详情变换
@@ -780,6 +781,9 @@ export default {
     },
 
     openInfo() {
+      if (!this.projectId) {
+        return this.$message('暂无更多数据');
+      }
       this.showInfo = true
     }
 

@@ -94,12 +94,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     context.saveDataMap[node.id] = result.features;
     context[node.saveData](forceDrawFeatures)
   }
-  context.setSourceMap({[node.id]: forceDrawFeatures});
-  // try {
-  //   context.setCurrentource(node.id);
-  // }catch (e) {
-  // }
-
+  // context.setSourceMap({[node.id]: forceDrawFeatures});
 
   // forceDrawFeatures.map(item => {
   //   const entityOption = {
@@ -153,8 +148,11 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       fix_data: fixAttributesByOrigin(v.attributes, fieldHash),
       type: node.id
     }
+    return Object.assign(v, {type: node.id})
   })
-  console.log('window.featureMap!!!', window.featureMap)
+  // console.log('window.featureMap!!!', window.featureMap)
+  context.setSourceMap({[node.id]: forceDrawFeatures});
+
   forceDrawFeatures.map(item => {
     const position = Cesium.Cartesian3.fromDegrees(
       item.geometry.x,
@@ -185,7 +183,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       outlineWidth: '2',
       scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-      pixelOffset: new Cesium.Cartesian2(0, 42),
+      pixelOffset: new Cesium.Cartesian2(0, 38),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
@@ -199,7 +197,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       outlineWidth: '2',
       scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-      pixelOffset: new Cesium.Cartesian2(0, 42),
+      pixelOffset: new Cesium.Cartesian2(0, 38),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });

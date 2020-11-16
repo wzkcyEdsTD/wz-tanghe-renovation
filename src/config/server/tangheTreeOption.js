@@ -157,7 +157,7 @@ export const CESIUM_TREE_OPTION = [
         // saveData: "setProjectList"
       },
       {
-        id: "2021年重点项目",
+        id: "xm2021",
         label: "2021年重点项目",
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}xm2021`,
@@ -166,7 +166,7 @@ export const CESIUM_TREE_OPTION = [
         // saveData: "setProjectList"
       },
       {
-        id: "断点",
+        id: "绿道断点",
         label: "断点",
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}绿道断点`,
@@ -180,7 +180,7 @@ export const CESIUM_TREE_OPTION = [
         switchLayer: 'switch-lvdao'
       },
       {
-        id: "桥梁",
+        id: "bridge",
         label: "桥梁",
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}bridge`,
@@ -188,7 +188,7 @@ export const CESIUM_TREE_OPTION = [
         type: "mvt",
       },
       {
-        id: "码头",
+        id: "wharf",
         label: "码头",
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}wharf`,
@@ -196,7 +196,7 @@ export const CESIUM_TREE_OPTION = [
         type: "mvt",
       },
       {
-        id:'景点',
+        id:'scenic_spot',
         icon:'景点',
         label: "景点",
         url: SERVER_DEFAULT_DATA,
@@ -204,7 +204,7 @@ export const CESIUM_TREE_OPTION = [
         type: "mvt"
       },
       {
-        id:'视频',
+        id:'shipin',
         icon:'视频',
         label: "视频",
         url: SERVER_DEFAULT_DATA,
@@ -212,7 +212,7 @@ export const CESIUM_TREE_OPTION = [
         type: "mvt"
       },
       {
-        id:'全景',
+        id:'quanjin',
         icon:'全景',
         label: "全景",
         url: SERVER_DEFAULT_DATA,
@@ -220,7 +220,7 @@ export const CESIUM_TREE_OPTION = [
         type: "mvt"
       },
       {
-        id:'监控',
+        id:'jiankong',
         icon:'监控',
         label: "监控",
         url: SERVER_DEFAULT_DATA,
@@ -260,7 +260,7 @@ export const CESIUM_TREE_OPTION = [
     children: CITY_INFO.map(v => {
       return {
         ...v,
-        id: v.label,
+        id: v.dataset,
         icon: v.label,
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}${v.dataset}`,
@@ -274,7 +274,7 @@ export const CESIUM_TREE_OPTION = [
     children: ST_INFO.map(v => {
       return {
         ...v,
-        id: v.label,
+        id: v.dataset,
         icon: v.label,
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}${v.dataset}`,
@@ -288,7 +288,7 @@ export const CESIUM_TREE_OPTION = [
     children: JG_INFO.map(v => {
       return {
         ...v,
-        id: v.label,
+        id: v.dataset,
         icon: v.label,
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}${v.dataset}`,
@@ -302,7 +302,7 @@ export const CESIUM_TREE_OPTION = [
     children: WH_INFO.map(v => {
       return {
         ...v,
-        id: v.label,
+        id: v.dataset,
         icon: v.label,
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}${v.dataset}`,

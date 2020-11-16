@@ -29,7 +29,7 @@ const state = {
   // 所有资源
   sourceMap: {},
   // 当前资源
-  currentSource: '断点',
+  currentSource: '绿道断点',
   // 十二景
   sejList: [],
 

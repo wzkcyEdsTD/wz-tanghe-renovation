@@ -6,13 +6,13 @@
       <img class="shadow" src="./images/shadow.png" alt="">
     </div>
     <div class="logoGroup">
-      <div class="xd">
-        <img src="./images/现代集团logo.png" class="xdlogo">
-        <span class="logoText">现代集团</span>
+      <div class="logo-item">
+        <img src="./images/xdjt.png" class="xdlogo">
+        <!-- <span class="logoText">现代集团</span> -->
       </div>
-      <div class="sj">
-        <img src="./images/设计集团logo.png" class="sjlogo">
-        <span class="logoText">设计集团</span>
+      <div class="logo-item">
+        <img src="./images/sjjt.png" class="sjlogo">
+        <!-- <span class="logoText">设计集团</span> -->
       </div>
     </div>
     <div class="info">
@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .header-wrapper {
   position: relative;
   z-index: 1;
@@ -107,49 +107,21 @@ export default {
       height: 4vh;
     }
   }
-
   .logoGroup {
     position: absolute;
     left: 0;
     top: 0;
     height: 60%;
     z-index: 2;
-    .xd{
-      position: absolute;
-      top: 0.5vh;
-      left: 2vh;
-      .xdlogo{
-        width: 3.5vh;
-        height: 3.2vh;
-      }
-      .logoText{
-        color: #ffffff;
-        font-family: DIN-Regular;
-        font-size: 2vh;
-        position: absolute;
-        top: 0.4vh;
-        width: 9vh;
-      }
-    }
-    .sj{
-      position: absolute;
-      top: 0.8vh;
-      left: 16vh;
-      .sjlogo{
-        width: 2.5vh;
-        height: 2.5vh;
-      }
-      .logoText{
-        color: #ffffff;
-        font-family: DIN-Regular;
-        font-size: 2vh;
-        position: absolute;
-        width: 8vh;
-        left: 3.5vh;
+    display: flex;
+    align-items: center;
+    .logo-item {
+      margin-left: 2vh;
+      >img {
+        height: 3vh;
       }
     }
   }
-
   .info {
     position: absolute;
     top: 0.3vh;
@@ -160,7 +132,10 @@ export default {
     /*text-align: left;*/
     line-height: 1.8vh;
     z-index: 3;
-    font-family: DIN-Regular;
+    // font-family: DIN-Regular;
+    .time {
+      font-family: YouSheBiaoTiHei;
+    }
   }
   .route-wrapper {
     z-index: 3;
@@ -176,7 +151,9 @@ export default {
       height: 2.5vh;
       font-size: 2.3vh;
       font-family: YouSheBiaoTiHei;
-      color:#5E91F6;
+      color:#A5C3FF;
+      background: url("./images/非选中光.png");
+      background-size: 13vh 2.5vh;
       &.active {
         color: #FFFFFF;
         background: url("./images/选中光.png");

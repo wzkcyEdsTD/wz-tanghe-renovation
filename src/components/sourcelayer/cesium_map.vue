@@ -66,6 +66,7 @@ export default {
       thfwmlayer: undefined,
       xzjxqxlayer: undefined,
       xzjxjdlayer: undefined,
+      blackMark: undefined,
       handdrawnlayer: undefined,
       handler: undefined,
       // isTotalTarget: true,
@@ -141,7 +142,7 @@ export default {
 
             this.$refs.searchDetail && (this.$refs.searchDetail.showZB = false);
 
-            if (~_NODEID_.indexOf('项目') || _NODEID_ == '断点') {
+            if (~_NODEID_.indexOf('项目') || _NODEID_ == '绿道断点') {
               this.$refs.projectDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
@@ -218,6 +219,7 @@ export default {
           this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
+          this.blackMark.show = false
           this.datalayer[value]
             ? (this.datalayer[value].show = true)
             : (this.datalayer[value] = window.earth.imageryLayers.addImageryProvider(
@@ -227,6 +229,9 @@ export default {
               ));
           window.earth.imageryLayers.lowerToBottom(this.datalayer[value])
           window.currentMapType = `vector${value}`
+          if (value == 'black') {
+            this.blackMark.show = true
+          }
         }
         // 切换底图时，当前选中资源的label标签颜色切换
         if (window.currentMapType == 'vectorwhite') {
@@ -455,6 +460,13 @@ export default {
           url: ServiceUrl.LVDAOImage.THIN,
         })
       )
+
+      this.blackMark = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.BlackMark,
+        })
+      )
+      this.blackMark.show = false
 
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
       // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
@@ -770,6 +782,9 @@ export default {
             processCompleted: async (res) => {
               if(res.result && res.result.features && res.result.features.length) {
                 const obj = this.bufferQueryData;
+                res.result.features.map(v => {
+                  return Object.assign(v, {type: dataset})
+                })
                 obj[dataset] = res.result.features;
                 this.SetBufferQueryData(obj)
               }

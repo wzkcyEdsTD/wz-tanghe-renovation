@@ -1,33 +1,33 @@
 <template>
   <div class="layerhub-wrapper">
-  <div class="sign-wrapper" :style="{right: showLarge?'22%':'21%'}">
+    <div class="sign-wrapper" style="right: 24%">
       <img src="/static/images/common/sign@2x.png">
     </div>
     <MapTool />
     <div class="left-wrapper">
-      <div class="switch-menu-wrapper-onemap">
+      <!-- <div class="switch-menu-wrapper-onemap">
         <div class="switch-menu-container">
           <span :class="{active: currentType=='xm'}" @click="currentType='xm'">项目</span>
           <span :class="{active: currentType=='dd'}" @click="currentType='dd'">断点</span>
         </div>
         <div class="switch-menu-decorate"></div>
-      </div>
+      </div> -->
       <div class="left-content">
         <ul class="zrdw-list">
           <li class="zrdw-item" :class="{active: currentZrdw==item.title}" v-for="(item, index) in zrdwList" :key="index" @click="getData(item)">
-            {{ item.title }}
+            <span>{{ item.title }}</span>
           </li>
         </ul>
         <div class="xm-container" v-show="currentType=='xm'">
-          <!-- <div class="titleHxhb-wrapper">
+          <div class="titleHxhb-wrapper">
             <span class="pre"></span>
-            <span class="title">项目</span>
-          </div> -->
+            <span class="title">列表</span>
+          </div>
           <div class="search-header">
             <el-input
               v-model="searchXMText"
               class="searchFilterInput"
-              placeholder="查找项目"
+              placeholder="输入查找内容"
               size="small"
               @keyup.enter.native="searchXMFilter"
             />
@@ -40,37 +40,46 @@
               </div>
             </div>
           </div>
-          <div id="xm-list" class="xm-list">
-            <div v-for="(item, index) in xmList" :key="index">
-              <div class="xm-item" :class="{ xmActive: xmActive == item.attributes.GUID }" @click="itemClick(item)">
-                <div class="name" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
-                <div class="info-box">
-                  <div class="info-item">
-                    <div class="key">建设状态</div>
-                    <div class="value" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.CURRENT_STATE }}</div>
-                  </div>
-                  <div class="split"></div>
-                  <div class="info-item">
-                    <div class="key">投资计划</div>
-                    <div class="value" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.TOTALAMOUNT }}万元</div>
-                  </div>
-                  <div class="split"></div>
-                  <div class="info-item jcsj">
-                    <div class="key">计划建成时间</div>
-                    <div class="value" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.CONSYEARE }}</div>
-                  </div>
+          <ul id="xm-list" class="xm-list">
+            <li class="xm-item" v-for="(item, index) in allList" :key="index" :class="{ xmActive: xmActive == item.attributes.GUID }" @click="itemClick(item)">
+              <div class="name" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
+              <div class="info-box" v-if="item.type=='项目'">
+                <div class="info-item">
+                  <div class="key">建设状态</div>
+                  <div class="value">{{ item.attributes.CURRENT_STATE }}</div>
+                </div>
+                <div class="split"></div>
+                <div class="info-item">
+                  <div class="key">投资计划</div>
+                  <div class="value">{{ item.attributes.TOTALAMOUNT }}万元</div>
+                </div>
+                <div class="split"></div>
+                <div class="info-item jcsj">
+                  <div class="key">计划建成时间</div>
+                  <div class="value">{{ item.attributes.CONSYEARE }}</div>
                 </div>
               </div>
-              <div class="split-line"></div>
-            </div>
-          </div>
-          <div class="no-tip" v-show="!xmList.length">暂无数据</div>
+              <div class="info-box" v-if="item.type=='绿道断点'">
+                <div class="info-item">
+                  <div class="key">计划贯穿时间</div>
+                  <div class="value">{{ item.attributes.JHGTSJ }}</div>
+                </div>
+                <div class="split"></div>
+                <div class="info-item">
+                  <div class="key">长度（米）</div>
+                  <div class="value">{{ item.attributes.LENGTH }}</div>
+                </div>
+              </div>
+            </li>
+            <!-- <div class="split-line" v-show="index!=allList.length-1"></div> -->
+          </ul>
+          <div class="no-tip" v-show="!allList.length">暂无数据</div>
         </div>
-        <div class="dd-container" v-show="currentType=='dd'">
-          <!-- <div class="titleHxhb-wrapper">
-            <span class="pre"></span>
-            <span class="title">断点</span>
-          </div> -->
+        <div class="mark-container">
+          <img class="button" src="./images/mark.png">
+          <img class="line" src="./images/mark-line.png">
+        </div>
+        <!-- <div class="dd-container" v-show="currentType=='dd'">
           <div class="search-header">
             <el-input
               v-model="searchDDText"
@@ -114,11 +123,11 @@
             </div>
           </div>
           <div class="no-tip" v-show="!ddList.length">暂无数据</div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="right-content" v-show="changeType=='other'">
-      <div class="kdtj-container" v-show="currentType=='dd'">
+      <!-- <div class="kdtj-container" v-show="currentType=='dd'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">断点统计</span>
@@ -141,26 +150,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="base-info">
-          <div class="base-item">
-            <div class="progressEmpty">
-              <img src="./images/0%（蓝）.png" class="empty">
-              <div class="progressFull" style="width: 1.00vh">
-                <img src="./images/100%（蓝）.png" class="full">
-              </div>
-              <span class="progressTitle">20%</span>
-            </div>
-          </div>
-          <div class="base-item">
-            <div class="progressEmpty">
-              <img src="./images/0%（橙）.png" class="empty">
-              <div class="progressFull" style="width: 1.00vh">
-                <img src="./images/100%（橙）.png" class="full">
-              </div>
-              <span class="progressTitleRight">20%</span>
-            </div>
-          </div>
-        </div> -->
         <div class="kdfb-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">断点分布</div>
@@ -205,7 +194,7 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="xmtj-container" v-show="currentType=='xm'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
@@ -236,7 +225,6 @@
               <div class="progressFull" :style="{width: `${ret.speed.finish/10}vh`}">
                 <img src="./images/100%（蓝）.png" class="full">
               </div>
-              <!-- <span class="progressTitle">{{(ret.situation.finish/ret.project.sum).toFixed(2)}}%</span> -->
               <span class="progressTitle">{{ret.speed.finish}}%</span>
             </div>
           </div>
@@ -306,7 +294,7 @@
       </div>
     </div>
     <div class="right-content" v-show="changeType=='all'">
-      <div class="kdtj-container" v-show="currentType=='dd'">
+      <!-- <div class="kdtj-container" v-show="currentType=='dd'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">断点统计</span>
@@ -384,7 +372,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="xmtj-container" v-show="currentType=='xm'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
@@ -397,17 +385,25 @@
           </div>
           <div class="mxph">
             <img src="./images/xmtzjh.png" class="xmtzPicture">
-            <div class="second">111%</div>
-            <div class="secondText">总 15.7亿元</div>
-            <div class="first">154%</div>
-            <div class="firstText">总 1.5亿元</div>
-            <div class="third">109%</div>
-            <div class="thirdText">总 0.2亿元</div>
+            <div class="rank-text-wrapper">
+              <div class="rank-text-item" style="margin-top:2vh;">
+                <div class="second">111%</div>
+                <div class="secondText">总 15.7亿元</div>
+              </div>
+              <div class="rank-text-item">
+                <div class="first">154%</div>
+                <div class="firstText">总 1.5亿元</div>
+              </div>
+              <div class="rank-text-item" style="margin-top:4vh;">
+                <div class="third">109%</div>
+                <div class="thirdText">总 0.2亿元</div>
+              </div>
+            </div>
           </div>
           <div class="progressFlex">
-            <span class="xmtzOH">瓯海区</span>
-            <span class="xmtzLC">瑞安市</span>
-            <span class="xmtzLW">浙南产业区</span>
+            <span class="xmtz-item second">瓯海区</span>
+            <span class="xmtz-item first">瑞安市</span>
+            <span class="xmtz-item third">浙南产业区</span>
           </div>
           <ul>
             <li class="info-item-right">
@@ -451,22 +447,22 @@
           </div>
           <div class="pictureFlex">
             <div class="xmwg">
-                <img src="./images/lan.png" class="bothSides">
-                <span class="compleRate">65%</span>
+                <img src="./images/complete2.png" class="bothSides">
+                <span class="compleRate second">65%</span>
               </div>
             <div class="xmwg">
-              <img src="./images/lan.png" class="middlePic">
-              <span class="compleRate">75%</span>
+              <img src="./images/complete1.png" class="middlePic">
+              <span class="compleRate first">75%</span>
             </div>
             <div class="xmwg">
-              <img src="./images/bai.png" class="bothSides">
-              <span class="compleRateRight">55%</span>
+              <img src="./images/complete3.png" class="bothSides">
+              <span class="compleRate third">55%</span>
             </div>
           </div>
           <div class="pictureFlex">
-            <p class="compleRateText">瓯海区<br/>9个</p>
-            <p class="compleRateText">鹿城区<br/>9个</p>
-            <p class="compleRateTextRight">龙湾区<br/>9个</p>
+            <p class="compleRateText second">瓯海区<br/>9个</p>
+            <p class="compleRateText first">鹿城区<br/>9个</p>
+            <p class="compleRateText third">龙湾区<br/>9个</p>
           </div>
           <ul>
             <li class="info-item-right">
@@ -513,26 +509,26 @@
               <div class="lucheng">
                 <p class="buleLabTitle">2020.6.1完成</p>
                 <p class="buleLabText">温州现代集团</p>
-                <p class="buleLabText">项目个数 4个</p>
-                <p class="buleLabText">投资计划 6.1亿元</p>
+                <p class="buleLabText">项目个数<span class="number">4</span>个</p>
+                <p class="buleLabText">投资计划<span class="number">6.1</span>亿元</p>
               </div>
               <div class="ouhai">
                 <p class="buleLabTitle">2020.12.1完成</p>
                 <p class="buleLabText">瑞安市政府</p>
-                <p class="buleLabText">项目个数 7个</p>
-                <p class="buleLabText">投资计划 18.4亿元</p>
+                <p class="buleLabText">项目个数<span class="number">7</span>个</p>
+                <p class="buleLabText">投资计划<span class="number">18.4</span>亿元</p>
               </div>
               <div class="longwan">
                 <p class="buleLabTitle">2023.12.1完成</p>
                 <p class="buleLabText">浙南产业区</p>
-                <p class="buleLabText">项目个数 1个</p>
-                <p class="buleLabText">投资计划 11.5亿元</p>
+                <p class="buleLabText">项目个数<span class="number">1</span>个</p>
+                <p class="buleLabText">投资计划<span class="number">11.5</span>亿元</p>
               </div>
               <div class="ruian">
                 <p class="buleLabTitle">2024.3.1完成</p>
                 <p class="buleLabText">龙湾区政府</p>
-                <p class="buleLabText">项目个数 8个</p>
-                <p class="buleLabText">投资计划 45.1亿元</p>
+                <p class="buleLabText">项目个数<span class="number">8</span>个</p>
+                <p class="buleLabText">投资计划<span class="number">45.1</span>亿元</p>
               </div>
             </div>
           </div>
@@ -553,20 +549,20 @@
               <div class="zhenan">
                 <p class="buleLabTitle">2022.9.1完成</p>
                 <p class="buleLabText">瓯海区政府</p>
-                <p class="buleLabText">项目个数 17个</p>
-                <p class="buleLabText">投资计划 108.9亿元</p>
+                <p class="buleLabText">项目个数<span class="number">17</span>个</p>
+                <p class="buleLabText">投资计划<span class="number">108.9</span>亿元</p>
               </div>
               <div class="xiandai">
                 <p class="buleLabTitle">2023.9.1完成</p>
-                <p class="buleLabText">温州城发集团完成</p>
-                <p class="buleLabText">项目个数 12个</p>
-                <p class="buleLabText">投资计划 34.6亿元</p>
+                <p class="buleLabText">温州城发集团</p>
+                <p class="buleLabText">项目个数<span class="number">12</span>个</p>
+                <p class="buleLabText">投资计划<span class="number">34.6</span>亿元</p>
               </div>
               <div class="chengfa">
                 <p class="buleLabTitle">2020.12.1完成</p>
                 <p class="buleLabText">鹿城区政府</p>
-                <p class="buleLabText">项目个数 18个</p>
-                <p class="buleLabText">投资计划 50.5亿元</p>
+                <p class="buleLabText">项目个数<span class="number">18</span>个</p>
+                <p class="buleLabText">投资计划<span class="number">50.5</span>亿元</p>
               </div>
             </div>
           </div>
@@ -581,11 +577,9 @@ import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "../../sourcelayer/layerHub/TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
 import MapTool from "../../sourcelayer/layerHub/components/mapTool"
-import CalTool from "../../sourcelayer/commonFrame/calTool/calTools";
 export default {
   components:{
     MapTool,
-    CalTool
   },
   data() {
     return {
@@ -605,81 +599,82 @@ export default {
       ],
       currentZrdw: '指挥部',
       list:[
-            {   "name":"指挥部",
-                "project":{"sum":"67","plan":"275"},
-                "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
-                "speed":{"Completion":"1.53","finish":"12.9"},
-                "pointStat":{"sum":"40","length":"19074"},
-                "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
-            },
-            {   "name":"鹿城区政府",
-                "project":{"sum":"22","plan":"50.5"},
-                "situation":{"pre":"4","preLag":"2","finish":"3","build":"7","buildLag":"6"},
-                "speed":{"Completion":"1.3","finish":"16.7"},
-                "pointStat":{"sum":"21","length":"8752"},
-                "pointDist":{"east":{"number":"4","length":"1380"},"south":{"number":"","length":""},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"1","length":"310"},}
-            },
-            {   "name":"瓯海区政府",
-                "project":{"sum":"23","plan":"115"},
-                "situation":{"pre":"0","preLag":"0","finish":"4","build":"13","buildLag":"6"},
-                "speed":{"Completion":"1.43","finish":"17.4"},
-                "pointStat":{"sum":"11","length":"8910"},
-                "pointDist":{"east":{"number":"","length":""},"south":{"number":"9","length":"7030"},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"2","length":"1880"},}
-            },
-            {   "name":"龙湾区政府",
-                "project":{"sum":"10","plan":"45"},
-                "situation":{"pre":"0","preLag":"0","finish":"1","build":"7","buildLag":"2"},
-                "speed":{"Completion":"0.03","finish":"10"},
-                "pointStat":{"sum":"8","length":"1412"},
-                "pointDist":{"east":{"number":"8","length":"1412"},"south":{"number":"","length":""},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"","length":""},}
-            },
-            {   "name":"瑞安市政府",
-                "project":{"sum":"11","plan":"20"},
-                "situation":{"pre":"0","preLag":"0","finish":"0","build":"9","buildLag":"2"},
-                "speed":{"Completion":"0","finish":"0"},
-                "pointStat":{"sum":"","length":""},
-                "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
-            },
-            {   "name":"温州现代集团",
-                "project":{"sum":"5","plan":"6"},
-                "situation":{"pre":"0","preLag":"0","finish":"2","build":"3","buildLag":"0"},
-                "speed":{"Completion":"32.15","finish":"40"},
-                "pointStat":{"sum":"","length":""},
-                "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
-            },
-            {   "name":"温州城发集团",
-                "project":{"sum":"12","plan":"3.5"},
-                "situation":{"pre":"1","preLag":"0","finish":"1","build":"9","buildLag":"1"},
-                "speed":{"Completion":"0.03","finish":"8.3"},
-                "pointStat":{"sum":"1","length":"157"},
-                "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
-            },
-            {   "name":"浙南产业区",
-                "project":{"sum":"2","plan":"11.8"},
-                "situation":{"pre":"0","preLag":"0","finish":"0","build":"2","buildLag":"0"},
-                "speed":{"Completion":"0","finish":"0"},
-                "pointStat":{"sum":"","length":""},
-                "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
-            },
-            // {   "name":"浙南产业区",
-            //     "项目统计":{"总数":"1","投资计划":"11.5"},
-            //     "建设情况":{"前期研究":"0","前期(滞后)":"0","完工":"0","在建":"1","在建(滞后)":"0"},
-            //     "建设进度":{"投资完成率":"0","项目完工率":"0"},
-            //     "卡点统计":{"总数":"","长度":""},
-            //     "卡点分布":{"东线":{"个数":"","长度":""},"南线":{"个数":"","长度":""},"内环":{"个数":"","长度":""},"外环":{"个数":"","长度":""},"西线":{"个数":"","长度":""},}
-            // }
-            ],
+        {   "name":"指挥部",
+            "project":{"sum":"67","plan":"275"},
+            "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
+            "speed":{"Completion":"1.53","finish":"12.9"},
+            "pointStat":{"sum":"40","length":"19074"},
+            "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
+        },
+        {   "name":"鹿城区政府",
+            "project":{"sum":"22","plan":"50.5"},
+            "situation":{"pre":"4","preLag":"2","finish":"3","build":"7","buildLag":"6"},
+            "speed":{"Completion":"1.3","finish":"16.7"},
+            "pointStat":{"sum":"21","length":"8752"},
+            "pointDist":{"east":{"number":"4","length":"1380"},"south":{"number":"","length":""},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"1","length":"310"},}
+        },
+        {   "name":"瓯海区政府",
+            "project":{"sum":"23","plan":"115"},
+            "situation":{"pre":"0","preLag":"0","finish":"4","build":"13","buildLag":"6"},
+            "speed":{"Completion":"1.43","finish":"17.4"},
+            "pointStat":{"sum":"11","length":"8910"},
+            "pointDist":{"east":{"number":"","length":""},"south":{"number":"9","length":"7030"},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"2","length":"1880"},}
+        },
+        {   "name":"龙湾区政府",
+            "project":{"sum":"10","plan":"45"},
+            "situation":{"pre":"0","preLag":"0","finish":"1","build":"7","buildLag":"2"},
+            "speed":{"Completion":"0.03","finish":"10"},
+            "pointStat":{"sum":"8","length":"1412"},
+            "pointDist":{"east":{"number":"8","length":"1412"},"south":{"number":"","length":""},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"","length":""},}
+        },
+        {   "name":"瑞安市政府",
+            "project":{"sum":"11","plan":"20"},
+            "situation":{"pre":"0","preLag":"0","finish":"0","build":"9","buildLag":"2"},
+            "speed":{"Completion":"0","finish":"0"},
+            "pointStat":{"sum":"","length":""},
+            "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
+        },
+        {   "name":"温州现代集团",
+            "project":{"sum":"5","plan":"6"},
+            "situation":{"pre":"0","preLag":"0","finish":"2","build":"3","buildLag":"0"},
+            "speed":{"Completion":"32.15","finish":"40"},
+            "pointStat":{"sum":"","length":""},
+            "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
+        },
+        {   "name":"温州城发集团",
+            "project":{"sum":"12","plan":"3.5"},
+            "situation":{"pre":"1","preLag":"0","finish":"1","build":"9","buildLag":"1"},
+            "speed":{"Completion":"0.03","finish":"8.3"},
+            "pointStat":{"sum":"1","length":"157"},
+            "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
+        },
+        {   "name":"浙南产业区",
+            "project":{"sum":"2","plan":"11.8"},
+            "situation":{"pre":"0","preLag":"0","finish":"0","build":"2","buildLag":"0"},
+            "speed":{"Completion":"0","finish":"0"},
+            "pointStat":{"sum":"","length":""},
+            "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
+        },
+        // {   "name":"浙南产业区",
+        //     "项目统计":{"总数":"1","投资计划":"11.5"},
+        //     "建设情况":{"前期研究":"0","前期(滞后)":"0","完工":"0","在建":"1","在建(滞后)":"0"},
+        //     "建设进度":{"投资完成率":"0","项目完工率":"0"},
+        //     "卡点统计":{"总数":"","长度":""},
+        //     "卡点分布":{"东线":{"个数":"","长度":""},"南线":{"个数":"","长度":""},"内环":{"个数":"","长度":""},"外环":{"个数":"","长度":""},"西线":{"个数":"","长度":""},}
+        // }
+      ],
       ddList:[],
       xmList:[],
       searchDDText: "",
       searchXMText: "",
-      ret:  {   "name":"指挥部",
-                "project":{"sum":"67","plan":"275"},
-                "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
-                "speed":{"Completion":"2","finish":"18"},
-                "pointStat":{"sum":"40","length":"19074"},
-                "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
-            },
+      ret: {
+        "name":"指挥部",
+        "project":{"sum":"67","plan":"275"},
+        "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
+        "speed":{"Completion":"2","finish":"18"},
+        "pointStat":{"sum":"40","length":"19074"},
+        "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
+      },
       pieEchart: null,
       barEchart: null,
       lineEchart: null,
@@ -693,10 +688,13 @@ export default {
     drawData() {
       return this.$store.state.map.sourceMap;
     },
+    allList() {
+      return this.xmList.concat(this.ddList)
+    },
     delayXmList() {
       let result = []
       let alldata = this.sourceMap['项目']
-      console.log(alldata);
+      // console.log(alldata);
       if (alldata) {
         if (this.currentZrdw != '指挥部') {
           result = alldata.filter(item => {
@@ -712,7 +710,7 @@ export default {
     },
     questionDdList() {
       let result = []
-      let alldata = this.sourceMap['断点']
+      let alldata = this.sourceMap['绿道断点']
       if (alldata) {
         if (this.currentZrdw != '指挥部') {
           result = alldata.filter(item => {
@@ -1226,12 +1224,12 @@ export default {
         this.xmList = this.sourceMap['项目'].filter(item => {
           return ~item.attributes.ZR_DEPTID.indexOf(this.currentZrdw)
         })
-        this.ddList = this.sourceMap['断点'].filter(item => {
+        this.ddList = this.sourceMap['绿道断点'].filter(item => {
           return ~item.attributes.ZRDW.indexOf(this.currentZrdw)
         })
       } else {
         this.xmList = this.sourceMap['项目']
-        this.ddList = this.sourceMap['断点']
+        this.ddList = this.sourceMap['绿道断点']
       }
     },
     searchXMFilter() {
@@ -1240,23 +1238,28 @@ export default {
         ? this.sourceMap['项目'].filter((item) => {
           return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
         })
-        : this.xmList
+        : this.sourceMap['项目']
+      this.ddList = this.searchXMText
+        ? this.sourceMap['绿道断点'].filter((item) => {
+          return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
+        })
+        : this.sourceMap['绿道断点']
     },
     searchXMClear() {
       this.searchXMText = "";
       this.filterData()
     },
-    searchDDFilter() {
-      this.ddList = this.searchDDText
-        ? this.sourceMap['断点'].filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
-        })
-        : this.ddList
-    },
-    searchDDClear() {
-      this.searchDDText = "";
-      this.filterData()
-    },
+    // searchDDFilter() {
+    //   this.ddList = this.searchDDText
+    //     ? this.sourceMap['绿道断点'].filter((item) => {
+    //       return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
+    //     })
+    //     : this.ddList
+    // },
+    // searchDDClear() {
+    //   this.searchDDText = "";
+    //   this.filterData()
+    // },
   },
   mounted() {
     const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
@@ -1271,22 +1274,19 @@ export default {
       icon: false,
     });
     this.getPOIPickedFeature({
-      id: "断点",
+      id: "绿道断点",
       label: "断点",
       url: SERVER_DEFAULT_DATA,
       newdataset: `${SW_DATA_NAME}绿道断点`,
       icon: "断点",
       iconSize: "small",
     });
-    // this.drawPies();
-    // this.drawBars();
-    // this.drawLines();
   },
   watch: {
     drawData(val) {
       console.log("drawData", val);
       this.sourceMap['项目'] && (this.xmList = this.sourceMap['项目'])
-      this.sourceMap['断点'] && (this.ddList = this.sourceMap['断点'])
+      this.sourceMap['绿道断点'] && (this.ddList = this.sourceMap['绿道断点'])
     },
     currentZrdw(val) {
       this.filterData()
@@ -1294,11 +1294,11 @@ export default {
     currentType(val) {
       // 点击，列表回到顶部
       $("#xm-list").scrollTop(0);
-      $("#dd-list").scrollTop(0);
+      // $("#dd-list").scrollTop(0);
 
       // 选中置空
       this.xmActive = "";
-      this.ddActive = "";
+      // this.ddActive = "";
     },
 
   },
@@ -1311,7 +1311,7 @@ export default {
 <style>
 .el-input__inner {
   background: transparent !important;
-  border: none;
-  color: white;
+  border: none !important;
+  color: white !important;
 }
 </style>

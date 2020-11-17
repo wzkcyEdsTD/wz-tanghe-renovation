@@ -24,7 +24,14 @@ module.exports = {
         pathRewrite: {
           "^/": ""
         }
-      }
+      },
+      '/djdmApi/': {
+        target: 'http://172.168.3.182:9000',
+        changeOrigin: true,
+        pathRewrite: {
+          "^/djdmApi/": ""
+        }
+      },
     },
 
     // Various Dev Server settings

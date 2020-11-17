@@ -1,5 +1,6 @@
 
 import axios from "axios";
+// axios.defaults.baseURL = (process.env.NODE_ENV === 'development') ? '/djdmApi' : ''
 const serverInstanec = axios.create();
 
 /**
@@ -18,7 +19,7 @@ const getAxios = (url = "", data = {}) => {
  * @param {*} id
  */
 export const queryInfoByid = (id) => {
-  const URL = `http://172.168.3.182:9000/details/${id}`;
+  const URL = `/details/${id}`;
   return getAxios(URL);
 };
 
@@ -27,7 +28,7 @@ export const queryInfoByid = (id) => {
  * @param {*} id
  */
 export const queryDetailByid = (id) => {
-  const URL = `http://172.168.3.182:9000/details/project/${id}`;
+  const URL = `/details/project/${id}`;
   return getAxios(URL);
 };
 
@@ -36,6 +37,6 @@ export const queryDetailByid = (id) => {
  * @param {*} code
  */
 export const queryDetailBycode = (code) => {
-  const URL = `http://172.168.3.182:9000/details/byCoding/${code}`;
+  const URL = `/details/byCoding/${code}`;
   return getAxios(URL);
 };

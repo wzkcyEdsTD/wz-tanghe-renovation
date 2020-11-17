@@ -1,7 +1,7 @@
 <template>
   <div class="cesiumContainer">
     <div id="cesiumContainer" />
-    <div v-if="mapLoaded && currentPage=='sourcelayer'">
+    <div v-if="mapLoaded && currentPage == 'sourcelayer'">
       <Summary />
       <SourceLayerHub ref="sourceLayerHub" />
       <CommonDetailPopup ref="commonDetailPopup" />
@@ -9,7 +9,7 @@
       <SearchDetail ref="searchDetail" />
       <SejPopup ref="SejPopup" />
     </div>
-    <div v-if="mapLoaded && currentPage=='compare'">
+    <div v-if="mapLoaded && currentPage == 'compare'">
       <CompareLayerHub ref="compareLayerHub" />
       <CommonDetailPopup ref="commonDetailPopup" />
       <ProjectDetailPopup ref="projectDetailPopup" />
@@ -21,7 +21,7 @@
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
 // import TotalTarget from "./totalTarget/totalTarget";
-import Summary from "./summary/summary"
+import Summary from "./summary/summary";
 // import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import SourceLayerHub from "./layerHub/layerHub";
 import CompareLayerHub from "../compare/layerHub/layerHub";
@@ -44,7 +44,7 @@ export default {
     ProjectDetailPopup,
     SejPopup,
     Summary,
-    SearchDetail
+    SearchDetail,
   },
   data() {
     return {
@@ -52,11 +52,11 @@ export default {
       imagelayer: {
         2018: undefined,
         2019: undefined,
-        mark: undefined
+        mark: undefined,
       },
       datalayer: {
         white: undefined,
-        black: undefined
+        black: undefined,
       },
       lvdaoShow: true,
       tanghe: undefined,
@@ -78,10 +78,10 @@ export default {
   },
   computed: {
     ...mapGetters("map", ["bufferQueryData"]),
-    currentPage () {
+    currentPage() {
       // vue中获取当前路由name
-      return this.$route.name
-    }
+      return this.$route.name;
+    },
   },
   created() {
     //  点位信息 hash
@@ -93,7 +93,7 @@ export default {
     //  点位深色label hash
     window.blackLabelMap = {};
     // 当前底图
-    window.currentMapType = 'vectorwhite'
+    window.currentMapType = "vectorwhite";
   },
   async mounted() {
     this.init3DMap(() => {
@@ -114,7 +114,7 @@ export default {
           return;
         //  *****[detailPopup]  详情查看点位*****
         // if (this.$refs.commonDetailPopup) {
-          // this.$refs.commonDetailPopup.renderForceEntity();
+        // this.$refs.commonDetailPopup.renderForceEntity();
         // }
         //  *****[bayonetList] 十二景名称点位*****
         if (this.$refs.SejPopup) {
@@ -135,46 +135,51 @@ export default {
           const [_TYPE_, _SMID_, _NODEID_] = pick.id.split("@");
           // *****[detailPopup]  资源详情点*****
           if (~["label", "billboard"].indexOf(_TYPE_)) {
-
             // 定位图标
             const geometry = window.featureMap[_NODEID_][_SMID_].geometry;
             this.addLocationIcon(geometry, _NODEID_);
 
             this.$refs.searchDetail && (this.$refs.searchDetail.showZB = false);
 
-            if (~_NODEID_.indexOf('项目') || _NODEID_ == '绿道断点') {
+            if (~_NODEID_.indexOf("项目") || _NODEID_ == "绿道断点") {
               this.$refs.projectDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
-                id: pick.id
+                id: pick.id,
               });
-              
+
               // 关闭详情的查看周边面板
               this.$refs.projectDetailPopup.closeCollapse();
-              this.$refs.commonDetailPopup.closePopup()
+              this.$refs.commonDetailPopup.closePopup();
             } else {
-
               // 跳过查看详情步骤
               this.$refs.commonDetailPopup.goDetail({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
               });
 
-              if(~_NODEID_.indexOf('视频') || _NODEID_ == '全景' || _NODEID_ == '监控'){
-                this.drawProjectCircle({
-                  ...window.featureMap[_NODEID_][_SMID_]
-                }, pick.id);
+              if (
+                ~_NODEID_.indexOf("视频") ||
+                _NODEID_ == "全景" ||
+                _NODEID_ == "监控"
+              ) {
+                this.drawProjectCircle(
+                  {
+                    ...window.featureMap[_NODEID_][_SMID_],
+                  },
+                  pick.id
+                );
                 this.$refs.searchDetail.getForceEntity({
                   ...window.featureMap[_NODEID_][_SMID_],
                   position: pick.primitive.position,
                 });
-                setTimeout(()=>{
+                setTimeout(() => {
                   this.$refs.searchDetail.getdata(this.bufferQueryData);
-                  console.log("bufferQueryData",this.bufferQueryData);
-                },500);
+                  console.log("bufferQueryData", this.bufferQueryData);
+                }, 500);
               }
 
-              this.$refs.projectDetailPopup.closeInfo()
+              this.$refs.projectDetailPopup.closeInfo();
             }
           }
         }
@@ -186,7 +191,7 @@ export default {
         //  底图切换
         // console.log("layer-switch", window.whiteLabelMap, window.blackLabelMap);
         if (type == "yx") {
-          console.log("yx", value, ServiceUrl.SWImage,this.imagelayer);
+          console.log("yx", value, ServiceUrl.SWImage, this.imagelayer);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
           this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
@@ -194,7 +199,9 @@ export default {
           this.datalayer.black && (this.datalayer.black.show = false);
           this.imagelayer[value]
             ? (this.imagelayer[value].show = true)
-            : (this.imagelayer[value] = window.earth.imageryLayers.addImageryProvider(
+            : (this.imagelayer[
+                value
+              ] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
                   url: ServiceUrl.SWImage[value],
                 })
@@ -203,14 +210,16 @@ export default {
           // 影像注记
           this.imagelayer["mark"]
             ? (this.imagelayer["mark"].show = true)
-            : (this.imagelayer["mark"] = window.earth.imageryLayers.addImageryProvider(
+            : (this.imagelayer[
+                "mark"
+              ] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
                   url: ServiceUrl.ImageMark,
                 })
               ));
 
-          window.earth.imageryLayers.lowerToBottom(this.imagelayer[value])
-          window.currentMapType = 'yx'
+          window.earth.imageryLayers.lowerToBottom(this.imagelayer[value]);
+          window.currentMapType = "yx";
         } else {
           // this.removeAll();
           console.log("vector", value, ServiceUrl.DataImage);
@@ -219,41 +228,49 @@ export default {
           this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
-          this.blackMark.show = false
+          this.blackMark.show = false;
           this.datalayer[value]
             ? (this.datalayer[value].show = true)
-            : (this.datalayer[value] = window.earth.imageryLayers.addImageryProvider(
+            : (this.datalayer[
+                value
+              ] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
                   url: ServiceUrl.DataImage[value],
                 })
               ));
-          window.earth.imageryLayers.lowerToBottom(this.datalayer[value])
-          window.currentMapType = `vector${value}`
-          if (value == 'black') {
-            this.blackMark.show = true
+          window.earth.imageryLayers.lowerToBottom(this.datalayer[value]);
+          window.currentMapType = `vector${value}`;
+          if (value == "black") {
+            this.blackMark.show = true;
           }
         }
         // 切换底图时，当前选中资源的label标签颜色切换
-        if (window.currentMapType == 'vectorwhite') {
+        if (window.currentMapType == "vectorwhite") {
           for (let key in window.whiteLabelMap) {
-            if (window.whiteLabelMap[key]._labels.length && window.whiteLabelMap[key]._labels[0].show) {
-              window.blackLabelMap[key].setAllLabelsVisible(true)
+            if (
+              window.whiteLabelMap[key]._labels.length &&
+              window.whiteLabelMap[key]._labels[0].show
+            ) {
+              window.blackLabelMap[key].setAllLabelsVisible(true);
             }
-            window.whiteLabelMap[key].setAllLabelsVisible(false)
+            window.whiteLabelMap[key].setAllLabelsVisible(false);
           }
         } else {
           for (let key in window.blackLabelMap) {
-            if (window.blackLabelMap[key]._labels.length && window.blackLabelMap[key]._labels[0].show) {
-              window.whiteLabelMap[key].setAllLabelsVisible(true)
+            if (
+              window.blackLabelMap[key]._labels.length &&
+              window.blackLabelMap[key]._labels[0].show
+            ) {
+              window.whiteLabelMap[key].setAllLabelsVisible(true);
             }
-            window.blackLabelMap[key].setAllLabelsVisible(false)
+            window.blackLabelMap[key].setAllLabelsVisible(false);
           }
         }
       });
       this.$bus.$off("cesium-3d-switch");
       this.$bus.$on("cesium-3d-switch", ({ type, value }) => {
         // 白模切换
-        if (type === 'baimo') {
+        if (type === "baimo") {
           const _LAYER_ = window.earth.scene.layers.find("baimo");
           if (_LAYER_) {
             _LAYER_.visible = value;
@@ -269,10 +286,10 @@ export default {
               LAYER.style3D.fillForeColor = new Cesium.Color.fromCssColorString(
                 "rgba(137,137,137, 1)"
               );
-            })
+            });
           }
         }
-        if (type === 'jingmo') {
+        if (type === "jingmo") {
           const _LAYER_ = window.earth.scene.layers.find(LAYERS[0].key);
           if (_LAYER_) {
             LAYERS.map((v) => {
@@ -298,48 +315,48 @@ export default {
 
       this.$bus.$off("remove-texiao");
       this.$bus.$on("remove-texiao", ({ value }) => {
-        this.removeAll(value)
-      })
+        this.removeAll(value);
+      });
 
       this.$bus.$off("switch-lvdao");
       this.$bus.$on("switch-lvdao", ({ value }) => {
-        this.lvdaoShow = value
+        this.lvdaoShow = value;
         if (value) {
           if (this.cameraHeight >= 5000) {
-            this.lvdaolayerThin.show = true
-            this.lvdaolayerBold.show = false
+            this.lvdaolayerThin.show = true;
+            this.lvdaolayerBold.show = false;
           } else {
-            this.lvdaolayerThin.show = false
-            this.lvdaolayerBold.show = true
+            this.lvdaolayerThin.show = false;
+            this.lvdaolayerBold.show = true;
           }
         } else {
-          this.lvdaolayerThin.show = false
-          this.lvdaolayerBold.show = false
+          this.lvdaolayerThin.show = false;
+          this.lvdaolayerBold.show = false;
         }
-      })
+      });
 
       this.$bus.$off("switch-thfwm");
       this.$bus.$on("switch-thfwm", ({ value }) => {
-        this.thfwmlayer.show = value
-      })
+        this.thfwmlayer.show = value;
+      });
 
       this.$bus.$off("switch-xzjxqx");
       this.$bus.$on("switch-xzjxqx", ({ value }) => {
-        this.xzjxqxlayer.show = value
-      })
+        this.xzjxqxlayer.show = value;
+      });
 
       this.$bus.$off("switch-xzjxjd");
       this.$bus.$on("switch-xzjxjd", ({ value }) => {
-        this.xzjxjdlayer.show = value
-      })
+        this.xzjxjdlayer.show = value;
+      });
 
       this.$bus.$off("clickFly");
       this.$bus.$on("clickFly", () => {
-        this.tangheFG.show = false
-        this.tanghe.show = true
-        this.lvdaolayerThin.show = false
-        this.lvdaolayerBold.show = true
-      })
+        this.tangheFG.show = false;
+        this.tanghe.show = true;
+        this.lvdaolayerThin.show = false;
+        this.lvdaolayerBold.show = true;
+      });
     },
     init3DMap(fn) {
       const that = this;
@@ -348,52 +365,31 @@ export default {
         selectionIndicator: false,
         shadows: false, //  内存吃不消
       });
-      viewer.scene.fxaa = false   // 关闭快速抗锯齿
+      viewer.scene.fxaa = false; // 关闭快速抗锯齿
       viewer.imageryLayers.get(0).show = false;
       viewer.scene.globe.baseColor = new Cesium.Color.fromCssColorString(
         "rgba(13,24,45, 1)"
       );
       window.earth = viewer;
 
-      // this.imagelayer[2019] = window.earth.imageryLayers.addImageryProvider(
-      //   new Cesium.SuperMapImageryProvider({
-      //     url: ServiceUrl.SWImage[2019],
-      //   })
-      // );
-
-      this.datalayer.white = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.DataImage.white,
-        })
-      );
-
-      /* this.datalayer.white = window.earth.imageryLayers.addImageryProvider(
+      // 2.5D
+      const matrixIds = [];
+      for (let i = 0; i < 20; ++i) {
+        matrixIds[i] = i + 1;
+      }
+      window.earth.imageryLayers.addImageryProvider(
         new Cesium.WebMapTileServiceImageryProvider({
-          url: "http://61.164.104.154:80/iserver/services/3dmap/wmts/3dmap/default/Custom_3dmap/{TileMatrix}/{TileRow}/{TileCol}.png",
+          url: "http://61.164.104.154:80/iserver/services/3dmap/wmts",
           layer: "3dmap",
           style: "default",
           format: "image/png",
-          tileMatrixSetID: "Custom_3dmap",
+          tileMatrixSetID: "custom_3dmap",
+          tileMatrixLabels: matrixIds,
           tilingScheme: new Cesium.GeographicTilingScheme({
-            numberOfLevelZeroTilesX: 1,
-            numberOfLevelZeroTilesY: 1
-
+            numberOfLevelZeroTilesX: 2
           }),
-          // subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-          // maximumLevel: 18,
         })
-      ); */
-
-      // window.earth.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-      //     url: "http://t0.tianditu.gov.cn/cva_w/wmts?tk=5c8b939368cb51f494b9472cd6ad74cc&service=WMTS&request=GetTile&version=1.0.0&style=default&tilematrixSet=w&format=tiles&width=256&height=256&layer=cva&tilematrix={TileMatrix}&tilerow={TileRow}&tilecol={TileCol}",
-      //     layer: "cva",
-      //     style: "default",
-      //     format: "tiles",
-      //     tileMatrixSetID: "w",
-      //     subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
-      //     maximumLevel: 18,
-      //   })
-      // )
+      );
 
       // const mapMvt = viewer.scene.addVectorTilesMap({
       //   url: ServiceUrl.YJMVT,
@@ -416,57 +412,57 @@ export default {
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.XZJXJD,
         })
-      )
+      );
       // this.xzjxjdlayer.alpha = 0.5;
-      this.xzjxjdlayer.show = false
+      this.xzjxjdlayer.show = false;
 
       this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.TANGHEFWM,
         })
-      )
+      );
       this.thfwmlayer.alpha = 0.7;
-      this.thfwmlayer.show = false
+      this.thfwmlayer.show = false;
 
       this.xzjxqxlayer = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.XZJXQX,
         })
-      )
-      this.xzjxqxlayer.show = false
+      );
+      this.xzjxqxlayer.show = false;
 
       this.tanghe = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.TANGHE2D,
         })
-      )
-      this.tanghe.show = false
+      );
+      this.tanghe.show = false;
 
       this.tangheFG = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.TANGHEFG,
         })
-      )
+      );
 
       this.lvdaolayerBold = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.LVDAOImage.BOLD,
         })
-      )
-      this.lvdaolayerBold.show = false  // 粗绿道默认隐藏
+      );
+      this.lvdaolayerBold.show = false; // 粗绿道默认隐藏
 
       this.lvdaolayerThin = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.LVDAOImage.THIN,
         })
-      )
+      );
 
       this.blackMark = window.earth.imageryLayers.addImageryProvider(
         new Cesium.SuperMapImageryProvider({
           url: ServiceUrl.BlackMark,
         })
-      )
-      this.blackMark.show = false
+      );
+      this.blackMark.show = false;
 
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
       // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
@@ -501,66 +497,72 @@ export default {
       //初始化飞行管理
       const flyManager = new Cesium.FlyManager({
         scene: window.earth.scene,
-        routes: routes
+        routes: routes,
       });
-      flyManager.readyPromise.then(function () { // 飞行路线就绪
+      flyManager.readyPromise.then(function () {
+        // 飞行路线就绪
         flyManager.play();
       });
     },
     lipai() {
-      this.lp(120.707729,28.010275,"oj",'static/images/瓯江.png',65,65);
-      this.lp(120.599327,27.789995,"fyj",'static/images/飞云江.png',75,75);
-      this.lp(120.726, 27.899,"wrth",'static/images/温瑞塘河.png',130,130);
+      this.lp(120.707729, 28.010275, "oj", "static/images/瓯江.png", 65, 65);
+      this.lp(120.599327, 27.789995, "fyj", "static/images/飞云江.png", 75, 75);
+      this.lp(120.726, 27.899, "wrth", "static/images/温瑞塘河.png", 130, 130);
     },
     quan() {
-      this.texiao(120.649,27.786,"ruian","static/images/瑞安.png");
-      this.texiao(120.720,27.822,"tangxia","static/images/塘下.png");
-      this.texiao(120.684,27.880,"xianyan","static/images/仙岩.png");
-      this.texiao(120.646,27.921,"liao","static/images/丽岙.png");
-      this.texiao(120.700,27.942,"chshan","static/images/茶山.png");
-      this.texiao(120.649,27.972,"wenzhoushiqu","static/images/温州市区.png");
+      this.texiao(120.649, 27.786, "ruian", "static/images/瑞安.png");
+      this.texiao(120.72, 27.822, "tangxia", "static/images/塘下.png");
+      this.texiao(120.684, 27.88, "xianyan", "static/images/仙岩.png");
+      this.texiao(120.646, 27.921, "liao", "static/images/丽岙.png");
+      this.texiao(120.7, 27.942, "chshan", "static/images/茶山.png");
+      this.texiao(
+        120.649,
+        27.972,
+        "wenzhoushiqu",
+        "static/images/温州市区.png"
+      );
     },
-    texiao(lon,lat,id,img){
+    texiao(lon, lat, id, img) {
       const viewer = window.earth;
       const entitys = viewer.entities.getById(id);
-      if (!!entitys){
+      if (!!entitys) {
         return;
       }
       var rr1 = 0;
-      var rr =0;
+      var rr = 0;
       var ss1 = 0;
       var ss = 0;
       var deviationR = 4;
       var MaxR = 900;
       // debugger;
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         viewer.entities.add({
-          id:id,
-          position:Cesium.Cartesian3.fromDegrees(lon,lat,50),
-          show:false,
-          ellipse:{
-            semiMinorAxis:new Cesium.CallbackProperty(function () {
-              var r1 = rr;  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-              r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+          id: id,
+          position: Cesium.Cartesian3.fromDegrees(lon, lat, 50),
+          show: false,
+          ellipse: {
+            semiMinorAxis: new Cesium.CallbackProperty(function () {
+              var r1 = rr; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+              r1 = r1 + deviationR; //deviationR为每次圆增加的大小
               if (r1 >= MaxR) {
                 r1 = 0;
               }
               rr = r1;
               return r1;
-            },false),
-            semiMajorAxis:new Cesium.CallbackProperty(function () {
-              var r1=rr1  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-              r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+            }, false),
+            semiMajorAxis: new Cesium.CallbackProperty(function () {
+              var r1 = rr1; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+              r1 = r1 + deviationR; //deviationR为每次圆增加的大小
               if (r1 >= MaxR) {
                 r1 = 0;
               }
               rr1 = r1;
               return r1;
-            },false),
-            height:10,
+            }, false),
+            height: 10,
             material: new Cesium.ImageMaterialProperty({
-              image:"static/images/1.png",
-              transparent:true,
+              image: "static/images/1.png",
+              transparent: true,
             }),
             // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,Number.MAX_VALUE),
           },
@@ -568,50 +570,49 @@ export default {
         setTimeout(function () {
           viewer.entities.add({
             id: `${id}1`,
-            position:Cesium.Cartesian3.fromDegrees(lon,lat,10),
-            show:false,
-            ellipse : {
-              semiMinorAxis :new Cesium.CallbackProperty(function () {
-                var r1 =ss  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-                r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+            position: Cesium.Cartesian3.fromDegrees(lon, lat, 10),
+            show: false,
+            ellipse: {
+              semiMinorAxis: new Cesium.CallbackProperty(function () {
+                var r1 = ss; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+                r1 = r1 + deviationR; //deviationR为每次圆增加的大小
                 if (r1 >= MaxR) {
                   r1 = 0;
                 }
                 ss = r1;
                 return r1;
-              },false),
-              semiMajorAxis :new Cesium.CallbackProperty(function () {
-                var r1=ss1  //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-                r1 = r1 + deviationR;//deviationR为每次圆增加的大小
+              }, false),
+              semiMajorAxis: new Cesium.CallbackProperty(function () {
+                var r1 = ss1; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+                r1 = r1 + deviationR; //deviationR为每次圆增加的大小
                 if (r1 >= MaxR) {
                   r1 = 0;
                 }
                 ss1 = r1;
                 return r1;
-              },false),
-              height:10,
-              material:new Cesium.ImageMaterialProperty({
-                image:"static/images/1.png",
-                transparent:true,
+              }, false),
+              height: 10,
+              material: new Cesium.ImageMaterialProperty({
+                image: "static/images/1.png",
+                transparent: true,
               }),
               // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(20000,Number.MAX_VALUE),
             },
           });
-        },4000);
+        }, 4000);
       });
-      this.lp(lon,lat,`${id}p`,img,60,60,600);
-
+      this.lp(lon, lat, `${id}p`, img, 60, 60, 600);
     },
-    lp(lon,lat,id,img,width,height,high){
+    lp(lon, lat, id, img, width, height, high) {
       const viewer = window.earth;
       const entity = viewer.entities.getById(id);
-      if (!!entity){
+      if (!!entity) {
         return;
       }
       viewer.entities.add({
         id: id,
-        position: Cesium.Cartesian3.fromDegrees(lon,lat, high||100),
-        show:false,
+        position: Cesium.Cartesian3.fromDegrees(lon, lat, high || 100),
+        show: false,
         billboard: {
           image: img,
           width: width,
@@ -623,44 +624,51 @@ export default {
     },
     removeAll(value) {
       const viewer = window.earth;
-      const id = ["ruian","tangxia","liao","chshan","wenzhoushiqu","xianyan"];
-      const idOther = ["wrth","oj","fyj"];
+      const id = [
+        "ruian",
+        "tangxia",
+        "liao",
+        "chshan",
+        "wenzhoushiqu",
+        "xianyan",
+      ];
+      const idOther = ["wrth", "oj", "fyj"];
       try {
         id.forEach(function (element) {
           viewer.entities.getById(element).show = value;
-          viewer.entities.getById(`${element}1`).show=value;
-          viewer.entities.getById(`${element}p`).show=value;
+          viewer.entities.getById(`${element}1`).show = value;
+          viewer.entities.getById(`${element}p`).show = value;
         });
         idOther.forEach(function (element) {
-          viewer.entities.getById(element).show=value;
+          viewer.entities.getById(element).show = value;
         });
       } catch (e) {
         console.log(e);
       }
     },
-    hide(self){
+    hide(self) {
       const viewer = window.earth;
       var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
       handler.setInputAction((wheelment) => {
         this.cameraHeight = viewer.camera.positionCartographic.height;
         if (this.lvdaoShow) {
           if (this.cameraHeight >= 5000) {
-            this.tangheFG.show = true
-            this.tanghe.show = false
-            this.lvdaolayerThin.show = true
-            this.lvdaolayerBold.show = false
+            this.tangheFG.show = true;
+            this.tanghe.show = false;
+            this.lvdaolayerThin.show = true;
+            this.lvdaolayerBold.show = false;
           } else {
-            this.tangheFG.show = false
-            this.tanghe.show = true
-            this.lvdaolayerThin.show = false
-            this.lvdaolayerBold.show = true
+            this.tangheFG.show = false;
+            this.tanghe.show = true;
+            this.lvdaolayerThin.show = false;
+            this.lvdaolayerBold.show = true;
           }
         }
       }, Cesium.ScreenSpaceEventType.WHEEL);
-      handler.setInputAction(function(event) {
-      }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
-      handler.setInputAction(function(event) {
-      }, Cesium.ScreenSpaceEventType.RIGHT_DOWN);
+      handler.setInputAction(function (event) {},
+      Cesium.ScreenSpaceEventType.LEFT_DOWN);
+      handler.setInputAction(function (event) {},
+      Cesium.ScreenSpaceEventType.RIGHT_DOWN);
     },
     switchHanddrawn(value) {
       if (value) {
@@ -672,7 +680,7 @@ export default {
               })
             ));
       } else {
-        this.handdrawnlayer.show = false
+        this.handdrawnlayer.show = false;
       }
     },
 
@@ -685,12 +693,9 @@ export default {
       window.earth.dataSources.add(ProjectCircleEntityCollection);
 
       // 定位
-      const locationEntityCollection = new Cesium.CustomDataSource(
-        "location"
-      );
+      const locationEntityCollection = new Cesium.CustomDataSource("location");
       window.earth.dataSources.add(locationEntityCollection);
     },
-
 
     // 添加定位图标
     addLocationIcon(geometry, id) {
@@ -704,7 +709,7 @@ export default {
           image: `/static/images/map-ico/location.png`,
           width: 34,
           height: 35,
-          scaleByDistance:new Cesium.NearFarScalar(3000, 1.5, 6000, 1.2),
+          scaleByDistance: new Cesium.NearFarScalar(3000, 1.5, 6000, 1.2),
           pixelOffset: new Cesium.Cartesian2(0, -15),
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
         },
@@ -740,18 +745,15 @@ export default {
       this.bufferQuery(point);
     },
 
-
     // 删除缓冲区，无id删除全部
     removeProjectCircle(id) {
       const datasource = window.earth.dataSources.getByName("project")[0];
       id ? datasource.entities.removeById(id) : datasource.entities.removeAll();
     },
 
-
     // 缓冲查询
     bufferQuery(geometryArgs) {
-
-      this.SetBufferQueryData({})
+      this.SetBufferQueryData({});
       // 查询
       this.singleQuery(geometryArgs, "项目");
       this.singleQuery(geometryArgs, "绿道断点");
@@ -764,10 +766,10 @@ export default {
       }, 500);
     },
 
-
     // 单个查询
     singleQuery(geometryArgs, dataset) {
-      const baseUrl = "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data";
+      const baseUrl =
+        "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data";
       let getFeatureParameter, getFeatureService;
       getFeatureParameter = new SuperMap.REST.GetFeaturesByBufferParameters({
         // 缓冲距离单位疑似十万米！！！图形单位米！！！
@@ -775,23 +777,30 @@ export default {
         toIndex: -1,
         datasetNames: [`172.168.3.181_thxm:${dataset}`],
         returnContent: true,
-        geometry: geometryArgs
+        geometry: geometryArgs,
       });
-      getFeatureService = new SuperMap.REST.GetFeaturesByBufferService(baseUrl, {
+      getFeatureService = new SuperMap.REST.GetFeaturesByBufferService(
+        baseUrl,
+        {
           eventListeners: {
             processCompleted: async (res) => {
-              if(res.result && res.result.features && res.result.features.length) {
+              if (
+                res.result &&
+                res.result.features &&
+                res.result.features.length
+              ) {
                 const obj = this.bufferQueryData;
-                res.result.features.map(v => {
-                  return Object.assign(v, {type: dataset})
-                })
+                res.result.features.map((v) => {
+                  return Object.assign(v, { type: dataset });
+                });
                 obj[dataset] = res.result.features;
-                this.SetBufferQueryData(obj)
+                this.SetBufferQueryData(obj);
               }
             },
             processFailed: (msg) => console.log(msg),
-          }
-      });
+          },
+        }
+      );
       getFeatureService.processAsync(getFeatureParameter);
     },
   },

@@ -75,9 +75,9 @@ export default {
     },
     nodeCheckChange(node, checked) {
       if (checked) {
-        this.selectedSourceList.push(node.id)
+        this.selectedSourceList.push(node.label)
         console.log('selectedSourceList', this.selectedSourceList)
-        if (~node.id.indexOf('项目')) this.$parent.showSign = true
+        if (~node.label.indexOf('项目')) this.$parent.showSign = true
         if (node.withImage) {
           node.withImage.forEach((item) => {
             const LAYER = this.tileLayers[item.name];
@@ -143,7 +143,7 @@ export default {
           this.$parent.$parent.removeProjectCircle();
         }
 
-        ~this.selectedSourceList.indexOf(node.id) && this.selectedSourceList.splice(this.selectedSourceList.indexOf(node.id), 1);
+        ~this.selectedSourceList.indexOf(node.label) && this.selectedSourceList.splice(this.selectedSourceList.indexOf(node.label), 1);
         
         const LAYER =
           node.type == "model"

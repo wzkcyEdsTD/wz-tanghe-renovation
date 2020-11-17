@@ -157,7 +157,7 @@ export const CESIUM_TREE_OPTION = [
         // saveData: "setProjectList"
       },
       {
-        id: "xm2021",
+        id: "2021年重点项目",
         label: "2021年重点项目",
         url: SERVER_DEFAULT_DATA,
         newdataset: `${SW_DATA_NAME}xm2021`,

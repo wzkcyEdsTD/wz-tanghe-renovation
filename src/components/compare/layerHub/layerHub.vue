@@ -42,7 +42,8 @@
           </div>
           <ul id="xm-list" class="xm-list">
             <li class="xm-item" v-for="(item, index) in allList" :key="index" :class="{ xmActive: xmActive == item.attributes.GUID }" @click="itemClick(item)">
-              <div class="name" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
+              <!-- <div class="name" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div> -->
+              <div class="name" :style="{color:index<3?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
               <div class="info-box" v-if="item.type=='项目'">
                 <div class="info-item">
                   <div class="key">建设状态</div>
@@ -1189,7 +1190,7 @@ export default {
       this.$nextTick(()=>{
         this.drawLines();
         this.drawBars();
-        this.drawPies();
+        // this.drawPies();
       });
     },
     itemClick(item) {

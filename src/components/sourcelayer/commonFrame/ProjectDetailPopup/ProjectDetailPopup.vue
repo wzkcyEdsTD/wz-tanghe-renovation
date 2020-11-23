@@ -9,21 +9,13 @@
           <span class="title">{{ forceEntity.attributes.NAME }}</span>
         </div>
         <div class="content-info">
-          <div class="top">
-            <button class="top-item" :disabled="!currentData.qj" :class="{'active':currentShow=='qj','disabled':!currentData.qj}" @click="currentShow='qj'">全景</button>
-            <button class="top-item" :disabled="!currentData.sp" :class="{'active':currentShow=='sp','disabled':!currentData.sp}" @click="currentShow='sp'">视频</button>
-            <button class="top-item" :disabled="!currentData.photo" :class="{'active':currentShow=='photo','disabled':!currentData.photo}" @click="currentShow='photo'">图片</button>
+          <div class="btn-list">
+            <button class="btn-item" :disabled="!currentData.qj" :class="{'active':currentShow=='qj','disabled':!currentData.qj}" @click="currentShow='qj'">全景</button>
+            <button class="btn-item" :disabled="!currentData.sp" :class="{'active':currentShow=='sp','disabled':!currentData.sp}" @click="currentShow='sp'">视频</button>
+            <button class="btn-item" :disabled="!currentData.photo" :class="{'active':currentShow=='photo','disabled':!currentData.photo}" @click="currentShow='photo'">图片</button>
           </div>
-          <div class="bottom">
-            <div class="left">
-              <ul class="date-list">
-                <li class="date-item" :class="{'active': currentIndex==index}" v-for="(item,index) in finalList" :key="index" @click="currentIndex=index">
-                  <img class="icon" src="./images/time-icon.png" />
-                  <span>{{`${item.date.substring(0,4)}-${item.date.substring(4,6)}-${item.date.substring(6,8)}`}}</span>
-                </li>
-              </ul>
-            </div>
-            <div class="right">
+          <div class="media-content">
+            <div class="top">
               <div class="swiper-buttons swiper-button-left"></div>
               <swiper
                 ref="mySwiper"
@@ -32,7 +24,6 @@
                 v-show="currentShow=='qj'"
               >
                 <swiper-slide v-for="(item,i) in currentData.qjslt" :key="i" class="swiper-item">
-                  <!-- <img :src="`/static/images/VRPic/${item}`" style="object-fit:contain;" :style="{height: showLarge?'35vh':'20vh'}" @click="openQJ(i)"> -->
                   <img :src="`/static/images/VRPic/${item}`" style="object-fit:contain;" @click="openQJ(i)">
                 </swiper-slide>
                 <swiper-slide class="swiper-item" v-if="!currentData.qjslt">
@@ -47,23 +38,9 @@
                 v-show="currentShow=='sp'"
               >
                 <swiper-slide v-for="(item,i) in currentData.sp" :key="i" class="swiper-item">
-                  <!-- <video ref="video" style="width:100%;" :style="{height: showLarge?'35vh':'20vh'}" :src="`/static/video/${item}`"
-                    controls="controls" autoplay></video> -->
                   <video ref="video" style="width:100%;" :src="`/static/video/${item}`"
                           controls="controls" muted></video>
                 </swiper-slide>
-                <!-- <swiper-slide class="swiper-item">
-                  <video ref="video1" style="width:100%;" src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218114723HDu3hhxqIT.mp4"
-                    controls="controls" muted="true"></video>
-                </swiper-slide>
-                <swiper-slide class="swiper-item">
-                  <video ref="video2" style="width:100%;" src="https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218093206z8V1JuPlpe.mp4"
-                    controls="controls" muted="true"></video>
-                </swiper-slide>
-                <swiper-slide class="swiper-item">
-                  <video ref="video3" style="width:100%;" src="https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4"
-                    controls="controls" muted="true"></video>
-                </swiper-slide> -->
                 <swiper-slide class="swiper-item" v-if="!currentData.sp">
                   <div class="no-tip">暂无数据</div>
                 </swiper-slide>
@@ -76,8 +53,6 @@
                 v-show="currentShow=='photo'"
               >
                 <swiper-slide v-for="(item,i) in currentData.photo" :key="i" class="swiper-item">
-                  <!-- <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain" :style="{height: showLarge?'35vh':'20vh'}"
-                    @click="onPreview(currentData.photo, i)"></el-image> -->
                   <el-image :src="`/static/images/${forceEntity.type}/${item}`" fit="contain"
                             @click="onPreview(currentData.photo, i)"></el-image>
                 </swiper-slide>
@@ -87,6 +62,30 @@
                 <div class="swiper-scrollbar" slot="scrollbar"></div>
               </swiper>
               <div class="swiper-buttons swiper-button-right"></div>
+            </div>
+            <div class="bottom">
+              <swiper
+                ref="SwiperTime"
+                class="swiper-time"
+                :options="timeSwiperOption"
+              >
+                <swiper-slide
+                  v-for="(item, index) in finalList"
+                  :key="index"
+                  :class="{ active: currentIndex == index }"
+                >
+                  <div class="item-content">
+                    <span>{{ item.date.substring(0,4) }}</span>
+                    <span
+                      >{{ item.date.substring(4,6) }}-{{
+                        item.date.substring(6,8)
+                      }}</span
+                    >
+                  </div>
+                </swiper-slide>
+              </swiper>
+              <div class="item-wrapper"></div>
+              <div class="item-check"></div>
             </div>
           </div>
         </div>
@@ -424,6 +423,14 @@
             </div>
           </el-collapse-item>
         </el-collapse>
+        <div class="qrcode-wrapper" v-show="~forceEntity.type.indexOf('项目')">
+          <div class="title-wrapper">
+            <span class="title">项目二维码</span>
+          </div>
+          <div class="qrcode-content">
+            <img src="./images/qrcode.png">
+          </div>
+        </div>
       </div>
     </transition>
     <el-image-viewer
@@ -481,6 +488,16 @@ export default {
             }
           },
         }
+      },
+      timeSwiperOption: {
+        slidesPerView: 3,
+        slideToClickedSlide: true,
+        centeredSlides: true,
+        on: {
+          slideChange: () => {
+            this.currentIndex = this.$refs.SwiperTime.swiper.activeIndex;
+          },
+        },
       },
       showViewer: false,
       srcList: [],
@@ -665,57 +682,6 @@ export default {
       let currentdate = year + seperator1 + month + seperator1 + strDate;
       this.date =  currentdate;
     },
-    // searchXMClear() {
-    //   this.searchXMText = "";
-    //   this.xmList = [];
-    //   this.searchXMFilter();
-    // },
-    // searchXMFilter() {
-    //   // console.log(this.currentXmList);
-    //   let allSearchList = this.questionXmList;
-    //   allSearchList = allSearchList.filter(item => {
-    //     return item.attributes.NAME.length
-    //   })
-    //   this.xmList = this.searchXMText
-    //     ? allSearchList.filter((item) => {
-    //       return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
-    //     })
-    //     : allSearchList;
-    // },
-    // searchDDClear() {
-    //   this.searchDDText = "";
-    //   this.ddList = [];
-    //   this.searchDDFilter();
-    // },
-    // searchDDFilter() {
-    //   // console.log(this.currentXmList);
-    //   let allSearchList = this.questionDdList;
-    //   allSearchList = allSearchList.filter(item => {
-    //     return item.attributes.NAME.length
-    //   })
-    //   this.ddList = this.searchDDText
-    //     ? allSearchList.filter((item) => {
-    //       return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
-    //     })
-    //     : allSearchList;
-    // },
-    // searchQJClear() {
-    //   this.searchQJText = "";
-    //   this.qjList = [];
-    //   this.searchQJFilter();
-    // },
-    // searchQJFilter() {
-    //   // console.log(this.currentXmList);
-    //   let allSearchList = this.questionQjList;
-    //   allSearchList = allSearchList.filter(item => {
-    //     return item.attributes.NAME.length
-    //   })
-    //   this.qjList = this.searchQJText
-    //     ? allSearchList.filter((item) => {
-    //       return item.attributes.NAME.indexOf(this.searchQJText) >= 0;
-    //     })
-    //     : allSearchList;
-    // },
     itemClick(item){
       console.log('itemClick!!!???', item)
       const { x, y } = item.geometry;

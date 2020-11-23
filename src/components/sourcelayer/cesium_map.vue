@@ -372,24 +372,30 @@ export default {
       );
       window.earth = viewer;
 
-      // 2.5D
-      const matrixIds = [];
-      for (let i = 0; i < 20; ++i) {
-        matrixIds[i] = i + 1;
-      }
-      window.earth.imageryLayers.addImageryProvider(
-        new Cesium.WebMapTileServiceImageryProvider({
-          url: "http://61.164.104.154:80/iserver/services/3dmap/wmts",
-          layer: "3dmap",
-          style: "default",
-          format: "image/png",
-          tileMatrixSetID: "custom_3dmap",
-          tileMatrixLabels: matrixIds,
-          tilingScheme: new Cesium.GeographicTilingScheme({
-            numberOfLevelZeroTilesX: 2
-          }),
+      this.datalayer.white = window.earth.imageryLayers.addImageryProvider(
+        new Cesium.SuperMapImageryProvider({
+          url: ServiceUrl.DataImage.white,
         })
       );
+
+      // 2.5D
+      // const matrixIds = [];
+      // for (let i = 0; i < 20; ++i) {
+      //   matrixIds[i] = i + 1;
+      // }
+      // window.earth.imageryLayers.addImageryProvider(
+      //   new Cesium.WebMapTileServiceImageryProvider({
+      //     url: "http://61.164.104.154:80/iserver/services/3dmap/wmts",
+      //     layer: "3dmap",
+      //     style: "default",
+      //     format: "image/png",
+      //     tileMatrixSetID: "custom_3dmap",
+      //     tileMatrixLabels: matrixIds,
+      //     tilingScheme: new Cesium.GeographicTilingScheme({
+      //       numberOfLevelZeroTilesX: 2
+      //     }),
+      //   })
+      // );
 
       // const mapMvt = viewer.scene.addVectorTilesMap({
       //   url: ServiceUrl.YJMVT,

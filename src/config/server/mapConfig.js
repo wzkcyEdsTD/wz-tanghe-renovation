@@ -23,7 +23,7 @@ export const ServiceUrl = {
   // 影像注记
   ImageMark: "http://172.168.3.183:8090/iserver/services/3D-dlyzj/rest/realspace/datas/dlyzj",
   // 矢量夜景注记
-  BlackMark: "http://172.168.3.183:8090/iserver/services/3D-dlallzjan1/rest/realspace/datas/dlallzj_%E6%9A%971",
+  BlackMark: "http://172.168.3.183:8090/iserver/services/3D-dlallzjan/rest/realspace/datas/dlallzj_an",
   //  大数据底图
   DataImage: {
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DSJCGS2000SW/rest/realspace/datas/DSJ_CGS2000_SW",

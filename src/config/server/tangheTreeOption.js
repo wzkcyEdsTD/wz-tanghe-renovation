@@ -152,7 +152,11 @@ export const CESIUM_TREE_OPTION = [
         type: "mvt",
         withImage: [{
           name: "xmfwm",
-          url: "http://172.168.3.183:8090/iserver/services/3D-fwm/rest/realspace/datas/xmfwm",
+          url: "http://172.168.3.183:8090/iserver/services/3D-xmfwm/rest/realspace/datas/xmfwm",
+        }, {
+          name: 'xmfwm-m',
+          url: "http://172.168.3.183:8090/iserver/services/3D-xmfwm-m/rest/realspace/datas/xmfwm-m",
+          alpha: 0.8
         }]
         // saveData: "setProjectList"
       },

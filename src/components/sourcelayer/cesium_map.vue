@@ -20,7 +20,6 @@
 
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
-// import TotalTarget from "./totalTarget/totalTarget";
 import Summary from "./summary/summary";
 // import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import SourceLayerHub from "./layerHub/layerHub";
@@ -30,13 +29,17 @@ import ProjectDetailPopup from "./commonFrame/ProjectDetailPopup/ProjectDetailPo
 import SejPopup from "./commonFrame/SejPopup/SejPopup";
 import SearchDetail from "./commonFrame/CommonDetailPopup/searchDetail";
 import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
+import {
+  initMapConfig,
+  mapImageLayerInit,
+  mapBaimoLayerInit,
+} from "./cesium_map_init";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
 const Cesium = window.Cesium;
 
 export default {
   components: {
-    // TotalTarget,
     // RoadLine,
     SourceLayerHub,
     CompareLayerHub,
@@ -53,6 +56,7 @@ export default {
         2018: undefined,
         2019: undefined,
         mark: undefined,
+        roadLine: undefined,
       },
       datalayer: {
         white: undefined,
@@ -201,22 +205,22 @@ export default {
             ? (this.imagelayer[value].show = true)
             : (this.imagelayer[
                 value
-              ] = window.earth.imageryLayers.addImageryProvider(
-                new Cesium.SuperMapImageryProvider({
-                  url: ServiceUrl.SWImage[value],
-                })
-              ));
+              ] = mapImageLayerInit(ServiceUrl.SWImage[value]));
 
           // 影像注记
           this.imagelayer["mark"]
             ? (this.imagelayer["mark"].show = true)
             : (this.imagelayer[
                 "mark"
-              ] = window.earth.imageryLayers.addImageryProvider(
-                new Cesium.SuperMapImageryProvider({
-                  url: ServiceUrl.ImageMark,
-                })
-              ));
+              ] = mapImageLayerInit(ServiceUrl.BlackMark));
+          this.imagelayer["mark"].alpha = 0.8
+          // 影像道路线
+          this.imagelayer["roadLine"]
+            ? (this.imagelayer["roadLine"].show = true)
+            : (this.imagelayer[
+                "roadLine"
+              ] = mapImageLayerInit(ServiceUrl.RoadLine));
+          this.imagelayer["roadLine"].alpha = 0.3
 
           window.earth.imageryLayers.lowerToBottom(this.imagelayer[value]);
           window.currentMapType = "yx";
@@ -226,6 +230,7 @@ export default {
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
           this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
+          this.imagelayer["roadLine"] && (this.imagelayer["roadLine"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
           this.blackMark.show = false;
@@ -233,11 +238,7 @@ export default {
             ? (this.datalayer[value].show = true)
             : (this.datalayer[
                 value
-              ] = window.earth.imageryLayers.addImageryProvider(
-                new Cesium.SuperMapImageryProvider({
-                  url: ServiceUrl.DataImage[value],
-                })
-              ));
+              ] = mapImageLayerInit(ServiceUrl.DataImage[value]));
           window.earth.imageryLayers.lowerToBottom(this.datalayer[value]);
           window.currentMapType = `vector${value}`;
           if (value == "black") {
@@ -289,28 +290,28 @@ export default {
             });
           }
         }
-        if (type === "jingmo") {
-          const _LAYER_ = window.earth.scene.layers.find(LAYERS[0].key);
-          if (_LAYER_) {
-            LAYERS.map((v) => {
-              const V_LAYER = window.earth.scene.layers.find(v.key);
-              V_LAYER.visible = value;
-            });
-          } else {
-            const PROMISES = LAYERS.map((v) => {
-              return window.earth.scene.addS3MTilesLayerByScp(v.url, {
-                name: v.key,
-              });
-            });
-            //  精模服务暂有问题，先用setTimeout代替promise处理可见
-            setTimeout(() => {
-              LAYERS.map((v) => {
-                const V_LAYER = window.earth.scene.layers.find(v.key);
-                V_LAYER.visibleDistanceMax = v.d || 1400;
-              });
-            }, 4000);
-          }
-        }
+        // if (type === "jingmo") {
+        //   const _LAYER_ = window.earth.scene.layers.find(LAYERS[0].key);
+        //   if (_LAYER_) {
+        //     LAYERS.map((v) => {
+        //       const V_LAYER = window.earth.scene.layers.find(v.key);
+        //       V_LAYER.visible = value;
+        //     });
+        //   } else {
+        //     const PROMISES = LAYERS.map((v) => {
+        //       return window.earth.scene.addS3MTilesLayerByScp(v.url, {
+        //         name: v.key,
+        //       });
+        //     });
+        //     //  精模服务暂有问题，先用setTimeout代替promise处理可见
+        //     setTimeout(() => {
+        //       LAYERS.map((v) => {
+        //         const V_LAYER = window.earth.scene.layers.find(v.key);
+        //         V_LAYER.visibleDistanceMax = v.d || 1400;
+        //       });
+        //     }, 4000);
+        //   }
+        // }
       });
 
       this.$bus.$off("remove-texiao");
@@ -365,109 +366,56 @@ export default {
         selectionIndicator: false,
         shadows: false, //  内存吃不消
       });
-      viewer.scene.fxaa = false; // 关闭快速抗锯齿
-      viewer.imageryLayers.get(0).show = false;
-      viewer.scene.globe.baseColor = new Cesium.Color.fromCssColorString(
-        "rgba(13,24,45, 1)"
-      );
       window.earth = viewer;
 
-      this.datalayer.white = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.DataImage.white,
-        })
-      );
+      // 地图初始配置
+      initMapConfig();
+
+      if (this.currentPage == 'sourcelayer') {
+        // 矢量日景
+        this.datalayer.white = mapImageLayerInit(ServiceUrl.DataImage.white)
+      }
+      if (this.currentPage == 'compare') {
+        // 2019影像图
+        this.imagelayer[2019] = mapImageLayerInit(ServiceUrl.SWImage[2019])
+      }
 
       // 2.5D
-      // const matrixIds = [];
-      // for (let i = 0; i < 20; ++i) {
-      //   matrixIds[i] = i + 1;
-      // }
-      // window.earth.imageryLayers.addImageryProvider(
-      //   new Cesium.WebMapTileServiceImageryProvider({
-      //     url: "http://61.164.104.154:80/iserver/services/3dmap/wmts",
-      //     layer: "3dmap",
-      //     style: "default",
-      //     format: "image/png",
-      //     tileMatrixSetID: "custom_3dmap",
-      //     tileMatrixLabels: matrixIds,
-      //     tilingScheme: new Cesium.GeographicTilingScheme({
-      //       numberOfLevelZeroTilesX: 2
-      //     }),
-      //   })
-      // );
+      // url: "http://61.164.104.154:80/iserver/services/3dmap/wmts",
 
-      // const mapMvt = viewer.scene.addVectorTilesMap({
-      //   url: ServiceUrl.YJMVT,
-      //   name: "mapMvt",
-      //   viewer,
-      // });
-
-      // const tanghePromise = viewer.scene.addS3MTilesLayerByScp(
-      //   ServiceUrl.TANGHE3D,
-      //   {
-      //     name: "tanghe3d",
-      //   }
-      // );
-      // Cesium.when(tanghePromise, () => {
-      //   const LAYER = viewer.scene.layers.find("tanghe3d");
-      //   // LAYER.visibleDistanceMax = 5000;
-      // });
-
-      this.xzjxjdlayer = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.XZJXJD,
-        })
-      );
+      // 行政街道
+      this.xzjxjdlayer = mapImageLayerInit(ServiceUrl.XZJXJD)
       // this.xzjxjdlayer.alpha = 0.5;
       this.xzjxjdlayer.show = false;
 
-      this.thfwmlayer = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.TANGHEFWM,
-        })
-      );
+      // 塘河范围面
+      this.thfwmlayer = mapImageLayerInit(ServiceUrl.TANGHEFWM)
       this.thfwmlayer.alpha = 0.7;
       this.thfwmlayer.show = false;
 
-      this.xzjxqxlayer = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.XZJXQX,
-        })
-      );
-      this.xzjxqxlayer.show = false;
+      // 行政区县
+      this.xzjxqxlayer = mapImageLayerInit(ServiceUrl.XZJXQX)
+      if (this.currentPage == 'sourcelayer') {
+        this.xzjxqxlayer.show = false;
+      }
 
-      this.tanghe = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.TANGHE2D,
-        })
-      );
+      // 二维塘河
+      this.tanghe = mapImageLayerInit(ServiceUrl.TANGHE2D)
       this.tanghe.show = false;
 
-      this.tangheFG = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.TANGHEFG,
-        })
-      );
+      // 塘河发光
+      this.tangheFG = mapImageLayerInit(ServiceUrl.TANGHEFG)
 
-      this.lvdaolayerBold = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.LVDAOImage.BOLD,
-        })
-      );
-      this.lvdaolayerBold.show = false; // 粗绿道默认隐藏
+      // 绿道粗
+      this.lvdaolayerBold = mapImageLayerInit(ServiceUrl.LVDAOImage.BOLD)
+      this.lvdaolayerBold.show = false;
 
-      this.lvdaolayerThin = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.LVDAOImage.THIN,
-        })
-      );
+      // 绿道细
+      this.lvdaolayerThin = mapImageLayerInit(ServiceUrl.LVDAOImage.THIN)
 
-      this.blackMark = window.earth.imageryLayers.addImageryProvider(
-        new Cesium.SuperMapImageryProvider({
-          url: ServiceUrl.BlackMark,
-        })
-      );
+      // 矢量夜景注记
+      this.blackMark = mapImageLayerInit(ServiceUrl.BlackMark)
+      this.blackMark.alpha = 0.8;
       this.blackMark.show = false;
 
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
@@ -765,6 +713,11 @@ export default {
       this.singleQuery(geometryArgs, "绿道断点");
       this.singleQuery(geometryArgs, "quanjin");
       this.singleQuery(geometryArgs, "shipin");
+      this.singleQuery(geometryArgs, "scenic_spot");
+      this.singleQuery(geometryArgs, "jiaotong");
+      this.singleQuery(geometryArgs, "toilet");
+      this.singleQuery(geometryArgs, "wharf");
+      this.singleQuery(geometryArgs, "bridge");
 
       // 延时获取异步数据
       setTimeout(() => {

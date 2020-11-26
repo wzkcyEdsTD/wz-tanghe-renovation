@@ -153,6 +153,9 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
   // console.log('window.featureMap!!!', window.featureMap)
   context.setSourceMap({[node.id]: forceDrawFeatures});
 
+  // 获取hash地址判断当前页面
+  let currentHash = window.location.hash
+
   forceDrawFeatures.map(item => {
     const position = Cesium.Cartesian3.fromDegrees(
       item.geometry.x,
@@ -160,11 +163,31 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       4
     );
 
+    let billImage
+    if (node.icon) {
+      if (node.icon == '断点') {
+        if (~currentHash.indexOf('compare')) {
+          billImage = `/static/images/map-ico/断点2.png`
+        } else {
+          billImage = `/static/images/map-ico/断点.png`
+        }
+      } else {
+        billImage = `/static/images/map-ico/${node.icon}.png`
+      }
+    } else {
+      if (~currentHash.indexOf('sourcelayer')) {
+        billImage = `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`
+      }
+      if (~currentHash.indexOf('compare')) {
+        billImage = `/static/images/map-ico/${item.attributes.ZT.trim()}.png`
+      }
+    }
+
     window.billboardMap[node.id].add({
       id: `billboard@${item.attributes.SMID}@${node.id}`,
-      image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
-      width: node.icon=='断点'? 33 : 32,
-      height: node.icon=='断点'? 33 : 32,
+      image: billImage,
+      width: 32,
+      height: 32,
       scaleByDistance:new Cesium.NearFarScalar(1000, 2, 6000, 1),
       // sizeInMeters:true,
       disableDepthTestDistance: Number.POSITIVE_INFINITY,

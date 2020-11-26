@@ -44,7 +44,7 @@
     <div class="middle">
       <div class="title-wrapper">
         <span class="pre"></span>
-        <span class="title">滞后工程列表</span>
+        <span class="title">预警工程列表</span>
       </div>
       <div class="result-wrapper">
         <ul class="result-list warn">
@@ -54,7 +54,7 @@
             <span class="content">责任单位</span>
             <span class="content">进度</span>
           </li>
-          <li class="result-item first">
+          <!-- <li class="result-item first">
             <span class="index">{{ "01" }}</span>
             <span class="name">{{ "葡萄8-5地块" }}</span>
             <span class="content">{{ "鹿城区" }}</span>
@@ -71,60 +71,12 @@
             <span class="name">{{ "葡萄8-5地块" }}</span>
             <span class="content">{{ "鹿城区" }}</span>
             <span class="content">{{ "地下室施工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "04" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "竣工验收准备" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "05" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "地下室施工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "06" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "未完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
+          </li> -->
+          <li class="result-item" v-for="(item, index) in warnXmList" :key="index">
+            <span class="index">{{ index }}</span>
+            <span class="name">{{ item.attributes.NAME }}</span>
+            <span class="content">{{ item.attributes.ZR_DEPTID }}</span>
+            <span class="content">{{ item.attributes.CURRENT_STATE }}</span>
           </li>
         </ul>
       </div>
@@ -142,7 +94,7 @@
             <span class="content">责任单位</span>
             <span class="content">进度</span>
           </li>
-          <li class="result-item first">
+          <!-- <li class="result-item first">
             <span class="index">{{ "01" }}</span>
             <span class="name">{{ "葡萄8-5地块" }}</span>
             <span class="content">{{ "鹿城区" }}</span>
@@ -159,60 +111,12 @@
             <span class="name">{{ "葡萄8-5地块" }}</span>
             <span class="content">{{ "鹿城区" }}</span>
             <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "04" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "05" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "06" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
-          </li>
-          <li class="result-item">
-            <span class="index">{{ "07" }}</span>
-            <span class="name">{{ "葡萄8-5地块" }}</span>
-            <span class="content">{{ "鹿城区" }}</span>
-            <span class="content">{{ "完工" }}</span>
+          </li> -->
+          <li class="result-item" v-for="(item, index) in lightXmList" :key="index">
+            <span class="index">{{ index }}</span>
+            <span class="name">{{ item.attributes.NAME }}</span>
+            <span class="content">{{ item.attributes.ZR_DEPTID }}</span>
+            <span class="content">{{ item.attributes.CURRENT_STATE }}</span>
           </li>
         </ul>
       </div>
@@ -221,6 +125,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: ["zrdw"],
   data() {
@@ -233,8 +138,37 @@ export default {
         zhenan: {amount: 0.3, total: 1, hard: 0, time: '2021-12-01'},
         chengfa: {amount: 0, total: 0, hard: 0, time: '0000-00-00'},
         xiandai: {amount: 5, total: 4, hard: 0, time: '2021-09-01'},
-      }
+      },
+      xmList: []
     }
+  },
+  computed: {
+    ...mapGetters("map", ["sourceMap"]),
+    drawData() {
+      return this.$store.state.map.sourceMap;
+    },
+    lightXmList() {
+      console.log('oleiolei', this.xmList)
+      let result = []
+      result = this.xmList.filter(item => {
+        return item.attributes.ZT == '亮点项目'
+      })
+      return result
+    },
+    warnXmList() {
+      console.log('heiheihei', this.xmList)
+      let result = []
+      result = this.xmList.filter(item => {
+        return item.attributes.ZT == '滞后工程'
+      })
+      return result
+    }
+  },
+  watch: {
+    drawData(val) {
+      console.log("nonono", val);
+      this.sourceMap['项目'] && (this.xmList = this.sourceMap['项目'])
+    },
   }
 };
 </script>

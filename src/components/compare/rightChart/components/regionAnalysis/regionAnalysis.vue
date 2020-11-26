@@ -180,9 +180,17 @@ export default {
 @import url("./regionAnalysis.less");
 </style>
 <style>
-.el-input {
-  width: 45% !important;
-  border-width: 0.5vh;
-  border-color: #165fea;
+.el-select-dropdown {
+  background-color: rgba(0, 28, 146, 0.6) !important;
+  border: 1px solid #165fea !important;
+}
+.el-select-dropdown__item {
+  color: #fff;
+}
+.el-select-dropdown__item.hover {
+  background: none !important;
+}
+.el-select-dropdown__item.selected {
+  color: #69FEE5;
 }
 </style>

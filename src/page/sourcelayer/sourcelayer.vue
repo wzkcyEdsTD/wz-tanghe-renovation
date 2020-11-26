@@ -1,47 +1,29 @@
 <template>
   <div class="page-map">
-    <div class="cesium-map" v-if="currentMapType == 'cesiumMap'">
+    <div class="cesium-map">
       <CesiumMap />
     </div>
     <div class="mask-wrapper">
       <div class="top"></div>
       <!-- <div class="left" v-if="!showLarger"></div> -->
-      <!-- <div class="leftlarger" v-if="showLarger"></div> -->
       <!-- <div class="bottom"></div> -->
     </div>
   </div>
 </template>
 <script>
 import CesiumMap from "components/sourcelayer/cesium_map";
-import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "Map",
+  name: "sourcelayer",
   data() {
     return {
-      showLarge:window.showLarge,
-      // screenWidth: document.body.clientWidth,
-      // screeHeight: document.body.clientHeight,
     };
-  },
-  computed: {
-    ...mapGetters("map", ["currentMapType"]),
   },
   mounted() {
     this.eventRegsiter();
-    // this.getKuanGao();
   },
   methods: {
     eventRegsiter() {},
-    // getKuanGao(){
-    //   //4320*1280
-    //   console.log(this.screenWidth);
-    //   if(this.screenWidth>4000&this.screeHeight>1000){
-    //     this.showLarger = true;
-    //   }else {
-    //     this.showLarger = false;
-    //   }
-    // },
   },
   components: {
     CesiumMap,
@@ -78,14 +60,6 @@ export default {
     height: 100%;
     background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
   }
-  // .leftlarger {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   width: 29vw;
-  //   height: 100%;
-  //   background: linear-gradient(90deg, #040D33 0%, rgba(4, 13, 51, 0.6) 75%, rgba(4, 13, 51, 0.1) 100%);
-  // }
   .bottom {
     position: fixed;
     bottom: 0;

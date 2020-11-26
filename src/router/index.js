@@ -33,6 +33,14 @@ const router = new Router({
       },
       component: resolve => require(["page/compare/compare"], resolve)
     },
+    {
+      path: "/decision",
+      name: "decision",
+      meta: {
+        title: "智慧塘河"
+      },
+      component: resolve => require(["page/decision/decision"], resolve)
+    },
   ]
 })
 

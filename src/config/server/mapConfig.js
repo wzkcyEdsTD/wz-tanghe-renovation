@@ -22,6 +22,7 @@ export const ServiceUrl = {
   },
   // 影像注记
   ImageMark: "http://172.168.3.183:8090/iserver/services/3D-dlyzj/rest/realspace/datas/dlyzj",
+  RoadLine: "http://172.168.3.183:8090/iserver/services/3D-dlallzj_line/rest/realspace/datas/dlallzj_line",
   // 矢量夜景注记
   BlackMark: "http://172.168.3.183:8090/iserver/services/3D-dlallzjan/rest/realspace/datas/dlallzj_an",
   //  大数据底图
@@ -93,8 +94,49 @@ export const ServiceUrl = {
     { key: "ZGDYP_DX", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_DX/config" },
     { key: "MaxShijuJZ", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/MaxShijuJZ/config" },
     { key: "MaxShijuQT", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/MaxShijuQT/config" },
-  ]
+  ],
+  // 要素服务
+  FEATUREMVT: "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data",
 };
+
+export const MediaServer = "http://172.168.3.182:8090/static";
+
+const datasource = "172.168.3.181_thxm:";
+
+// 图层列表
+export const LayerList = [{
+    id: "十二景",
+    label: "十二景",
+    dataset: `${datasource}十二景`,
+    icon: '十二景',
+    icon2: "十二景",
+    type: "mvt",
+    saveData: "setSejList",
+    check: false,
+}, {
+    id: "项目",
+    label: "项目",
+    dataset: `${datasource}项目`,
+    icon: false,
+    icon2: "项目",
+    type: "mvt",
+    check: false,
+}, {
+    id: "绿道断点",
+    label: "断点",
+    dataset: `${datasource}绿道断点`,
+    icon: '断点',
+    icon2: "断点",
+    type: "mvt",
+    check: false,
+}, {
+    id: "绿道",
+    label: "绿道",
+    dataset: `${datasource}绿道断点`,
+    icon: '绿道',
+    icon2: "绿道",
+    check: false,
+}]
 
 export const BimSourceURL = {
   SCENE_URL:

@@ -6,25 +6,43 @@
       <div class="circle-item item1">
         <div class="content">
           <p class="area">鹿城区</p>
-          <p class="number">67个</p>
+          <p class="number">22个</p>
         </div>
       </div>
       <div class="circle-item item2">
         <div class="content">
           <p class="area">瓯海区</p>
-          <p class="number">67个</p>
+          <p class="number">23个</p>
         </div>
       </div>
       <div class="circle-item item3">
         <div class="content">
           <p class="area">龙湾区</p>
-          <p class="number">67个</p>
+          <p class="number">10个</p>
         </div>
       </div>
       <div class="circle-item item4">
         <div class="content">
           <p class="area">瑞安市</p>
-          <p class="number">67个</p>
+          <p class="number">11个</p>
+        </div>
+      </div>
+      <div class="circle-item item5">
+        <div class="content">
+          <p class="area">浙南产业区</p>
+          <p class="number">2个</p>
+        </div>
+      </div>
+      <div class="circle-item item6">
+        <div class="content">
+          <p class="area">城发集团</p>
+          <p class="number">22个</p>
+        </div>
+      </div>
+      <div class="circle-item item7">
+        <div class="content">
+          <p class="area">现代集团</p>
+          <p class="number">5个</p>
         </div>
       </div>
     </div>

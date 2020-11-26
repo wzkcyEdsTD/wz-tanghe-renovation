@@ -20,10 +20,9 @@
       <p class="time">{{times}}</p>
     </div>
     <div class="route-wrapper">
-      <div class="route-item" :class="{active: currentPage=='sourcelayer'}" @click="goRoute('sourcelayer')">
-        资源一张图
-      </div>
+      <div class="route-item" :class="{active: currentPage=='sourcelayer'}" @click="goRoute('sourcelayer')">资源一张图</div>
       <div class="route-item" :class="{active: currentPage=='compare'}" @click="goRoute('compare')">互学互比</div>
+      <div class="route-item" :class="{active: currentPage=='decision'}" @click="goRoute('decision')">辅助决策</div>
     </div>
   </div>
 </template>
@@ -42,7 +41,6 @@ export default {
   computed: {
     currentPage: {
       get() {
-        // vue中获取当前路由name
         return this.$route.name
       },
       set(val) {}
@@ -62,11 +60,6 @@ export default {
   methods: {
     goRoute(name) {
       if (this.currentPage != name) {
-        // if (name == 'compare') {
-        //   this.showLarge && this.$bus.$emit("change-screen", { value: false });
-        // } else {
-        //   this.showLarge && this.$bus.$emit("change-screen", { value: true });
-        // }
         this.currentPage = name
         this.$router.push({name})
       }
@@ -141,7 +134,7 @@ export default {
     z-index: 3;
     position: absolute;
     top: 10%;
-    right: 20%;
+    right: 10%;
     color: #fff;
     display: flex;
     .route-item {

@@ -1,7 +1,15 @@
 <template>
   <div class="layerhub-wrapper">
     <div class="sign-wrapper" style="right: 24%">
-      <img src="/static/images/common/sign@2x.png">
+      <img src="/static/images/common/sign2@2x.png">
+    </div>
+    <div class="mark-popup" v-if="showMark">
+      <div class="mask"></div>
+      <div class="content">
+        <p class="text">扫描二维码进行评分</p>
+        <img class="qrcode" src="./images/qrcode.png" />
+        <img class="close" src="./images/mark-close.png" @click="showMark=false" />
+      </div>
     </div>
     <MapTool />
     <div class="left-wrapper">
@@ -77,7 +85,7 @@
           <div class="no-tip" v-show="!allList.length">暂无数据</div>
         </div>
         <div class="mark-container">
-          <img class="button" src="./images/mark.png">
+          <img class="button" src="./images/mark.png" @click="goMark">
           <img class="line" src="./images/mark-line.png">
         </div>
         <!-- <div class="dd-container" v-show="currentType=='dd'">
@@ -681,6 +689,7 @@ export default {
       lineEchart: null,
       xmActive: "",
       ddActive: "",
+      showMark: false
       // xiaEchart: null,
     };
   },
@@ -729,10 +738,10 @@ export default {
   methods: {
     ...mapActions("map", ["setSourceMap"]),
     getPOIPickedFeature(node, fn) {
-      const { newdataset, url } = node;
+      const { newdataset, url, query } = node;
       var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
       getFeatureParam = new SuperMap.REST.FilterParameter({
-        attributeFilter: `SMID <= 1000`,
+        attributeFilter: query ? `SMID <= 1000 AND ${query}`: `SMID <= 1000`,
       });
       getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
         queryParameter: getFeatureParam,
@@ -1192,6 +1201,9 @@ export default {
         this.drawBars();
         // this.drawPies();
       });
+
+      // 大屏下关闭多媒体窗口
+      this.$bus.$emit("close-rightPlayer");
     },
     itemClick(item) {
       console.log(item, this.currentType)
@@ -1221,6 +1233,21 @@ export default {
       });
     },
     filterData () {
+      const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
+      const SW_DATA = "/data-alldata/rest/data";
+      const SW_DATA_NAME = "172.168.3.181_thxm:";
+      const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
+      // 清空地图标绘
+      for (let i in window.billboardMap) {
+        window.billboardMap[i]._billboards.map((v) => (v.show = false));
+      }
+      for (let i in window.blackLabelMap) {
+        window.blackLabelMap[i].setAllLabelsVisible(false)
+      }
+      for (let i in window.whiteLabelMap) {
+        window.whiteLabelMap[i].setAllLabelsVisible(false)
+      }
+
       if (this.currentZrdw != '指挥部') {
         this.xmList = this.sourceMap['项目'].filter(item => {
           return ~item.attributes.ZR_DEPTID.indexOf(this.currentZrdw)
@@ -1228,9 +1255,41 @@ export default {
         this.ddList = this.sourceMap['绿道断点'].filter(item => {
           return ~item.attributes.ZRDW.indexOf(this.currentZrdw)
         })
+        this.getPOIPickedFeature({
+          id: "项目",
+          label: "项目",
+          url: SERVER_DEFAULT_DATA,
+          newdataset: `${SW_DATA_NAME}项目`,
+          icon: false,
+          query: `ZR_DEPTID like '%${this.currentZrdw}'`
+        });
+        this.getPOIPickedFeature({
+          id: "绿道断点",
+          label: "断点",
+          url: SERVER_DEFAULT_DATA,
+          newdataset: `${SW_DATA_NAME}绿道断点`,
+          icon: "断点",
+          iconSize: "small",
+          query: `ZRDW like '%${this.currentZrdw}'`
+        });
       } else {
         this.xmList = this.sourceMap['项目']
         this.ddList = this.sourceMap['绿道断点']
+        this.getPOIPickedFeature({
+          id: "项目",
+          label: "项目",
+          url: SERVER_DEFAULT_DATA,
+          newdataset: `${SW_DATA_NAME}项目`,
+          icon: false,
+        });
+        this.getPOIPickedFeature({
+          id: "绿道断点",
+          label: "断点",
+          url: SERVER_DEFAULT_DATA,
+          newdataset: `${SW_DATA_NAME}绿道断点`,
+          icon: "断点",
+          iconSize: "small",
+        });
       }
     },
     searchXMFilter() {
@@ -1261,6 +1320,9 @@ export default {
     //   this.searchDDText = "";
     //   this.filterData()
     // },
+    goMark() {
+      this.showMark = true
+    }
   },
   mounted() {
     const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";

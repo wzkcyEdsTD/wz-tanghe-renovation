@@ -1,6 +1,6 @@
 <template>
   <div class="page-map">
-    <div class="cesium-map" v-if="currentMapType == 'cesiumMap'">
+    <div class="cesium-map">
       <CesiumMap />
     </div>
     <div class="mask-wrapper">
@@ -12,15 +12,11 @@
 </template>
 <script>
 import CesiumMap from "components/sourcelayer/cesium_map";
-import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "Map",
+  name: "compare",
   data() {
     return {};
-  },
-  computed: {
-    ...mapGetters("map", ["currentMapType"]),
   },
   mounted() {
     this.eventRegsiter();

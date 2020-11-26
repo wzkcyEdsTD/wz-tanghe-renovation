@@ -126,16 +126,28 @@ export default {
         label: '粗模',
         value: 'baimo',
         selected: false
-      }, {
-        label: '精模',
-        value: 'jingmo',
-        selected: false
-      }],
+      },
+      // {
+      //   label: '精模',
+      //   value: 'jingmo',
+      //   selected: false
+      // }
+      ],
       current3d: '',
     }
   },
   computed: {
     currentPage () {
+      if (this.$route.name == 'compare') {
+        this.currentLayer = 'yx'
+        this.currentYear = 2019
+        this.currentVector = ''
+      }
+      if (this.$route.name == 'sourcelayer') {
+        this.currentLayer = 'vector'
+        this.currentVector = 'white'
+        this.currentYear = ''
+      }
       return this.$route.name
     }
   },

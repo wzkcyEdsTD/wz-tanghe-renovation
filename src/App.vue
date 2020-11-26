@@ -15,6 +15,11 @@
     </div>
     <div class="rightScreen-wrapper" v-if="showRightScreen && currentPage=='compare'">
       <RightChart />
+      <div class="player-wrapper compare" v-show="showPlayer">
+        <video class="video" v-show="showType=='video'" :src="showSrc" controls="controls" autoplay muted></video>
+        <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
+        <div v-show="showType=='jk'" id="player" class="frequency-pic type1" />
+      </div>
     </div>
   </div>
 </template>
@@ -42,8 +47,6 @@ export default {
       showSrc: 'static/video/温瑞塘河.mp4',
       // videoSrc: 'static/video/温瑞塘河/温瑞塘河.mp4',
       // qjSrc: ''
-      screenWidth: document.body.clientWidth,
-      screeHeight: document.body.clientHeight,
       video: undefined,
       // playerOptions: {  // vue-video-player方式
       //   // videojs and plugin options
@@ -62,6 +65,8 @@ export default {
       //   flash: { hls: { withCredentials: false }},
       //   html5: { hls: { withCredentials: false }},
       // }
+      currentPage: '',
+      showPlayer: false,
     };
   },
   computed: {
@@ -69,39 +74,50 @@ export default {
     ...mapState({
       isLoading: "isLoading",
     }),
-    currentPage () {
-      return this.$route.name
-    }
     // player() {
     //   return this.$refs.videoPlayer.player
     // }
   },
   watch: {
+    '$route' (to) {
+      this.showPlayer = false
+      this.currentPage = to.name
+      this.getKuanGao()
+    }
   },
   created() {
     window.showLarge = false;
-    this.getKuanGao();
   },
   mounted() {
-    this.initScreen()
     this.eventRegsiter()
   },
   methods: {
-    getKuanGao(){
+    getKuanGao() {
       //4320*1280
-      console.log('screenWidth!!!!', this.screenWidth);
-      if(this.screenWidth>4000&this.screeHeight>1000){
+      let screenWidth = document.body.clientWidth
+      let screeHeight = document.body.clientHeight
+      console.log('screenWidth!!!!', screenWidth);
+      if(screenWidth>4000 && screeHeight>1000){
         window.showLarge = true
       }else {
         window.showLarge = false
       }
+      this.initScreen()
     },
     initScreen() {
       if (window.showLarge) {
-        document.getElementById('header').style.width = '55%'
-        document.getElementById('content').style.width = '55%'
-        // document.getElementById('content').style.display = 'none'
-        this.showRightScreen = true
+        if (this.currentPage == 'sourcelayer' || this.currentPage == 'compare') {
+          this.showRightScreen = true
+          document.getElementById('header').style.width = '55%'
+          document.getElementById('content').style.width = '55%'
+          // document.getElementById('content').style.display = 'none'
+        } else {
+          document.getElementById('header').style.width = '100%'
+          document.getElementById('content').style.width = '100%'
+        }
+      } else {
+        document.getElementById('header').style.width = '100%'
+        document.getElementById('content').style.width = '100%'
       }
     },
     initRtmp() {  // aliplayer方式
@@ -143,6 +159,7 @@ export default {
       })
       this.$bus.$off("change-rightContent");
       this.$bus.$on("change-rightContent", ({ type, value }) => {
+        this.showPlayer = true
         this.showType = type
         this.showSrc = value
         if (type == 'jk') {
@@ -151,6 +168,10 @@ export default {
           // console.log('fuckplayer', this.player)
           // this.player.play()
         }
+      })
+      this.$bus.$off("close-rightPlayer");
+      this.$bus.$on("close-rightPlayer", () => {
+        this.showPlayer = false
       })
     }
   },
@@ -173,6 +194,10 @@ html,
 body {
   width: 100%;
   height: 100%;
+}
+.cesium-viewer-bottom,
+.cesium-viewer-navigationContainer {
+    display: none;
 }
 #app {
   width: 100%;
@@ -203,8 +228,15 @@ body {
   .player-wrapper {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
+    &.compare {
+      position: absolute;
+      top: 2%;
+      left: 2%;
+      width: 96%;
+      height: 96%;
+    }
     .video, .iframe {
       width: 100%;
       height: 100%;

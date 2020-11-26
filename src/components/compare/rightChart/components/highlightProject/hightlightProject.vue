@@ -12,7 +12,7 @@
           <span class="content">责任单位</span>
           <span class="content">进度</span>
         </li>
-        <li class="result-item first">
+        <!-- <li class="result-item first">
           <span class="index">{{ "01" }}</span>
           <span class="name">{{ "葡萄8-5地块" }}</span>
           <span class="content">{{ "鹿城区" }}</span>
@@ -29,60 +29,12 @@
           <span class="name">{{ "葡萄8-5地块" }}</span>
           <span class="content">{{ "鹿城区" }}</span>
           <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "04" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "05" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "06" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "07" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "07" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "07" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "07" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "07" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
-        </li>
-        <li class="result-item">
-          <span class="index">{{ "07" }}</span>
-          <span class="name">{{ "葡萄8-5地块" }}</span>
-          <span class="content">{{ "鹿城区" }}</span>
-          <span class="content">{{ "完工" }}</span>
+        </li> -->
+        <li class="result-item" v-for="(item, index) in lightXmList" :key="index">
+          <span class="index">{{ index }}</span>
+          <span class="name">{{ item.attributes.NAME }}</span>
+          <span class="content">{{ item.attributes.ZR_DEPTID }}</span>
+          <span class="content">{{ item.attributes.CURRENT_STATE }}</span>
         </li>
       </ul>
     </div>
@@ -90,8 +42,32 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "hightlightProject",
+  data() {
+    return {
+      xmList: []
+    }
+  },
+  computed: {
+    ...mapGetters("map", ["sourceMap"]),
+    drawData() {
+      return this.$store.state.map.sourceMap;
+    },
+    lightXmList() {
+      let result = []
+      result = this.xmList.filter(item => {
+        return item.attributes.ZT == '亮点项目'
+      })
+      return result
+    },
+  },
+  watch: {
+    drawData(val) {
+      this.sourceMap['项目'] && (this.xmList = this.sourceMap['项目'])
+    },
+  }
 };
 </script>
 

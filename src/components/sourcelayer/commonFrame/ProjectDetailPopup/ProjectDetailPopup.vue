@@ -415,8 +415,101 @@
                   </div>
                 </div>
               </div>
+              <div v-show="spotList?spotList.length>0?true:false:false">
+                <div class="fjxm">
+                  <div class="tp">
+                    <img src="./images/时间框.png" class="kuang">
+                    <span class="text">附近景点</span>
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="result-wrapper">
+                    <ul class="result-list">
+                      <li class="result-item header">
+                        <span class="index">序号</span>
+                        <span class="name">景点名称</span>
+                        <span class="content">所属街道</span>
+                      </li>
+                      <li
+                        class="result-item"
+                        v-for="(item, index) in spotList"
+                        :key="index"
+                        @click="itemClick(item)"
+                      >
+                        <span class="index">{{ index + 1 }}</span>
+                        <span class="name" :title="item.attributes.NAME">{{
+                      item.attributes.NAME
+                    }}</span>
+                        <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div v-show="wharfList?wharfList.length>0?true:false:false">
+                <div class="fjxm">
+                  <div class="tp">
+                    <img src="./images/时间框.png" class="kuang">
+                    <span class="text">附近码头</span>
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="result-wrapper">
+                    <ul class="result-list">
+                      <li class="result-item header">
+                        <span class="index">序号</span>
+                        <span class="name">码头名称</span>
+                        <span class="content">所属街道</span>
+                      </li>
+                      <li
+                        class="result-item"
+                        v-for="(item, index) in wharfList"
+                        :key="index"
+                        @click="itemClick(item)"
+                      >
+                        <span class="index">{{ index + 1 }}</span>
+                        <span class="name" :title="item.attributes.NAME">{{
+                      item.attributes.NAME
+                    }}</span>
+                        <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div v-show="bridgeList?bridgeList.length>0?true:false:false">
+                <div class="fjxm">
+                  <div class="tp">
+                    <img src="./images/时间框.png" class="kuang">
+                    <span class="text">附近桥梁</span>
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="result-wrapper">
+                    <ul class="result-list">
+                      <li class="result-item header">
+                        <span class="index">序号</span>
+                        <span class="name">桥梁名称</span>
+                        <span class="content">所属街道</span>
+                      </li>
+                      <li
+                        class="result-item"
+                        v-for="(item, index) in bridgeList"
+                        :key="index"
+                        @click="itemClick(item)"
+                      >
+                        <span class="index">{{ index + 1 }}</span>
+                        <span class="name" :title="item.attributes.NAME">{{
+                      item.attributes.NAME
+                    }}</span>
+                        <span class="content" :title="item.attributes.STREET">{{ item.attributes.STREET}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
 
-              <div v-show="(!isListEmpty(xmList) && !isListEmpty(ddList) && !isListEmpty(qjList) && !isListEmpty(spList)) || (!isListEmpty(xmList) && !isListEmpty(ddList))" class="description">
+              <div v-show="(!isListEmpty(xmList) && !isListEmpty(ddList) && !isListEmpty(qjList) && !isListEmpty(spList) && !isListEmpty(spotList) && !isListEmpty(wharfList) && !isListEmpty(bridgeList)) || (!isListEmpty(xmList) && !isListEmpty(ddList))" class="description">
                 暂无周边信息
               </div>
             
@@ -434,7 +527,7 @@
       </div>
     </transition>
     <el-image-viewer
-      :style="{left:showLarge?'60%':'0'}"
+      :style="{left:showLarge?'55%':'0'}"
       v-if="showViewer"
       :on-close="closeViewer"
       :url-list="srcList"
@@ -509,6 +602,11 @@ export default {
       questionDdList:null,
       questionQjList:null,
       questionSpList:null,
+      questionSpotList:null,
+      questionBusList:null,
+      questionToiletList:null,
+      questionWharfList:null,
+      questionBridgeList:null,
       searchXMText:'',
       xmList:[],
       searchDDText:'',
@@ -516,6 +614,11 @@ export default {
       searchQJText:'',
       qjList:[],
       spList:[],
+      spotList: [],
+      busList: [],
+      toiletList: [],
+      wharfList: [],
+      bridgeList: [],
       activeNames: [],
       projectId: '',
       showInfo: false
@@ -710,6 +813,11 @@ export default {
         this.questionXmList = temp['项目'];
         this.questionDdList = temp['绿道断点'];
         this.questionSpList = temp['shipin'];
+        this.questionSpotList = temp['scenic_spot'];
+        this.questionBusList = temp['jiaotong'];
+        this.questionToiletList = temp['toilet'];
+        this.questionWharfList = temp['wharf'];
+        this.questionBridgeList = temp['bridge'];
         if(this.questionQjList){
           this.questionQjList = this.questionQjList.filter((item) => {
             return item.attributes.NAME !=name;
@@ -730,10 +838,40 @@ export default {
             return item.attributes.NAME !=name;
           })
         }
+        if(this.questionSpotList){
+          this.questionSpotList = this.questionSpotList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
+        if(this.questionBusList){
+          this.questionBusList = this.questionBusList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
+        if(this.questionToiletList){
+          this.questionToiletList = this.questionToiletList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
+        if(this.questionWharfList){
+          this.questionWharfList = this.questionWharfList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
+        if(this.questionBridgeList){
+          this.questionBridgeList = this.questionBridgeList.filter((item) => {
+            return item.attributes.NAME !=name;
+          })
+        }
         this.xmList = this.questionXmList;
         this.ddList = this.questionDdList;
         this.qjList = this.questionQjList;
         this.spList = this.questionSpList;
+        this.spotList = this.questionSpotList;
+        this.busList = this.questionBusList;
+        this.toiletList = this.questionToiletList;
+        this.wharfList = this.questionWharfList;
+        this.bridgeList = this.questionBridgeList;
       })
     },
 

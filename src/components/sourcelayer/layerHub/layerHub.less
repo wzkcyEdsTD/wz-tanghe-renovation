@@ -1,35 +1,5 @@
 .layerhub-wrapper {
-  .switch-menu-wrapper {
-    margin-bottom: 1vh;
-    text-align: center;
-    .switch-menu-container {
-      width: 34vh;
-      height: 4vh;
-      cursor: pointer;
-      .bg-image('./images/switch-bg');
-      display: flex;
-      >span {
-        flex: 1;
-        line-height: 4vh;
-        font-family: YouSheBiaoTiHei;
-        font-size: 3vh;
-        color: #fff;
-        opacity: .5;
-        &.active {
-          opacity: 1;
-          font-size: 3vh;
-        }
-      }
-    }
-    .switch-menu-decorate {
-      margin-top: 1vh;
-      width: 38vh;
-      height: 0.8vh;
-      .bg-image('./images/switch-decorate');
-    }
-  }
-
-  .left-menu-wrapper {
+  .left-wrapper {
     z-index: 999;
     position  : absolute;
     top       : 5vh;
@@ -39,6 +9,93 @@
     padding-top: 3vh;
     padding-left: 2vh;
     background-color: #040D33;
+    .switch-menu-wrapper {
+      margin-bottom: 1vh;
+      text-align: center;
+      .switch-menu-container {
+        width: 34vh;
+        height: 4vh;
+        cursor: pointer;
+        .bg-image('./images/switch-bg');
+        display: flex;
+        >span {
+          flex: 1;
+          line-height: 4vh;
+          font-family: YouSheBiaoTiHei;
+          font-size: 3vh;
+          color: #fff;
+          opacity: .5;
+          &.active {
+            opacity: 1;
+            font-size: 3vh;
+          }
+        }
+      }
+      .switch-menu-decorate {
+        margin-top: 1vh;
+        width: 38vh;
+        height: 0.8vh;
+        .bg-image('./images/switch-decorate');
+      }
+    }
+  }
+  .right-wrapper {
+    position: absolute;
+    box-sizing: border-box;
+    top: 5vh;
+    bottom: 0;
+    right: 0;
+    padding: 3vh 2vh 0 2vh;
+    width: 40vh;
+    background-color: #040D33;
+    color: white;
+    overflow: hidden;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    z-index: 999;
+    .ding {
+      padding-top: 1vh;
+    }
+    .ssj{
+      padding-top: 1.4vh
+    }
+    .box {
+      display: flex;
+      flex-direction: row;
+    }
+    .buttonpd {
+      padding-right: 5vh;
+      cursor: pointer;
+      &.active {
+        .button {
+          top: 40%;
+        }
+      }
+    }
+    .tp {
+      position: relative;
+    }
+    .button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.6vh;
+    }
+    .tupian{
+      width: 9vh;
+      height: 4vh;
+    }
+    .tupianxuanzhong{
+      width: 11vh;
+      height: 4.5vh;
+    }
+    .zhuangshi {
+      margin-top: 1vh;
+      width: 38vh;
+      height: 0.8vh;
+      transform: rotateY(180deg);
+    }
   }
   .sign-wrapper {
     z-index: 999;

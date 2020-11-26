@@ -2,7 +2,6 @@
   <div class="cesiumContainer">
     <div id="cesiumContainer" />
     <div v-if="mapLoaded && currentPage == 'sourcelayer'">
-      <Summary />
       <SourceLayerHub ref="sourceLayerHub" />
       <CommonDetailPopup ref="commonDetailPopup" />
       <ProjectDetailPopup ref="projectDetailPopup" />
@@ -20,7 +19,6 @@
 
 <script>
 import { ServiceUrl } from "config/server/mapConfig";
-import Summary from "./summary/summary";
 // import RoadLine from "./extraModel/PolylineTrailLink/RoadLine";
 import SourceLayerHub from "./layerHub/layerHub";
 import CompareLayerHub from "../compare/layerHub/layerHub";
@@ -46,7 +44,6 @@ export default {
     CommonDetailPopup,
     ProjectDetailPopup,
     SejPopup,
-    Summary,
     SearchDetail,
   },
   data() {
@@ -73,8 +70,6 @@ export default {
       blackMark: undefined,
       handdrawnlayer: undefined,
       handler: undefined,
-      // isTotalTarget: true,
-      // showSummary: 'total',
       sceneLayers: [],
       cameraHeight: 5000,
       showLarge: window.showLarge,

@@ -13,13 +13,6 @@
     </div>
     <MapTool />
     <div class="left-wrapper">
-      <!-- <div class="switch-menu-wrapper-onemap">
-        <div class="switch-menu-container">
-          <span :class="{active: currentType=='xm'}" @click="currentType='xm'">项目</span>
-          <span :class="{active: currentType=='dd'}" @click="currentType='dd'">断点</span>
-        </div>
-        <div class="switch-menu-decorate"></div>
-      </div> -->
       <div class="left-content">
         <ul class="zrdw-list">
           <li class="zrdw-item" :class="{active: currentZrdw==item.title}" v-for="(item, index) in zrdwList" :key="index" @click="getData(item)">
@@ -80,7 +73,6 @@
                 </div>
               </div>
             </li>
-            <!-- <div class="split-line" v-show="index!=allList.length-1"></div> -->
           </ul>
           <div class="no-tip" v-show="!allList.length">暂无数据</div>
         </div>
@@ -88,122 +80,9 @@
           <img class="button" src="./images/mark.png" @click="goMark">
           <img class="line" src="./images/mark-line.png">
         </div>
-        <!-- <div class="dd-container" v-show="currentType=='dd'">
-          <div class="search-header">
-            <el-input
-              v-model="searchDDText"
-              class="searchFilterInput"
-              placeholder="查找断点"
-              size="small"
-              @keyup.enter.native="searchDDFilter"
-            />
-            <div class="button-container">
-              <div class="button-item">
-                <i class="icon-common icon-clear" @click="searchDDClear"></i>
-              </div>
-              <div class="button-item">
-                <i class="icon-common icon-search" @click="searchDDFilter"></i>
-              </div>
-            </div>
-          </div>
-          <div id="dd-list"  class="dd-list">
-            <div v-for="(item, index) in ddList" :key="index">
-              <div class="dd-item" :class="{ ddActive: ddActive == item.attributes.GUID }" @click="itemClick(item)">
-                <img
-                  :src="item.attributes.PHOTO?`/static/images/断点/${
-                    item.attributes.PHOTO.split(';')[0]
-                  }`:`/static/images/断点/1_20200928.jpg`"
-                />
-                <div class="info-box">
-                  <div class="name" :style="{color:item.attributes.YS==1?'#20D38E':item.attributes.YS==2?'#FF9124':'#14D1D1'}">
-                    {{ index + 1 }}.{{ item.attributes.NAME }}
-                  </div>
-                  <div class="info-item">
-                    <div class="key">计划贯穿时间</div>
-                    <div class="value" :style="{color:item.attributes.YS==1?'#20D38E':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.JHGTSJ }}</div>
-                  </div>
-                  <div class="info-item">
-                    <div class="key">长度（米）</div>
-                    <div class="value" :style="{color:item.attributes.YS==1?'#20D38E':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ item.attributes.LENGTH }}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="split-line"></div>
-            </div>
-          </div>
-          <div class="no-tip" v-show="!ddList.length">暂无数据</div>
-        </div> -->
       </div>
     </div>
     <div class="right-content" v-show="changeType=='other'">
-      <!-- <div class="kdtj-container" v-show="currentType=='dd'">
-        <div class="titleHxhb-wrapper">
-          <span class="pre"></span>
-          <span class="title">断点统计</span>
-        </div>
-        <div class="base-info">
-          <div class="base-item">
-            <div style="padding-left: 1vh;">
-              <img src="./images/kd-number.png" alt="" style="width:11vh"/>
-              <div class="title" style="color: #2fc8e9">总数</div>
-              <div class="text" v-if="ret.pointStat.sum">{{ret.pointStat.sum}}<span class="unit">个</span></div>
-              <div class="text" v-if="!ret.pointStat.sum">0<span class="unit">个</span></div>
-            </div>
-          </div>
-          <div class="base-item">
-            <div>
-              <img src="./images/kd-length.png" alt="" style="width: 11vh;"/>
-              <div class="titleRight" style="color: #ff8b4f">总长度</div>
-              <div class="textRight" v-if="ret.pointStat.length">{{ret.pointStat.length}}<span class="unit">米</span></div>
-              <div class="textRight" v-if="!ret.pointStat.length">0<span class="unit">米</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="kdfb-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">断点分布</div>
-            <div class="decorate"></div>
-          </div>
-          <div style="width: 30vh;height: 15vh" class="echart" ref="pieEchart"></div>
-        </div>
-        <div class="jh-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">计划贯通时间轴</div>
-            <div class="decorate"></div>
-          </div>
-          <div class="gif-wrapper">
-            <img src="./images/timegif.gif" alt="" />
-          </div>
-        </div>
-        <div class="czwt-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">
-              存在问题<span class="number">{{'(' + questionDdList.length +')个'}}</span>
-            </div>
-            <div class="decorate"></div>
-          </div>
-          <div class="result-wrapper">
-            <ul class="result-list">
-              <li class="result-item header">
-                <span class="index">序号</span>
-                <span class="name">断点位置</span>
-                <span class="content">存在问题</span>
-              </li>
-              <li
-                class="result-item"
-                v-for="(item, index) in questionDdList"
-                :key="index"
-              >
-                <span class="index">{{ index + 1 }}</span>
-                <span class="name" :title="item.attributes.NAME">{{
-                  item.attributes.NAME
-                }}</span>
-                <span class="content" :title="item.attributes.CZWT">{{ item.attributes.CZWT }}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
       <div class="xmtj-container" v-show="currentType=='xm'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
@@ -303,85 +182,6 @@
       </div>
     </div>
     <div class="right-content" v-show="changeType=='all'">
-      <!-- <div class="kdtj-container" v-show="currentType=='dd'">
-        <div class="titleHxhb-wrapper">
-          <span class="pre"></span>
-          <span class="title">断点统计</span>
-        </div>
-        <div class="yhsxzcd-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">一环三线断点总长度</div>
-            <div class="decorate"></div>
-          </div>
-          <div class="progressFlex">
-            <span class="yhsxText">瓯海区</span>
-            <div class = "square">
-              <div class="squareIn" style="width: 46.7%"></div>
-              <div class="squareInText">46.7%</div>
-            </div>
-            <span class="yhsxTextRight">8910米</span>
-          </div>
-          <div class="progressFlex">
-            <span class="yhsxText">鹿城区</span>
-            <div class = "square">
-              <div class="squareIn" style="width: 45.9%"></div>
-              <div class="squareInText">45.9%</div>
-            </div>
-            <span class="yhsxTextRight">8752米</span>
-          </div>
-          <div class="progressFlex">
-            <span class="yhsxText">龙湾区</span>
-            <div class = "square">
-              <div class="squareIn" style="width: 7.4%"></div>
-              <div class="squareInText">7.4%</div>
-            </div>
-            <span class="yhsxTextRight">1412米</span>
-          </div>
-        </div>
-        <div class="yhsx-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">一环三线</div>
-            <div class="decorate"></div>
-          </div>
-          <img src="./images/动图2.gif" class="yhsxdongtu">
-        </div>
-        <div class="zrdw-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">责任单位卡点时间轴</div>
-            <div class="decorate"></div>
-          </div>
-          <div class="progressFlexIn">
-            <div class="lab">
-              <p class="labTitle">2020.12</p>
-              <p class="labtext">龙湾区完成</p>
-              <p class="labtext">卡点个数 8个</p>
-              <p class="labtext">卡点总长度 1412米</p>
-            </div>
-            <div class="labOH">
-              <p class="labTitle">2022.10</p>
-              <p class="labtext">鹿城区完成</p>
-              <p class="labtext">卡点个数 21个</p>
-              <p class="labtext">卡点总长度 8752米</p>
-            </div>
-          </div>
-          <div class="end">
-            <div>
-              <img src="./images/红线.png" class="redLine">
-              <img src="./images/红线.png" class="redLineMidle">
-              <img src="./images/红线.png" class="redLineRight">
-              <div class="straightLine"></div>
-            </div>
-          </div>
-          <div class="progressFlexIn">
-            <div class="labLW">
-              <p class="labTitle">2021.12</p>
-              <p class="labtext">瓯海区完成</p>
-              <p class="labtext">卡点个数 11个</p>
-              <p class="labtext">卡点总长度 8910米</p>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="xmtj-container" v-show="currentType=='xm'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
@@ -664,17 +464,9 @@ export default {
             "pointStat":{"sum":"","length":""},
             "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
         },
-        // {   "name":"浙南产业区",
-        //     "项目统计":{"总数":"1","投资计划":"11.5"},
-        //     "建设情况":{"前期研究":"0","前期(滞后)":"0","完工":"0","在建":"1","在建(滞后)":"0"},
-        //     "建设进度":{"投资完成率":"0","项目完工率":"0"},
-        //     "卡点统计":{"总数":"","长度":""},
-        //     "卡点分布":{"东线":{"个数":"","长度":""},"南线":{"个数":"","长度":""},"内环":{"个数":"","长度":""},"外环":{"个数":"","长度":""},"西线":{"个数":"","长度":""},}
-        // }
       ],
       ddList:[],
       xmList:[],
-      searchDDText: "",
       searchXMText: "",
       ret: {
         "name":"指挥部",
@@ -684,13 +476,10 @@ export default {
         "pointStat":{"sum":"40","length":"19074"},
         "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
       },
-      pieEchart: null,
       barEchart: null,
       lineEchart: null,
       xmActive: "",
-      ddActive: "",
       showMark: false
-      // xiaEchart: null,
     };
   },
   computed: {
@@ -704,7 +493,6 @@ export default {
     delayXmList() {
       let result = []
       let alldata = this.sourceMap['项目']
-      // console.log(alldata);
       if (alldata) {
         if (this.currentZrdw != '指挥部') {
           result = alldata.filter(item => {
@@ -759,110 +547,6 @@ export default {
         },
       });
       getFeatureBySQLService.processAsync(getFeatureBySQLParams);
-    },
-    drawPies() {
-      let data1=[],data2=[],lab;
-      if(!!this.$data.ret){
-        data1.push(parseFloat(this.$data.ret.pointDist.east.number));//东线个数
-        data2.push(parseFloat(this.$data.ret.pointDist.east.length));//东线长度
-        data1.push(parseFloat(this.$data.ret.pointDist.south.number));//南线个数
-        data2.push(parseFloat(this.$data.ret.pointDist.south.length));//南线长度
-        data1.push(parseFloat(this.$data.ret.pointDist.west.number));//西线个数
-        data2.push(parseFloat(this.$data.ret.pointDist.west.length));//西线长度
-        data1.push(parseFloat(this.$data.ret.pointDist.outer.number));//外环个数
-        data2.push(parseFloat(this.$data.ret.pointDist.outer.length));//外环长度
-        data1.push(parseFloat(this.$data.ret.pointDist.inner.number));//内环个数
-        data2.push(parseFloat(this.$data.ret.pointDist.inner.length));//内环长度
-      }
-      const that = this;
-      const e = this.getFontSize();
-      this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
-      this.pieEchart.setOption({
-        series: [
-          {
-            name: "",
-            type: "pie",
-            selectedMode: "single",
-            radius: ["20%", "25%"],
-            label: {
-              position: "inner",
-            },
-
-            data: [
-              {
-                value: 335,
-                name: "",
-                itemStyle: {
-                  color: new this.$echarts.graphic.LinearGradient(
-                    0.5,
-                    0,
-                    0.5,
-                    1,
-                    [
-                      { offset: 0, color: "#2374F5" },
-                      { offset: 0.5, color: "#7BBDFF" },
-                      { offset: 1, color: "#064E96" },
-                    ]
-                  ),
-                },
-              },
-            ],
-          },
-          {
-            name: "",
-            type: "pie",
-            radius: ["25%", "90%"],
-            label: {
-              position: "inner",
-              formatter: " {b}：{c}个 ",
-              textStyle: {
-                color: "#040C32",
-                fontSize: e,
-              },
-            },
-
-            data: [
-              { value: data1[0], name: "东线", itemStyle: { color: "#52D1FE" } },
-              { value: data1[2], name: "西环", itemStyle: { color: "#FF9E72" } },
-              { value: data1[1], name: "南线", itemStyle: { color: "#047DF6" } },
-              { value: data1[3], name: "外环", itemStyle: { color: "#8FEF8B" } },
-              { value: data1[4], name: "内环", itemStyle: { color: "#6852FE" } },
-            ],
-          },
-          {
-            name: "",
-            type: "pie",
-            radius: ["25%", "90%"],
-            label: {
-              formatter: " {b}",
-              textStyle: {
-                color: "#FFFFFF",
-                fontSize: e,
-              },
-            },
-            labelLine: {
-              show: true,
-              normal: {
-                length: 5, // 改变标示线的长度
-                lineStyle: {
-                  color: "#A4EEFF", // 改变标示线的颜色
-                  fontSize: e,
-                },
-              },
-            },
-            data: [
-              { value: data1[0], name: data2[0]+"米", itemStyle: { color: "#52D1FE" } },
-              { value: data1[2], name: data2[2]+"米", itemStyle: { color: "#FF9E72" } },
-              { value: data1[1], name: data2[1]+"米", itemStyle: { color: "#047DF6" } },
-              { value: data1[3], name: data2[3]+"米", itemStyle: { color: "#8FEF8B" } },
-              { value: data1[4], name: data2[4]+"米", itemStyle: { color: "#6852FE" } },
-            ],
-          },
-        ],
-      });
-      window.addEventListener("resize",function () {
-        that.pieEchart.resize();
-      });
     },
     getFontSize(){
       let e = this.screenWidth;
@@ -1179,7 +863,6 @@ export default {
 
       this.currentZrdw = item.title;
       this.searchXMText = '';
-      this.searchDDText = '';
       if (item.title==='指挥部'){
         this.changeType = 'all';
       }else{
@@ -1199,18 +882,14 @@ export default {
       this.$nextTick(()=>{
         this.drawLines();
         this.drawBars();
-        // this.drawPies();
       });
 
       // 大屏下关闭多媒体窗口
       this.$bus.$emit("close-rightPlayer");
     },
     itemClick(item) {
-      console.log(item, this.currentType)
       if(this.currentType == "xm") {
         this.xmActive = item.attributes.GUID;
-      } else {
-        this.ddActive = item.attributes.GUID;
       }
 
       const { x, y } = item.geometry;
@@ -1309,17 +988,6 @@ export default {
       this.searchXMText = "";
       this.filterData()
     },
-    // searchDDFilter() {
-    //   this.ddList = this.searchDDText
-    //     ? this.sourceMap['绿道断点'].filter((item) => {
-    //       return item.attributes.NAME.indexOf(this.searchDDText) >= 0;
-    //     })
-    //     : this.ddList
-    // },
-    // searchDDClear() {
-    //   this.searchDDText = "";
-    //   this.filterData()
-    // },
     goMark() {
       this.showMark = true
     }
@@ -1357,11 +1025,9 @@ export default {
     currentType(val) {
       // 点击，列表回到顶部
       $("#xm-list").scrollTop(0);
-      // $("#dd-list").scrollTop(0);
 
       // 选中置空
       this.xmActive = "";
-      // this.ddActive = "";
     },
 
   },

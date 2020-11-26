@@ -10,7 +10,7 @@
           <div class="box">
             <div class="left">
               <div class="tp">
-                <img src="./img/zuo.png" alt="" class="quanquan" />
+                <img src="../images/zuo.png" alt="" class="quanquan" />
                 <span class="xmzs">85</span>
               </div>
               <div class="yxxm">
@@ -19,7 +19,7 @@
             </div>
             <div class="right">
               <div class="tp">
-                <img src="./img/you.png" alt="" class="quanquan" />
+                <img src="../images/you.png" alt="" class="quanquan" />
                 <span class="xmzje">283.5</span>
               </div>
               <div class="yxxm">
@@ -29,7 +29,7 @@
           </div>
           <div class="uls1">
             <div>
-              <img src="./img/发光圈圈.png" alt="" class="jz1" />
+              <img src="../images/发光圈圈.png" alt="" class="jz1" />
             </div>
             <span class="jdt">完成率:12/66</span>
             <div
@@ -48,7 +48,7 @@
         <div class="zsj">
           <div class="jianju">
             <span class="xbt">断点预计完成情况</span>
-            <!--                  <img src="./img/装饰.png" alt="" class="zs" />-->
+            <!--                  <img src="../images/装饰.png" alt="" class="zs" />-->
             <div class="dw">
               <span class="smalls">单位：个(累计)</span>
             </div>
@@ -60,7 +60,7 @@
             <div class="ssj">
               <div class="uls1">
                 <div>
-                  <img src="./img/发光圈圈.png" alt="" class="jz1" />
+                  <img src="../images/发光圈圈.png" alt="" class="jz1" />
                 </div>
                 <span class="jdt">完工率:1/40</span>
                 <div
@@ -77,40 +77,40 @@
         <span class="pre"></span>
         <span class="title">十二景</span>
       </div>
-      <img src="./img/装饰1.svg" class="zxp" />
+      <img src="../images/装饰1.svg" class="zxp" />
       <div class="ssj1">
         <div class="uls">
           <div class="left2">
             <span class="jz">东线</span>
             <div class="xwz" @click="itemClick('世纪之光')">
-              <img src="./img/世纪之光icon.svg" class="jz2" />
+              <img src="../images/世纪之光icon.svg" class="jz2" />
               <span class="sejdx">世纪之光</span>
             </div>
             <div class="xwz" @click="itemClick('蒲州新韵')">
-              <img src="./img/蒲州新韵icon.svg" class="jz2" />
+              <img src="../images/蒲州新韵icon.svg" class="jz2" />
               <span class="sejdx">蒲州新韵</span>
             </div>
           </div>
-          <img src="./img/直线12.svg" class="zx" />
+          <img src="../images/直线12.svg" class="zx" />
           <div class="left1">
             <span class="jz">西线</span>
             <div class="uls">
               <div class="xwz" @click="itemClick('瞿溪溯源')">
-                <img src="./img/瞿溪溯源icon.svg" class="jz2" />
+                <img src="../images/瞿溪溯源icon.svg" class="jz2" />
                 <span class="sejxx">瞿溪溯源</span>
               </div>
               <div class="xwz" @click="itemClick('仙门烟柳')">
-                <img src="./img/仙门烟柳icon.svg" class="jz2" />
+                <img src="../images/仙门烟柳icon.svg" class="jz2" />
                 <span class="sejxx">仙门烟柳</span>
               </div>
             </div>
             <div class="uls">
               <div class="xwz" @click="itemClick('镜湖古岸')">
-                <img src="./img/镜湖古岸icon.svg" class="jz2" />
+                <img src="../images/镜湖古岸icon.svg" class="jz2" />
                 <span class="sejxx">镜湖古岸</span>
               </div>
               <div class="xwz" @click="itemClick('会昌竞渡')">
-                <img src="./img/会昌竞渡icon.svg" class="jz2" />
+                <img src="../images/会昌竞渡icon.svg" class="jz2" />
                 <span class="sejxx">会昌竞渡</span>
               </div>
             </div>
@@ -120,35 +120,35 @@
           <span class="jz">南线</span>
           <div class="uls">
             <div class="xwz1" @click="itemClick('南塘印象')">
-              <img src="./img/南塘印象icon.svg" class="jz2" />
+              <img src="../images/南塘印象icon.svg" class="jz2" />
               <span class="sejnx">南塘印象</span>
             </div>
             <div class="xwz1" @click="itemClick('南湖月色')">
-              <img src="./img/南湖月色icon.svg" class="jz2" />
+              <img src="../images/南湖月色icon.svg" class="jz2" />
               <span class="sejnx">南湖月色</span>
             </div>
             <div class="xwz1" @click="itemClick('浮岛帆游')">
-              <img src="./img/浮岛帆游icon.svg" class="jz2" />
+              <img src="../images/浮岛帆游icon.svg" class="jz2" />
               <span class="sejnx">浮岛帆游</span>
             </div>
           </div>
           <div class="uls">
             <div class="xwz1" @click="itemClick('梧田老街')">
-              <img src="./img/梧田老街icon.svg" class="jz2" />
+              <img src="../images/梧田老街icon.svg" class="jz2" />
               <span class="sejnx">梧田老街</span>
             </div>
             <div class="xwz1" @click="itemClick('白象塔院')">
-              <img src="./img/白象塔院icon.svg" class="jz2" />
+              <img src="../images/白象塔院icon.svg" class="jz2" />
               <span class="sejnx">白象塔院</span>
             </div>
             <div class="xwz1" @click="itemClick('穗丰怀古')">
-              <img src="./img/穗丰怀古icon.svg" class="jz2" />
+              <img src="../images/穗丰怀古icon.svg" class="jz2" />
               <span class="sejnx">穗丰怀古</span>
             </div>
           </div>
         </div>
       </div>
-      <img src="./img/装饰1.svg" class="zxp1" />
+      <img src="../images/装饰1.svg" class="zxp1" />
     </div>
   </div>
 </template>

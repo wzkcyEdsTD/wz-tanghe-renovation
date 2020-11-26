@@ -432,6 +432,16 @@ export default {
 };
 </script>
 
+<style lang="less" scoped>
+@import url("./source.less");
+</style>
 <style lang="less">
-@import url("./projectSummary.less");
+.searchFilterInput {
+  width: 31vh;
+  .el-input__inner {
+    background: none;
+    border    : none;
+    color     : white;
+  }
+}
 </style>

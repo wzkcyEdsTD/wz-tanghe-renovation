@@ -8,50 +8,10 @@
   padding-top: 3vh;
   padding-left: 2vh;
   background-color: #040D33;
-  .switch-menu-wrapper-onemap {
-    // z-index   : 999;
-    // position  : absolute;
-    // top       : 9vh;
-    // left      : 0px;
-    text-align: center;
-    .switch-menu-container {
-      margin-left: 10px;
-      width: 287px;
-      height: 35px;
-      cursor: pointer;
-      .bg-image('./images/switch-bg');
-      display: flex;
-      >span {
-        flex: 1;
-        line-height: 4vh;
-        font-family: YouSheBiaoTiHei;
-        font-size: 3vh;
-        color: #fff;
-        opacity: .5;
-        &.active {
-          opacity: 1;
-          font-size: 3vh;
-        }
-      }
-    }
-    .switch-menu-decorate {
-      margin-top: 1vh;
-      width: 35vh;
-      height: 1vh;
-      .bg-image('./images/switch-decorate');
-    }
-  }
   .left-content {
-    // z-index: 1;
-    // position: fixed;
-    // left: 2vh;
-    // top: 16vh;
     margin-top: 2vh;
     display: flex;
     .zrdw-list {
-      // margin-top: 4vh;
-      // font-family: PingFang;
-      // font-size: 1.3vh;
       color: #fff;
       .zrdw-item {
         margin-top: 0.5vh;
@@ -60,8 +20,6 @@
         width: 4vh;
         height: 10vh;
         padding: 0 1vh;
-        // height: 5vh;
-        // line-height: 5vh;
         font-size: 1.4vh;
         text-align: center;
         .bg-image('./images/zrdw-bg');
@@ -76,29 +34,17 @@
       margin-top: -3vh;
       margin-left: 1vh;
       .xm-list {
-        // padding: 0.5vh 1vh;
         margin-top: 1vh;
         width: 25vh;
         max-height: 79vh;
         overflow-y: scroll;
         background-color: #113D6A;
         .xm-item {
-          // width: 23vh;
-          // height: 50px;
-          // background-color: #03070F;
-          // background: linear-gradient(180deg, #10254B 0%, #03070F 100%);
-          // border: 0.1vh solid #165FEA;
           padding: 1vh;
           border-bottom: 2px solid #24558E;
           cursor: pointer;
           position: relative;
-
-          // >div >div {
-          //   z-index: 4;
-          // }
-
           .name {
-            // width: 20vh;
             font-family: YouSheBiaoTiHei;
             font-size: 1.8vh;
             color: #16EAEA;
@@ -112,10 +58,8 @@
             display: flex;
             align-items: center;
             .info-item {
-              // flex: 1;
               display: flex;
               flex-direction: column;
-              // transform: scale(0.9);
               text-align: left;
               .key {
                 font-size: 1.2vh;
@@ -164,12 +108,6 @@
           background: linear-gradient(180deg, rgba(21, 56, 98, 0) 0%, #3BF1FF 100%);
           z-index: 0;
         }
-        // .split-line {
-        //   margin: 1vh auto;
-        //   width: 95%;
-        //   height: 0.1vh;
-        //   background-color: rgba(255, 255, 255, 0.4);
-        // }
       }
     }
     .mark-container {
@@ -179,6 +117,7 @@
         margin-top: 1vh;
         width: 6vh;
         z-index: 99;
+        cursor: pointer;
       }
       .line {
         z-index: -1;
@@ -188,83 +127,6 @@
         width: 25.5vh;
       }
     }
-    // .dd-container {
-    //   margin-left: 3vh;
-    //   .dd-list {
-    //     margin-top: 1vh;
-    //     max-height: 74vh;
-    //     overflow-y: scroll;
-    //     .dd-item {
-    //       display: flex;
-    //       align-items: center;
-    //       cursor: pointer;
-    //       position: relative;
-
-    //       >div >div {
-    //         z-index: 4;
-    //       }
-
-    //       >img {
-    //         width: 7vh;
-    //         height: 5.8vh;
-    //       }
-    //       .info-box {
-    //         margin-left: 0.5vh;
-    //         padding:0.5vh 0;
-    //         width: 17vh;
-    //         height: 6vh;
-    //         background: linear-gradient(180deg, #10254B 0%, #03070F 100%);
-    //         border: 0.1vh solid #165FEA;
-    //         .name {
-    //           padding-left: 8px;
-    //           width: 100%;
-    //           font-family: YouSheBiaoTiHei;
-    //           font-size: 1.7vh;
-    //           color: #16EAEA;
-    //           white-space: nowrap;
-    //           text-overflow: ellipsis;
-    //           overflow: hidden;
-    //           word-break: break-all;
-    //         }
-    //         .info-item {
-    //           width: 100%;
-    //           display: flex;
-    //           transform: scale(0.9);
-    //           .key {
-    //             flex: 2;
-    //             margin-top: 0.3vh;
-    //             font-size: 1.3vh;
-    //             color: #eee;
-    //           }
-    //           .value {
-    //             flex: 1;
-    //             margin-top: 0.3vh;
-    //             font-size: 1.3vh;
-    //             color: #16EAEA;
-    //           }
-    //         }
-    //       }
-    //     }
-
-    //     .ddActive::after {
-    //       content: '';
-    //       position: absolute;
-    //       width: 100%;
-    //       height: 38%;
-    //       left: 0;
-    //       bottom: 0;
-    //       background: linear-gradient(180deg, rgba(21, 56, 98, 0) 0%, #3BF1FF 100%);
-    //       z-index: 0;
-    //     }
-
-    //     .split-line {
-    //       margin: 1vh auto;
-    //       width: 95%;
-    //       height: 0.1vh;
-    //       background-color: rgba(255, 255, 255, 0.4);
-    //     }
-    //   }
-    // }
   }
 }
 .right-content {
@@ -498,17 +360,6 @@
           color: #FFD64B;
         }
       }
-      // .xmtzLC{
-      //   font-family: YouSheBiaoTiHei;
-      //   font-size: 1.5vh;
-        // color: #D81A80;
-      //   padding-right: 8.5vh;
-      // }
-      // .xmtzLW{
-      //   font-family: YouSheBiaoTiHei;
-      //   font-size: 1.5vh;
-        // color: #FFD64B;
-      // }
     }
     .progressFlexIn{
       display: flex;
@@ -1198,6 +1049,7 @@
       position: absolute;
       top: -3vh;
       right: -3vh;
+      width: 5vh;
     }
     .qrcode {
       width: 60%;

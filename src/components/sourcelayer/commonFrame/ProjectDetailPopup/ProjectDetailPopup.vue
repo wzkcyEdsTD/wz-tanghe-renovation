@@ -677,9 +677,7 @@ export default {
     formatData(attr, key) {
       if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
         let QJStr = this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ
-        console.log('QJStr', QJStr)
-        let qjTempArr = QJStr.split(';')
-        console.log('qjTempArr', qjTempArr)
+        let qjTempArr = QJStr && ~QJStr.indexOf(";") ? QJStr.split(';') : []
         let attrValue = this.forceEntity.attributes[attr]
         if (attrValue.length) {
           if (~attrValue.indexOf(';')) {
@@ -690,15 +688,12 @@ export default {
                 if (this.finalData[time]) {
                   !this.finalData[time][key] && (this.finalData[time][key] = [])
                   this.finalData[time][key].push(item)
-                  if (~attr.indexOf('SLT')) {
-                    this.finalData[time].qj.push(qjTempArr[index])
-                  }
                 } else {
                   this.finalData[time] = {date: time}
                   this.finalData[time][key] = [item]
-                  if (~attr.indexOf('SLT')) {
-                    this.finalData[time].qj = [qjTempArr[index]]
-                  }
+                }
+                if (~attr.indexOf('SLT')) {
+                  this.finalData[time].qj = [qjTempArr[index]]
                 }
               } else {
                 let time = '20200101'
@@ -712,27 +707,19 @@ export default {
               }
             })
           } else {
+            let time
             if (attrValue.split('_')[1]) {
-              let time = attrValue.split('_')[1].split('.')[0]
-              if (this.finalData[time]) {
-                this.finalData[time][key] = [attrValue]
-                if (~attr.indexOf('SLT')) {
-                  this.finalData[time].qj = [QJStr]
-                }
-              } else {
+              time = attrValue.split('_')[1].split('.')[0]
+              if (!this.finalData[time]) {
                 this.finalData[time] = {date: time}
-                this.finalData[time][key] = [attrValue]
-                if (~attr.indexOf('SLT')) {
-                  this.finalData[time].qj = [QJStr]
-                }
               }
             } else {
-              let time = '20200101'
+              time = '20200101'
               this.finalData[time] = {date: time}
-              this.finalData[time][key] = [attrValue]
-              if (~attr.indexOf('SLT')) {
-                this.finalData[time].qj = [QJStr]
-              }
+            }
+            this.finalData[time][key] = [attrValue]
+            if (~attr.indexOf('SLT')) {
+              this.finalData[time].qj = [QJStr]
             }
           }
         }

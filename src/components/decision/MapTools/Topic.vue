@@ -114,7 +114,7 @@ export default {
       if (item.value  == 3) {
         this.konggui = window.earth.imageryLayers.addImageryProvider(
           new Cesium.SuperMapImageryProvider({
-            url: 'http://172.20.83.223:8090/iserver/services/map-KongGui_LuCheng/rest/maps/%E6%8E%A7%E8%A7%84%E4%B8%89%E5%8C%BA20200304%40172.20.83.196_swdata'
+            url: 'http://172.168.3.183:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ'
           })
         );
       }

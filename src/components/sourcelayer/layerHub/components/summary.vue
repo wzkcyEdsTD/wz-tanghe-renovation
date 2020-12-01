@@ -11,7 +11,7 @@
             <div class="left">
               <div class="tp">
                 <img src="../images/zuo.png" alt="" class="quanquan" />
-                <span class="xmzs">85</span>
+                <span class="xmzs">{{projSum}}</span>
               </div>
               <div class="yxxm">
                 <span class="yxwz">项目总数(个)</span>
@@ -20,7 +20,7 @@
             <div class="right">
               <div class="tp">
                 <img src="../images/you.png" alt="" class="quanquan" />
-                <span class="xmzje">283.5</span>
+                <span class="xmzje">{{projAmountSum}}</span>
               </div>
               <div class="yxxm">
                 <span class="yxwz">项目总金额(亿元)</span>
@@ -153,6 +153,7 @@
   </div>
 </template>
 <script>
+import { getProjNumAndAmound } from "api/tangheAPI";
 export default {
   name: "right",
   data() {
@@ -160,10 +161,7 @@ export default {
       temp:
         "温瑞塘河位于瓯江以南、飞云江以北的温瑞平原，是温州市境内十分重要的河道水系，分属于鹿城、瓯海、龙湾、瑞安等“三区一市”管辖。",
       attributes: {},
-      // showHub:false,
       showHub: window.showLarge,
-      // screenWidth: document.body.clientWidth,
-      // screeHeight: document.body.clientHeight,
       lable: {
         lymj: 740,
         xsl: 6500,
@@ -171,15 +169,26 @@ export default {
         pjll: 9.13,
       },
       currentType: "total",
+      projSum: 0,
+      projAmountSum: 0
     };
   },
   mounted() {
+    this.initData()
     this.$nextTick(() => {
       this.drawLine();
       this.initBar();
     });
   },
   methods: {
+    async initData() {
+      let res = await getProjNumAndAmound()
+      let data = res.data
+      if (data.code === 200) {
+        this.projSum = data.result.projSum
+        this.projAmountSum = (data.result.projAmountSum / 10000).toFixed(1)
+      }
+    },
     getFontSize() {
       let e = this.screenWidth;
       if (e > 4000) {

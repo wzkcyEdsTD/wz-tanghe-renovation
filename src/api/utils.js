@@ -10,7 +10,7 @@ const commonParams = {};
  */
 export function post(url, data) {
   return axios.request({ url: url, data: data, method: "post" }).then(res => {
-    return Promise.resolve(res);
+    return Promise.resolve(res.data);
   });
 }
 
@@ -30,7 +30,7 @@ export function get(url, data) {
       params: allData
     })
     .then(res => {
-      return Promise.resolve(res);
+      return Promise.resolve(res.data);
     });
 }
 

@@ -183,10 +183,9 @@ export default {
   methods: {
     async initData() {
       let res = await getProjNumAndAmound()
-      let data = res.data
-      if (data.code === 200) {
-        this.projSum = data.result.projSum
-        this.projAmountSum = (data.result.projAmountSum / 10000).toFixed(1)
+      if (res.code === 200) {
+        this.projSum = res.result.projSum
+        this.projAmountSum = (res.result.projAmountSum / 10000).toFixed(1)
       }
     },
     getFontSize() {

@@ -8,21 +8,18 @@ const getFontSize = () => {
   return e;
 }
 
-export const drawBar = (context) => {
+export const drawBar = (context, barData) => {
   let data1 = [], data2 = [], lab = [];
   const e = getFontSize();
-  console.log(e);
-  if (!!context.$data.ret) {
-    data1.push(parseFloat(context.$data.ret.situation.build));//在建
-    data1.push(parseFloat(context.$data.ret.situation.pre));//前期研究
+  data1.push(parseFloat(barData.build));//在建
+  data1.push(parseFloat(barData.pre));//前期研究
 
-    data2.push(parseFloat(context.$data.ret.situation.finish));//完工
-    data2.push(parseFloat(context.$data.ret.situation.buildLag));//在建滞后
-    data2.push(parseFloat(context.$data.ret.situation.preLag));//前期滞后
-    lab.push("" + data2[0]);
-    lab.push((data2[1] + data1[0]) + '(' + data2[1] + ")在建");
-    lab.push((data2[2] + data1[1]) + '(' + data2[2] + ")前期");
-  }
+  data2.push(parseFloat(barData.finish));//完工
+  data2.push(parseFloat(barData.buildLag));//在建滞后
+  data2.push(parseFloat(barData.preLag));//前期滞后
+  lab.push("" + data2[0]);
+  lab.push((data2[1] + data1[0]) + '(' + data2[1] + ")在建");
+  lab.push((data2[2] + data1[1]) + '(' + data2[2] + ")前期");
   context.barEchart = context.$echarts.init(context.$refs.barEchart);
   context.barEchart.setOption({
     grid: {
@@ -179,13 +176,13 @@ export const drawBar = (context) => {
 
 export const drawLine = (context) => {
   const e = getFontSize();
-  let data1, data2, lab;
-  if (!!context.$data.ret) {
-    data1 = parseFloat(context.$data.ret.speed.Completion);
-    data2 = 100 - 1 - data1;
-    console.log(data2);
-    lab = context.$data.ret.project.plan;
-  }
+  // let data1, data2, lab;
+  // if (!!context.$data.ret) {
+  //   data1 = parseFloat(context.$data.ret.speed.Completion);
+  //   data2 = 100 - 1 - data1;
+  //   console.log(data2);
+  //   lab = context.$data.ret.project.plan;
+  // }
   context.lineEchart = context.$echarts.init(context.$refs.lineEchart);
   context.lineEchart.setOption({
     grid: {

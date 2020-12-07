@@ -83,6 +83,15 @@
       display: flex;
       >p{
         align-self: center;
+        line-height: 1.4;
+        >span {
+          &::after {
+            content: "、";
+          }
+          &:last-child::after {
+            content: "";
+          }
+        }
       }
     }
   }

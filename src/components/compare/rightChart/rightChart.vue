@@ -1,21 +1,21 @@
 <template>
   <div class="rightChart">
     <div class="left">
-      <regionAnalysis v-show="zrdw=='all'"></regionAnalysis>
-      <projectPlan v-show="zrdw=='all'"></projectPlan>
-      <PartLeft :zrdw="zrdw" v-if="zrdw!='all'" />
+      <regionAnalysis :regionData="regionData" v-show="zrdw=='all'"></regionAnalysis>
+      <projectPlan :regionData="regionData" v-show="zrdw=='all'"></projectPlan>
+      <PartLeft :zrdw="zrdw" :regionData="regionData" v-if="zrdw!='all'" />
     </div>
     <div class="middle">
       <div class="center-box" v-show="zrdw=='all'">
         <Swivel />
       </div>
       <projectProcess v-show="zrdw=='all'"></projectProcess>
-      <PartMiddle v-if="zrdw!='all'" />
+      <PartMiddle :zrdw="zrdw" v-if="zrdw!='all'" />
     </div>
     <div class="right">
-      <KeyProjects v-show="zrdw=='all'"></KeyProjects>
+      <KeyProjects :projData="projData" v-show="zrdw=='all'"></KeyProjects>
       <HightlightProject v-show="zrdw=='all'"></HightlightProject>
-      <PartRight :zrdw="zrdw" v-if="zrdw!='all'" />
+      <PartRight :projData="projData" :zrdw="zrdw" v-if="zrdw!='all'" />
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@
   import PartLeft from "./components/PartLeft/PartLeft";
   import PartMiddle from "./components/PartMiddle/PartMiddle";
   import PartRight from "./components/PartRight/PartRight"
+  import { getProjNumByStreet, getProjDeptNumAmound } from "api/tangheAPI";
   export default {
     components:{
       HightlightProject,
@@ -44,10 +45,25 @@
     },
     data(){
       return{
-        zrdw: 'all'
+        zrdw: 'all',
+        regionData: [],
+        projData: []
       };
     },
+    methods: {
+      async initData() {
+        let regionRes = await getProjNumByStreet()
+        if (regionRes.code === 200) {
+          this.regionData = regionRes.result
+        }
+        let projRes = await getProjDeptNumAmound({isImportant: 1})
+        if (projRes.code === 200) {
+          this.projData = projRes.result
+        }
+      },
+    },
     mounted() {
+      this.initData()
       this.$bus.$off("change-zrdw");
       this.$bus.$on("change-zrdw", ({ value }) => {
         this.zrdw = value

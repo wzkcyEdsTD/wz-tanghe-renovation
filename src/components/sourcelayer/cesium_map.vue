@@ -101,7 +101,6 @@ export default {
       this.initHandler();
     });
     this.eventRegsiter();
-    this.hide(this);
 
     this.createEntityCollection();
   },
@@ -183,6 +182,24 @@ export default {
           }
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+      // 监听鼠标滚轮事件
+      this.handler.setInputAction((wheelment) => {
+        this.cameraHeight = window.earth.camera.positionCartographic.height;
+        if (this.lvdaoShow) {
+          if (this.cameraHeight >= 5000) {
+            this.tangheFG.show = true;
+            this.tanghe.show = false;
+            this.lvdaolayerThin.show = true;
+            this.lvdaolayerBold.show = false;
+          } else {
+            this.tangheFG.show = false;
+            this.tanghe.show = true;
+            this.lvdaolayerThin.show = false;
+            this.lvdaolayerBold.show = true;
+          }
+        }
+      }, Cesium.ScreenSpaceEventType.WHEEL);
     },
     eventRegsiter() {
       this.$bus.$off("cesium-layer-switch");
@@ -309,10 +326,10 @@ export default {
         // }
       });
 
-      this.$bus.$off("remove-texiao");
-      this.$bus.$on("remove-texiao", ({ value }) => {
-        this.removeAll(value);
-      });
+      // this.$bus.$off("remove-texiao");
+      // this.$bus.$on("remove-texiao", ({ value }) => {
+      //   this.removeAll(value);
+      // });
 
       this.$bus.$off("switch-lvdao");
       this.$bus.$on("switch-lvdao", ({ value }) => {
@@ -440,185 +457,162 @@ export default {
         },
       });
     },
-    fly() {
-      const routes = new Cesium.RouteCollection(window.earth.entities);
-      routes.fromFile("./static/fpf/首页飞行.fpf");
-      //初始化飞行管理
-      const flyManager = new Cesium.FlyManager({
-        scene: window.earth.scene,
-        routes: routes,
-      });
-      flyManager.readyPromise.then(function () {
-        // 飞行路线就绪
-        flyManager.play();
-      });
-    },
-    lipai() {
-      this.lp(120.707729, 28.010275, "oj", "static/images/瓯江.png", 65, 65);
-      this.lp(120.599327, 27.789995, "fyj", "static/images/飞云江.png", 75, 75);
-      this.lp(120.726, 27.899, "wrth", "static/images/温瑞塘河.png", 130, 130);
-    },
-    quan() {
-      this.texiao(120.649, 27.786, "ruian", "static/images/瑞安.png");
-      this.texiao(120.72, 27.822, "tangxia", "static/images/塘下.png");
-      this.texiao(120.684, 27.88, "xianyan", "static/images/仙岩.png");
-      this.texiao(120.646, 27.921, "liao", "static/images/丽岙.png");
-      this.texiao(120.7, 27.942, "chshan", "static/images/茶山.png");
-      this.texiao(
-        120.649,
-        27.972,
-        "wenzhoushiqu",
-        "static/images/温州市区.png"
-      );
-    },
-    texiao(lon, lat, id, img) {
-      const viewer = window.earth;
-      const entitys = viewer.entities.getById(id);
-      if (!!entitys) {
-        return;
-      }
-      var rr1 = 0;
-      var rr = 0;
-      var ss1 = 0;
-      var ss = 0;
-      var deviationR = 4;
-      var MaxR = 900;
-      // debugger;
-      this.$nextTick(() => {
-        viewer.entities.add({
-          id: id,
-          position: Cesium.Cartesian3.fromDegrees(lon, lat, 50),
-          show: false,
-          ellipse: {
-            semiMinorAxis: new Cesium.CallbackProperty(function () {
-              var r1 = rr; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-              r1 = r1 + deviationR; //deviationR为每次圆增加的大小
-              if (r1 >= MaxR) {
-                r1 = 0;
-              }
-              rr = r1;
-              return r1;
-            }, false),
-            semiMajorAxis: new Cesium.CallbackProperty(function () {
-              var r1 = rr1; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-              r1 = r1 + deviationR; //deviationR为每次圆增加的大小
-              if (r1 >= MaxR) {
-                r1 = 0;
-              }
-              rr1 = r1;
-              return r1;
-            }, false),
-            height: 10,
-            material: new Cesium.ImageMaterialProperty({
-              image: "static/images/1.png",
-              transparent: true,
-            }),
-            // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,Number.MAX_VALUE),
-          },
-        });
-        setTimeout(function () {
-          viewer.entities.add({
-            id: `${id}1`,
-            position: Cesium.Cartesian3.fromDegrees(lon, lat, 10),
-            show: false,
-            ellipse: {
-              semiMinorAxis: new Cesium.CallbackProperty(function () {
-                var r1 = ss; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-                r1 = r1 + deviationR; //deviationR为每次圆增加的大小
-                if (r1 >= MaxR) {
-                  r1 = 0;
-                }
-                ss = r1;
-                return r1;
-              }, false),
-              semiMajorAxis: new Cesium.CallbackProperty(function () {
-                var r1 = ss1; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-                r1 = r1 + deviationR; //deviationR为每次圆增加的大小
-                if (r1 >= MaxR) {
-                  r1 = 0;
-                }
-                ss1 = r1;
-                return r1;
-              }, false),
-              height: 10,
-              material: new Cesium.ImageMaterialProperty({
-                image: "static/images/1.png",
-                transparent: true,
-              }),
-              // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(20000,Number.MAX_VALUE),
-            },
-          });
-        }, 4000);
-      });
-      this.lp(lon, lat, `${id}p`, img, 60, 60, 600);
-    },
-    lp(lon, lat, id, img, width, height, high) {
-      const viewer = window.earth;
-      const entity = viewer.entities.getById(id);
-      if (!!entity) {
-        return;
-      }
-      viewer.entities.add({
-        id: id,
-        position: Cesium.Cartesian3.fromDegrees(lon, lat, high || 100),
-        show: false,
-        billboard: {
-          image: img,
-          width: width,
-          height: height,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY,
-          // translucencyByDistance: new Cesium.NearFarScalar(7000, 0, 8000, 1)
-        },
-      });
-    },
-    removeAll(value) {
-      const viewer = window.earth;
-      const id = [
-        "ruian",
-        "tangxia",
-        "liao",
-        "chshan",
-        "wenzhoushiqu",
-        "xianyan",
-      ];
-      const idOther = ["wrth", "oj", "fyj"];
-      try {
-        id.forEach(function (element) {
-          viewer.entities.getById(element).show = value;
-          viewer.entities.getById(`${element}1`).show = value;
-          viewer.entities.getById(`${element}p`).show = value;
-        });
-        idOther.forEach(function (element) {
-          viewer.entities.getById(element).show = value;
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    hide(self) {
-      const viewer = window.earth;
-      var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-      handler.setInputAction((wheelment) => {
-        this.cameraHeight = viewer.camera.positionCartographic.height;
-        if (this.lvdaoShow) {
-          if (this.cameraHeight >= 5000) {
-            this.tangheFG.show = true;
-            this.tanghe.show = false;
-            this.lvdaolayerThin.show = true;
-            this.lvdaolayerBold.show = false;
-          } else {
-            this.tangheFG.show = false;
-            this.tanghe.show = true;
-            this.lvdaolayerThin.show = false;
-            this.lvdaolayerBold.show = true;
-          }
-        }
-      }, Cesium.ScreenSpaceEventType.WHEEL);
-      handler.setInputAction(function (event) {},
-      Cesium.ScreenSpaceEventType.LEFT_DOWN);
-      handler.setInputAction(function (event) {},
-      Cesium.ScreenSpaceEventType.RIGHT_DOWN);
-    },
+    // fly() {
+    //   const routes = new Cesium.RouteCollection(window.earth.entities);
+    //   routes.fromFile("./static/fpf/首页飞行.fpf");
+    //   //初始化飞行管理
+    //   const flyManager = new Cesium.FlyManager({
+    //     scene: window.earth.scene,
+    //     routes: routes,
+    //   });
+    //   flyManager.readyPromise.then(function () {
+    //     // 飞行路线就绪
+    //     flyManager.play();
+    //   });
+    // },
+    // lipai() {
+    //   this.lp(120.707729, 28.010275, "oj", "static/images/瓯江.png", 65, 65);
+    //   this.lp(120.599327, 27.789995, "fyj", "static/images/飞云江.png", 75, 75);
+    //   this.lp(120.726, 27.899, "wrth", "static/images/温瑞塘河.png", 130, 130);
+    // },
+    // quan() {
+    //   this.texiao(120.649, 27.786, "ruian", "static/images/瑞安.png");
+    //   this.texiao(120.72, 27.822, "tangxia", "static/images/塘下.png");
+    //   this.texiao(120.684, 27.88, "xianyan", "static/images/仙岩.png");
+    //   this.texiao(120.646, 27.921, "liao", "static/images/丽岙.png");
+    //   this.texiao(120.7, 27.942, "chshan", "static/images/茶山.png");
+    //   this.texiao(
+    //     120.649,
+    //     27.972,
+    //     "wenzhoushiqu",
+    //     "static/images/温州市区.png"
+    //   );
+    // },
+    // texiao(lon, lat, id, img) {
+    //   const viewer = window.earth;
+    //   const entitys = viewer.entities.getById(id);
+    //   if (!!entitys) {
+    //     return;
+    //   }
+    //   var rr1 = 0;
+    //   var rr = 0;
+    //   var ss1 = 0;
+    //   var ss = 0;
+    //   var deviationR = 4;
+    //   var MaxR = 900;
+    //   // debugger;
+    //   this.$nextTick(() => {
+    //     viewer.entities.add({
+    //       id: id,
+    //       position: Cesium.Cartesian3.fromDegrees(lon, lat, 50),
+    //       show: false,
+    //       ellipse: {
+    //         semiMinorAxis: new Cesium.CallbackProperty(function () {
+    //           var r1 = rr; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+    //           r1 = r1 + deviationR; //deviationR为每次圆增加的大小
+    //           if (r1 >= MaxR) {
+    //             r1 = 0;
+    //           }
+    //           rr = r1;
+    //           return r1;
+    //         }, false),
+    //         semiMajorAxis: new Cesium.CallbackProperty(function () {
+    //           var r1 = rr1; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+    //           r1 = r1 + deviationR; //deviationR为每次圆增加的大小
+    //           if (r1 >= MaxR) {
+    //             r1 = 0;
+    //           }
+    //           rr1 = r1;
+    //           return r1;
+    //         }, false),
+    //         height: 10,
+    //         material: new Cesium.ImageMaterialProperty({
+    //           image: "static/images/1.png",
+    //           transparent: true,
+    //         }),
+    //         // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,Number.MAX_VALUE),
+    //       },
+    //     });
+    //     setTimeout(function () {
+    //       viewer.entities.add({
+    //         id: `${id}1`,
+    //         position: Cesium.Cartesian3.fromDegrees(lon, lat, 10),
+    //         show: false,
+    //         ellipse: {
+    //           semiMinorAxis: new Cesium.CallbackProperty(function () {
+    //             var r1 = ss; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+    //             r1 = r1 + deviationR; //deviationR为每次圆增加的大小
+    //             if (r1 >= MaxR) {
+    //               r1 = 0;
+    //             }
+    //             ss = r1;
+    //             return r1;
+    //           }, false),
+    //           semiMajorAxis: new Cesium.CallbackProperty(function () {
+    //             var r1 = ss1; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
+    //             r1 = r1 + deviationR; //deviationR为每次圆增加的大小
+    //             if (r1 >= MaxR) {
+    //               r1 = 0;
+    //             }
+    //             ss1 = r1;
+    //             return r1;
+    //           }, false),
+    //           height: 10,
+    //           material: new Cesium.ImageMaterialProperty({
+    //             image: "static/images/1.png",
+    //             transparent: true,
+    //           }),
+    //           // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(20000,Number.MAX_VALUE),
+    //         },
+    //       });
+    //     }, 4000);
+    //   });
+    //   this.lp(lon, lat, `${id}p`, img, 60, 60, 600);
+    // },
+    // lp(lon, lat, id, img, width, height, high) {
+    //   const viewer = window.earth;
+    //   const entity = viewer.entities.getById(id);
+    //   if (!!entity) {
+    //     return;
+    //   }
+    //   viewer.entities.add({
+    //     id: id,
+    //     position: Cesium.Cartesian3.fromDegrees(lon, lat, high || 100),
+    //     show: false,
+    //     billboard: {
+    //       image: img,
+    //       width: width,
+    //       height: height,
+    //       disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    //       // translucencyByDistance: new Cesium.NearFarScalar(7000, 0, 8000, 1)
+    //     },
+    //   });
+    // },
+    // removeAll(value) {
+    //   const viewer = window.earth;
+    //   const id = [
+    //     "ruian",
+    //     "tangxia",
+    //     "liao",
+    //     "chshan",
+    //     "wenzhoushiqu",
+    //     "xianyan",
+    //   ];
+    //   const idOther = ["wrth", "oj", "fyj"];
+    //   try {
+    //     id.forEach(function (element) {
+    //       viewer.entities.getById(element).show = value;
+    //       viewer.entities.getById(`${element}1`).show = value;
+    //       viewer.entities.getById(`${element}p`).show = value;
+    //     });
+    //     idOther.forEach(function (element) {
+    //       viewer.entities.getById(element).show = value;
+    //     });
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // },
+
     switchHanddrawn(value) {
       if (value) {
         this.handdrawnlayer

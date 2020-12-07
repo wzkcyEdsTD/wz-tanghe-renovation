@@ -5,120 +5,16 @@
       <span class="title">重点项目统计</span>
     </div>
     <div class="allFlex">
-      <div class="childFlex">
-        <img src="./img/select.png" class="icon">
+      <div class="childFlex" v-for="(item,index) in projData" :key="index">
+        <img :src="item.deptName == '总体项目' ? require('./img/select.png') : require('./img/unselect.png')" class="icon" />
         <div class="allText">
-          <p :style="{color:'#F2F468'}" class="title">总体项目</p>
+          <p class="name" :class="{total: item.deptName == '总体项目'}">{{item.deptName}}</p>
           <div class="otherFlex">
-            <span class="text" >28</span>
+            <span class="text">{{item.num}}</span>
             <span class="textSmall">/个</span>
           </div>
           <div class="otherFlex">
-            <span class="text">19.73</span>
-            <span class="textSmall">亿元</span>
-          </div>
-        </div>
-      </div>
-      <div class="childFlex">
-        <img src="./img/unselect.png" class="icon">
-        <div class="allText">
-          <p class="title">鹿城区政府</p>
-          <div class="otherFlex">
-            <span class="text" >7</span>
-            <span class="textSmall">/个</span>
-          </div>
-          <div class="otherFlex">
-            <span class="text">0.66</span>
-            <span class="textSmall">亿元</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="allFlex">
-      <div class="childFlex">
-        <img src="./img/unselect.png" class="icon">
-        <div class="allText">
-          <p class="title">瓯海区政府</p>
-          <div class="otherFlex">
-            <span class="text" >9</span>
-            <span class="textSmall">/个</span>
-          </div>
-          <div class="otherFlex">
-            <span class="text">11.72</span>
-            <span class="textSmall">亿元</span>
-          </div>
-        </div>
-      </div>
-      <div class="childFlex">
-        <img src="./img/unselect.png" class="icon">
-        <div class="allText">
-          <p class="title">龙湾区政府</p>
-          <div class="otherFlex">
-            <span class="text" >3</span>
-            <span class="textSmall">/个</span>
-          </div>
-          <div class="otherFlex">
-            <span class="text">1.20</span>
-            <span class="textSmall">亿元</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="allFlex">
-      <div class="childFlex">
-        <img src="./img/unselect.png" class="icon">
-        <div class="allText">
-          <p class="title">瑞安市政府</p>
-          <div class="otherFlex">
-            <span class="text" >6</span>
-            <span class="textSmall">/个</span>
-          </div>
-          <div class="otherFlex">
-            <span class="text">1.70</span>
-            <span class="textSmall">亿元</span>
-          </div>
-        </div>
-      </div>
-      <div class="childFlex">
-        <img src="./img/unselect.png" class="icon">
-        <div class="allText">
-          <p class="title">浙南产业区</p>
-          <div class="otherFlex">
-            <span class="text" >1</span>
-            <span class="textSmall">/个</span>
-          </div>
-          <div class="otherFlex">
-            <span class="text">0.3</span>
-            <span class="textSmall">亿元</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="allFlex">
-      <div class="childFlex">
-        <img src="./img/unselect.png" class="icon">
-        <div class="allText">
-          <p class="title">现代集团</p>
-          <div class="otherFlex">
-            <span class="text" >4</span>
-            <span class="textSmall">/个</span>
-          </div>
-          <div class="otherFlex">
-            <span class="text">5.00</span>
-            <span class="textSmall">亿元</span>
-          </div>
-        </div>
-      </div>
-      <div class="childFlex">
-        <img src="./img/unselect.png" class="icon">
-        <div class="allText">
-          <p class="title">城发集团</p>
-          <div class="otherFlex">
-            <span class="text" >0</span>
-            <span class="textSmall">/个</span>
-          </div>
-          <div class="otherFlex">
-            <span class="text">0</span>
+            <span class="text">{{(item.projAmountSum / 10000).toFixed(2)}}</span>
             <span class="textSmall">亿元</span>
           </div>
         </div>
@@ -128,11 +24,20 @@
 </template>
 
 <script>
-    export default {
-        name: "keyProjects"
+export default {
+  name: "keyProjects",
+  props: ["projData"],
+  data() {
+    return {
     }
+  },
+  methods: {
+  },
+  mounted() {
+  }
+};
 </script>
 
 <style lang="less" scoped>
-  @import url("./keyProjects.less");
+@import url("./keyProjects.less");
 </style>

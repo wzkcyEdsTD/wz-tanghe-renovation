@@ -43,11 +43,12 @@
   }
   .allFlex{
     display: flex;
+    flex-wrap: wrap;
     padding-left: 1vh;
-    padding-top: 2vh;
     .childFlex{
       display: flex;
-      width: 25vh;
+      margin-top: 2vh;
+      width: 50%;
       .icon{
         width: 7vh;
         // height: 7vh;
@@ -58,11 +59,14 @@
       }
       .allText{
         align-self: center;
-        .title{
+        .name{
           color: #56F1F1;
           // font-family: "PingFang";
           font-size: 1.7vh;
           height: 2vh;
+          &.total {
+            color: #F2F468;
+          }
         }
         .text{
           font-size: 1.7vh;
@@ -76,8 +80,6 @@
           font-family: DIN;
         }
       }
-
     }
   }
-
 }

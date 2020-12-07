@@ -1,25 +1,35 @@
 <template>
   <div class="layerhub-wrapper">
     <div class="sign-wrapper" style="right: 24%">
-      <img src="/static/images/common/sign2@2x.png">
+      <img src="/static/images/common/sign2@2x.png" />
     </div>
     <div class="mark-popup" v-if="showMark">
       <div class="mask"></div>
       <div class="content">
         <p class="text">扫描二维码进行评分</p>
         <img class="qrcode" src="./images/qrcode.png" />
-        <img class="close" src="./images/mark-close.png" @click="showMark=false" />
+        <img
+          class="close"
+          src="./images/mark-close.png"
+          @click="showMark = false"
+        />
       </div>
     </div>
     <MapTool />
     <div class="left-wrapper">
       <div class="left-content">
         <ul class="zrdw-list">
-          <li class="zrdw-item" :class="{active: currentZrdw==item.title}" v-for="(item, index) in zrdwList" :key="index" @click="getData(item)">
+          <li
+            class="zrdw-item"
+            :class="{ active: currentZrdw == item.title }"
+            v-for="(item, index) in zrdwList"
+            :key="index"
+            @click="selectZrdw(item)"
+          >
             <span>{{ item.title }}</span>
           </li>
         </ul>
-        <div class="xm-container" v-show="currentType=='xm'">
+        <div class="xm-container" v-show="currentType == 'xm'">
           <div class="titleHxhb-wrapper">
             <span class="pre"></span>
             <span class="title">列表</span>
@@ -42,10 +52,20 @@
             </div>
           </div>
           <ul id="xm-list" class="xm-list">
-            <li class="xm-item" v-for="(item, index) in allList" :key="index" :class="{ xmActive: xmActive == item.attributes.GUID }" @click="itemClick(item)">
-              <!-- <div class="name" :style="{color:item.attributes.YS==1?'#FFD529':item.attributes.YS==2?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div> -->
-              <div class="name" :style="{color:index<3?'#FF9124':'#14D1D1'}">{{ index + 1 }}.{{ item.attributes.NAME }}</div>
-              <div class="info-box" v-if="item.type=='项目'">
+            <li
+              class="xm-item"
+              v-for="(item, index) in allList"
+              :key="index"
+              :class="{ xmActive: xmActive == item.attributes.GUID }"
+              @click="itemClick(item)"
+            >
+              <div
+                class="name"
+                :style="{ color: index < 3 ? '#FF9124' : '#14D1D1' }"
+              >
+                {{ index + 1 }}.{{ item.attributes.NAME }}
+              </div>
+              <div class="info-box" v-if="item.type == '项目'">
                 <div class="info-item">
                   <div class="key">建设状态</div>
                   <div class="value">{{ item.attributes.CURRENT_STATE }}</div>
@@ -61,7 +81,7 @@
                   <div class="value">{{ item.attributes.CONSYEARE }}</div>
                 </div>
               </div>
-              <div class="info-box" v-if="item.type=='绿道断点'">
+              <div class="info-box" v-if="item.type == '绿道断点'">
                 <div class="info-item">
                   <div class="key">计划贯穿时间</div>
                   <div class="value">{{ item.attributes.JHGTSJ }}</div>
@@ -77,13 +97,13 @@
           <div class="no-tip" v-show="!allList.length">暂无数据</div>
         </div>
         <div class="mark-container">
-          <img class="button" src="./images/mark.png" @click="goMark">
-          <img class="line" src="./images/mark-line.png">
+          <img class="button" src="./images/mark.png" @click="goMark" />
+          <img class="line" src="./images/mark-line.png" />
         </div>
       </div>
     </div>
-    <div class="right-content" v-show="changeType=='other'">
-      <div class="xmtj-container" v-show="currentType=='xm'">
+    <div class="right-content" v-show="changeType == 'other'">
+      <div class="xmtj-container" v-show="currentType == 'xm'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">项目统计</span>
@@ -91,38 +111,50 @@
         <div class="base-info">
           <div class="base-item">
             <div class="leftPicture">
-              <img src="./images/球-蓝.png" alt="" style="width: 13vh"/>
+              <img src="./images/球-蓝.png" alt="" style="width: 13vh" />
             </div>
             <div class="title" style="color: #2fc8e9">总数</div>
-            <div class="text">{{ret.project.sum}}<span class="unit">个</span></div>
-            <img src="./images/台子-蓝.png" alt="" class="leftPictureBottom"/>
+            <div class="text">
+              {{ currentData.num }}<span class="unit">个</span>
+            </div>
+            <img src="./images/台子-蓝.png" alt="" class="leftPictureBottom" />
           </div>
           <div class="base-item">
             <div class="rightPicture">
-              <img src="./images/球-红.png" alt="" style="width: 15vh"/>
+              <img src="./images/球-红.png" alt="" style="width: 15vh" />
             </div>
             <div class="titleRight" style="color: #ff8b4f">投资计划</div>
-            <div class="textRight">{{ret.project.plan}}<span class="unit">亿元</span></div>
-            <img src="./images/台子-红.png" alt="" class="rightPictureBottom"/>
+            <div class="textRight">
+              {{ currentData.amount }}<span class="unit">亿元</span>
+            </div>
+            <img src="./images/台子-红.png" alt="" class="rightPictureBottom" />
           </div>
         </div>
         <div class="base-info">
           <div class="base-item">
             <div class="progressEmpty">
-              <img src="./images/0%（蓝）.png" class="empty">
-              <div class="progressFull" :style="{width: `${ret.speed.finish/10}vh`}">
-                <img src="./images/100%（蓝）.png" class="full">
+              <img src="./images/0%（蓝）.png" class="empty" />
+              <div
+                class="progressFull"
+                :style="{ width: `${currentData.stsRate / 10}vh` }"
+              >
+                <img src="./images/100%（蓝）.png" class="full" />
               </div>
-              <span class="progressTitle">{{ret.speed.finish}}%</span>
+              <span class="progressTitle">{{ currentData.stsRate }}%</span>
             </div>
           </div>
           <div class="base-item">
             <div class="progressEmpty">
-              <img src="./images/0%（红）.png" class="empty">
-              <div class="progressFull" :style="{width: `${ret.speed.Completion/10}vh`}">
-                <img src="./images/100%（红）.png" class="full">
+              <img src="./images/0%（红）.png" class="empty" />
+              <div
+                class="progressFull"
+                :style="{ width: `${currentData.amoundRate / 10}vh` }"
+              >
+                <img src="./images/100%（红）.png" class="full" />
               </div>
-              <span class="progressTitleRight">{{ret.speed.Completion}}%</span>
+              <span class="progressTitleRight"
+                >{{ currentData.amoundRate }}%</span
+              >
             </div>
           </div>
         </div>
@@ -131,7 +163,11 @@
             <div class="sub-title">建设情况</div>
             <div class="decorate"></div>
           </div>
-          <div style="height: 16vh;  width: 36vh;" class="echart" ref="barEchart"></div>
+          <div
+            style="height: 16vh; width: 36vh"
+            class="echart"
+            ref="barEchart"
+          ></div>
         </div>
         <div class="jd-info">
           <div class="sub-title-wrapper">
@@ -140,15 +176,21 @@
           </div>
           <div class="chart-wrapper">
             <div class="rate-item">
-              <p class="xiaobiaoti">{{'投资计划(万元)'}}</p>
-              <div style="height: 16vh;  width: 35vh;" class="echart" ref="lineEchart"></div>
+              <p class="xiaobiaoti">{{ "投资计划(万元)" }}</p>
+              <div
+                style="height: 16vh; width: 35vh"
+                class="echart"
+                ref="lineEchart"
+              ></div>
             </div>
           </div>
         </div>
         <div class="czwt-info">
           <div class="sub-title-wrapper">
             <div class="sub-title">
-              滞后项目<span class="number">{{"("+delayXmList.length+")个"}}</span>
+              滞后项目<span class="number">{{
+                "(" + delayXmList.length + ")个"
+              }}</span>
             </div>
             <div class="decorate"></div>
           </div>
@@ -181,8 +223,8 @@
         </div>
       </div>
     </div>
-    <div class="right-content" v-show="changeType=='all'">
-      <div class="xmtj-container" v-show="currentType=='xm'">
+    <div class="right-content" v-show="changeType == 'all'">
+      <div class="xmtj-container" v-show="currentType == 'xm'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
           <span class="title">项目统计</span>
@@ -193,9 +235,9 @@
             <div class="decorate"></div>
           </div>
           <div class="mxph">
-            <img src="./images/xmtzjh.png" class="xmtzPicture">
+            <img src="./images/xmtzjh.png" class="xmtzPicture" />
             <div class="rank-text-wrapper">
-              <div class="rank-text-item" style="margin-top:2vh;">
+              <div class="rank-text-item" style="margin-top: 2vh">
                 <div class="second">111%</div>
                 <div class="secondText">总 15.7亿元</div>
               </div>
@@ -203,7 +245,7 @@
                 <div class="first">154%</div>
                 <div class="firstText">总 1.5亿元</div>
               </div>
-              <div class="rank-text-item" style="margin-top:4vh;">
+              <div class="rank-text-item" style="margin-top: 4vh">
                 <div class="third">109%</div>
                 <div class="thirdText">总 0.2亿元</div>
               </div>
@@ -256,53 +298,62 @@
           </div>
           <div class="pictureFlex">
             <div class="xmwg">
-                <img src="./images/complete2.png" class="bothSides">
-                <span class="compleRate second">65%</span>
-              </div>
-            <div class="xmwg">
-              <img src="./images/complete1.png" class="middlePic">
-              <span class="compleRate first">75%</span>
+              <el-progress
+                class="second"
+                type="circle"
+                :stroke-width="10"
+                :percentage="finishData[1].rate"
+                color="#299CFF"
+              ></el-progress>
             </div>
             <div class="xmwg">
-              <img src="./images/complete3.png" class="bothSides">
-              <span class="compleRate third">55%</span>
+              <el-progress
+                class="first"
+                type="circle"
+                :stroke-width="10"
+                :percentage="finishData[0].rate"
+                color="#B967FF"
+              ></el-progress>
+            </div>
+            <div class="xmwg">
+              <el-progress
+                class="third"
+                type="circle"
+                :stroke-width="10"
+                :percentage="finishData[2].rate"
+                color="#29D1EF"
+              ></el-progress>
             </div>
           </div>
           <div class="pictureFlex">
-            <p class="compleRateText second">瓯海区<br/>9个</p>
-            <p class="compleRateText first">鹿城区<br/>9个</p>
-            <p class="compleRateText third">龙湾区<br/>9个</p>
+            <p class="compleRateText second">
+              {{ finishData[1].name }}<br />{{ finishData[1].num }}个
+            </p>
+            <p class="compleRateText first">
+              {{ finishData[0].name }}<br />{{ finishData[0].num }}个
+            </p>
+            <p class="compleRateText third">
+              {{ finishData[2].name }}<br />{{ finishData[2].num }}个
+            </p>
           </div>
           <ul>
             <li class="info-item-right">
-              <span class="value">瑞安市</span>
-              <span class="value">浙江产业区</span>
-              <span class="value">温州现代集团</span>
-              <span class="value">温州城发集团</span>
+              <span
+                class="value"
+                v-for="(item, index) in finishData.slice(3, 7)"
+                :key="index"
+                >{{ item.name }}</span
+              >
             </li>
             <li class="info-item-right">
-              <div class="key">
+              <div
+                class="key"
+                v-for="(item, index) in finishData.slice(3, 7)"
+                :key="index"
+              >
                 <div class="keyAllText">
-                    <p class="firstKeyText">45%</p>
-                    <p class="secondKeyText">9个</p>
-                  </div>
-              </div>
-              <div class="key">
-                <div class="keyAllText">
-                  <p class="firstKeyText">35%</p>
-                  <p class="secondKeyText">9个</p>
-                </div>
-              </div>
-              <div class="key">
-                <div class="keyAllText">
-                  <p class="firstKeyText">25%</p>
-                  <p class="secondKeyText">9个</p>
-                </div>
-              </div>
-              <div class="key">
-                <div class="keyAllText">
-                  <p class="firstKeyText">15%</p>
-                  <p class="secondKeyText">9个</p>
+                  <p class="firstKeyText">{{ item.rate }}%</p>
+                  <p class="secondKeyText">{{ item.num }}个</p>
                 </div>
               </div>
             </li>
@@ -315,63 +366,66 @@
           </div>
           <div class="progressFlexIn">
             <div class="buleText">
-              <div class="lucheng">
-                <p class="buleLabTitle">2020.6.1完成</p>
-                <p class="buleLabText">温州现代集团</p>
-                <p class="buleLabText">项目个数<span class="number">4</span>个</p>
-                <p class="buleLabText">投资计划<span class="number">6.1</span>亿元</p>
-              </div>
-              <div class="ouhai">
-                <p class="buleLabTitle">2020.12.1完成</p>
-                <p class="buleLabText">瑞安市政府</p>
-                <p class="buleLabText">项目个数<span class="number">7</span>个</p>
-                <p class="buleLabText">投资计划<span class="number">18.4</span>亿元</p>
-              </div>
-              <div class="longwan">
-                <p class="buleLabTitle">2023.12.1完成</p>
-                <p class="buleLabText">浙南产业区</p>
-                <p class="buleLabText">项目个数<span class="number">1</span>个</p>
-                <p class="buleLabText">投资计划<span class="number">11.5</span>亿元</p>
-              </div>
-              <div class="ruian">
-                <p class="buleLabTitle">2024.3.1完成</p>
-                <p class="buleLabText">龙湾区政府</p>
-                <p class="buleLabText">项目个数<span class="number">8</span>个</p>
-                <p class="buleLabText">投资计划<span class="number">45.1</span>亿元</p>
+              <div
+                class="item"
+                :style="{ left: `${25 * index}%` }"
+                v-for="(item, index) in upList"
+                :key="index"
+              >
+                <p class="buleLabTitle">{{ item.name.substr(0, 10) }}完成</p>
+                <p class="buleLabText">{{ item.deptName }}</p>
+                <p class="buleLabText">
+                  项目个数<span class="number">{{ item.num }}</span
+                  >个
+                </p>
+                <p class="buleLabText">
+                  投资计划<span class="number">{{
+                    (item.projAmountSum / 10000).toFixed(2)
+                  }}</span
+                  >亿元
+                </p>
               </div>
             </div>
           </div>
           <div class="end">
             <div class="blueLine">
-              <img src="./images/蓝线.png" class="lucheng">
-              <img src="./images/蓝线.png" class="ouhai">
-              <img src="./images/蓝线.png" class="zhenan">
-              <img src="./images/蓝线.png" class="longwan">
-              <img src="./images/蓝线.png" class="xiandai">
-              <img src="./images/蓝线.png" class="ruian">
-              <img src="./images/蓝线.png" class="chengfa">
+              <img
+                :style="{ left: `${25 * index}%` }"
+                v-for="(item, index) in upList"
+                :key="item.sysOrgCode"
+                src="./images/蓝线.png"
+                class="up-img"
+              />
+              <img
+                :style="{ left: `${30 * index + 10}%` }"
+                v-for="(item, index) in downList"
+                :key="item.sysOrgCode"
+                src="./images/蓝线.png"
+                class="down-img"
+              />
               <div class="straightLine"></div>
             </div>
           </div>
           <div class="progressFlexIn">
             <div class="buleText">
-              <div class="zhenan">
-                <p class="buleLabTitle">2022.9.1完成</p>
-                <p class="buleLabText">瓯海区政府</p>
-                <p class="buleLabText">项目个数<span class="number">17</span>个</p>
-                <p class="buleLabText">投资计划<span class="number">108.9</span>亿元</p>
-              </div>
-              <div class="xiandai">
-                <p class="buleLabTitle">2023.9.1完成</p>
-                <p class="buleLabText">温州城发集团</p>
-                <p class="buleLabText">项目个数<span class="number">12</span>个</p>
-                <p class="buleLabText">投资计划<span class="number">34.6</span>亿元</p>
-              </div>
-              <div class="chengfa">
-                <p class="buleLabTitle">2020.12.1完成</p>
-                <p class="buleLabText">鹿城区政府</p>
-                <p class="buleLabText">项目个数<span class="number">18</span>个</p>
-                <p class="buleLabText">投资计划<span class="number">50.5</span>亿元</p>
+              <div
+                class="item"
+                :style="{ left: `${30 * index + 10}%` }"
+                v-for="(item, index) in downList"
+                :key="index"
+              >
+                <p class="buleLabTitle">{{ item.name.substr(0, 10) }}完成</p>
+                <p class="buleLabText">{{ item.deptName }}</p>
+                <p class="buleLabText">
+                  项目个数<span class="number">{{ item.num }}</span
+                  >个
+                </p>
+                <p class="buleLabText">
+                  投资计划<span class="number">{{
+                    (item.projAmountSum / 10000).toFixed(2)
+                  }}</span
+                  >亿元
+                </p>
               </div>
             </div>
           </div>
@@ -386,100 +440,90 @@ import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "../../sourcelayer/layerHub/TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
 import MapTool from "../../sourcelayer/layerHub/components/mapTool";
-import { drawBar, drawLine } from "./EchartsDrawTool"
+import { drawBar, drawLine } from "./EchartsDrawTool";
+import {
+  getProjStatusByDept,
+  getProjDeptNumAmound,
+  getProjStatusAmound,
+  getProjNumAndAmound,
+} from "api/tangheAPI";
+
+const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
+const SW_DATA = "/data-alldata/rest/data";
+const SW_DATA_NAME = "172.168.3.181_thxm:";
+const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
+
 export default {
-  components:{
+  components: {
     MapTool,
   },
   data() {
     return {
-      showLarge:window.showLarge,
-      currentType: 'xm',
-      changeType:'all',
+      showLarge: window.showLarge,
+      currentType: "xm",
+      changeType: "all",
       zrdwList: [
-        {title: '指挥部', value: 'all'},
-        {title: '鹿城区政府', value: 'lucheng'},
-        {title: '龙湾区政府', value: 'longwan'},
-        {title: '瓯海区政府', value: 'ouhai'},
-        {title: "瑞安市政府", value: 'ruian'},
-        {title: "浙南产业区", value: 'zhenan'},
-        {title: "温州城发集团", value: 'chengfa'},
-        {title: "温州现代集团", value: 'xiandai'},
+        { title: "指挥部", value: "all", sysOrgCode: "all" },
+        { title: "鹿城区政府", value: "lucheng", sysOrgCode: "A02A01" },
+        { title: "龙湾区政府", value: "longwan", sysOrgCode: "A02A03" },
+        { title: "瓯海区政府", value: "ouhai", sysOrgCode: "A02A02" },
+        { title: "瑞安市政府", value: "ruian", sysOrgCode: "A02A04" },
+        { title: "浙南产业区", value: "zhenan", sysOrgCode: "A02A05" },
+        { title: "温州城发集团", value: "chengfa", sysOrgCode: "A02A07" },
+        { title: "温州现代集团", value: "xiandai", sysOrgCode: "A02A06" },
       ],
-      currentZrdw: '指挥部',
-      list:[
-        {   "name":"指挥部",
-            "project":{"sum":"67","plan":"275"},
-            "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
-            "speed":{"Completion":"1.53","finish":"12.9"},
-            "pointStat":{"sum":"40","length":"19074"},
-            "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
-        },
-        {   "name":"鹿城区政府",
-            "project":{"sum":"22","plan":"50.5"},
-            "situation":{"pre":"4","preLag":"2","finish":"3","build":"7","buildLag":"6"},
-            "speed":{"Completion":"1.3","finish":"16.7"},
-            "pointStat":{"sum":"21","length":"8752"},
-            "pointDist":{"east":{"number":"4","length":"1380"},"south":{"number":"","length":""},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"1","length":"310"},}
-        },
-        {   "name":"瓯海区政府",
-            "project":{"sum":"23","plan":"115"},
-            "situation":{"pre":"0","preLag":"0","finish":"4","build":"13","buildLag":"6"},
-            "speed":{"Completion":"1.43","finish":"17.4"},
-            "pointStat":{"sum":"11","length":"8910"},
-            "pointDist":{"east":{"number":"","length":""},"south":{"number":"9","length":"7030"},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"2","length":"1880"},}
-        },
-        {   "name":"龙湾区政府",
-            "project":{"sum":"10","plan":"45"},
-            "situation":{"pre":"0","preLag":"0","finish":"1","build":"7","buildLag":"2"},
-            "speed":{"Completion":"0.03","finish":"10"},
-            "pointStat":{"sum":"8","length":"1412"},
-            "pointDist":{"east":{"number":"8","length":"1412"},"south":{"number":"","length":""},"inner":{"number":"","length":""},"outer":{"number":"","length":""},"west":{"number":"","length":""},}
-        },
-        {   "name":"瑞安市政府",
-            "project":{"sum":"11","plan":"20"},
-            "situation":{"pre":"0","preLag":"0","finish":"0","build":"9","buildLag":"2"},
-            "speed":{"Completion":"0","finish":"0"},
-            "pointStat":{"sum":"","length":""},
-            "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
-        },
-        {   "name":"温州现代集团",
-            "project":{"sum":"5","plan":"6"},
-            "situation":{"pre":"0","preLag":"0","finish":"2","build":"3","buildLag":"0"},
-            "speed":{"Completion":"32.15","finish":"40"},
-            "pointStat":{"sum":"","length":""},
-            "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
-        },
-        {   "name":"温州城发集团",
-            "project":{"sum":"12","plan":"3.5"},
-            "situation":{"pre":"1","preLag":"0","finish":"1","build":"9","buildLag":"1"},
-            "speed":{"Completion":"0.03","finish":"8.3"},
-            "pointStat":{"sum":"1","length":"157"},
-            "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
-        },
-        {   "name":"浙南产业区",
-            "project":{"sum":"2","plan":"11.8"},
-            "situation":{"pre":"0","preLag":"0","finish":"0","build":"2","buildLag":"0"},
-            "speed":{"Completion":"0","finish":"0"},
-            "pointStat":{"sum":"","length":""},
-            "pointDist":{"east":{"number":"0","length":"0"},"south":{"number":"0","length":"0"},"inner":{"number":"0","length":"0"},"outer":{"number":"0","length":"0"},"west":{"number":"0","length":"0"},}
-        },
-      ],
-      ddList:[],
-      xmList:[],
+      currentZrdw: "指挥部",
+      ddList: [],
+      xmList: [],
       searchXMText: "",
-      ret: {
-        "name":"指挥部",
-        "project":{"sum":"67","plan":"275"},
-        "situation":{"pre":"4","preLag":"2","finish":"12","build":"26","buildLag":"23"},
-        "speed":{"Completion":"2","finish":"18"},
-        "pointStat":{"sum":"40","length":"19074"},
-        "pointDist":{"east":{"number":"12","length":"2792"},"south":{"number":"9","length":"7030"},"inner":{"number":"6","length":"1652"},"outer":{"number":"10","length":"5410"},"west":{"number":"3","length":"2190"},}
-      },
       barEchart: null,
       lineEchart: null,
       xmActive: "",
-      showMark: false
+      showMark: false,
+      finishData: [
+        {
+          name: "鹿城区政府",
+          num: 0,
+          rate: 0,
+        },
+        {
+          name: "瓯海区政府",
+          num: 0,
+          rate: 0,
+        },
+        {
+          name: "龙湾区政府",
+          num: 0,
+          rate: 0,
+        },
+        {
+          name: "瑞安市政府",
+          num: 0,
+          rate: 0,
+        },
+        {
+          name: "浙南产业园",
+          num: 0,
+          rate: 0,
+        },
+        {
+          name: "温州现代集团",
+          num: 0,
+          rate: 0,
+        },
+        {
+          name: "温州城发集团",
+          num: 0,
+          rate: 0,
+        },
+      ],
+      projData: [],
+      currentData: {
+        num: 0,
+        amount: 0,
+        stsRate: 0,
+        amoundRate: 0,
+      },
     };
   },
   computed: {
@@ -488,48 +532,97 @@ export default {
       return this.$store.state.map.sourceMap;
     },
     allList() {
-      return this.xmList.concat(this.ddList)
+      return this.xmList.concat(this.ddList);
     },
     delayXmList() {
-      let result = []
-      let alldata = this.sourceMap['项目']
+      let result = [];
+      let alldata = this.sourceMap["项目"];
       if (alldata) {
-        if (this.currentZrdw != '指挥部') {
-          result = alldata.filter(item => {
-            return item.attributes.ZR_DEPTID == this.currentZrdw && ~item.attributes.CURRENT_STATE.indexOf('滞后')
-          })
+        if (this.currentZrdw != "指挥部") {
+          result = alldata.filter((item) => {
+            return (
+              item.attributes.ZR_DEPTID == this.currentZrdw &&
+              ~item.attributes.CURRENT_STATE.indexOf("滞后")
+            );
+          });
         } else {
-          result = alldata.filter(item => {
-            return ~item.attributes.CURRENT_STATE.indexOf('滞后')
-          })
+          result = alldata.filter((item) => {
+            return ~item.attributes.CURRENT_STATE.indexOf("滞后");
+          });
         }
       }
-      return result
+      return result;
     },
     questionDdList() {
-      let result = []
-      let alldata = this.sourceMap['绿道断点']
+      let result = [];
+      let alldata = this.sourceMap["绿道断点"];
       if (alldata) {
-        if (this.currentZrdw != '指挥部') {
-          result = alldata.filter(item => {
-            return item.attributes.ZRDW == this.currentZrdw && item.attributes.CZWT != '无'
-          })
+        if (this.currentZrdw != "指挥部") {
+          result = alldata.filter((item) => {
+            return (
+              item.attributes.ZRDW == this.currentZrdw &&
+              item.attributes.CZWT != "无"
+            );
+          });
         } else {
-          result = alldata.filter(item => {
-            return item.attributes.CZWT != '无'
-          })
+          result = alldata.filter((item) => {
+            return item.attributes.CZWT != "无";
+          });
         }
       }
-      return result
+      return result;
+    },
+    upList() {
+      let result = [];
+      this.projData.forEach((item, index) => {
+        if (index % 2 == 0) {
+          result.push(item);
+        }
+      });
+      console.log("upList", result);
+      return result;
+    },
+    downList() {
+      let result = [];
+      this.projData.forEach((item, index) => {
+        if (index % 2 == 1) {
+          result.push(item);
+        }
+      });
+      console.log("downList", result);
+      return result;
     },
   },
   methods: {
     ...mapActions("map", ["setSourceMap"]),
+    async initData() {
+      let res = await getProjStatusByDept({ status: "完工" });
+      if (res.code === 200) {
+        res.result.forEach((i) => {
+          this.finishData.forEach((j) => {
+            if (j.name == i.deptName) {
+              j.num = i.statusInfos[0].num;
+              j.rate = Number(i.statusInfos[0].rate.toFixed(1));
+            }
+          });
+        });
+        this.finishData.sort((a, b) => {
+          return b.rate - a.rate;
+        });
+      }
+
+      let projRes = await getProjDeptNumAmound();
+      if (projRes.code === 200) {
+        projRes.result.forEach((item) => {
+          item.name && this.projData.push(item);
+        });
+      }
+    },
     getPOIPickedFeature(node, fn) {
       const { newdataset, url, query } = node;
       var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
       getFeatureParam = new SuperMap.REST.FilterParameter({
-        attributeFilter: query ? `SMID <= 1000 AND ${query}`: `SMID <= 1000`,
+        attributeFilter: query ? `SMID <= 1000 AND ${query}` : `SMID <= 1000`,
       });
       getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
         queryParameter: getFeatureParam,
@@ -540,7 +633,6 @@ export default {
         eventListeners: {
           processCompleted: async (res) => {
             const fields = await getIserverFields(url, newdataset);
-            console.log(119, fields);
             treeDrawTool(this, res, node, fields, fn);
           },
           processFailed: (msg) => console.log(msg),
@@ -548,48 +640,77 @@ export default {
       });
       getFeatureBySQLService.processAsync(getFeatureBySQLParams);
     },
-    drawBars() {
-      drawBar(this)
-    },
-    drawLines() {
-      drawLine(this)
-    },
-    getData(item){
+    // drawBars() {
+    //   drawBar(this);
+    // },
+    // drawLines() {
+    //   drawLine(this);
+    // },
+    async selectZrdw(item) {
       // 点击，列表回到顶部
       $("#xm-list").scrollTop(0);
       $("#dd-list").scrollTop(0);
 
       // 不再重复操作
-      if(this.currentZrdw == item.title) return;
+      if (this.currentZrdw == item.title) return;
 
       this.currentZrdw = item.title;
-      this.searchXMText = '';
-      if (item.title==='指挥部'){
-        this.changeType = 'all';
-      }else{
-        this.changeType = 'other';
-      }
-      console.log(this.changeType);
-      this.$bus.$emit("change-zrdw", { value: item.value });
-      let rets = [];
-      this.list.forEach(function (element) {
-        if(element.name==item.title){
-          rets.push(element);
+      this.searchXMText = "";
+      this.$bus.$emit("change-zrdw", { value: item.sysOrgCode });
+
+      if (item.title === "指挥部") {
+        this.changeType = "all";
+      } else {
+        this.changeType = "other";
+        let numRes = await getProjNumAndAmound({ sysOrgCode: item.sysOrgCode });
+        if (numRes.code === 200) {
+          this.currentData.num = numRes.result.num;
+          this.currentData.amount = (
+            numRes.result.projAmountSum / 10000
+          ).toFixed(1);
         }
-      });
-      if(rets.length>0){
-        this.ret = rets[0];
+        let rateRes = await getProjStatusAmound({
+          sysOrgCode: item.sysOrgCode,
+          status: "*完工*",
+        });
+        if (rateRes.code === 200) {
+          this.currentData.stsRate = rateRes.result.stsRate.toFixed(1);
+          this.currentData.amoundRate = rateRes.result.amoundRate.toFixed(1);
+        }
+
+        // this.$nextTick(() => {
+        //   this.drawLines();
+        //   this.drawBars();
+        // });
+        let barRes = await getProjStatusByDept({ sysOrgCode: item.sysOrgCode });
+        if (barRes.code === 200) {
+          let barData = {};
+          barRes.result[0].statusInfos.forEach((item) => {
+            if (item.name === "前期(滞后)") {
+              barData.preLag = item.num;
+            }
+            if (item.name === "前期研究") {
+              barData.pre = item.num;
+            }
+            if (item.name === "完工") {
+              barData.finish = item.num;
+            }
+            if (item.name === "在建") {
+              barData.build = item.num;
+            }
+            if (item.name === "在建(滞后)") {
+              barData.buildLag = item.num;
+            }
+          });
+          drawBar(this, barData);
+        }
       }
-      this.$nextTick(()=>{
-        this.drawLines();
-        this.drawBars();
-      });
 
       // 大屏下关闭多媒体窗口
       this.$bus.$emit("close-rightPlayer");
     },
     itemClick(item) {
-      if(this.currentType == "xm") {
+      if (this.currentType == "xm") {
         this.xmActive = item.attributes.GUID;
       }
 
@@ -608,40 +729,36 @@ export default {
           roll: 0.0,
         },
         complete: () => {
-          this.$bus.$emit('clickFly');
-        }
+          this.$bus.$emit("clickFly");
+        },
       });
     },
-    filterData () {
-      const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
-      const SW_DATA = "/data-alldata/rest/data";
-      const SW_DATA_NAME = "172.168.3.181_thxm:";
-      const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
+    filterData() {
       // 清空地图标绘
       for (let i in window.billboardMap) {
         window.billboardMap[i]._billboards.map((v) => (v.show = false));
       }
       for (let i in window.blackLabelMap) {
-        window.blackLabelMap[i].setAllLabelsVisible(false)
+        window.blackLabelMap[i].setAllLabelsVisible(false);
       }
       for (let i in window.whiteLabelMap) {
-        window.whiteLabelMap[i].setAllLabelsVisible(false)
+        window.whiteLabelMap[i].setAllLabelsVisible(false);
       }
 
-      if (this.currentZrdw != '指挥部') {
-        this.xmList = this.sourceMap['项目'].filter(item => {
-          return ~item.attributes.ZR_DEPTID.indexOf(this.currentZrdw)
-        })
-        this.ddList = this.sourceMap['绿道断点'].filter(item => {
-          return ~item.attributes.ZRDW.indexOf(this.currentZrdw)
-        })
+      if (this.currentZrdw != "指挥部") {
+        this.xmList = this.sourceMap["项目"].filter((item) => {
+          return ~item.attributes.ZR_DEPTID.indexOf(this.currentZrdw);
+        });
+        this.ddList = this.sourceMap["绿道断点"].filter((item) => {
+          return ~item.attributes.ZRDW.indexOf(this.currentZrdw);
+        });
         this.getPOIPickedFeature({
           id: "项目",
           label: "项目",
           url: SERVER_DEFAULT_DATA,
           newdataset: `${SW_DATA_NAME}项目`,
           icon: false,
-          query: `ZR_DEPTID like '%${this.currentZrdw}'`
+          query: `ZR_DEPTID like '%${this.currentZrdw}'`,
         });
         this.getPOIPickedFeature({
           id: "绿道断点",
@@ -650,11 +767,11 @@ export default {
           newdataset: `${SW_DATA_NAME}绿道断点`,
           icon: "断点",
           iconSize: "small",
-          query: `ZRDW like '%${this.currentZrdw}'`
+          query: `ZRDW like '%${this.currentZrdw}'`,
         });
       } else {
-        this.xmList = this.sourceMap['项目']
-        this.ddList = this.sourceMap['绿道断点']
+        this.xmList = this.sourceMap["项目"];
+        this.ddList = this.sourceMap["绿道断点"];
         this.getPOIPickedFeature({
           id: "项目",
           label: "项目",
@@ -673,31 +790,28 @@ export default {
       }
     },
     searchXMFilter() {
-      console.log('searchXMFilter', this.searchXMText)
+      console.log("searchXMFilter", this.searchXMText);
       this.xmList = this.searchXMText
-        ? this.sourceMap['项目'].filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
-        })
-        : this.sourceMap['项目']
+        ? this.sourceMap["项目"].filter((item) => {
+            return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
+          })
+        : this.sourceMap["项目"];
       this.ddList = this.searchXMText
-        ? this.sourceMap['绿道断点'].filter((item) => {
-          return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
-        })
-        : this.sourceMap['绿道断点']
+        ? this.sourceMap["绿道断点"].filter((item) => {
+            return item.attributes.NAME.indexOf(this.searchXMText) >= 0;
+          })
+        : this.sourceMap["绿道断点"];
     },
     searchXMClear() {
       this.searchXMText = "";
-      this.filterData()
+      this.filterData();
     },
     goMark() {
-      this.showMark = true
-    }
+      this.showMark = true;
+    },
   },
   mounted() {
-    const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
-    const SW_DATA = "/data-alldata/rest/data";
-    const SW_DATA_NAME = "172.168.3.181_thxm:";
-    const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
+    this.initData();
     this.getPOIPickedFeature({
       id: "项目",
       label: "项目",
@@ -717,11 +831,11 @@ export default {
   watch: {
     drawData(val) {
       console.log("drawData", val);
-      this.sourceMap['项目'] && (this.xmList = this.sourceMap['项目'])
-      this.sourceMap['绿道断点'] && (this.ddList = this.sourceMap['绿道断点'])
+      this.sourceMap["项目"] && (this.xmList = this.sourceMap["项目"]);
+      this.sourceMap["绿道断点"] && (this.ddList = this.sourceMap["绿道断点"]);
     },
     currentZrdw(val) {
-      this.filterData()
+      this.filterData();
     },
     currentType(val) {
       // 点击，列表回到顶部
@@ -730,7 +844,6 @@ export default {
       // 选中置空
       this.xmActive = "";
     },
-
   },
 };
 </script>
@@ -738,10 +851,30 @@ export default {
 <style lang="less" scoped>
 @import url("./layerHub.less");
 </style>
-<style>
+<style lang="less">
 .el-input__inner {
   background: transparent !important;
   border: none !important;
   color: white !important;
+}
+.el-progress--circle {
+  &.first {
+    .el-progress__text {
+      color: #b967ff !important;
+    }
+  }
+  &.second {
+    .el-progress__text {
+      color: #299cff !important;
+    }
+  }
+  &.third {
+    .el-progress__text {
+      color: #29d1ef !important;
+    }
+  }
+  .el-progress__text {
+    font-size: 2vh !important;
+  }
 }
 </style>

@@ -2,7 +2,7 @@ import { get, post, postRequest, uploadFileRequest, getRequest, putRequest, dele
 
 // 项目统计
 export function getProjNumAndAmound(data) {
-  const url = 'http://192.168.2.136:8080/jeecg-boot/tanghe/resourceProject/count/projNumAndAmound'
+  const url = 'http://172.168.3.182:8080/jeecg-boot/tanghe/resourceProject/count/projNumAndAmound'
   return get(url, data)
 }
 

@@ -33,6 +33,7 @@ import {
   mapBaimoLayerInit,
   mapWmtsLayerInit,
 } from "./cesium_map_init";
+import { addWhiteLabel, addBlackLabel } from "./layerHub/TreeDrawTool";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
 const Cesium = window.Cesium;
@@ -261,24 +262,30 @@ export default {
           window.earth.imageryLayers.lowerToBottom(this.datalayer[value]);
           window.currentMapType = `vector${value}`;
         }
-        // 切换底图时，当前选中资源的label标签颜色切换
+        // 切换底图时，地图上label颜色切换
         if (window.currentMapType == "vectorwhite") {
-          for (let key in window.whiteLabelMap) {
+          for (let key in window.blackLabelMap) {
             if (
-              window.whiteLabelMap[key]._labels.length &&
-              window.whiteLabelMap[key]._labels[0].show
+              window.blackLabelMap[key]._labels.length 
             ) {
               window.blackLabelMap[key].setAllLabelsVisible(true);
+            } else {
+              for (let innerkey in window.featureMap[key]) {
+                addBlackLabel(key, window.featureMap[key][innerkey])
+              }
             }
             window.whiteLabelMap[key].setAllLabelsVisible(false);
           }
         } else {
-          for (let key in window.blackLabelMap) {
+          for (let key in window.whiteLabelMap) {
             if (
-              window.blackLabelMap[key]._labels.length &&
-              window.blackLabelMap[key]._labels[0].show
+              window.whiteLabelMap[key]._labels.length 
             ) {
               window.whiteLabelMap[key].setAllLabelsVisible(true);
+            } else {
+              for (let innerkey in window.featureMap[key]) {
+                addWhiteLabel(key, window.featureMap[key][innerkey])
+              }
             }
             window.blackLabelMap[key].setAllLabelsVisible(false);
           }

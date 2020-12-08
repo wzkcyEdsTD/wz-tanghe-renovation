@@ -138,36 +138,56 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
 
     if (node.id == '十二景') return;
 
-    window.whiteLabelMap[node.id].add({
-      id: `label@${item.attributes.SMID}@${node.id}`,
-      text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
-      font: "bold 14px Microsoft YaHei",
-      outlineColor: Cesium.Color.BLACK,
-      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-      outlineWidth: '2',
-      scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
-      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-      pixelOffset: new Cesium.Cartesian2(0, 38),
-      disableDepthTestDistance: Number.POSITIVE_INFINITY,
-      position
-    });
-    window.blackLabelMap[node.id].add({
-      id: `label@${item.attributes.SMID}@${node.id}`,
-      text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
-      font: "bold 14px Microsoft YaHei",
-      outlineColor: Cesium.Color.WHITE,
-      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-      outlineWidth: '2',
-      scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
-      distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-      pixelOffset: new Cesium.Cartesian2(0, 38),
-      disableDepthTestDistance: Number.POSITIVE_INFINITY,
-      position
-    });
-    window.currentMapType == 'vectorwhite' ? window.whiteLabelMap[node.id].setAllLabelsVisible(false) : window.blackLabelMap[node.id].setAllLabelsVisible(false)
+    if (window.currentMapType == 'vectorwhite') {
+      addBlackLabel(node.id, item)
+    } else {
+      addWhiteLabel(node.id, item)
+    }
 
   });
   fn && fn();
 };
+
+export const addWhiteLabel = (key, item) => {
+  const position = Cesium.Cartesian3.fromDegrees(
+    item.geometry.x,
+    item.geometry.y,
+    4
+  );
+  window.whiteLabelMap[key].add({
+    id: `label@${item.attributes.SMID}@${key}`,
+    text: item.attributes.SHORTNAME || item.attributes.NAME,
+    fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
+    font: "bold 14px Microsoft YaHei",
+    outlineColor: Cesium.Color.BLACK,
+    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+    outlineWidth: '2',
+    scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
+    distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
+    pixelOffset: new Cesium.Cartesian2(0, 38),
+    disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    position
+  });
+}
+
+export const addBlackLabel = (key, item) => {
+  const position = Cesium.Cartesian3.fromDegrees(
+    item.geometry.x,
+    item.geometry.y,
+    4
+  );
+  window.blackLabelMap[key].add({
+    id: `label@${item.attributes.SMID}@${key}`,
+    text: item.attributes.SHORTNAME || item.attributes.NAME,
+    fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
+    font: "bold 14px Microsoft YaHei",
+    outlineColor: Cesium.Color.WHITE,
+    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+    outlineWidth: '2',
+    scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
+    distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
+    pixelOffset: new Cesium.Cartesian2(0, 38),
+    disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    position
+  });
+}

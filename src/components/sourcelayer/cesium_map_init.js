@@ -1,5 +1,6 @@
 // 地图初始配置
 export const initMapConfig = () => {
+  window.earth.scene.debugShowFramesPerSecond = true;
   window.earth.imageryLayers.get(0).show = false;
   window.earth.scene.globe.baseColor = new Cesium.Color.fromCssColorString(
       "rgba(13, 24, 45, 1)"

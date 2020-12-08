@@ -12,7 +12,7 @@
       <SourceTree ref="SourceTree" v-show="selected=='source'" />
       <Synopsis v-show="selected=='synopsis'" />
     </div>
-    <div class="right-wrapper">
+    <!-- <div class="right-wrapper">
       <div class="box">
         <div class="buttonpd" :class="{active: currentType=='summary'}" @click="currentType='summary'">
           <div class="tp">
@@ -32,7 +32,7 @@
       <img src="./images/switch-decorate.png" class="zhuangshi"/>
       <Summary v-show="currentType == 'summary'" />
       <Source v-show="currentType == 'source'" />
-    </div>
+    </div> -->
     <div class="sign-wrapper" :style="{right: showLarge?'22%':'22%'}" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div>

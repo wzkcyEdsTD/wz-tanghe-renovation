@@ -51,28 +51,22 @@
           { label: "贴地测量", value: "贴地测量" },
         ],
         toolType: "空间测量",
-        // cesium Object
-        viewer: undefined,
-        handlerDis: undefined,
-        handlerArea: undefined,
-        handlerHeight: undefined,
         clampMode: 0,
       };
     },
     created() {
-      this.viewer = window.earth;
-      this.handlerDis = new Cesium.MeasureHandler(
-        this.viewer,
+      window.handlerDis = new Cesium.MeasureHandler(
+        window.earth,
         Cesium.MeasureMode.Distance,
         this.clampMode
       );
-      this.handlerArea = new Cesium.MeasureHandler(
-        this.viewer,
+      window.handlerArea = new Cesium.MeasureHandler(
+        window.earth,
         Cesium.MeasureMode.Area,
         this.clampMode
       );
-      this.handlerHeight = new Cesium.MeasureHandler(
-        this.viewer,
+      window.handlerHeight = new Cesium.MeasureHandler(
+        window.earth,
         Cesium.MeasureMode.DVH
       );
     },
@@ -80,53 +74,48 @@
       this.eventRegsiter();
     },
     beforeDestroy() {
-      this.viewer = undefined;
-      this.handlerDis = undefined;
-      this.handlerArea = undefined;
-      this.handlerHeight = undefined;
       this.clearGauge();
     },
     methods: {
       //  事件绑定
       eventRegsiter() {
-        const that = this;
-        that.handlerDis.measureEvt.addEventListener(function (result) {
+        window.handlerDis.measureEvt.addEventListener(function (result) {
           var dis = Number(result.distance);
           var positions = result.positions;
           var distance =
             dis > 1000 ? (dis / 1000).toFixed(2) + "km" : dis.toFixed(2) + "m";
-          that.handlerDis.disLabel.text = "距离:" + distance;
+          window.handlerDis.disLabel.text = "距离:" + distance;
         });
-        that.handlerDis.activeEvt.addEventListener(function (isActive) {
+        window.handlerDis.activeEvt.addEventListener(function (isActive) {
           if (isActive == true) {
-            that.viewer.enableCursorStyle = false;
-            that.viewer._element.style.cursor = "";
+            window.earth.enableCursorStyle = false;
+            window.earth._element.style.cursor = "";
             $("body").removeClass("measureCur").addClass("measureCur");
           } else {
-            that.viewer.enableCursorStyle = true;
+            window.earth.enableCursorStyle = true;
             $("body").removeClass("measureCur");
           }
         });
-        that.handlerArea.measureEvt.addEventListener(function (result) {
+        window.handlerArea.measureEvt.addEventListener(function (result) {
           var mj = Number(result.area);
           var positions = result.positions;
           var area =
             mj > 1000000
               ? (mj / 1000000).toFixed(2) + "km²"
               : mj.toFixed(2) + "㎡";
-          that.handlerArea.areaLabel.text = "面积:" + area;
+          window.handlerArea.areaLabel.text = "面积:" + area;
         });
-        that.handlerArea.activeEvt.addEventListener(function (isActive) {
+        window.handlerArea.activeEvt.addEventListener(function (isActive) {
           if (isActive == true) {
-            that.viewer.enableCursorStyle = false;
-            that.viewer._element.style.cursor = "";
+            window.earth.enableCursorStyle = false;
+            window.earth._element.style.cursor = "";
             $("body").removeClass("measureCur").addClass("measureCur");
           } else {
-            that.viewer.enableCursorStyle = true;
+            window.earth.enableCursorStyle = true;
             $("body").removeClass("measureCur");
           }
         });
-        that.handlerHeight.measureEvt.addEventListener(function (result) {
+        window.handlerHeight.measureEvt.addEventListener(function (result) {
           var distance =
             result.distance > 1000
               ? (result.distance / 1000).toFixed(2) + "km"
@@ -139,40 +128,40 @@
             result.horizontalDistance > 1000
               ? (result.horizontalDistance / 1000).toFixed(2) + "km"
               : result.horizontalDistance + "m";
-          that.handlerHeight.disLabel.text = "空间距离:" + distance;
-          that.handlerHeight.vLabel.text = "垂直高度:" + vHeight;
-          that.handlerHeight.hLabel.text = "水平距离:" + hDistance;
+          window.handlerHeight.disLabel.text = "空间距离:" + distance;
+          window.handlerHeight.vLabel.text = "垂直高度:" + vHeight;
+          window.handlerHeight.hLabel.text = "水平距离:" + hDistance;
         });
-        that.handlerHeight.activeEvt.addEventListener(function (isActive) {
+        window.handlerHeight.activeEvt.addEventListener(function (isActive) {
           if (isActive == true) {
-            that.viewer.enableCursorStyle = false;
-            that.viewer._element.style.cursor = "";
+            window.earth.enableCursorStyle = false;
+            window.earth._element.style.cursor = "";
             $("body").removeClass("measureCur").addClass("measureCur");
           } else {
-            that.viewer.enableCursorStyle = true;
+            window.earth.enableCursorStyle = true;
             $("body").removeClass("measureCur");
           }
         });
       },
       //  改变select
       changeMapType(prov) {
-        this.handlerArea.clampMode = prov == "空间测量" ? 0 : 1;
-        this.handlerDis.clampMode = prov == "空间测量" ? 0 : 1;
+        window.handlerArea.clampMode = prov == "空间测量" ? 0 : 1;
+        window.handlerDis.clampMode = prov == "空间测量" ? 0 : 1;
       },
       //  测距
       gaugeDistance() {
         this.deactiveAll();
-        this.handlerDis && this.handlerDis.activate();
+        window.handlerDis && window.handlerDis.activate();
       },
       //  测面
       gaugeArea() {
         this.deactiveAll();
-        this.handlerArea && this.handlerArea.activate();
+        window.handlerArea && window.handlerArea.activate();
       },
       //  测高
       gaugeHeight() {
         this.deactiveAll();
-        this.handlerHeight && this.handlerHeight.activate();
+        window.handlerHeight && window.handlerHeight.activate();
       },
       //  关闭地图测量
       closeGauge() {
@@ -182,14 +171,14 @@
       },
       //  清除分析结果
       clearGauge() {
-        this.handlerDis && this.handlerDis.clear();
-        this.handlerArea && this.handlerArea.clear();
-        this.handlerHeight && this.handlerHeight.clear();
+        window.handlerDis && window.handlerDis.clear();
+        window.handlerArea && window.handlerArea.clear();
+        window.handlerHeight && window.handlerHeight.clear();
       },
       deactiveAll() {
-        this.handlerDis && this.handlerDis.deactivate();
-        this.handlerArea && this.handlerArea.deactivate();
-        this.handlerHeight && this.handlerHeight.deactivate();
+        window.handlerDis && window.handlerDis.deactivate();
+        window.handlerArea && window.handlerArea.deactivate();
+        window.handlerHeight && window.handlerHeight.deactivate();
       },
     },
   };

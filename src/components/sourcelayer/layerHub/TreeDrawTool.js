@@ -57,7 +57,6 @@ export const fixTreeWithExtra = (gArr, eObj, node, context) => {
       : drawFeatures.push(item);
   });
   context[node.saveData](extraFeatures);
-  // context.searchFilter();
   return { drawFeatures };
 };
 
@@ -70,73 +69,17 @@ export const fixTreeWithExtra = (gArr, eObj, node, context) => {
  */
 export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
   const fieldHash = fixFieldsByArr(fields);
-  // const poiEntityCollection = new Cesium.CustomDataSource(node.id);
-  // window.earth.dataSources.add(poiEntityCollection).then(datasource => {
-  //   context.entityMap[node.id] = datasource;
-  // });
   //  hash赋值
   window.billboardMap[node.id] = window.earth.scene.primitives.add(new Cesium.BillboardCollection());
   window.whiteLabelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
   window.blackLabelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
 
-  // context.featureMap[node.id] = result.features;
   let forceDrawFeatures = [];
-  // if (node.id === '项目') {
-  //   result.features.forEach(item => {
-  //     if (item.attributes.SFFSY67) {
-  //       forceDrawFeatures.push(item)
-  //     }
-  //   })
-  // } else {
-    forceDrawFeatures = result.features;
-  // }
+  forceDrawFeatures = result.features;
   if (node.saveData) {
     context.saveDataMap[node.id] = result.features;
     context[node.saveData](forceDrawFeatures)
   }
-  // context.setSourceMap({[node.id]: forceDrawFeatures});
-
-  // forceDrawFeatures.map(item => {
-  //   const entityOption = {
-  //     id: `${node.id}_${item.attributes.SMID}@${node.icon}`,
-  //     label: {
-  //       text: node.id == '项目' ? item.attributes.SHORTNAME : item.attributes.NAME,
-  //       // color: new Cesium.Color.fromCssColorString("#000"),
-  //       fillColor: node.id == '项目' ? new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#fff"),
-  //       // style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-  //       // outlineColor: new Cesium.Color.fromCssColorString("#fff"),
-  //       font: "8px",
-  //       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-  //       pixelOffset: new Cesium.Cartesian2(0, -20),
-  //       disableDepthTestDistance: Number.POSITIVE_INFINITY
-  //     },
-  //     name: node.id,
-  //     fieldHash,
-  //     extra_data: item.attributes,
-  //     fix_data: fixAttributesByOrigin(item.attributes, fieldHash),
-  //     geometry: item.geometry,
-  //     type: node.id
-  //   };
-  //   const entityInstance = {
-  //       ...entityOption,
-  //       position: Cesium.Cartesian3.fromDegrees(
-  //         item.geometry.x,
-  //         item.geometry.y,
-  //         4
-  //       ),
-  //       billboard: {
-  //         image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`,
-  //         width: node.iconSize == 'small' ? 24 : 24,
-  //         height: node.iconSize == 'small' ? 24 : 25,
-  //         // sizeInMeters: true,
-  //         disableDepthTestDistance: Number.POSITIVE_INFINITY,
-  //         // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-  //         // translucencyByDistance: new Cesium.NearFarScalar(7000, 1, 8000, 0)
-  //       }
-  //     };
-
-  //   poiEntityCollection.entities.add(entityInstance);
-  // });
 
   //  属性赋值
   forceDrawFeatures.map(v => {
@@ -148,10 +91,9 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       fix_data: fixAttributesByOrigin(v.attributes, fieldHash),
       type: node.id
     }
-    return Object.assign(v, {type: node.id})
+    return Object.assign(v, { type: node.id })
   })
-  // console.log('window.featureMap!!!', window.featureMap)
-  context.setSourceMap({[node.id]: forceDrawFeatures});
+  context.setSourceMap({ [node.id]: forceDrawFeatures });
 
   // 获取hash地址判断当前页面
   let currentHash = window.location.hash
@@ -188,18 +130,18 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       image: billImage,
       width: 32,
       height: 32,
-      scaleByDistance:new Cesium.NearFarScalar(1000, 2, 6000, 1),
+      scaleByDistance: new Cesium.NearFarScalar(1000, 2, 6000, 1),
       // sizeInMeters:true,
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     })
 
-    if(node.id == '十二景') return;
+    if (node.id == '十二景') return;
 
     window.whiteLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
+      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
       font: "bold 14px Microsoft YaHei",
       outlineColor: Cesium.Color.BLACK,
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
@@ -213,7 +155,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     window.blackLabelMap[node.id].add({
       id: `label@${item.attributes.SMID}@${node.id}`,
       text: item.attributes.SHORTNAME || item.attributes.NAME,
-      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021=='是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
+      fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
       font: "bold 14px Microsoft YaHei",
       outlineColor: Cesium.Color.WHITE,
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
@@ -224,7 +166,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
       position
     });
-    window.currentMapType == 'vectorwhite' ? window.whiteLabelMap[node.id].setAllLabelsVisible(false) : window.blackLabelMap[node.id].setAllLabelsVisible(false)
+    window.currentMapType == 'vectorwhite' ? window.whiteLabelMap[node.id].setAllLabelsVisible(false) : window.blackLabelMap[node.id].setAllLabelsVisible(false)
 
   });
   fn && fn();

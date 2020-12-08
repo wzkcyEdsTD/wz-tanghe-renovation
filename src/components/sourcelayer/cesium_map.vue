@@ -31,6 +31,7 @@ import {
   initMapConfig,
   mapImageLayerInit,
   mapBaimoLayerInit,
+  mapWmtsLayerInit,
 } from "./cesium_map_init";
 import { mapGetters, mapActions } from "vuex";
 const LAYERS = ServiceUrl.SCENE_WZMODEL;
@@ -52,7 +53,7 @@ export default {
       imagelayer: {
         2018: undefined,
         2019: undefined,
-        mark: undefined,
+        // mark: undefined,
         roadLine: undefined,
       },
       datalayer: {
@@ -69,7 +70,6 @@ export default {
       xzjxjdlayer: undefined,
       blackMark: undefined,
       handdrawnlayer: undefined,
-      handler: undefined,
       sceneLayers: [],
       cameraHeight: 5000,
       showLarge: window.showLarge,
@@ -121,11 +121,11 @@ export default {
       });
     },
     initHandler() {
-      this.handler = new Cesium.ScreenSpaceEventHandler(
+      const handler = new Cesium.ScreenSpaceEventHandler(
         window.earth.scene.canvas
       );
       // 监听左键点击事件
-      this.handler.setInputAction((e) => {
+      handler.setInputAction((e) => {
         const pick = window.earth.scene.pick(e.position);
         console.log("pick", pick);
         if (!pick || !pick.id) return;
@@ -157,9 +157,9 @@ export default {
               });
 
               if (
-                ~_NODEID_.indexOf("视频") ||
-                _NODEID_ == "全景" ||
-                _NODEID_ == "监控"
+                _NODEID_ == "shipin" ||
+                _NODEID_ == "quanjin" ||
+                _NODEID_ == "jiankong"
               ) {
                 this.drawProjectCircle(
                   {
@@ -184,19 +184,23 @@ export default {
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
       // 监听鼠标滚轮事件
-      this.handler.setInputAction((wheelment) => {
+      handler.setInputAction((wheelment) => {
         this.cameraHeight = window.earth.camera.positionCartographic.height;
         if (this.lvdaoShow) {
           if (this.cameraHeight >= 5000) {
             this.tangheFG.show = true;
-            this.tanghe.show = false;
+            this.tanghe && (this.tanghe.show = false);
             this.lvdaolayerThin.show = true;
-            this.lvdaolayerBold.show = false;
+            this.lvdaolayerBold && (this.lvdaolayerBold.show = false);
           } else {
             this.tangheFG.show = false;
-            this.tanghe.show = true;
+            this.tanghe
+              ? (this.tanghe.show = true)
+              : (this.tanghe = mapImageLayerInit(ServiceUrl.TANGHE2D));
             this.lvdaolayerThin.show = false;
-            this.lvdaolayerBold.show = true;
+            this.lvdaolayerBold
+            ? (this.lvdaolayerBold.show = true)
+            : (this.lvdaolayerBold = mapImageLayerInit(ServiceUrl.LVDAOImage.BOLD));
           }
         }
       }, Cesium.ScreenSpaceEventType.WHEEL);
@@ -205,34 +209,31 @@ export default {
       this.$bus.$off("cesium-layer-switch");
       this.$bus.$on("cesium-layer-switch", ({ type, value }) => {
         //  底图切换
-        // console.log("layer-switch", window.whiteLabelMap, window.blackLabelMap);
         if (type == "yx") {
           console.log("yx", value, ServiceUrl.SWImage, this.imagelayer);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
-          this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
+          this.blackMark && (this.blackMark.show = false);
           this.imagelayer[value]
             ? (this.imagelayer[value].show = true)
-            : (this.imagelayer[
-                value
-              ] = mapImageLayerInit(ServiceUrl.SWImage[value]));
+            : (this.imagelayer[value] = mapImageLayerInit(
+                ServiceUrl.SWImage[value]
+              ));
 
-          // 影像注记
-          this.imagelayer["mark"]
-            ? (this.imagelayer["mark"].show = true)
-            : (this.imagelayer[
-                "mark"
-              ] = mapImageLayerInit(ServiceUrl.BlackMark));
-          this.imagelayer["mark"].alpha = 0.8
+          // 深色注记
+          this.blackMark
+            ? (this.blackMark.show = true)
+            : (this.blackMark = mapImageLayerInit(ServiceUrl.BlackMark));
+          this.blackMark.alpha = 0.8;
           // 影像道路线
           this.imagelayer["roadLine"]
             ? (this.imagelayer["roadLine"].show = true)
-            : (this.imagelayer[
-                "roadLine"
-              ] = mapImageLayerInit(ServiceUrl.RoadLine));
-          this.imagelayer["roadLine"].alpha = 0.3
+            : (this.imagelayer["roadLine"] = mapImageLayerInit(
+                ServiceUrl.RoadLine
+              ));
+          this.imagelayer["roadLine"].alpha = 0.3;
 
           window.earth.imageryLayers.lowerToBottom(this.imagelayer[value]);
           window.currentMapType = "yx";
@@ -241,21 +242,24 @@ export default {
           console.log("vector", value, ServiceUrl.DataImage);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
-          this.imagelayer["mark"] && (this.imagelayer["mark"].show = false);
-          this.imagelayer["roadLine"] && (this.imagelayer["roadLine"].show = false);
+          this.imagelayer["roadLine"] &&
+            (this.imagelayer["roadLine"].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
           this.datalayer.black && (this.datalayer.black.show = false);
-          this.blackMark.show = false;
+          this.blackMark && (this.blackMark.show = false);
           this.datalayer[value]
             ? (this.datalayer[value].show = true)
-            : (this.datalayer[
-                value
-              ] = mapImageLayerInit(ServiceUrl.DataImage[value]));
+            : (this.datalayer[value] = mapImageLayerInit(
+                ServiceUrl.DataImage[value]
+              ));
+          if (value == "black") {
+            this.blackMark
+              ? (this.blackMark.show = true)
+              : (this.blackMark = mapImageLayerInit(ServiceUrl.BlackMark));
+            this.blackMark.alpha = 0.8;
+          }
           window.earth.imageryLayers.lowerToBottom(this.datalayer[value]);
           window.currentMapType = `vector${value}`;
-          if (value == "black") {
-            this.blackMark.show = true;
-          }
         }
         // 切换底图时，当前选中资源的label标签颜色切换
         if (window.currentMapType == "vectorwhite") {
@@ -337,36 +341,62 @@ export default {
         if (value) {
           if (this.cameraHeight >= 5000) {
             this.lvdaolayerThin.show = true;
-            this.lvdaolayerBold.show = false;
+            this.lvdaolayerBold && (this.lvdaolayerBold.show = false);
           } else {
             this.lvdaolayerThin.show = false;
-            this.lvdaolayerBold.show = true;
+            this.lvdaolayerBold
+            ? (this.lvdaolayerBold.show = true)
+            : (this.lvdaolayerBold = mapImageLayerInit(ServiceUrl.LVDAOImage.BOLD));
           }
         } else {
           this.lvdaolayerThin.show = false;
-          this.lvdaolayerBold.show = false;
+          this.lvdaolayerBold && (this.lvdaolayerBold.show = false);
         }
       });
 
+      // 塘河范围面
       this.$bus.$off("switch-thfwm");
       this.$bus.$on("switch-thfwm", ({ value }) => {
-        this.thfwmlayer.show = value;
+        if (value) {
+          this.thfwmlayer
+            ? (this.thfwmlayer.show = true)
+            : (this.thfwmlayer = mapImageLayerInit(ServiceUrl.TANGHEFWM));
+          this.thfwmlayer.alpha = 0.7;
+        } else {
+          this.thfwmlayer.show = false;
+        }
       });
 
+      // 行政区县
       this.$bus.$off("switch-xzjxqx");
       this.$bus.$on("switch-xzjxqx", ({ value }) => {
-        this.xzjxqxlayer.show = value;
+        if (value) {
+          this.xzjxqxlayer
+            ? (this.xzjxqxlayer.show = true)
+            : (this.xzjxqxlayer = mapImageLayerInit(ServiceUrl.XZJXQX));
+        } else {
+          this.xzjxqxlayer.show = false;
+        }
       });
 
+      // 行政街道
       this.$bus.$off("switch-xzjxjd");
       this.$bus.$on("switch-xzjxjd", ({ value }) => {
-        this.xzjxjdlayer.show = value;
+        if (value) {
+          this.xzjxjdlayer
+            ? (this.xzjxjdlayer.show = true)
+            : (this.xzjxjdlayer = mapImageLayerInit(ServiceUrl.XZJXJD));
+        } else {
+          this.xzjxjdlayer.show = false;
+        }
       });
 
       this.$bus.$off("clickFly");
       this.$bus.$on("clickFly", () => {
         this.tangheFG.show = false;
-        this.tanghe.show = true;
+        this.tanghe
+          ? (this.tanghe.show = true)
+          : (this.tanghe = mapImageLayerInit(ServiceUrl.TANGHE2D));
         this.lvdaolayerThin.show = false;
         this.lvdaolayerBold.show = true;
       });
@@ -374,6 +404,7 @@ export default {
     init3DMap(fn) {
       const that = this;
       const viewer = new Cesium.Viewer("cesiumContainer", {
+        skyBox: false,
         infoBox: false,
         selectionIndicator: false,
         shadows: false, //  内存吃不消
@@ -383,52 +414,24 @@ export default {
       // 地图初始配置
       initMapConfig();
 
-      if (this.currentPage == 'sourcelayer') {
+      if (this.currentPage == "sourcelayer") {
         // 矢量日景
-        this.datalayer.white = mapImageLayerInit(ServiceUrl.DataImage.white)
+        this.datalayer.white = mapImageLayerInit(ServiceUrl.DataImage.white);
       }
-      if (this.currentPage == 'compare') {
+      if (this.currentPage == "compare") {
         // 2019影像图
-        this.imagelayer[2019] = mapImageLayerInit(ServiceUrl.SWImage[2019])
+        this.imagelayer[2019] = mapImageLayerInit(ServiceUrl.SWImage[2019]);
       }
 
       // 2.5D
       // url: "http://61.164.104.154:80/iserver/services/3dmap/wmts",
-
-      // 行政街道
-      this.xzjxjdlayer = mapImageLayerInit(ServiceUrl.XZJXJD)
-      // this.xzjxjdlayer.alpha = 0.5;
-      this.xzjxjdlayer.show = false;
-
-      // 塘河范围面
-      this.thfwmlayer = mapImageLayerInit(ServiceUrl.TANGHEFWM)
-      this.thfwmlayer.alpha = 0.7;
-      this.thfwmlayer.show = false;
-
-      // 行政区县
-      this.xzjxqxlayer = mapImageLayerInit(ServiceUrl.XZJXQX)
-      if (this.currentPage == 'sourcelayer') {
-        this.xzjxqxlayer.show = false;
-      }
-
-      // 二维塘河
-      this.tanghe = mapImageLayerInit(ServiceUrl.TANGHE2D)
-      this.tanghe.show = false;
+      // mapWmtsLayerInit('test', 'http://61.164.104.154:80/iserver/services/3dmap/wmts')
 
       // 塘河发光
-      this.tangheFG = mapImageLayerInit(ServiceUrl.TANGHEFG)
-
-      // 绿道粗
-      this.lvdaolayerBold = mapImageLayerInit(ServiceUrl.LVDAOImage.BOLD)
-      this.lvdaolayerBold.show = false;
+      this.tangheFG = mapImageLayerInit(ServiceUrl.TANGHEFG);
 
       // 绿道细
-      this.lvdaolayerThin = mapImageLayerInit(ServiceUrl.LVDAOImage.THIN)
-
-      // 矢量夜景注记
-      this.blackMark = mapImageLayerInit(ServiceUrl.BlackMark)
-      this.blackMark.alpha = 0.8;
-      this.blackMark.show = false;
+      this.lvdaolayerThin = mapImageLayerInit(ServiceUrl.LVDAOImage.THIN);
 
       // window.earth.scene.open("http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace")
       // var promise = window.earth.scene.open('http://172.168.3.183:8090/iserver/services/3D-all/rest/realspace');
@@ -613,7 +616,23 @@ export default {
     //   }
     // },
 
-    switchHanddrawn(value) {
+    // 切换手绘地图
+    switchHanddrawn(show) {
+      if (show) {
+        this.handdrawnlayer
+          ? (this.handdrawnlayer.show = true)
+          : (this.handdrawnlayer = window.earth.imageryLayers.addImageryProvider(
+              new Cesium.SuperMapImageryProvider({
+                url: ServiceUrl.HANDDRAWN,
+              })
+            ));
+      } else {
+        this.handdrawnlayer.show = false;
+      }
+    },
+
+    // 切换2.5维底图
+    switchWmts(value, show) {
       if (value) {
         this.handdrawnlayer
           ? (this.handdrawnlayer.show = true)

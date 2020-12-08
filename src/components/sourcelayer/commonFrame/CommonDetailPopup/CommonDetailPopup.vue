@@ -393,7 +393,7 @@ export default {
 
     // 跳转详情
     goDetail(entity) {
-      if(entity.type === "全景") {
+      if(entity.type === "quanjin") {
         if (this.showLarge) {
           this.$bus.$emit("change-rightContent", { type: 'qj', value: entity.attributes.QJMC });
         } else {
@@ -401,7 +401,7 @@ export default {
           this.showQJ = true;
           this.isShow = false;
         }
-      } else if(entity.type === "视频") {
+      } else if(entity.type === "shipin") {
         if (this.showLarge) {
           this.$bus.$emit("change-rightContent", { type: 'video', value: `/static/video/${entity.attributes.SPWJM}` });
         } else {
@@ -409,7 +409,7 @@ export default {
           this.showVideo = true;
           this.isShow = false;
         }
-      } else if(entity.type === "监控") {
+      } else if(entity.type === "jiankong") {
         if (this.showLarge) {
           this.$bus.$emit("change-rightContent", { type: 'jk', value: entity.attributes.URL });
         } else {

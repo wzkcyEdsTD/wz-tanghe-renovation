@@ -120,6 +120,10 @@ export default {
         label: '手绘',
         value: 'handdrawn',
         selected: false
+      }, {
+        label: '2.5维鹿城',
+        value: '2.5LC',
+        selected: false
       }],
       currentVector: 'white',
       threeDList: [{
@@ -175,13 +179,16 @@ export default {
       }
     },
     changeVector(item) {
-      this.currentYear = ''
-      this.currentLayer = 'vector'
-      // debugger;
       if (item.value == 'handdrawn') {
         item.selected = !item.selected
         this.$parent.$parent.switchHanddrawn(item.selected);
-      } else {
+      } else if (~item.value.indexOf('2.5')) {
+        item.selected = !item.selected
+        this.$parent.$parent.switchWmts(item.value, item.selected);
+      } 
+      else {
+        this.currentYear = ''
+        this.currentLayer = 'vector'
         this.currentVector = item.value
       }
     },

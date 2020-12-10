@@ -68,9 +68,11 @@ export default {
       lvdaolayerBold: undefined,
       thfwmlayer: undefined,
       xzjxqxlayer: undefined,
+      xzjxqxmlayer: undefined,
       xzjxjdlayer: undefined,
       blackMark: undefined,
       handdrawnlayer: undefined,
+      wmtsLC: undefined,
       sceneLayers: [],
       cameraHeight: 5000,
       showLarge: window.showLarge,
@@ -200,8 +202,10 @@ export default {
               : (this.tanghe = mapImageLayerInit(ServiceUrl.TANGHE2D));
             this.lvdaolayerThin.show = false;
             this.lvdaolayerBold
-            ? (this.lvdaolayerBold.show = true)
-            : (this.lvdaolayerBold = mapImageLayerInit(ServiceUrl.LVDAOImage.BOLD));
+              ? (this.lvdaolayerBold.show = true)
+              : (this.lvdaolayerBold = mapImageLayerInit(
+                  ServiceUrl.LVDAOImage.BOLD
+                ));
           }
         }
       }, Cesium.ScreenSpaceEventType.WHEEL);
@@ -265,26 +269,22 @@ export default {
         // 切换底图时，地图上label颜色切换
         if (window.currentMapType == "vectorwhite") {
           for (let key in window.blackLabelMap) {
-            if (
-              window.blackLabelMap[key]._labels.length 
-            ) {
+            if (window.blackLabelMap[key]._labels.length) {
               window.blackLabelMap[key].setAllLabelsVisible(true);
             } else {
               for (let innerkey in window.featureMap[key]) {
-                addBlackLabel(key, window.featureMap[key][innerkey])
+                addBlackLabel(key, window.featureMap[key][innerkey]);
               }
             }
             window.whiteLabelMap[key].setAllLabelsVisible(false);
           }
         } else {
           for (let key in window.whiteLabelMap) {
-            if (
-              window.whiteLabelMap[key]._labels.length 
-            ) {
+            if (window.whiteLabelMap[key]._labels.length) {
               window.whiteLabelMap[key].setAllLabelsVisible(true);
             } else {
               for (let innerkey in window.featureMap[key]) {
-                addWhiteLabel(key, window.featureMap[key][innerkey])
+                addWhiteLabel(key, window.featureMap[key][innerkey]);
               }
             }
             window.blackLabelMap[key].setAllLabelsVisible(false);
@@ -352,8 +352,10 @@ export default {
           } else {
             this.lvdaolayerThin.show = false;
             this.lvdaolayerBold
-            ? (this.lvdaolayerBold.show = true)
-            : (this.lvdaolayerBold = mapImageLayerInit(ServiceUrl.LVDAOImage.BOLD));
+              ? (this.lvdaolayerBold.show = true)
+              : (this.lvdaolayerBold = mapImageLayerInit(
+                  ServiceUrl.LVDAOImage.BOLD
+                ));
           }
         } else {
           this.lvdaolayerThin.show = false;
@@ -378,11 +380,16 @@ export default {
       this.$bus.$off("switch-xzjxqx");
       this.$bus.$on("switch-xzjxqx", ({ value }) => {
         if (value) {
+          this.xzjxqxmlayer
+            ? (this.xzjxqxmlayer.show = true)
+            : (this.xzjxqxmlayer = mapImageLayerInit(ServiceUrl.XZJXQXM));
+          this.xzjxqxmlayer.alpha = 0.5;
           this.xzjxqxlayer
             ? (this.xzjxqxlayer.show = true)
             : (this.xzjxqxlayer = mapImageLayerInit(ServiceUrl.XZJXQX));
         } else {
           this.xzjxqxlayer.show = false;
+          this.xzjxqxmlayer.show = false;
         }
       });
 
@@ -400,12 +407,12 @@ export default {
 
       this.$bus.$off("clickFly");
       this.$bus.$on("clickFly", () => {
-        this.tangheFG.show = false;
+        this.tangheFG && (this.tangheFG.show = false);
         this.tanghe
           ? (this.tanghe.show = true)
           : (this.tanghe = mapImageLayerInit(ServiceUrl.TANGHE2D));
-        this.lvdaolayerThin.show = false;
-        this.lvdaolayerBold.show = true;
+        this.lvdaolayerThin && (this.lvdaolayerThin.show = false);
+        this.lvdaolayerBold && (this.lvdaolayerBold.show = true);
       });
     },
     init3DMap(fn) {
@@ -429,10 +436,6 @@ export default {
         // 2019影像图
         this.imagelayer[2019] = mapImageLayerInit(ServiceUrl.SWImage[2019]);
       }
-
-      // 2.5D
-      // url: "http://61.164.104.154:80/iserver/services/3dmap/wmts",
-      // mapWmtsLayerInit('test', 'http://61.164.104.154:80/iserver/services/3dmap/wmts')
 
       // 塘河发光
       this.tangheFG = mapImageLayerInit(ServiceUrl.TANGHEFG);
@@ -628,28 +631,32 @@ export default {
       if (show) {
         this.handdrawnlayer
           ? (this.handdrawnlayer.show = true)
-          : (this.handdrawnlayer = window.earth.imageryLayers.addImageryProvider(
-              new Cesium.SuperMapImageryProvider({
-                url: ServiceUrl.HANDDRAWN,
-              })
-            ));
+          : (this.handdrawnlayer = mapImageLayerInit(ServiceUrl.HANDDRAWN));
       } else {
         this.handdrawnlayer.show = false;
       }
     },
 
     // 切换2.5维底图
-    switchWmts(value, show) {
-      if (value) {
-        this.handdrawnlayer
-          ? (this.handdrawnlayer.show = true)
-          : (this.handdrawnlayer = window.earth.imageryLayers.addImageryProvider(
-              new Cesium.SuperMapImageryProvider({
-                url: ServiceUrl.HANDDRAWN,
-              })
-            ));
+    switchWmts(show, value) {
+      if (show) {
+        if (value == "2.5DLC") {
+          this.wmtsLC
+            ? (this.wmtsLC.show = true)
+            : (this.wmtsLC = mapWmtsLayerInit(
+                "wmtsLC",
+                "http://61.164.104.154:80/iserver/services/3dmap/wmts"
+              ));
+        }
+        // 图层排序，防止被覆盖
+        this.tanghe && window.earth.imageryLayers.raiseToTop(this.tanghe);
+        this.tangheFG && window.earth.imageryLayers.raiseToTop(this.tangheFG);
+        this.lvdaolayerThin &&
+          window.earth.imageryLayers.raiseToTop(this.lvdaolayerThin);
+        this.lvdaolayerBold &&
+          window.earth.imageryLayers.raiseToTop(this.lvdaolayerBold);
       } else {
-        this.handdrawnlayer.show = false;
+        this.wmtsLC && (this.wmtsLC.show = false);
       }
     },
 

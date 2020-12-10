@@ -61,7 +61,9 @@
             >
               <div
                 class="name"
-                :style="{ color: index < 3 ? '#FF9124' : '#14D1D1' }"
+                :style="{
+                  color: item.attributes.YS != 30 ? '#FF9124' : '#14D1D1',
+                }"
               >
                 {{ index + 1 }}.{{ item.attributes.NAME }}
               </div>
@@ -133,24 +135,24 @@
         <div class="base-info">
           <div class="base-item">
             <div class="progressEmpty">
-              <img src="./images/0%（蓝）.png" class="empty" />
+              <img src="./images/0（蓝）.png" class="empty" />
               <div
                 class="progressFull"
                 :style="{ width: `${currentData.stsRate / 10}vh` }"
               >
-                <img src="./images/100%（蓝）.png" class="full" />
+                <img src="./images/100（蓝）.png" class="full" />
               </div>
               <span class="progressTitle">{{ currentData.stsRate }}%</span>
             </div>
           </div>
           <div class="base-item">
             <div class="progressEmpty">
-              <img src="./images/0%（红）.png" class="empty" />
+              <img src="./images/0（红）.png" class="empty" />
               <div
                 class="progressFull"
                 :style="{ width: `${currentData.amoundRate / 10}vh` }"
               >
-                <img src="./images/100%（红）.png" class="full" />
+                <img src="./images/100（红）.png" class="full" />
               </div>
               <span class="progressTitleRight"
                 >{{ currentData.amoundRate }}%</span
@@ -171,12 +173,12 @@
         </div>
         <div class="jd-info">
           <div class="sub-title-wrapper">
-            <div class="sub-title">项目投资计划表</div>
+            <div class="sub-title">项目完工计划表</div>
             <div class="decorate"></div>
           </div>
           <div class="chart-wrapper">
             <div class="rate-item">
-              <p class="xiaobiaoti">{{ "投资计划(万元)" }}</p>
+              <p class="xiaobiaoti">{{ "完工计划(个)" }}</p>
               <div
                 style="height: 16vh; width: 35vh"
                 class="echart"
@@ -446,12 +448,18 @@ import {
   getProjDeptNumAmound,
   getProjStatusAmound,
   getProjNumAndAmound,
+  getProjByConsdate,
 } from "api/tangheAPI";
 
 const SERVER_HOST = "http://172.168.3.183:8090/iserver/services";
 const SW_DATA = "/data-alldata/rest/data";
 const SW_DATA_NAME = "172.168.3.181_thxm:";
 const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
+const orientation = {
+  heading: 0.01768860454315663,
+  pitch: Cesium.Math.toRadians(-90),
+  roll: 0.0,
+};
 
 export default {
   components: {
@@ -524,6 +532,8 @@ export default {
         stsRate: 0,
         amoundRate: 0,
       },
+      项目res: {},
+      绿道断点res: {},
     };
   },
   computed: {
@@ -532,7 +542,17 @@ export default {
       return this.$store.state.map.sourceMap;
     },
     allList() {
-      return this.xmList.concat(this.ddList);
+      let tempArr = this.xmList.concat(this.ddList);
+      let isKeyArr = []
+      let noKeyArr = []
+      tempArr.forEach(item => {
+        if (item.attributes.YS != 30) {
+          isKeyArr.push(item)
+        } else {
+          noKeyArr.push(item)
+        }
+      })
+      return isKeyArr.concat(noKeyArr);
     },
     delayXmList() {
       let result = [];
@@ -632,6 +652,7 @@ export default {
       getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(url, {
         eventListeners: {
           processCompleted: async (res) => {
+            this[`${node.id}res`] = res;
             const fields = await getIserverFields(url, newdataset);
             treeDrawTool(this, res, node, fields, fn);
           },
@@ -640,12 +661,6 @@ export default {
       });
       getFeatureBySQLService.processAsync(getFeatureBySQLParams);
     },
-    // drawBars() {
-    //   drawBar(this);
-    // },
-    // drawLines() {
-    //   drawLine(this);
-    // },
     async selectZrdw(item) {
       // 点击，列表回到顶部
       $("#xm-list").scrollTop(0);
@@ -678,10 +693,6 @@ export default {
           this.currentData.amoundRate = rateRes.result.amoundRate.toFixed(1);
         }
 
-        // this.$nextTick(() => {
-        //   this.drawLines();
-        //   this.drawBars();
-        // });
         let barRes = await getProjStatusByDept({ sysOrgCode: item.sysOrgCode });
         if (barRes.code === 200) {
           let barData = {};
@@ -704,6 +715,11 @@ export default {
           });
           drawBar(this, barData);
         }
+
+        let lineRes = await getProjByConsdate({ sysOrgCode: item.sysOrgCode });
+        if (lineRes.code === 200) {
+          drawLine(this, lineRes.result);
+        }
       }
 
       // 大屏下关闭多媒体窗口
@@ -721,13 +737,11 @@ export default {
       this.$parent.$refs.projectDetailPopup.getForceEntity(item);
       this.$parent.$refs.commonDetailPopup.closePopup();
 
+      this.$bus.$emit("click-item", { value: item });
+
       window.earth.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(x, y, 1200),
-        orientation: {
-          heading: 0.01768860454315663,
-          pitch: Cesium.Math.toRadians(-90),
-          roll: 0.0,
-        },
+        orientation: orientation,
         complete: () => {
           this.$bus.$emit("clickFly");
         },
@@ -746,47 +760,31 @@ export default {
       }
 
       if (this.currentZrdw != "指挥部") {
-        this.xmList = this.sourceMap["项目"].filter((item) => {
+        let currentXmRes = this.项目res.result.features.filter((item) => {
           return ~item.attributes.ZR_DEPTID.indexOf(this.currentZrdw);
         });
-        this.ddList = this.sourceMap["绿道断点"].filter((item) => {
+        let currentDdRes = this.绿道断点res.result.features.filter((item) => {
           return ~item.attributes.ZRDW.indexOf(this.currentZrdw);
         });
-        this.getPOIPickedFeature({
-          id: "项目",
-          label: "项目",
-          url: SERVER_DEFAULT_DATA,
-          newdataset: `${SW_DATA_NAME}项目`,
-          icon: false,
-          query: `ZR_DEPTID like '%${this.currentZrdw}'`,
-        });
-        this.getPOIPickedFeature({
-          id: "绿道断点",
-          label: "断点",
-          url: SERVER_DEFAULT_DATA,
-          newdataset: `${SW_DATA_NAME}绿道断点`,
-          icon: "断点",
-          iconSize: "small",
-          query: `ZRDW like '%${this.currentZrdw}'`,
-        });
-      } else {
+        treeDrawTool(
+          this,
+          { result: { features: currentXmRes } },
+          { id: "项目", icon: false }
+        );
+        treeDrawTool(
+          this,
+          { result: { features: currentDdRes } },
+          { id: "绿道断点", icon: "断点" }
+        );
+
         this.xmList = this.sourceMap["项目"];
         this.ddList = this.sourceMap["绿道断点"];
-        this.getPOIPickedFeature({
-          id: "项目",
-          label: "项目",
-          url: SERVER_DEFAULT_DATA,
-          newdataset: `${SW_DATA_NAME}项目`,
-          icon: false,
-        });
-        this.getPOIPickedFeature({
-          id: "绿道断点",
-          label: "断点",
-          url: SERVER_DEFAULT_DATA,
-          newdataset: `${SW_DATA_NAME}绿道断点`,
-          icon: "断点",
-          iconSize: "small",
-        });
+      } else {
+        treeDrawTool(this, this.项目res, { id: "项目", icon: false });
+        treeDrawTool(this, this.绿道断点res, { id: "绿道断点", icon: "断点" });
+
+        this.xmList = this.sourceMap["项目"];
+        this.ddList = this.sourceMap["绿道断点"];
       }
     },
     searchXMFilter() {
@@ -836,6 +834,43 @@ export default {
     },
     currentZrdw(val) {
       this.filterData();
+      if (val == "龙湾区政府") {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.803145,
+            27.933237,
+            15000
+          ),
+          orientation: orientation,
+        });
+      } else if (val == "瑞安市政府") {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.685643,
+            27.792632,
+            15000
+          ),
+          orientation: orientation,
+        });
+      } else if (val == "浙南产业区") {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.789269,
+            27.847479,
+            15000
+          ),
+          orientation: orientation,
+        });
+      } else {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.67625660935506,
+            27.990332018707733,
+            15000.0
+          ),
+          orientation: orientation,
+        });
+      }
     },
     currentType(val) {
       // 点击，列表回到顶部

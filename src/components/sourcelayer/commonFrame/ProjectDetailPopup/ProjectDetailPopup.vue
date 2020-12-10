@@ -2,7 +2,7 @@
   <div>
     <transition name="fade" v-if="forceEntity.attributes">
       <div class="project-detail-popup" v-show="isShow">
-        <span class="close-btn" @click="closeInfo"></span>
+        <span class="close-btn" @click="closeDetail"></span>
         <div class="title-wrapper">
           <span class="pre"></span>
           <span class="title">{{ forceEntity.attributes.NAME }}</span>
@@ -11,34 +11,34 @@
           <div class="btn-list">
             <button
               class="btn-item"
-              :disabled="!currentData.qj"
+              :disabled="!this.forceEntity.attributes.QJ"
               :class="{
                 active: currentShow == 'qj',
-                disabled: !currentData.qj,
+                disabled: !this.forceEntity.attributes.QJ,
               }"
-              @click="currentShow = 'qj'"
+              @click="onTypeClick('qj')"
             >
               全景
             </button>
             <button
               class="btn-item"
-              :disabled="!currentData.sp"
+              :disabled="!this.forceEntity.attributes.SP"
               :class="{
                 active: currentShow == 'sp',
-                disabled: !currentData.sp,
+                disabled: !this.forceEntity.attributes.SP,
               }"
-              @click="currentShow = 'sp'"
+              @click="onTypeClick('sp')"
             >
               视频
             </button>
             <button
               class="btn-item"
-              :disabled="!currentData.photo"
+              :disabled="!this.forceEntity.attributes.PHOTO"
               :class="{
                 active: currentShow == 'photo',
-                disabled: !currentData.photo,
+                disabled: !this.forceEntity.attributes.PHOTO,
               }"
-              @click="currentShow = 'photo'"
+              @click="onTypeClick('photo')"
             >
               图片
             </button>
@@ -367,7 +367,11 @@
             </div>
           </div>
         </div>
-        <Around ref="around" :forceEntity="forceEntity" :aroundData="aroundData" />
+        <Around
+          ref="around"
+          :forceEntity="forceEntity"
+          :aroundData="aroundData"
+        />
         <div class="qrcode-wrapper" v-show="~forceEntity.type.indexOf('项目')">
           <div class="title-wrapper">
             <span class="title">项目二维码</span>
@@ -404,7 +408,7 @@ export default {
   components: {
     ElImageViewer,
     ProjectInfoPopup,
-    Around
+    Around,
   },
   computed: {
     ...mapGetters("map", ["bufferQueryData"]),
@@ -417,9 +421,9 @@ export default {
       isShow: false,
       finalData: {},
       finalList: [],
-      currentData: {},
-      currentIndex: 0,
-      currentShow: "qj",
+      currentData: {}, // 当前展示数据
+      currentIndex: 0, // 当前展示索引
+      currentShow: "qj", // 当前展示类型
       swiperOptions: {
         slidesPerView: 1,
         scrollbar: {
@@ -433,9 +437,9 @@ export default {
           slideChangeTransitionEnd: () => {
             console.log("slideChangeTransitionEnd!!", this.currentShow);
             if (this.currentShow == "sp") {
-              // this.$refs.video1.pause();
-              // this.$refs.video2.pause();
-              // this.$refs.video3.pause();
+              this.$refs.video.forEach((item) => {
+                item.pause()
+              });
             }
           },
         },
@@ -462,16 +466,27 @@ export default {
   },
   mounted() {
     this.getNowFormatDate();
+    this.eventRegsiter();
   },
   methods: {
+    eventRegsiter() {
+      // 列表点击事件
+      this.$bus.$off("click-item");
+      this.$bus.$on("click-item", ({ value }) => {
+        let qj = value.attributes.QJ
+        if (this.showQJ && qj) {
+          this.QJURL = ~qj.indexOf(";") ? qj.split(";")[0] : qj;
+        }
+      });
+    },
     getForceEntity(forceEntity) {
       this.forceEntity = forceEntity;
       this.projectId = this.forceEntity.attributes.XMID;
       this.isShow = true;
       console.log("aaa", forceEntity);
       this.$nextTick(() => {
-        this.creatQrCode()
-      })
+        this.creatQrCode();
+      });
       this.initData(forceEntity.attributes.GUID);
     },
     creatQrCode() {
@@ -484,6 +499,10 @@ export default {
       });
     },
     async initData(id) {
+      this.$nextTick(() => {
+        this.$refs.SwiperTime.swiper.slideTo(0, 0, false);
+      });
+
       this.currentIndex = 0;
       this.currentData = {};
       this.finalData = {};
@@ -505,8 +524,6 @@ export default {
       console.log("finalList", this.finalList);
       if (this.finalList.length) {
         this.currentData = this.finalList[this.currentIndex];
-        console.log("currentData", this.currentData);
-        // console.log('refsVideo', this.$refs.video)
       }
     },
     formatData(attr, key) {
@@ -519,28 +536,24 @@ export default {
           if (~attrValue.indexOf(";")) {
             let tempArr = attrValue.split(";");
             tempArr.forEach((item, index) => {
+              let time
               if (item.split("_")[1]) {
-                let time = item.split("_")[1].split(".")[0];
-                if (this.finalData[time]) {
-                  !this.finalData[time][key] &&
-                    (this.finalData[time][key] = []);
-                  this.finalData[time][key].push(item);
-                } else {
-                  this.finalData[time] = { date: time };
-                  this.finalData[time][key] = [item];
-                }
-                if (~attr.indexOf("SLT")) {
-                  this.finalData[time].qj = [qjTempArr[index]];
-                }
+                time = item.split("_")[1].split(".")[0];
               } else {
-                let time = "20200101";
-                this.finalData[time] = { date: time };
-                this.finalData[time][key] = [];
+                time = "20200101";
+              }
+              if (this.finalData[time]) {
+                !this.finalData[time][key] &&
+                  (this.finalData[time][key] = []);
                 this.finalData[time][key].push(item);
-                if (~attr.indexOf("SLT")) {
-                  this.finalData[time].qj = [];
-                  this.finalData[time].qj.push(qjTempArr[index]);
-                }
+              } else {
+                this.finalData[time] = { date: time };
+                this.finalData[time][key] = [item];
+              }
+              if (~attr.indexOf("SLT")) {
+                !this.finalData[time].qj &&
+                  (this.finalData[time].qj = []);
+                this.finalData[time].qj.push(qjTempArr[index]);
               }
             });
           } else {
@@ -562,7 +575,19 @@ export default {
         }
       }
     },
-    closeInfo() {
+    onTypeClick(type) {
+      if (!this.currentData[type]) {
+        for (let i = 0; i < this.finalList.length; i++) {
+          if (this.finalList[i][type]) {
+            this.currentIndex = i;
+            this.$refs.SwiperTime.swiper.slideTo(i, 0, false);
+            break;
+          }
+        }
+      }
+      this.currentShow = type;
+    },
+    closeDetail() {
       this.isShow = false;
     },
     openQJ(index) {
@@ -574,7 +599,6 @@ export default {
         });
       } else {
         this.QJURL = this.currentData.qj[index];
-        console.log("QJURL", this.QJURL);
         this.showQJ = true;
       }
     },
@@ -583,6 +607,7 @@ export default {
       this.QJURL = "";
     },
     onPreview(list, index) {
+      this.closeQJ()
       this.srcList = list.map((item) => {
         return `/static/images/${this.forceEntity.type}/${item}`;
       });
@@ -615,16 +640,16 @@ export default {
       let currentdate = year + seperator1 + month + seperator1 + strDate;
       this.date = currentdate;
     },
-    
+
     // 周边数据
     getdata(temp) {
-      this.aroundData = temp
+      this.aroundData = temp;
     },
     // 关闭面板
     closeCollapse() {
       this.$nextTick(() => {
         this.$refs.around.collapseChange([]);
-      })
+      });
     },
 
     openInfo() {
@@ -637,18 +662,22 @@ export default {
   watch: {
     currentIndex(val) {
       this.currentData = this.finalList[val];
-      console.log("watchcurrentData", this.currentData);
-      console.log("watchcurrentshow", this.currentShow);
     },
     currentData(val) {
-      if (!val.qj) {
+      // 切换展示数据时优先展示有内容的类型
+      if (!val[this.currentShow]) {
+        if (val.qj) {
+          this.currentShow = "qj";
+          return
+        }
         if (val.sp) {
           this.currentShow = "sp";
-        } else {
-          val.photo && (this.currentShow = "photo");
+          return
         }
-      } else {
-        this.currentShow = "qj";
+        if (val.photo) {
+          this.currentShow = "photo";
+          return
+        }
       }
     },
     currentShow(val) {

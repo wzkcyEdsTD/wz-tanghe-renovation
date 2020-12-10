@@ -106,10 +106,14 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     );
 
     let billImage
+    let width = 32
+    let height = 32
     if (node.icon) {
       if (node.icon == '断点') {
         if (~currentHash.indexOf('compare')) {
           billImage = `/static/images/map-ico/断点2.png`
+          width = 28
+          height = 28
         } else {
           billImage = `/static/images/map-ico/断点.png`
         }
@@ -122,14 +126,15 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
       }
       if (~currentHash.indexOf('compare')) {
         billImage = `/static/images/map-ico/${item.attributes.ZT.trim()}.png`
+        height = 35
       }
     }
 
     window.billboardMap[node.id].add({
       id: `billboard@${item.attributes.SMID}@${node.id}`,
       image: billImage,
-      width: 32,
-      height: 32,
+      width: width,
+      height: height,
       scaleByDistance: new Cesium.NearFarScalar(1000, 2, 6000, 1),
       // sizeInMeters:true,
       disableDepthTestDistance: Number.POSITIVE_INFINITY,

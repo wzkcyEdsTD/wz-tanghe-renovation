@@ -64,7 +64,6 @@ export default {
         this.popList = popList;
         !this.shallPop &&
           this.$nextTick(() => {
-            console.log('goal!!!!')
             this.shallPop = true;
           });
       } else {

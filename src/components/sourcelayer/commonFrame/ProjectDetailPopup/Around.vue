@@ -306,7 +306,6 @@ export default {
   methods: {
     // 折叠面板事件监听
     collapseChange(val) {
-      console.log('wft????', val)
       this.activeNames = val
       // 展开画圆，收起清除
       if (val.length) {

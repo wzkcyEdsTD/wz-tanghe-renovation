@@ -174,15 +174,16 @@ export const drawBar = (context, barData) => {
   });
 }
 
-export const drawLine = (context) => {
+export const drawLine = (context, lineData) => {
   const e = getFontSize();
-  // let data1, data2, lab;
-  // if (!!context.$data.ret) {
-  //   data1 = parseFloat(context.$data.ret.speed.Completion);
-  //   data2 = 100 - 1 - data1;
-  //   console.log(data2);
-  //   lab = context.$data.ret.project.plan;
-  // }
+  let nameList = []
+  let numberList = []
+  lineData.forEach(item => {
+    if (item.name) {
+      nameList.push(item.name.substr(0, 10))
+      numberList.push(item.num.toFixed(2))
+    }
+  })
   context.lineEchart = context.$echarts.init(context.$refs.lineEchart);
   context.lineEchart.setOption({
     grid: {
@@ -205,7 +206,8 @@ export const drawLine = (context) => {
     xAxis: {
       type: 'category',
       boundaryGap: '',
-      data: ['2020.1.1', '2020.2.1', '2020.6.1', '2020.8.1', '2020.9.1', '2020.10.1', '2020.11.1', '2020.12.1', '2021.1.1', '2021.3.1', '2021.4.1', '2021.6.1', '2022.3.1', '2022.7.1', '2022.9.1', '2021.10.1', '2021.12.1', '2022.10.1', '2022.12.1', '2023.9.1', '2023.12.1', '2024.3.1'],
+      data: nameList,
+      // data: ['2020.1.1', '2020.2.1', '2020.6.1', '2020.8.1', '2020.9.1', '2020.10.1', '2020.11.1', '2020.12.1', '2021.1.1', '2021.3.1', '2021.4.1', '2021.6.1', '2022.3.1', '2022.7.1', '2022.9.1', '2021.10.1', '2021.12.1', '2022.10.1', '2022.12.1', '2023.9.1', '2023.12.1', '2024.3.1'],
       axisTick: {
         //x轴刻度线
         show: false,
@@ -270,7 +272,8 @@ export const drawLine = (context) => {
       },
     ],
     series: [{
-      data: [3000, 19000, 150, 15144, 103200, 161250, 500, 24813.36, 194718, 7540, 20016, 133571, 7340, 50000, 67214, 1454, 928097, 5000, 408570, 171360, 176769, 240263],
+      data: numberList,
+      // data: [3000, 19000, 150, 15144, 103200, 161250, 500, 24813.36, 194718, 7540, 20016, 133571, 7340, 50000, 67214, 1454, 928097, 5000, 408570, 171360, 176769, 240263],
       type: 'line',
       smooth: true,
       areaStyle: {

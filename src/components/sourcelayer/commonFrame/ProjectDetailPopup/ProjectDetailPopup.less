@@ -402,13 +402,13 @@
   }
 }
 
-
 .QJFrame {
   position: absolute;
   z-index: 9999;
-  left: 0;
-  width: 100%;
+  left: 47.5%;
+  width: calc(100% - 90vh);
   height: 100%;
+  transform: translateX(-50%);
   transition: all 1s;
   background: rgba(19,45,85,.9);
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
@@ -425,8 +425,8 @@
   .close {
     .bg-image("./images/close");
     position: absolute;
-    top: 12%;
-    right: 3%;
+    top: 6%;
+    right: 1%;
     width: 3.2vh;
     height: 3.2vh;
     text-decoration: none;
@@ -476,38 +476,6 @@
     text-align: right;
     text-decoration: underline;
     cursor: pointer;
-  }
-}
-
-.QJFrame {
-  position: absolute;
-  z-index: 9999;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: all 1s;
-  background: rgba(19,45,85,.9);
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
-  box-sizing: border-box;
-  bottom: 0;
-  #content {
-    width: 100%;
-    // height: 800px;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-  }
-  .close {
-    .bg-image("./images/close");
-    position: absolute;
-    top: 12%;
-    right: 3%;
-    width: 32px;
-    height: 32px;
-    text-decoration: none;
-    cursor: pointer;
-    z-index: 99;
   }
 }
 

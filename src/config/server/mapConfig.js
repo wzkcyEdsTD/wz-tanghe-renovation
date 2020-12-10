@@ -73,6 +73,9 @@ export const ServiceUrl = {
   // 行政区县
   XZJXQX:
     "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/qx",
+  // 行政区县面
+  XZJXQXM:
+    "http://172.168.3.183:8090/iserver/services/3D-qxm/rest/realspace/datas/qxm",
   // 行政街道
   XZJXJD:
     // "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/jd",

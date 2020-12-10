@@ -48,16 +48,13 @@ const mutations = {
   // },
 
   [types.SET_SOURCE_MAP](state, data) {
-    console.log(222, data)
     // state.sourceMap = {...state.sourceMap, ...data};
     state.sourceMap = Object.assign({}, state.sourceMap, data)
   },
   [types.SET_CURRENT_SOURCE](state, data) {
-    console.log(333, data)
     state.currentSource = data;
   },
   [types.SET_SEJ_LIST](state, data) {
-    console.log(444, data)
     state.sejList = data;
   },
   [types.SET_BUFFER_QUERY_DATA](state, data) {

@@ -2,10 +2,10 @@
   <div class="map-tool" :style="{right: currentPage=='sourcelayer'?'22%':'24%'}">
     <div class="box">
       <div class="sub-container" :class="{light: currentVector=='black'}" :style="{visibility: currentMouse=='yx' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='yx'" @mouseleave="currentMouse=''">
-        <div class="sub-item" :class="{selected: currentYear==item}" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}"
+        <div class="sub-item" :style="{'padding-top': showLarge ? '1.1vh' : '0.9vh'}" :class="{selected: currentYear==item.value || item.selected}"
              v-for="(item, index) in yearList" :key="index"
              @click="changeYear(item)">
-          {{item}}
+          {{item.label}}
         </div>
       </div>
       <div class="sub-container" :class="{light: currentVector=='black'}" :style="{visibility: currentMouse=='vector' ? 'visible' : 'hidden'}" @mouseenter="currentMouse='vector'" @mouseleave="currentMouse=''">
@@ -88,7 +88,17 @@ export default {
       showLarge:window.showLarge,
       currentMouse: '',
       currentLayer: 'vector',
-      yearList: [2018, 2019],
+      yearList: [{
+        label: '2018',
+        value: '2018'
+      }, {
+        label: '2019',
+        value: '2019'
+      }, {
+        label: '2.5维鹿城',
+        value: '2.5DLC',
+        selected: false
+      }],
       currentYear: '',
       currentTool:'',
       isTool: false,
@@ -119,10 +129,6 @@ export default {
       }, {
         label: '手绘',
         value: 'handdrawn',
-        selected: false
-      }, {
-        label: '2.5维鹿城',
-        value: '2.5LC',
         selected: false
       }],
       currentVector: 'white',
@@ -157,9 +163,39 @@ export default {
   },
   methods: {
     changeYear(item) {
-      this.currentVector = ''
-      this.currentYear = item
-      this.currentLayer = 'yx'
+      if (~item.value.indexOf('2.5D')) {
+        item.selected = !item.selected
+        // 显示2.5维时底图为影像图
+        if (this.currentLayer !== 'yx') {
+          this.currentVector = ''
+          this.currentLayer = 'yx'
+          this.currentYear = '2019'
+        }
+        this.$parent.$parent.switchWmts(item.selected, item.value);
+      } else {
+        this.currentVector = ''
+        this.currentLayer = 'yx'
+        this.currentYear = item.value
+      }
+    },
+    changeVector(item) {
+      if (item.value == 'handdrawn') {
+        item.selected = !item.selected
+        this.$parent.$parent.switchHanddrawn(item.selected);
+      } else {
+        this.yearList[2].selected = false
+        this.$parent.$parent.switchWmts(false);
+        this.currentYear = ''
+        this.currentLayer = 'vector'
+        this.currentVector = item.value
+      }
+    },
+    change3d(item) {
+      // this.currentLayer = '3d'
+      item.selected = !item.selected
+      item.selected ? this.is3D = true : this.is3D = false
+      this.current3d = item.value
+      this.$bus.$emit("cesium-3d-switch", { type: item.value , value: item.selected });
     },
     changeTool(item) {
       this.isTool = true
@@ -177,27 +213,6 @@ export default {
         this.isTool = false;
         this.$refs.tools.clearGauge();
       }
-    },
-    changeVector(item) {
-      if (item.value == 'handdrawn') {
-        item.selected = !item.selected
-        this.$parent.$parent.switchHanddrawn(item.selected);
-      } else if (~item.value.indexOf('2.5')) {
-        item.selected = !item.selected
-        this.$parent.$parent.switchWmts(item.value, item.selected);
-      } 
-      else {
-        this.currentYear = ''
-        this.currentLayer = 'vector'
-        this.currentVector = item.value
-      }
-    },
-    change3d(item) {
-      // this.currentLayer = '3d'
-      item.selected = !item.selected
-      item.selected ? this.is3D = true : this.is3D = false
-      this.current3d = item.value
-      this.$bus.$emit("cesium-3d-switch", { type: item.value , value: item.selected });
     },
   },
   watch: {

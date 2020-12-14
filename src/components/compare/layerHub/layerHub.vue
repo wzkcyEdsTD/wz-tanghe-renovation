@@ -3,18 +3,7 @@
     <div class="sign-wrapper" style="right: 24%">
       <img src="/static/images/common/sign2@2x.png" />
     </div>
-    <div class="mark-popup" v-if="showMark">
-      <div class="mask"></div>
-      <div class="content">
-        <p class="text">扫描二维码进行评分</p>
-        <img class="qrcode" src="./images/qrcode.png" />
-        <img
-          class="close"
-          src="./images/mark-close.png"
-          @click="showMark = false"
-        />
-      </div>
-    </div>
+    <MarkRule v-if="showMark" />
     <MapTool />
     <div class="left-wrapper">
       <div class="left-content">
@@ -233,61 +222,61 @@
         </div>
         <div class="xmtzjh-info">
           <div class="sub-title-wrapper">
-            <div class="sub-title">当年项目投资计划完成率排行</div>
+            <div class="sub-title">年度项目投资计划完成率排行</div>
             <div class="decorate"></div>
           </div>
           <div class="mxph">
             <img src="./images/xmtzjh.png" class="xmtzPicture" />
             <div class="rank-text-wrapper">
               <div class="rank-text-item" style="margin-top: 2vh">
-                <div class="second">111%</div>
-                <div class="secondText">总 15.7亿元</div>
+                <div class="second">150%</div>
+                <div class="secondText">0.20亿元</div>
               </div>
               <div class="rank-text-item">
-                <div class="first">154%</div>
-                <div class="firstText">总 1.5亿元</div>
+                <div class="first">178%</div>
+                <div class="firstText">1.52亿元</div>
               </div>
               <div class="rank-text-item" style="margin-top: 4vh">
-                <div class="third">109%</div>
-                <div class="thirdText">总 0.2亿元</div>
+                <div class="third">134%</div>
+                <div class="thirdText">4.09亿元</div>
               </div>
             </div>
           </div>
           <div class="progressFlex">
-            <span class="xmtz-item second">瓯海区</span>
+            <span class="xmtz-item second">浙南产业区</span>
             <span class="xmtz-item first">瑞安市</span>
-            <span class="xmtz-item third">浙南产业区</span>
+            <span class="xmtz-item third">龙湾区</span>
           </div>
           <ul>
             <li class="info-item-right">
-              <span class="value">温州城发集团</span>
-              <span class="value">龙湾区</span>
+              <span class="value">瓯海区</span>
+              <span class="value">市城发集团</span>
               <span class="value">鹿城区</span>
-              <span class="value">温州现代集团</span>
+              <span class="value">市现代集团</span>
             </li>
             <li class="info-item-right">
               <div class="key">
                 <div class="keyAllText">
-                  <p class="firstKeyText">103%</p>
-                  <p class="secondKeyText">4.6亿元</p>
+                  <p class="firstKeyText">128%</p>
+                  <p class="secondKeyText">14.6亿元</p>
                 </div>
               </div>
               <div class="key">
                 <div class="keyAllText">
-                  <p class="firstKeyText">100%</p>
-                  <p class="secondKeyText">4.1亿元</p>
+                  <p class="firstKeyText">114%</p>
+                  <p class="secondKeyText">5.35亿元</p>
                 </div>
               </div>
               <div class="key">
                 <div class="keyAllText">
-                  <p class="firstKeyText">67%</p>
-                  <p class="secondKeyText">6.3亿元</p>
+                  <p class="firstKeyText">85%</p>
+                  <p class="secondKeyText">2.35亿元</p>
                 </div>
               </div>
               <div class="key">
                 <div class="keyAllText">
                   <p class="firstKeyText">2.6%</p>
-                  <p class="secondKeyText">2.6亿元</p>
+                  <p class="secondKeyText">2.64亿元</p>
                 </div>
               </div>
             </li>
@@ -295,7 +284,7 @@
         </div>
         <div class="xmwgl-info">
           <div class="sub-title-wrapper">
-            <div class="sub-title">项目完工率</div>
+            <div class="sub-title">年度计划建成项目完成率排行</div>
             <div class="decorate"></div>
           </div>
           <div class="pictureFlex">
@@ -441,6 +430,7 @@
 import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "../../sourcelayer/layerHub/TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
+import MarkRule from "./components/MarkRule";
 import MapTool from "../../sourcelayer/layerHub/components/mapTool";
 import { drawBar, drawLine } from "./EchartsDrawTool";
 import {
@@ -464,6 +454,7 @@ const orientation = {
 export default {
   components: {
     MapTool,
+    MarkRule
   },
   data() {
     return {
@@ -491,36 +482,36 @@ export default {
       finishData: [
         {
           name: "鹿城区政府",
-          num: 0,
-          rate: 0,
-        },
-        {
-          name: "瓯海区政府",
-          num: 0,
-          rate: 0,
+          num: 4,
+          rate: 100.00,
         },
         {
           name: "龙湾区政府",
-          num: 0,
-          rate: 0,
+          num: 3,
+          rate: 75.00,
         },
         {
-          name: "瑞安市政府",
-          num: 0,
-          rate: 0,
-        },
-        {
-          name: "浙南产业园",
-          num: 0,
-          rate: 0,
-        },
-        {
-          name: "温州现代集团",
-          num: 0,
-          rate: 0,
+          name: "瓯海区政府",
+          num: 6,
+          rate: 66.67,
         },
         {
           name: "温州城发集团",
+          num: 2,
+          rate: 50.00,
+        },
+        {
+          name: "温州现代集团",
+          num: 4,
+          rate: 20.00,
+        },
+        {
+          name: "瑞安市政府",
+          num: 1,
+          rate: 0,
+        },
+        {
+          name: "浙南产业区",
           num: 0,
           rate: 0,
         },
@@ -616,20 +607,20 @@ export default {
   methods: {
     ...mapActions("map", ["setSourceMap"]),
     async initData() {
-      let res = await getProjStatusByDept({ status: "完工" });
-      if (res.code === 200) {
-        res.result.forEach((i) => {
-          this.finishData.forEach((j) => {
-            if (j.name == i.deptName) {
-              j.num = i.statusInfos[0].num;
-              j.rate = Number(i.statusInfos[0].rate.toFixed(1));
-            }
-          });
-        });
-        this.finishData.sort((a, b) => {
-          return b.rate - a.rate;
-        });
-      }
+      // let res = await getProjStatusByDept({ status: "完工" });
+      // if (res.code === 200) {
+      //   res.result.forEach((i) => {
+      //     this.finishData.forEach((j) => {
+      //       if (j.name == i.deptName) {
+      //         j.num = i.statusInfos[0].num;
+      //         j.rate = Number(i.statusInfos[0].rate.toFixed(1));
+      //       }
+      //     });
+      //   });
+      //   this.finishData.sort((a, b) => {
+      //     return b.rate - a.rate;
+      //   });
+      // }
 
       let projRes = await getProjDeptNumAmound();
       if (projRes.code === 200) {
@@ -665,6 +656,9 @@ export default {
       // 点击，列表回到顶部
       $("#xm-list").scrollTop(0);
       $("#dd-list").scrollTop(0);
+
+      // 关闭详情
+      this.$parent.$refs.projectDetailPopup.closeDetail();
 
       // 不再重复操作
       if (this.currentZrdw == item.title) return;

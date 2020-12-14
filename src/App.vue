@@ -228,8 +228,6 @@ body {
   .player-wrapper {
     width: 100%;
     height: 100%;
-    // display: flex;
-    // align-items: center;
     &.compare {
       position: absolute;
       top: 2%;
@@ -242,9 +240,9 @@ body {
       height: 100%;
       border: 1px solid #165FEA;
     }
-    // .iframe {
-    //   height: 100%;
-    // }
+    .video {
+      background-color: #000;
+    }
   }
 }
 </style>

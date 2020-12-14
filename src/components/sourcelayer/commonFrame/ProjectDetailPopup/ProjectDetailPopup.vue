@@ -393,6 +393,10 @@
       <i class="close" @click="closeQJ"></i>
       <iframe id="content" :src="QJURL"></iframe>
     </div>
+    <div class="SPFrame" v-show="showSP">
+      <i class="close" @click="closeSP"></i>
+      <video id="content" :src="SPURL" controls="controls" autoplay muted></video>
+    </div>
     <ProjectInfoPopup v-if="showInfo" :id="projectId" />
   </div>
 </template>
@@ -438,7 +442,7 @@ export default {
             console.log("slideChangeTransitionEnd!!", this.currentShow);
             if (this.currentShow == "sp") {
               this.$refs.video.forEach((item) => {
-                item.pause()
+                item.pause();
               });
             }
           },
@@ -458,7 +462,9 @@ export default {
       srcList: [],
       srcIndex: 0,
       showQJ: false,
+      showSP: false,
       QJURL: "",
+      SPURL: "",
       date: "",
       projectId: "",
       showInfo: false,
@@ -473,9 +479,13 @@ export default {
       // 列表点击事件
       this.$bus.$off("click-item");
       this.$bus.$on("click-item", ({ value }) => {
-        let qj = value.attributes.QJ
+        let qj = value.attributes.QJ;
+        let sp = value.attributes.SP;
         if (this.showQJ && qj) {
           this.QJURL = ~qj.indexOf(";") ? qj.split(";")[0] : qj;
+        }
+        if (this.showSP && sp) {
+          this.SPURL = ~sp.indexOf(";") ? `/static/video/${sp.split(";")[0]}` : `/static/video/${sp}`;
         }
       });
     },
@@ -536,23 +546,21 @@ export default {
           if (~attrValue.indexOf(";")) {
             let tempArr = attrValue.split(";");
             tempArr.forEach((item, index) => {
-              let time
+              let time;
               if (item.split("_")[1]) {
                 time = item.split("_")[1].split(".")[0];
               } else {
                 time = "20200101";
               }
               if (this.finalData[time]) {
-                !this.finalData[time][key] &&
-                  (this.finalData[time][key] = []);
+                !this.finalData[time][key] && (this.finalData[time][key] = []);
                 this.finalData[time][key].push(item);
               } else {
                 this.finalData[time] = { date: time };
                 this.finalData[time][key] = [item];
               }
               if (~attr.indexOf("SLT")) {
-                !this.finalData[time].qj &&
-                  (this.finalData[time].qj = []);
+                !this.finalData[time].qj && (this.finalData[time].qj = []);
                 this.finalData[time].qj.push(qjTempArr[index]);
               }
             });
@@ -588,9 +596,13 @@ export default {
       this.currentShow = type;
     },
     closeDetail() {
+      this.closeQJ()
+      this.closeSP()
+      this.closeViewer()
       this.isShow = false;
     },
     openQJ(index) {
+      this.closeSP();
       this.closeViewer();
       if (this.showLarge) {
         this.$bus.$emit("change-rightContent", {
@@ -606,8 +618,13 @@ export default {
       this.showQJ = false;
       this.QJURL = "";
     },
+    closeSP() {
+      this.showSP = false;
+      this.SPURL = "";
+    },
     onPreview(list, index) {
-      this.closeQJ()
+      this.closeQJ();
+      this.closeSP();
       this.srcList = list.map((item) => {
         return `/static/images/${this.forceEntity.type}/${item}`;
       });
@@ -620,10 +637,18 @@ export default {
     handlePlay(e) {
       this.closeViewer();
       console.log("handlePlay", e);
-      this.$bus.$emit("change-rightContent", {
-        type: "video",
-        value: e.target.currentSrc,
-      });
+      e.target.pause()
+      if (this.showLarge) {
+        this.$bus.$emit("change-rightContent", {
+          type: "video",
+          value: e.target.currentSrc,
+        });
+      } else {
+        this.closeQJ();
+        this.closeViewer();
+        this.showSP = true
+        this.SPURL = e.target.currentSrc
+      }
     },
     getNowFormatDate() {
       let date = new Date();
@@ -668,23 +693,25 @@ export default {
       if (!val[this.currentShow]) {
         if (val.qj) {
           this.currentShow = "qj";
-          return
+          return;
         }
         if (val.sp) {
           this.currentShow = "sp";
-          return
+          return;
         }
         if (val.photo) {
           this.currentShow = "photo";
-          return
+          return;
         }
       }
     },
     currentShow(val) {
-      if (val == "sp" && this.showLarge) {
-        this.$refs.video.forEach((item) => {
-          item.addEventListener("play", (e) => {
-            this.handlePlay(e);
+      if (val == "sp") {
+        this.$nextTick(() => {
+          this.$refs.video.forEach((item) => {
+            item.addEventListener("play", (e) => {
+              this.handlePlay(e);
+            });
           });
         });
       }

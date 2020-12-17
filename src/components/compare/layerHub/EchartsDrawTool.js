@@ -8,7 +8,7 @@ const getFontSize = () => {
   return e;
 }
 
-export const drawBar = (context, barData) => {
+export const drawJSQK = (context, barData) => {
   let data1 = [], data2 = [], lab = [];
   const e = getFontSize();
   data1.push(parseFloat(barData.build));//在建
@@ -20,8 +20,8 @@ export const drawBar = (context, barData) => {
   lab.push("" + data2[0]);
   lab.push((data2[1] + data1[0]) + '(' + data2[1] + ")在建");
   lab.push((data2[2] + data1[1]) + '(' + data2[2] + ")前期");
-  context.barEchart = context.$echarts.init(context.$refs.barEchart);
-  context.barEchart.setOption({
+  context.jsqkEchart = context.$echarts.init(context.$refs.jsqkEchart);
+  context.jsqkEchart.setOption({
     grid: {
       left: '30%',
       top: 10,
@@ -170,11 +170,11 @@ export const drawBar = (context, barData) => {
     ],
   });
   window.addEventListener("resize", () => {
-    context.barEchart.resize();
+    context.jsqkEchart.resize();
   });
 }
 
-export const drawLine = (context, lineData) => {
+export const drawWGJH = (context, lineData) => {
   const e = getFontSize();
   let nameList = []
   let numberList = []
@@ -184,8 +184,8 @@ export const drawLine = (context, lineData) => {
       numberList.push(item.num.toFixed(2))
     }
   })
-  context.lineEchart = context.$echarts.init(context.$refs.lineEchart);
-  context.lineEchart.setOption({
+  context.wgjhEchart = context.$echarts.init(context.$refs.wgjhEchart);
+  context.wgjhEchart.setOption({
     grid: {
       top: '10%',
       bottom: '35%',
@@ -221,8 +221,8 @@ export const drawLine = (context, lineData) => {
         rotate: 40,
         textStyle: {
           color: "#ffffff",
-          fontFamily: 'DIN',
-          fontSize: e
+          // fontFamily: 'DIN',
+          // fontSize: e
         }
       },
       axisLine: {
@@ -247,9 +247,9 @@ export const drawLine = (context, lineData) => {
       axisLabel: {
         show: true,
         textStyle: {
-          fontFamily: 'DIN',
+          // fontFamily: 'DIN',
           color: "#ffffff",
-          fontSize: e
+          // fontSize: e
         }
       },
       axisLine: {
@@ -292,6 +292,98 @@ export const drawLine = (context, lineData) => {
     }]
   });
   window.addEventListener("resize", () => {
-    context.lineEchart.resize();
+    context.wgjhEchart.resize();
   });
+}
+
+export const drawXMSL = (context, barData) => {
+  const e = getFontSize();
+  let nameList = ['鹿城区政府', '瓯海区政府', '温州城发集团', '龙湾区政府', '瑞安市政府', '温州现代集团', '浙南产业区']
+  let numberList = [18, 17, 12, 8, 7, 5, 1]
+  // barData.forEach(item => {
+  //   if (item.name) {
+  //     nameList.push(item.deptName)
+  //     numberList.push(item.num)
+  //   }
+  // })
+  context.xmslEchart = context.$echarts.init(context.$refs.xmslEchart);
+  context.xmslEchart.setOption({
+    grid: {
+      left: '15%',
+      top: '10%',
+      bottom: '32%',
+    },
+    xAxis: {
+      type: 'category',
+      // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      data: nameList,
+      axisTick: {
+        //x轴刻度线
+        show: false,
+      },
+      splitLine: {
+        //网格线
+        show: false,
+      },
+      axisLabel: {
+        show: true,
+        rotate: 40,
+        textStyle: {
+          color: "#ffffff",
+        }
+      },
+      axisLine: {
+        //坐标轴线
+        show: true,
+        lineStyle: {
+          color: '#ffffff',
+        }
+      },
+    },
+    yAxis: {
+      type: 'value',
+      axisTick: {
+        //x轴刻度线
+        show: false,
+      },
+      splitLine: {
+        //网格线
+        show: false,
+      },
+      axisLine: {
+        //坐标轴线
+        show: true,
+        lineStyle: {
+          color: '#ffffff',
+        }
+      },
+    },
+    series: [{
+      data: numberList,
+      type: 'bar',
+      barWidth : 10,
+      itemStyle: {
+        color: new context.$echarts.graphic.LinearGradient(
+          0, 0, 0, 1,
+          [
+            { offset: 0, color: '#83bff6' },
+            { offset: 0.5, color: '#188df0' },
+            { offset: 1, color: '#188df0' }
+          ]
+        )
+      },
+      emphasis: {
+        itemStyle: {
+          color: new context.$echarts.graphic.LinearGradient(
+            0, 0, 0, 1,
+            [
+              { offset: 0, color: '#2378f7' },
+              { offset: 0.7, color: '#2378f7' },
+              { offset: 1, color: '#83bff6' }
+            ]
+          )
+        }
+      },
+    }]
+  })
 }

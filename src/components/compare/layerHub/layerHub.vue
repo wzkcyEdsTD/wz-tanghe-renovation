@@ -97,7 +97,7 @@
       <div class="xmtj-container" v-show="currentType == 'xm'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
-          <span class="title">项目统计</span>
+          <span class="title">项目统计-{{currentZrdw}}</span>
         </div>
         <div class="base-info">
           <div class="base-item">
@@ -114,14 +114,14 @@
             <div class="rightPicture">
               <img src="./images/球-红.png" alt="" style="width: 15vh" />
             </div>
-            <div class="titleRight" style="color: #ff8b4f">投资计划</div>
+            <div class="titleRight" style="color: #f53a90">年度总投资额</div>
             <div class="textRight">
               {{ currentData.amount }}<span class="unit">亿元</span>
             </div>
             <img src="./images/台子-红.png" alt="" class="rightPictureBottom" />
           </div>
         </div>
-        <div class="base-info">
+        <!-- <div class="base-info">
           <div class="base-item">
             <div class="progressEmpty">
               <img src="./images/0（蓝）.png" class="empty" />
@@ -148,44 +148,93 @@
               >
             </div>
           </div>
-        </div>
-        <div class="jsqk-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">建设情况</div>
-            <div class="decorate"></div>
+        </div> -->
+        <div class="content-box">
+          <div class="content-title">
+            <span class="pre"></span>
+            <div class="title">年度开工完成率</div>
           </div>
-          <div
-            style="height: 16vh; width: 36vh"
+          <div class="content-item">
+            <p class="text">年度计划开工项目数</p>
+            <span class="number blue">{{currentData.jhkg_num}}</span>
+            <span class="unit">个</span>
+          </div>
+          <div class="content-item">
+            <p class="text">年度累计开工项目数</p>
+            <span class="number orange">{{currentData.ljkg_num}}</span>
+            <span class="unit">个</span>
+          </div>
+          <div class="progress-wrapper">
+            <div class="progress" :style="{width: `${currentData.kg_rate/2}%`}"></div>
+            <span class="rate">{{currentData.kg_rate}}%</span>
+          </div>
+          <!-- <div
+            style="height: 16vh; width: 100%"
             class="echart"
-            ref="barEchart"
-          ></div>
+            ref="jsqkEchart"
+          ></div> -->
         </div>
-        <div class="jd-info">
-          <div class="sub-title-wrapper">
-            <div class="sub-title">项目完工计划表</div>
+        <div class="content-box">
+          <!-- <div class="sub-title-wrapper">
+            <div class="sub-title">年度计划建成完成率</div>
             <div class="decorate"></div>
+          </div> -->
+          <div class="content-title">
+            <span class="pre"></span>
+            <div class="title">年度计划建成完成率</div>
           </div>
-          <div class="chart-wrapper">
-            <div class="rate-item">
-              <p class="xiaobiaoti">{{ "完工计划(个)" }}</p>
-              <div
-                style="height: 16vh; width: 35vh"
-                class="echart"
-                ref="lineEchart"
-              ></div>
-            </div>
+          <div class="content-item">
+            <p class="text">年度计划建成项目数</p>
+            <span class="number blue">{{currentData.jhjc_num}}</span>
+            <span class="unit">个</span>
           </div>
+          <div class="content-item">
+            <p class="text">年度累计建成项目数</p>
+            <span class="number orange">{{currentData.ljjc_num}}</span>
+            <span class="unit">个</span>
+          </div>
+          <div class="progress-wrapper">
+            <div class="progress" :style="{width: `${currentData.jc_rate/2}%`}"></div>
+            <span class="rate">{{currentData.jc_rate}}%</span>
+          </div>
+          <!-- <div class="chart-wrapper">
+            <p class="xiaobiaoti">{{ "完工计划(个)" }}</p>
+            <div
+              style="height: 16vh; width: 100%"
+              class="echart"
+              ref="wgjhEchart"
+            ></div>
+          </div> -->
         </div>
-        <div class="czwt-info">
-          <div class="sub-title-wrapper">
+        <div class="content-box">
+          <!-- <div class="sub-title-wrapper">
             <div class="sub-title">
               滞后项目<span class="number">{{
                 "(" + delayXmList.length + ")个"
               }}</span>
             </div>
+            <div class="sub-title">年度投资完成率</div>
             <div class="decorate"></div>
+          </div> -->
+          <div class="content-title">
+            <span class="pre"></span>
+            <div class="title">年度投资完成率</div>
           </div>
-          <div class="result-wrapper">
+          <div class="content-item">
+            <p class="text">年度计划总投资</p>
+            <span class="number blue">{{currentData.jhtz_num}}</span>
+            <span class="unit">亿元</span>
+          </div>
+          <div class="content-item">
+            <p class="text">年度累计投资额</p>
+            <span class="number orange">{{currentData.ljtz_num}}</span>
+            <span class="unit">亿元</span>
+          </div>
+          <div class="progress-wrapper">
+            <div class="progress" :style="{width: `${currentData.tz_rate/2}%`}"></div>
+            <span class="rate">{{currentData.tz_rate}}%</span>
+          </div>
+          <!-- <div class="result-wrapper">
             <ul class="result-list">
               <li class="result-item header">
                 <span class="index">序号</span>
@@ -210,7 +259,39 @@
                 }}</span>
               </li>
             </ul>
+          </div> -->
+        </div>
+        <div class="content-box">
+          <!-- <div class="sub-title-wrapper">
+            <div class="sub-title">年度政府性投资完成率</div>
+            <div class="decorate"></div>
+          </div> -->
+          <div class="content-title">
+            <span class="pre"></span>
+            <div class="title">年度政府性投资完成率</div>
           </div>
+          <div class="content-item">
+            <p class="text">年度计划政府性投资</p>
+            <span class="number blue">{{currentData.jhzf_num}}</span>
+            <span class="unit">亿元</span>
+          </div>
+          <div class="content-item">
+            <p class="text">年度累计完成政府性投资</p>
+            <span class="number orange">{{currentData.ljzf_num}}</span>
+            <span class="unit">亿元</span>
+          </div>
+          <div class="progress-wrapper">
+            <div class="progress" :style="{width: `${currentData.zf_rate/2}%`}"></div>
+            <span class="rate">{{currentData.zf_rate}}%</span>
+          </div>
+          <!-- <div class="chart-wrapper">
+            <p class="xiaobiaoti">{{ "完工计划(个)" }}</p>
+            <div
+              style="height: 16vh; width: 100%"
+              class="echart"
+              ref="wgjhEchart"
+            ></div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -218,206 +299,85 @@
       <div class="xmtj-container" v-show="currentType == 'xm'">
         <div class="titleHxhb-wrapper">
           <span class="pre"></span>
-          <span class="title">项目统计</span>
+          <span class="title">各责任单位指标排行</span>
         </div>
-        <div class="xmtzjh-info">
+        <div class="content-box">
           <div class="sub-title-wrapper">
-            <div class="sub-title">年度项目投资计划完成率排行</div>
+            <div class="sub-title">项目数量</div>
             <div class="decorate"></div>
           </div>
-          <div class="mxph">
-            <img src="./images/xmtzjh.png" class="xmtzPicture" />
-            <div class="rank-text-wrapper">
-              <div class="rank-text-item" style="margin-top: 2vh">
-                <div class="second">150%</div>
-                <div class="secondText">0.20亿元</div>
-              </div>
-              <div class="rank-text-item">
-                <div class="first">178%</div>
-                <div class="firstText">1.52亿元</div>
-              </div>
-              <div class="rank-text-item" style="margin-top: 4vh">
-                <div class="third">134%</div>
-                <div class="thirdText">4.09亿元</div>
-              </div>
-            </div>
+          <div class="chart-wrapper">
+            <p class="xiaobiaoti">{{ "单位(个)" }}</p>
+            <div
+              style="height: 16vh; width: 100%"
+              class="echart"
+              ref="xmslEchart"
+            ></div>
           </div>
-          <div class="progressFlex">
-            <span class="xmtz-item second">浙南产业区</span>
-            <span class="xmtz-item first">瑞安市</span>
-            <span class="xmtz-item third">龙湾区</span>
-          </div>
-          <ul>
-            <li class="info-item-right">
-              <span class="value">瓯海区</span>
-              <span class="value">市城发集团</span>
-              <span class="value">鹿城区</span>
-              <span class="value">市现代集团</span>
-            </li>
-            <li class="info-item-right">
-              <div class="key">
-                <div class="keyAllText">
-                  <p class="firstKeyText">128%</p>
-                  <p class="secondKeyText">14.6亿元</p>
-                </div>
-              </div>
-              <div class="key">
-                <div class="keyAllText">
-                  <p class="firstKeyText">114%</p>
-                  <p class="secondKeyText">5.35亿元</p>
-                </div>
-              </div>
-              <div class="key">
-                <div class="keyAllText">
-                  <p class="firstKeyText">85%</p>
-                  <p class="secondKeyText">2.35亿元</p>
-                </div>
-              </div>
-              <div class="key">
-                <div class="keyAllText">
-                  <p class="firstKeyText">2.6%</p>
-                  <p class="secondKeyText">2.64亿元</p>
-                </div>
-              </div>
-            </li>
-          </ul>
         </div>
-        <div class="xmwgl-info">
+        <div class="content-box">
           <div class="sub-title-wrapper">
-            <div class="sub-title">年度计划建成项目完成率排行</div>
+            <div class="sub-title">年度项目总投资额</div>
             <div class="decorate"></div>
           </div>
-          <div class="pictureFlex">
-            <div class="xmwg">
-              <el-progress
-                class="second"
-                type="circle"
-                :stroke-width="10"
-                :percentage="finishData[1].rate"
-                color="#299CFF"
-              ></el-progress>
-            </div>
-            <div class="xmwg">
-              <el-progress
-                class="first"
-                type="circle"
-                :stroke-width="10"
-                :percentage="finishData[0].rate"
-                color="#B967FF"
-              ></el-progress>
-            </div>
-            <div class="xmwg">
-              <el-progress
-                class="third"
-                type="circle"
-                :stroke-width="10"
-                :percentage="finishData[2].rate"
-                color="#29D1EF"
-              ></el-progress>
+          <div class="amount-rank">
+            <div class="amount-item bg1" v-for="(item,index) in amountData.slice(0,3)" :key="index">
+              <div class="number">{{item.num}}<span class="unit">亿元</span></div>
+              <div class="name">{{item.name}}</div>
             </div>
           </div>
-          <div class="pictureFlex">
-            <p class="compleRateText second">
-              {{ finishData[1].name }}<br />{{ finishData[1].num }}个
-            </p>
-            <p class="compleRateText first">
-              {{ finishData[0].name }}<br />{{ finishData[0].num }}个
-            </p>
-            <p class="compleRateText third">
-              {{ finishData[2].name }}<br />{{ finishData[2].num }}个
-            </p>
+          <div class="amount-rank" style="margin-top:1.5vh">
+            <div class="amount-item bg2" v-for="(item,index) in amountData.slice(3)" :key="index">
+              <div class="number">{{item.num}}<span class="unit">亿元</span></div>
+              <div class="name">{{item.name}}</div>
+            </div>
           </div>
-          <ul>
-            <li class="info-item-right">
-              <span
-                class="value"
-                v-for="(item, index) in finishData.slice(3, 7)"
-                :key="index"
-                >{{ item.name }}</span
-              >
-            </li>
-            <li class="info-item-right">
-              <div
-                class="key"
-                v-for="(item, index) in finishData.slice(3, 7)"
-                :key="index"
-              >
-                <div class="keyAllText">
-                  <p class="firstKeyText">{{ item.rate }}%</p>
-                  <p class="secondKeyText">{{ item.num }}个</p>
-                </div>
-              </div>
-            </li>
-          </ul>
         </div>
-        <div class="zrdwxmsjz">
+        <div class="content-box">
           <div class="sub-title-wrapper">
-            <div class="sub-title">责任单位项目时间轴</div>
+            <div class="sub-title">年度计划建成项目完成率</div>
             <div class="decorate"></div>
           </div>
-          <div class="progressFlexIn">
-            <div class="buleText">
-              <div
-                class="item"
-                :style="{ left: `${25 * index}%` }"
-                v-for="(item, index) in upList"
-                :key="index"
-              >
-                <p class="buleLabTitle">{{ item.name.substr(0, 10) }}完成</p>
-                <p class="buleLabText">{{ item.deptName }}</p>
-                <p class="buleLabText">
-                  项目个数<span class="number">{{ item.num }}</span
-                  >个
-                </p>
-                <p class="buleLabText">
-                  投资计划<span class="number">{{
-                    (item.projAmountSum / 10000).toFixed(2)
-                  }}</span
-                  >亿元
-                </p>
-              </div>
+          <div class="rate-rank">
+            <div class="rate-item" v-for="(item,index) in finishData" :key="index">
+              <p class="name">{{item.name}}</p>
+              <el-progress class="goodrate" :text-inside="true" :stroke-width="26" :percentage="item.rate"></el-progress>
             </div>
           </div>
-          <div class="end">
-            <div class="blueLine">
-              <img
-                :style="{ left: `${25 * index}%` }"
-                v-for="(item, index) in upList"
-                :key="item.sysOrgCode"
-                src="./images/蓝线.png"
-                class="up-img"
-              />
-              <img
-                :style="{ left: `${30 * index + 10}%` }"
-                v-for="(item, index) in downList"
-                :key="item.sysOrgCode"
-                src="./images/蓝线.png"
-                class="down-img"
-              />
-              <div class="straightLine"></div>
+        </div>
+        <div class="content-box">
+          <div class="sub-title-wrapper">
+            <div class="sub-title">年度投资完成率</div>
+            <div class="decorate"></div>
+          </div>
+          <div class="invest-rank">
+            <div class="invest-item" v-for="(item,index) in investData.slice(0,3)" :key="index">
+              <el-progress
+                type="circle"
+                class="goodinvest"
+                :width="investCircleWidth"
+                :percentage="item.num"
+                color="#00FFFF"
+                base-color="rgba(255,255,255,0.1)"
+                :inner-circle="true"
+                innerCircleColor="(rgba(0,0,0,0.15),rgba(0,225,255,0.49))"
+              ></el-progress>
+              <p class="name">{{item.name}}</p>
             </div>
           </div>
-          <div class="progressFlexIn">
-            <div class="buleText">
-              <div
-                class="item"
-                :style="{ left: `${30 * index + 10}%` }"
-                v-for="(item, index) in downList"
-                :key="index"
-              >
-                <p class="buleLabTitle">{{ item.name.substr(0, 10) }}完成</p>
-                <p class="buleLabText">{{ item.deptName }}</p>
-                <p class="buleLabText">
-                  项目个数<span class="number">{{ item.num }}</span
-                  >个
-                </p>
-                <p class="buleLabText">
-                  投资计划<span class="number">{{
-                    (item.projAmountSum / 10000).toFixed(2)
-                  }}</span
-                  >亿元
-                </p>
-              </div>
+          <div class="invest-rank">
+            <div class="invest-item" v-for="(item,index) in investData.slice(3)" :key="index">
+              <el-progress
+                type="circle"
+                class="badinvest"
+                :width="investCircleWidth"
+                :percentage="item.num"
+                color="#8DE1FF"
+                base-color="rgba(255,255,255,0.1)"
+                :inner-circle="true"
+                innerCircleColor="(rgba(0,0,0,0.15),rgba(141,225,255,0.49))"
+              ></el-progress>
+              <p class="name">{{item.name}}</p>
             </div>
           </div>
         </div>
@@ -432,7 +392,7 @@ import { treeDrawTool } from "../../sourcelayer/layerHub/TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
 import MarkRule from "./components/MarkRule";
 import MapTool from "../../sourcelayer/layerHub/components/mapTool";
-import { drawBar, drawLine } from "./EchartsDrawTool";
+import { drawJSQK, drawWGJH, drawXMSL } from "./EchartsDrawTool";
 import {
   getProjStatusByDept,
   getProjDeptNumAmound,
@@ -452,6 +412,7 @@ const orientation = {
 };
 
 export default {
+  name: "LayerHub",
   components: {
     MapTool,
     MarkRule
@@ -475,40 +436,41 @@ export default {
       ddList: [],
       xmList: [],
       searchXMText: "",
-      barEchart: null,
-      lineEchart: null,
+      // jsqkEchart: null,
+      wgjhEchart: null,
+      xmslEchart: null,
       xmActive: "",
       showMark: false,
       finishData: [
         {
+          name: "瑞安市政府",
+          num: 1,
+          rate: 300,
+        },
+        {
           name: "鹿城区政府",
           num: 4,
-          rate: 100.00,
+          rate: 100,
         },
         {
           name: "龙湾区政府",
           num: 3,
-          rate: 75.00,
+          rate: 100,
         },
         {
           name: "瓯海区政府",
           num: 6,
-          rate: 66.67,
+          rate: 100,
         },
         {
           name: "温州城发集团",
           num: 2,
-          rate: 50.00,
+          rate: 100,
         },
         {
           name: "温州现代集团",
           num: 4,
-          rate: 20.00,
-        },
-        {
-          name: "瑞安市政府",
-          num: 1,
-          rate: 0,
+          rate: 60,
         },
         {
           name: "浙南产业区",
@@ -516,15 +478,208 @@ export default {
           rate: 0,
         },
       ],
-      projData: [],
+      amountData: [
+        {
+          name: "瓯海区政府",
+          num: 22.6,
+        },
+        {
+          name: "鹿城区政府",
+          num: 7.54,
+        },
+        {
+          name: "龙湾区政府",
+          num: 5.51,
+        },
+        {
+          name: "温州城发集团",
+          num: 5.46,
+        },
+        {
+          name: "瑞安市政府",
+          num: 2.71,
+        },
+        {
+          name: "温州现代集团",
+          num: 2.58,
+        },
+        {
+          name: "浙南产业区",
+          num: 0.3,
+        },
+      ],
+      investData: [
+        {
+          name: "瑞安市政府",
+          num: 178,
+        },
+        {
+          name: "浙南产业区",
+          num: 150,
+        },
+        {
+          name: "瓯海区政府",
+          num: 144,
+        },
+        {
+          name: "龙湾区政府",
+          num: 134,
+        },
+        {
+          name: "温州城发集团",
+          num: 117,
+        },
+        {
+          name: "鹿城区政府",
+          num: 112,
+        },
+        {
+          name: "温州现代集团",
+          num: 97,
+        },
+      ],
+      projData: [
+        {
+          name: "鹿城区政府",
+          num: 18,
+          amount: 7.54,
+          jhkg_num: 4,
+          ljkg_num: 8,
+          kg_rate: 200,
+          jhjc_num: 4,
+          ljjc_num: 4,
+          jc_rate: 100,
+          jhtz_num: 6.35,
+          ljtz_num: 7.54,
+          tz_rate: 112,
+          jhzf_num: 2.35,
+          ljzf_num: 2.47,
+          zf_rate: 105
+        },
+        {
+          name: "瓯海区政府",
+          num: 17,
+          amount: 22.6,
+          jhkg_num: 5,
+          ljkg_num: 5,
+          kg_rate: 100,
+          jhjc_num: 9,
+          ljjc_num: 9,
+          jc_rate: 100,
+          jhtz_num: 15.72,
+          ljtz_num: 22.6,
+          tz_rate: 144,
+          jhzf_num: 14.6,
+          ljzf_num: 21.48,
+          zf_rate: 148
+        },
+        {
+          name: "温州城发集团",
+          num: 12,
+          amount: 5.46,
+          jhkg_num: 2,
+          ljkg_num: 2,
+          kg_rate: 100,
+          jhjc_num: 2,
+          ljjc_num: 2,
+          jc_rate: 100,
+          jhtz_num: 4.66,
+          ljtz_num: 5.46,
+          tz_rate: 117.17,
+          jhzf_num: 4.66,
+          ljzf_num: 5.46,
+          zf_rate: 117.17
+        },
+        {
+          name: "龙湾区政府",
+          num: 8,
+          amount: 5.51,
+          jhkg_num: 2,
+          ljkg_num: 2,
+          kg_rate: 100,
+          jhjc_num: 4,
+          ljjc_num: 4,
+          jc_rate: 100,
+          jhtz_num: 4.09,
+          ljtz_num: 5.51,
+          tz_rate: 134,
+          jhzf_num: 4.09,
+          ljzf_num: 5.51,
+          zf_rate: 134
+        },
+        {
+          name: "瑞安市政府",
+          num: 7,
+          amount: 2.71,
+          jhkg_num: 5,
+          ljkg_num: 7,
+          kg_rate: 140,
+          jhjc_num: 1,
+          ljjc_num: 3,
+          jc_rate: 300,
+          jhtz_num: 1.52,
+          ljtz_num: 2.71,
+          tz_rate: 178.3,
+          jhzf_num: 1.52,
+          ljzf_num: 2.71,
+          zf_rate: 178.3
+        },
+        {
+          name: "温州现代集团",
+          num: 5,
+          amount: 2.58,
+          jhkg_num: 5,
+          ljkg_num: 4,
+          kg_rate: 80,
+          jhjc_num: 5,
+          ljjc_num: 3,
+          jc_rate: 60,
+          jhtz_num: 2.64,
+          ljtz_num: 2.58,
+          tz_rate: 97.6,
+          jhzf_num: 2.64,
+          ljzf_num: 2.58,
+          zf_rate: 97.6
+        },
+        {
+          name: "浙南产业区",
+          num: 1,
+          amount: 0.3,
+          jhkg_num: 0,
+          ljkg_num: 0,
+          kg_rate: 0,
+          jhjc_num: 0,
+          ljjc_num: 0,
+          jc_rate: 0,
+          jhtz_num: 0.2,
+          ljtz_num: 0.3,
+          tz_rate: 150,
+          jhzf_num: 0.2,
+          ljzf_num: 0.3,
+          zf_rate: 150
+        },
+      ],
       currentData: {
         num: 0,
         amount: 0,
-        stsRate: 0,
-        amoundRate: 0,
+        jhkg_num: 0,
+          ljkg_num: 0,
+          kg_rate: 0,
+          jhjc_num: 0,
+          ljjc_num: 0,
+          jc_rate: 0,
+          jhtz_num: 0,
+          ljtz_num: 0,
+          tz_rate: 0,
+          jhzf_num: 0,
+          ljzf_num: 0,
+          zf_rate: 0
+        // stsRate: 0,
+        // amoundRate: 0,
       },
       项目res: {},
       绿道断点res: {},
+      investCircleWidth: 0
     };
   },
   computed: {
@@ -545,64 +700,44 @@ export default {
       })
       return isKeyArr.concat(noKeyArr);
     },
-    delayXmList() {
-      let result = [];
-      let alldata = this.sourceMap["项目"];
-      if (alldata) {
-        if (this.currentZrdw != "指挥部") {
-          result = alldata.filter((item) => {
-            return (
-              item.attributes.ZR_DEPTID == this.currentZrdw &&
-              ~item.attributes.CURRENT_STATE.indexOf("滞后")
-            );
-          });
-        } else {
-          result = alldata.filter((item) => {
-            return ~item.attributes.CURRENT_STATE.indexOf("滞后");
-          });
-        }
-      }
-      return result;
-    },
-    questionDdList() {
-      let result = [];
-      let alldata = this.sourceMap["绿道断点"];
-      if (alldata) {
-        if (this.currentZrdw != "指挥部") {
-          result = alldata.filter((item) => {
-            return (
-              item.attributes.ZRDW == this.currentZrdw &&
-              item.attributes.CZWT != "无"
-            );
-          });
-        } else {
-          result = alldata.filter((item) => {
-            return item.attributes.CZWT != "无";
-          });
-        }
-      }
-      return result;
-    },
-    upList() {
-      let result = [];
-      this.projData.forEach((item, index) => {
-        if (index % 2 == 0) {
-          result.push(item);
-        }
-      });
-      console.log("upList", result);
-      return result;
-    },
-    downList() {
-      let result = [];
-      this.projData.forEach((item, index) => {
-        if (index % 2 == 1) {
-          result.push(item);
-        }
-      });
-      console.log("downList", result);
-      return result;
-    },
+    // delayXmList() {
+    //   let result = [];
+    //   let alldata = this.sourceMap["项目"];
+    //   if (alldata) {
+    //     if (this.currentZrdw != "指挥部") {
+    //       result = alldata.filter((item) => {
+    //         return (
+    //           item.attributes.ZR_DEPTID == this.currentZrdw &&
+    //           ~item.attributes.CURRENT_STATE.indexOf("滞后")
+    //         );
+    //       });
+    //     } else {
+    //       result = alldata.filter((item) => {
+    //         return ~item.attributes.CURRENT_STATE.indexOf("滞后");
+    //       });
+    //     }
+    //   }
+    //   return result;
+    // },
+    // questionDdList() {
+    //   let result = [];
+    //   let alldata = this.sourceMap["绿道断点"];
+    //   if (alldata) {
+    //     if (this.currentZrdw != "指挥部") {
+    //       result = alldata.filter((item) => {
+    //         return (
+    //           item.attributes.ZRDW == this.currentZrdw &&
+    //           item.attributes.CZWT != "无"
+    //         );
+    //       });
+    //     } else {
+    //       result = alldata.filter((item) => {
+    //         return item.attributes.CZWT != "无";
+    //       });
+    //     }
+    //   }
+    //   return result;
+    // },
   },
   methods: {
     ...mapActions("map", ["setSourceMap"]),
@@ -622,12 +757,24 @@ export default {
       //   });
       // }
 
-      let projRes = await getProjDeptNumAmound();
-      if (projRes.code === 200) {
-        projRes.result.forEach((item) => {
-          item.name && this.projData.push(item);
-        });
-      }
+      // let projRes = await getProjDeptNumAmound();
+      // if (projRes.code === 200) {
+      //   projRes.result.forEach((item) => {
+      //     if (item.name) {
+      //       this.amountData.push(item);
+      //       this.projData.push(item)
+      //     }
+      //   });
+      //   this.amountData.sort((a, b) => {
+      //     return b.projAmountSum - a.projAmountSum;
+      //   });
+      //   this.projData.sort((a, b) => {
+      //     return b.num - a.num;
+      //   });
+      //   drawXMSL(this, this.projData)
+      // }
+
+      drawXMSL(this)
     },
     getPOIPickedFeature(node, fn) {
       const { newdataset, url, query } = node;
@@ -652,7 +799,7 @@ export default {
       });
       getFeatureBySQLService.processAsync(getFeatureBySQLParams);
     },
-    async selectZrdw(item) {
+    async selectZrdw(zrdw) {
       // 点击，列表回到顶部
       $("#xm-list").scrollTop(0);
       $("#dd-list").scrollTop(0);
@@ -661,59 +808,79 @@ export default {
       this.$parent.$refs.projectDetailPopup.closeDetail();
 
       // 不再重复操作
-      if (this.currentZrdw == item.title) return;
+      if (this.currentZrdw == zrdw.title) return;
 
-      this.currentZrdw = item.title;
+      this.currentZrdw = zrdw.title;
       this.searchXMText = "";
-      this.$bus.$emit("change-zrdw", { value: item.sysOrgCode });
+      this.$bus.$emit("change-zrdw", { value: zrdw.sysOrgCode });
 
-      if (item.title === "指挥部") {
+      if (zrdw.title === "指挥部") {
         this.changeType = "all";
       } else {
         this.changeType = "other";
-        let numRes = await getProjNumAndAmound({ sysOrgCode: item.sysOrgCode });
-        if (numRes.code === 200) {
-          this.currentData.num = numRes.result.num;
-          this.currentData.amount = (
-            numRes.result.projAmountSum / 10000
-          ).toFixed(1);
-        }
-        let rateRes = await getProjStatusAmound({
-          sysOrgCode: item.sysOrgCode,
-          status: "*完工*",
-        });
-        if (rateRes.code === 200) {
-          this.currentData.stsRate = rateRes.result.stsRate.toFixed(1);
-          this.currentData.amoundRate = rateRes.result.amoundRate.toFixed(1);
-        }
 
-        let barRes = await getProjStatusByDept({ sysOrgCode: item.sysOrgCode });
-        if (barRes.code === 200) {
-          let barData = {};
-          barRes.result[0].statusInfos.forEach((item) => {
-            if (item.name === "前期(滞后)") {
-              barData.preLag = item.num;
-            }
-            if (item.name === "前期研究") {
-              barData.pre = item.num;
-            }
-            if (item.name === "完工") {
-              barData.finish = item.num;
-            }
-            if (item.name === "在建") {
-              barData.build = item.num;
-            }
-            if (item.name === "在建(滞后)") {
-              barData.buildLag = item.num;
-            }
-          });
-          drawBar(this, barData);
-        }
+        this.projData.forEach(item => {
+          if (item.name == zrdw.title) {
+            this.currentData.num = item.num
+            this.currentData.amount = item.amount
+            this.currentData.jhkg_num = item.jhkg_num
+            this.currentData.ljkg_num = item.ljkg_num
+            this.currentData.kg_rate = item.kg_rate
+            this.currentData.jhjc_num = item.jhjc_num
+            this.currentData.ljjc_num = item.ljjc_num
+            this.currentData.jc_rate = item.jc_rate
+            this.currentData.jhtz_num = item.jhtz_num
+            this.currentData.ljtz_num = item.ljtz_num
+            this.currentData.tz_rate = item.tz_rate
+            this.currentData.jhzf_num = item.jhzf_num
+            this.currentData.ljzf_num = item.ljzf_num
+            this.currentData.zf_rate = item.zf_rate
+          }
+        })
 
-        let lineRes = await getProjByConsdate({ sysOrgCode: item.sysOrgCode });
-        if (lineRes.code === 200) {
-          drawLine(this, lineRes.result);
-        }
+        // let numRes = await getProjNumAndAmound({ sysOrgCode: zrdw.sysOrgCode });
+        // if (numRes.code === 200) {
+        //   this.currentData.num = numRes.result.num;
+        //   this.currentData.amount = (
+        //     numRes.result.projAmountSum / 10000
+        //   ).toFixed(1);
+        // }
+        // let rateRes = await getProjStatusAmound({
+        //   sysOrgCode: zrdw.sysOrgCode,
+        //   status: "*完工*",
+        // });
+        // if (rateRes.code === 200) {
+        //   this.currentData.stsRate = rateRes.result.stsRate.toFixed(1);
+        //   this.currentData.amoundRate = rateRes.result.amoundRate.toFixed(1);
+        // }
+
+        // let barRes = await getProjStatusByDept({ sysOrgCode: zrdw.sysOrgCode });
+        // if (barRes.code === 200) {
+        //   let barData = {};
+        //   barRes.result[0].statusInfos.forEach((item) => {
+        //     if (item.name === "前期(滞后)") {
+        //       barData.preLag = item.num;
+        //     }
+        //     if (item.name === "前期研究") {
+        //       barData.pre = item.num;
+        //     }
+        //     if (item.name === "完工") {
+        //       barData.finish = item.num;
+        //     }
+        //     if (item.name === "在建") {
+        //       barData.build = item.num;
+        //     }
+        //     if (item.name === "在建(滞后)") {
+        //       barData.buildLag = item.num;
+        //     }
+        //   });
+        //   drawJSQK(this, barData);
+        // }
+
+        // let lineRes = await getProjByConsdate({ sysOrgCode: zrdw.sysOrgCode });
+        // if (lineRes.code === 200) {
+        //   drawWGJH(this, lineRes.result);
+        // }
       }
 
       // 大屏下关闭多媒体窗口
@@ -752,6 +919,7 @@ export default {
       for (let i in window.whiteLabelMap) {
         window.whiteLabelMap[i].setAllLabelsVisible(false);
       }
+      window.earth.dataSources.getByName("location")[0].entities.removeAll();
 
       if (this.currentZrdw != "指挥部") {
         let currentXmRes = this.项目res.result.features.filter((item) => {
@@ -819,6 +987,11 @@ export default {
       icon: "断点",
       iconSize: "small",
     });
+
+    this.$nextTick(() => {
+      let investCircleDiv = document.getElementsByClassName('invest-item')[0];
+      this.investCircleWidth = investCircleDiv.clientWidth
+    })
   },
   watch: {
     drawData(val) {
@@ -855,6 +1028,15 @@ export default {
           ),
           orientation: orientation,
         });
+      } else if (val == "瓯海区政府") {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.646624,
+            27.964185,
+            15000
+          ),
+          orientation: orientation,
+        });
       } else {
         window.earth.camera.flyTo({
           destination: Cesium.Cartesian3.fromDegrees(
@@ -887,23 +1069,48 @@ export default {
   color: white !important;
 }
 .el-progress--circle {
-  &.first {
+  &.goodinvest {
     .el-progress__text {
-      color: #b967ff !important;
+      color: #00ffff !important;
     }
   }
-  &.second {
+  &.badinvest {
     .el-progress__text {
-      color: #299cff !important;
-    }
-  }
-  &.third {
-    .el-progress__text {
-      color: #29d1ef !important;
+      color: #8de1ff !important;
     }
   }
   .el-progress__text {
     font-size: 2vh !important;
+  }
+}
+.goodrate {
+  .el-progress-bar__outer {
+    border: solid 1px #00618d;
+    background-color: #00035c;
+    .el-progress-bar__inner{
+      background-color: unset;
+      background-image: linear-gradient(to right, #3587d8 , #f14bff);
+      border-radius: 0;
+      max-width: 100%;
+      .el-progress-bar__innerText {
+        color: #fff;
+      }
+    }
+  }
+}
+.badrate {
+  .el-progress-bar__outer {
+    border: solid 1px #00618d;
+    background-color: #00035c;
+    .el-progress-bar__inner{
+      background-color: unset;
+      background-image: linear-gradient(to right, #3587d8 , #974bff);
+      border-radius: 0;
+      max-width: 100%;
+      .el-progress-bar__innerText {
+        color: #fff;
+      }
+    }
   }
 }
 </style>

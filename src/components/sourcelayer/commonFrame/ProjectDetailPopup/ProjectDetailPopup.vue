@@ -409,6 +409,7 @@ import ProjectInfoPopup from "./ProjectInfoPopup";
 import Around from "./Around";
 import { queryForOneMapById } from "api/tangheAPI";
 export default {
+  name: "ProjectDetailPopup",
   components: {
     ElImageViewer,
     ProjectInfoPopup,

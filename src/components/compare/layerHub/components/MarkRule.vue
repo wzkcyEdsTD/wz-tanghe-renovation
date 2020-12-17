@@ -28,13 +28,13 @@
           <div class="rule-content">执行力<span>15</span>分</div>
         </div>
       </div>
-      <div class="note">
+      <!-- <div class="note">
         <img src="../images/mark-note.png" />
         <p class="text">
           指挥部领导评分权重:
           指挥部领导成员占40%，其中总指挥占20%，2个副指挥各占10%
         </p>
-      </div>
+      </div> -->
       <img class="close" src="../images/mark-close.png" @click="close" />
     </div>
   </div>
@@ -42,6 +42,7 @@
 
 <script>
 export default {
+  name: "MarkRule",
   methods: {
     close() {
       this.$parent.showMark = false;
@@ -69,7 +70,7 @@ export default {
     position: absolute;
     top: 30%;
     left: 50%;
-    width: 40%;
+    width: 50%;
     padding: 3vh;
     display: flex;
     flex-direction: column;
@@ -88,6 +89,7 @@ export default {
           font-family: YouSheBiaoTiHei;
           font-size: 2vh;
           color: #ff46a0;
+          vertical-align: middle;
         }
       }
     }
@@ -103,7 +105,7 @@ export default {
         align-items: center;
         width: 50%;
         margin: 1vh 0;
-        font-size: 1.8vh;
+        font-size: 2vh;
         .index {
           font-family: YouSheBiaoTiHei;
           font-size: 2vh;

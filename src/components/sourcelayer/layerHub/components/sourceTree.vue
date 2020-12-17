@@ -55,6 +55,7 @@ export default {
       var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
       getFeatureParam = new SuperMap.REST.FilterParameter({
         attributeFilter: `SMID <= 1000`,
+        // attributeFilter: `resource_type = 'project_all'`,
       });
       getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
         queryParameter: getFeatureParam,
@@ -65,7 +66,6 @@ export default {
         eventListeners: {
           processCompleted: async (res) => {
             const fields = await getIserverFields(url, newdataset);
-            console.log(119, fields);
             treeDrawTool(this, res, node, fields, fn);
           },
           processFailed: (msg) => console.log(msg),

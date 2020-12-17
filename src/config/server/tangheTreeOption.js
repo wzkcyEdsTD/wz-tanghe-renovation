@@ -4,40 +4,12 @@ const SERVER_HOST =
 // "http://172.20.83.223:8098/iserver/services";
 const SW_DATA = "/data-alldata/rest/data";
 const SW_DATA_NAME = "172.168.3.181_thxm:";
+// const SW_DATA_NAME2 = "172.168.3.181_thxm_manage:";
 const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
 
 // const SW_DATA2 = "/data-thzt/rest/data";
 // const SW_DATA_NAME2 = "thzt:";
 // const SERVER_DEFAULT_DATA2 = SERVER_HOST + SW_DATA2;
-
-// export const TARGET_SOURCE = [
-//   {
-//     id: "项目",
-//     label: "项目",
-//     url: SERVER_DEFAULT_DATA,
-//     newdataset: `${SW_DATA_NAME}项目`,
-//     icon: false,
-//     type: "mvt",
-//     saveData: "setProjectList"
-//   },
-//   {
-//     id: "绿道断点",
-//     label: "绿道断点",
-//     url: SERVER_DEFAULT_DATA,
-//     newdataset: `${SW_DATA_NAME}绿道断点`,
-//     icon: '卡点',
-//     type: "mvt",
-//   },
-//   {
-//     id: "十二景",
-//     label: "十二景",
-//     url: SERVER_DEFAULT_DATA,
-//     newdataset: `${SW_DATA_NAME}十二景`,
-//     icon: '十二景',
-//     type: "mvt",
-//     saveData: "setSightList"
-//   },
-// ];
 
 //  公共设施
 const PUBLIC_INFO = [
@@ -101,34 +73,6 @@ const WH_INFO = [
 ]
 
 export const CESIUM_TREE_OPTION = [
-  // {
-  //   id: "项目",
-  //   label: "项目",
-  //   url: SERVER_DEFAULT_DATA,
-  //   newdataset: `${SW_DATA_NAME}项目`,
-  //   icon: false,
-  //   type: "mvt",
-  //   // saveData: "setProjectList"
-  // },
-  // {
-  //   id: "断点",
-  //   label: "断点",
-  //   url: SERVER_DEFAULT_DATA,
-  //   newdataset: `${SW_DATA_NAME}绿道断点`,
-  //   icon: '断点',
-  //   iconSize: 'small',
-  //   type: "mvt",
-  // },
-  // {
-  //   id: "十二景",
-  //   label: "十二景",
-  //   url: SERVER_DEFAULT_DATA,
-  //   newdataset: `${SW_DATA_NAME}十二景`,
-  //   icon: '十二景',
-  //   type: "mvt",
-  //   saveData: "setSejList",
-  //   // withImage: "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz"
-  // },
   {
     id: "塘河沿线",
     label: "塘河沿线",

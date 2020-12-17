@@ -241,9 +241,9 @@ export default {
 @import url("./PartLeft.less");
 </style>
 <style lang="less">
-.el-progress {
-  display: inline;
-}
+// .el-progress {
+//   display: inline;
+// }
 .el-progress-bar {
   width: 70%;
   .el-progress-bar__outer {

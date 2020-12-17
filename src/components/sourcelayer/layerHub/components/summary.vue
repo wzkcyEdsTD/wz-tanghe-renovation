@@ -184,7 +184,7 @@ export default {
     async initData() {
       let res = await getProjNumAndAmound()
       if (res.code === 200) {
-        this.projSum = res.result.projSum
+        this.projSum = res.result.num
         this.projAmountSum = (res.result.projAmountSum / 10000).toFixed(1)
       }
     },

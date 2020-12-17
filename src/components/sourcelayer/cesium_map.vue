@@ -39,6 +39,7 @@ const LAYERS = ServiceUrl.SCENE_WZMODEL;
 const Cesium = window.Cesium;
 
 export default {
+  name: "CesiumMap",
   components: {
     // RoadLine,
     SourceLayerHub,

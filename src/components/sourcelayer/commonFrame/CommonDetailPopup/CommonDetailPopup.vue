@@ -121,15 +121,15 @@
     </transition>
     <div class="QJFrame" v-show="showQJ">
       <i class="close" @click="closeQJ"></i>
-      <iframe id="content" :src="QJURL"></iframe>
+      <iframe class="content" :src="QJURL"></iframe>
     </div>
     <div class="videoFrame" v-show="showVideo">
       <i class="close" @click="closeVideo"></i>
-      <video :src="VideoURL" controls="controls"></video>
+      <video class="content" :src="VideoURL" controls="controls"></video>
     </div>
     <div class="JKFrame" v-show="showJK">
       <i class="close" @click="closeJK"></i>
-      <div id="jkplayer" class="jkplayer" />
+      <div id="jkplayer" class="content" />
     </div>
     <searchDetail ref="searchDetail"  v-show="showDetail"></searchDetail>
   </div>

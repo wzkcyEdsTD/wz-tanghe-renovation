@@ -684,6 +684,10 @@ export default {
       }
       this.showInfo = true;
     },
+
+    closeInfo() {   // 父级页面使用
+      this.showInfo = false;
+    }
   },
   watch: {
     currentIndex(val) {

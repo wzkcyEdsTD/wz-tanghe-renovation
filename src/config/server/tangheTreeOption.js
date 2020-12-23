@@ -177,30 +177,12 @@ export const CESIUM_TREE_OPTION = [
       },
     ]
   },
-  // {
-  //   id: "乡镇名称",
-  //   label: "乡镇名称",
-  //   type: "cesium_town",
-  // },
+
   // {
   //   id: "塘河沿线",
   //   label: "塘河沿线",
   //   type: "cesium_thyx",
   // },
-  // {
-  //   id: "基础数据",
-  //   label: "基础数据",
-  //   children: PUBLIC_INFO.map(v => {
-  //     return {
-  //       ...v,
-  //       id: v.label,
-  //       icon: v.label,
-  //       url: SERVER_DEFAULT_DATA2,
-  //       newdataset: `${SW_DATA_NAME2}${v.dataset}`,
-  //       type: "mvt"
-  //     };
-  //   })
-  // }
 
   {
     id: "城市塘河",

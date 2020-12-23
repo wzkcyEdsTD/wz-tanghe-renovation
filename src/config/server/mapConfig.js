@@ -9,10 +9,8 @@
 export const ServiceUrl = {
   // 温州白模
   WZBaimo:
-    // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-BaiMoLuCheng/rest/realspace/datas/BaiMo_LuCheng/config",
-    // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb/rest/realspace/datas/RES_LC_Model@baimo/config",
-    // "http://10.36.234.83:8090/iserver/services/3D-RES_PY_LC_Z1-SW_BM/rest/realspace/datas/RES_PY_SQ@Baimo/config",
-    "http://172.168.3.183:8090/iserver/services/3D-bm_repair/rest/realspace/datas/thbm@bm_repair/config",
+    // "http://172.168.3.183:8090/iserver/services/3D-bm_repair/rest/realspace/datas/thbm@bm_repair/config",
+    "http://172.168.3.183:8090/iserver/services/3D-bm/rest/realspace/datas/bm/config",
   //  影像底图
   SWImage: {
     // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-YX2019SW/rest/realspace/datas/YX_2019_SW",

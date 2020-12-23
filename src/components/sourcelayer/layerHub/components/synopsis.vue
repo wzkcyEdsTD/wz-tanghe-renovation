@@ -158,8 +158,9 @@ export default {
     padding-left: 1vh;
   }
   .hangdao{
-    width:35vh;
-    height: 25vh;
+    width: 90%;
+    // width:35vh;
+    // height: 25vh;
   }
   .right1 {
     flex-shrink: 0;
@@ -199,7 +200,7 @@ export default {
   .lab {
     margin-bottom: 1vh;
     font-size: 1.5vh;
-    width: 35vh;
+    // width: 35vh;
     color: #dedede;
     line-height: 2vh;
     padding-top: 0.5vh;
@@ -237,7 +238,8 @@ export default {
     padding-top: 1vh;
   }
   .sp {
-    width: 35vh;
+    // width: 35vh;
+    width: 100%;
     padding-right: 1vh;
   }
 }

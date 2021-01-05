@@ -111,11 +111,13 @@ export default {
         label: '测面',
         value: 'mian',
         selected: false
-      },{
-        label: '测高',
-        value: 'gao',
-        selected: false
-      },{
+      },
+      // {
+      //   label: '测高',
+      //   value: 'gao',
+      //   selected: false
+      // },
+      {
         label: '清除',
         value: 'clear',
         selected: false

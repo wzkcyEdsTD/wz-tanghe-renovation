@@ -309,7 +309,7 @@ export default {
       this.activeNames = val
       // 展开画圆，收起清除
       if (val.length) {
-        this.$parent.$parent.drawProjectCircle(this.forceEntity, this.forceEntity.id);
+        this.$parent.$parent.drawProjectCircle(this.forceEntity, this.forceEntity.name);
       } else {
         this.$parent.$parent.removeProjectCircle();
       }
@@ -341,7 +341,8 @@ export default {
     },
     getdata() {
       let temp = this.aroundData
-      let name = this.forceEntity.attributes.NAME;
+      console.log('aroundData', temp)
+      let name = this.forceEntity.name;
       this.$nextTick(() => {
         this.questionQjList = temp["quanjin"];
         this.questionXmList = temp["项目"];

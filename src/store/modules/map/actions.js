@@ -78,7 +78,7 @@ export const setSourceMap = ({ commit }, data) => {
   commit(types.SET_SOURCE_MAP, data);
 };
 
-export const setCurrentource = ({ commit }, data) => {
+export const setCurrentsource = ({ commit }, data) => {
   commit(types.SET_CURRENT_SOURCE, data);
 };
 

@@ -56,7 +56,7 @@ export const fixTreeWithExtra = (gArr, eObj, node, context) => {
       ? extraFeatures.push({ ...item, extra_data: eObj[attributes.SHORTNAME] })
       : drawFeatures.push(item);
   });
-  context[node.saveData](extraFeatures);
+  context[node.callback](extraFeatures);
   return { drawFeatures };
 };
 
@@ -76,22 +76,32 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
 
   let forceDrawFeatures = [];
   forceDrawFeatures = result.features;
-  if (node.saveData) {
+  if (node.callback) {
     context.saveDataMap[node.id] = result.features;
-    context[node.saveData](forceDrawFeatures)
+    context[node.callback](forceDrawFeatures)
   }
 
   //  属性赋值
   forceDrawFeatures.map(v => {
     !window.featureMap[node.id] && (window.featureMap[node.id] = {});
-    window.featureMap[node.id][v.attributes.SMID] = {
-      name: v.attributes.SHORTNAME || v.attributes.NAME || v.attributes.MC || v.attributes.JC || v.attributes[node.withExtraKey],
-      attributes: v.attributes,
-      geometry: v.geometry,
-      fix_data: fixAttributesByOrigin(v.attributes, fieldHash),
-      type: node.id
+    if (v.attributes) {
+      window.featureMap[node.id][v.attributes.SMID] = {
+        name: v.attributes.SHORTNAME || v.attributes.NAME || v.attributes.MC || v.attributes.JC || v.attributes[node.withExtraKey],
+        attributes: v.attributes,
+        geometry: v.geometry,
+        fix_data: fixAttributesByOrigin(v.attributes, fieldHash),
+        type: node.id
+      }
+      return Object.assign(v, { type: node.id })
+    } else {
+      window.featureMap[node.id][v.resourceId] = {
+        name: v.shortName || v.name,
+        attributes: v,
+        geometry: {x: Number(v.lng), y: Number(v.lat)},
+        type: node.id
+      }
+      return Object.assign(v, { geometry: {x: Number(v.lng), y: Number(v.lat)} })
     }
-    return Object.assign(v, { type: node.id })
   })
   context.setSourceMap({ [node.id]: forceDrawFeatures });
 
@@ -108,8 +118,8 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     let billImage
     let width = 32
     let height = 32
-    if (node.icon) {
-      if (node.icon == '断点') {
+    if (node.marker_icon) {
+      if (node.marker_icon == '断点') {
         if (~currentHash.indexOf('compare')) {
           billImage = `/static/images/map-ico/断点2.png`
           width = 28
@@ -118,20 +128,28 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
           billImage = `/static/images/map-ico/断点.png`
         }
       } else {
-        billImage = `/static/images/map-ico/${node.icon}.png`
+        billImage = `/static/images/map-ico/${node.marker_icon}.png`
       }
     } else {
       if (~currentHash.indexOf('sourcelayer')) {
-        billImage = `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`
+        if (item.attributes) {
+          billImage = `/static/images/map-ico/${item.attributes.STATUS.trim()}.png`
+        } else {
+          billImage = `/static/images/map-ico/${item.status.trim()}.png`
+        }
       }
       if (~currentHash.indexOf('compare')) {
-        billImage = `/static/images/map-ico/${item.attributes.ZT.trim()}.png`
+        if (item.attributes) {
+          billImage = `/static/images/map-ico/${item.attributes.ZT.trim()}.png`
+        } else {
+          billImage = `/static/images/map-ico/${item.zt.trim()}.png`
+        }
         height = 35
       }
     }
 
     window.billboardMap[node.id].add({
-      id: `billboard@${item.attributes.SMID}@${node.id}`,
+      id: item.attributes ? `billboard@${item.attributes.SMID}@${node.id}` : `billboard@${item.resourceId}@${node.id}`,
       image: billImage,
       width: width,
       height: height,
@@ -154,15 +172,26 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
 };
 
 export const addWhiteLabel = (key, item) => {
+  let fillColor
+  if (~key.indexOf('项目')) {
+    if (item.attributes) {
+      fillColor = item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF")
+    } else {
+      fillColor = item.isImportant ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF")
+    }
+  } else {
+    fillColor = new Cesium.Color.fromCssColorString("#fff")
+  }
   const position = Cesium.Cartesian3.fromDegrees(
     item.geometry.x,
     item.geometry.y,
     4
   );
   window.whiteLabelMap[key].add({
-    id: `label@${item.attributes.SMID}@${key}`,
-    text: item.attributes.SHORTNAME || item.attributes.NAME,
-    fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
+    id: item.attributes ? `label@${item.attributes.SMID}@${key}` : `label@${item.resourceId}@${key}`,
+    text: item.attributes ? item.attributes.SHORTNAME || item.attributes.NAME : item.shortName || item.name,
+    // fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
+    fillColor,
     font: "bold 14px Microsoft YaHei",
     outlineColor: Cesium.Color.BLACK,
     style: Cesium.LabelStyle.FILL_AND_OUTLINE,
@@ -176,6 +205,16 @@ export const addWhiteLabel = (key, item) => {
 }
 
 export const addBlackLabel = (key, item) => {
+  let fillColor
+  if (~key.indexOf('项目')) {
+    if (item.attributes) {
+      fillColor = item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF")
+    } else {
+      fillColor = item.isImportant ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF")
+    }
+  } else {
+    fillColor = new Cesium.Color.fromCssColorString("#010C27")
+  }
   const position = Cesium.Cartesian3.fromDegrees(
     item.geometry.x,
     item.geometry.y,
@@ -184,7 +223,8 @@ export const addBlackLabel = (key, item) => {
   window.blackLabelMap[key].add({
     id: `label@${item.attributes.SMID}@${key}`,
     text: item.attributes.SHORTNAME || item.attributes.NAME,
-    fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
+    // fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
+    fillColor,
     font: "bold 14px Microsoft YaHei",
     outlineColor: Cesium.Color.WHITE,
     style: Cesium.LabelStyle.FILL_AND_OUTLINE,

@@ -263,6 +263,72 @@
                 </div>
               </div>
             </div>
+            <div class="rate-info">
+              <div class="sub-title">
+                <span class="sub-title-text">打分</span>
+                <span class="sub-title-line"></span>
+              </div>
+              <div class="rate-wrapper" v-show="!dorate">
+                <div class="top">
+                  <div class="rate-box">
+                    <p class="text">总体评分</p>
+                    <el-rate disabled v-model="value1"></el-rate>
+                  </div>
+                  <div class="do-rate" @click="dorate=true">
+                    <img src="./images/comment.png" >
+                    <span>写评价</span>
+                  </div>
+                </div>
+                <div class="comment-list">
+                  <div class="comment-item">
+                    <div class="comment-header">
+                      <div class="left">
+                        <img class="avatar" src="./images/avatar.png" >
+                        <div class="info">
+                          <p class="name">XXX</p>
+                          <el-rate class="comment-rate" disabled v-model="value1"></el-rate>
+                        </div>
+                      </div>
+                      <div class="right">2020.12.20  14:40:00</div>
+                    </div>
+                    <div class="comment-content">
+                      评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评
+                    </div>
+                  </div>
+                  <div class="comment-item">
+                    <div class="comment-header">
+                      <div class="left">
+                        <img class="avatar" src="./images/avatar.png" >
+                        <div class="info">
+                          <p class="name">XXX</p>
+                          <el-rate class="comment-rate" disabled v-model="value1"></el-rate>
+                        </div>
+                      </div>
+                      <div class="right">2020.12.20  14:40:00</div>
+                    </div>
+                    <div class="comment-content">
+                      评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="dorate-wrapper" v-show="dorate">
+                <div class="rate-box">
+                  <p>总体评分</p>
+                  <el-rate v-model="value2"></el-rate>
+                </div>
+                <div class="comment-box">
+                  <p>评论</p>
+                  <el-input resize="none" class="comment-input"
+                    type="textarea"
+                    :rows="2"
+                    placeholder="请输入内容"
+                    v-model="textarea">
+                  </el-input>
+                  <button class="submit" @click="dorate=false">上传评价</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -314,6 +380,11 @@ export default {
       currentMonth: '',
       currentDay: '',
       JHGTState: 0,   // 1已贯通、2小于三个月、3大于三个月
+
+      dorate: false,
+      value1: 4,
+      value2: null,
+      textarea: ""
     };
   },
   components: { ElImageViewer, Overview },
@@ -519,4 +590,19 @@ export default {
 <style lang="less" scoped>
 @import url("~@/components/decision/Frame/css/frame.less");
 @import url("./css/ProjectDetailPopup.less");
+</style>
+<style lang="less">
+.comment-rate {
+  .el-rate__icon {
+    font-size: 12px;
+    margin-right: 0;
+  }
+}
+.comment-input {
+  .el-textarea__inner {
+    background-color: transparent;
+    color: #fff;
+    border: solid 1px #4a4949;
+  }
+}
 </style>

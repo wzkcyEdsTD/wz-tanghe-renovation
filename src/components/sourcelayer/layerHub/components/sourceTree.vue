@@ -7,15 +7,15 @@
     <div class="tree-container">
       <el-tree
         ref="tree"
-        :data="data"
+        :data="menuList"
         show-checkbox
         node-key="id"
         :default-expanded-keys="['塘河沿线']"
         @check-change="nodeCheckChange">
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <div class="img-wrapper" v-if="!data.children">
-            <img v-if="~selectedSourceList.indexOf(node.label)" class="icon" :src="`/static/images/source-icon/${node.label}icon@2x.png`" />
-            <img v-else class="icon" :src="`/static/images/source-icon/${node.label}icon-未选择@2x.png`" />
+            <img v-if="~selectedSourceList.indexOf(node.label)" class="icon" :src="node.icon" />
+            <img v-else class="icon gray" :src="node.icon" />
           </div>
           <span class="label">{{ node.label }}</span>
         </span>
@@ -28,44 +28,55 @@
 import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "../TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
-import { CESIUM_TREE_OPTION } from "config/server/tangheTreeOption";
+import { rootList } from "api/tangheAPI";
+// import { CESIUM_TREE_OPTION } from "config/server/tangheTreeOption";
 const Cesium = window.Cesium;
 
 export default {
   name: "sourceTree",
   data() {
     return {
-      data: CESIUM_TREE_OPTION,
+      menuList: [],
       tileLayers: {},
       saveDataMap: {},
       selectedSourceList: []
     };
   },
   mounted() {
-    this.$refs.tree.setCheckedKeys(['十二景', '项目', '绿道']);
+    this.initData()
   },
   methods: {
-    ...mapActions("map", ["setSourceMap", "setCurrentource", "setSejList"]),
+    ...mapActions("map", ["setSourceMap", "setCurrentsource", "setSejList"]),
+
+    async initData() {
+      let res = await rootList()
+      if (res.code === 200) {
+        this.menuList = res.result
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(['十二景', '项目', '绿道']);
+        })
+      }
+    },
     /**
      * POI fetch
      * @param {object} node
      */
     getPOIPickedFeature(node, fn) {
-      const { newdataset, url } = node;
+      const { datasetName, src, param } = node;
       var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
       getFeatureParam = new SuperMap.REST.FilterParameter({
-        attributeFilter: `SMID <= 1000`,
-        // attributeFilter: `resource_type = 'project_all'`,
+        // attributeFilter: `SMID <= 1000`,
+        attributeFilter: param,
       });
       getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
         queryParameter: getFeatureParam,
         toIndex: -1,
-        datasetNames: [newdataset],
+        datasetNames: [datasetName],
       });
-      getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(url, {
+      getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(src, {
         eventListeners: {
           processCompleted: async (res) => {
-            const fields = await getIserverFields(url, newdataset);
+            const fields = await getIserverFields(src, datasetName);
             treeDrawTool(this, res, node, fields, fn);
           },
           processFailed: (msg) => console.log(msg),
@@ -74,12 +85,17 @@ export default {
       getFeatureBySQLService.processAsync(getFeatureBySQLParams);
     },
     nodeCheckChange(node, checked) {
+      console.log('gogogo', node, checked)
+      if (node.children) {
+        return
+      }
+      let nodeDetail = Object.assign(JSON.parse(node.serivcePath), {id: node.id})
       if (checked) {
         this.selectedSourceList.push(node.label)
         console.log('selectedSourceList', this.selectedSourceList)
         if (~node.label.indexOf('项目')) this.$parent.showSign = true
-        if (node.withImage) {
-          node.withImage.forEach((item) => {
+        if (nodeDetail.withImage) {
+          nodeDetail.withImage.forEach((item) => {
             const LAYER = this.tileLayers[item.name];
             if (LAYER) {
               LAYER.show = true;
@@ -88,38 +104,38 @@ export default {
                 item.name
               ] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
-                  url: item.url,
+                  url: item.src,
                 })
               );
               item.alpha && (this.tileLayers[item.name].alpha = item.alpha);
             }
           });
         }
-        if (node.switchLayer) {
-          this.$bus.$emit(node.switchLayer, { value: true });
+        if (node.serivceType == 'layer') {
+          this.$bus.$emit(nodeDetail.switch, { value: true });
         }
-        if (node.type == "mvt" && node.id) {
+        if (node.serivceType == "mvt" && node.id) {
           if (node.id && window.billboardMap[node.id]) {
-            node.saveData
-              ? this[node.saveData](this.saveDataMap[node.id])
+            nodeDetail.callback
+              ? this[nodeDetail.callback](this.saveDataMap[node.id])
               : null;
             window.billboardMap[node.id]._billboards.map(
               (v) => (v.show = true)
             );
-            this.setCurrentource(node.id);
+            this.setCurrentsource(node.id);
             window.currentMapType == "vectorwhite"
               ? window.blackLabelMap[node.id].setAllLabelsVisible(true)
               : window.whiteLabelMap[node.id].setAllLabelsVisible(true);
           } else {
-            this.getPOIPickedFeature(node, () => {
-              this.setCurrentource(node.id);
+            this.getPOIPickedFeature(nodeDetail, () => {
+              this.setCurrentsource(node.id);
             });
           }
-        } else if (node.type == "model") {
-          node.componentEvent &&
-            node.componentKey &&
-            this.$bus.$emit(node.componentEvent, { value: node.componentKey });
-        } else if (node.type == "image") {
+        } else if (node.serivceType == "model") {
+          // node.componentEvent &&
+          //   node.componentKey &&
+          //   this.$bus.$emit(node.componentEvent, { value: node.componentKey });
+        } else if (node.serivceType == "image") {
           const LAYER = this.tileLayers[node.id];
           LAYER
             ? (LAYER.show = true)
@@ -153,21 +169,21 @@ export default {
         if (
           window.billboardMap[node.id]
         ) {
-          node.saveData && this[node.saveData]([]);
+          nodeDetail.callback && this[nodeDetail.callback]([]);
           window.billboardMap[node.id]._billboards.map((v) => (v.show = false));
           window.blackLabelMap[node.id].setAllLabelsVisible(false)
           window.whiteLabelMap[node.id].setAllLabelsVisible(false)
         }
-        if (node.withImage) {
-          node.withImage.forEach((item) => {
+        if (nodeDetail.withImage) {
+          nodeDetail.withImage.forEach((item) => {
             const LAYER = this.tileLayers[item.name];
             LAYER.show = false;
           });
         }
-        node.componentEvent &&
-          this.$bus.$emit(node.componentEvent, { value: null });
-        node.switchLayer &&
-          this.$bus.$emit(node.switchLayer, { value: false });
+        // node.componentEvent &&
+        //   this.$bus.$emit(node.componentEvent, { value: null });
+        node.serivceType == 'layer' &&
+          this.$bus.$emit(nodeDetail.switch, { value: false });
         if (node.id == '项目') this.$parent.showSign = false
       }
     },

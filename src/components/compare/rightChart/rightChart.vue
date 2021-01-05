@@ -1,21 +1,21 @@
 <template>
   <div class="rightChart">
     <div class="left">
-      <regionAnalysis :regionData="regionData" v-show="zrdw=='all'"></regionAnalysis>
-      <projectPlan :regionData="regionData" v-show="zrdw=='all'"></projectPlan>
-      <PartLeft :zrdw="zrdw" :regionData="regionData" v-if="zrdw!='all'" />
+      <regionAnalysis :regionData="regionData" v-show="zrdw=='A02'"></regionAnalysis>
+      <projectPlan :regionData="regionData" v-show="zrdw=='A02'"></projectPlan>
+      <PartLeft :zrdw="zrdw" :regionData="regionData" v-if="zrdw!='A02'" />
     </div>
     <div class="middle">
-      <div class="center-box" v-show="zrdw=='all'">
+      <div class="center-box" v-show="zrdw=='A02'">
         <Swivel />
       </div>
-      <projectProcess v-show="zrdw=='all'"></projectProcess>
-      <PartMiddle :zrdw="zrdw" v-if="zrdw!='all'" />
+      <projectProcess v-show="zrdw=='A02'"></projectProcess>
+      <PartMiddle :zrdw="zrdw" v-if="zrdw!='A02'" />
     </div>
     <div class="right">
-      <KeyProjects :projData="projData" v-show="zrdw=='all'"></KeyProjects>
-      <HightlightProject v-show="zrdw=='all'"></HightlightProject>
-      <PartRight :projData="projData" :zrdw="zrdw" v-if="zrdw!='all'" />
+      <KeyProjects :projData="projData" v-show="zrdw=='A02'"></KeyProjects>
+      <HightlightProject v-show="zrdw=='A02'"></HightlightProject>
+      <PartRight :projData="projData" :zrdw="zrdw" v-if="zrdw!='A02'" />
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@
     },
     data(){
       return{
-        zrdw: 'all',
+        zrdw: 'A02',
         regionData: [],
         projData: []
       };

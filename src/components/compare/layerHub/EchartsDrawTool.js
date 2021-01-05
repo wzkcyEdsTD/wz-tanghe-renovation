@@ -297,15 +297,17 @@ export const drawWGJH = (context, lineData) => {
 }
 
 export const drawXMSL = (context, barData) => {
-  const e = getFontSize();
-  let nameList = ['鹿城区政府', '瓯海区政府', '温州城发集团', '龙湾区政府', '瑞安市政府', '温州现代集团', '浙南产业区']
-  let numberList = [18, 17, 12, 8, 7, 5, 1]
-  // barData.forEach(item => {
-  //   if (item.name) {
-  //     nameList.push(item.deptName)
-  //     numberList.push(item.num)
-  //   }
-  // })
+  // const e = getFontSize();
+  // let nameList = ['鹿城区政府', '瓯海区政府', '温州城发集团', '龙湾区政府', '瑞安市政府', '温州现代集团', '浙南产业区']
+  // let numberList = [18, 17, 12, 8, 7, 5, 1]
+  let nameList = []
+  let numberList = []
+  barData.forEach(item => {
+    if (item.name) {
+      nameList.push(item.name)
+      numberList.push(item.num)
+    }
+  })
   context.xmslEchart = context.$echarts.init(context.$refs.xmslEchart);
   context.xmslEchart.setOption({
     grid: {

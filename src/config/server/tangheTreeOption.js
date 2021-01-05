@@ -1,15 +1,10 @@
 
 const SERVER_HOST =
 "http://172.168.3.183:8090/iserver/services"
-// "http://172.20.83.223:8098/iserver/services";
 const SW_DATA = "/data-alldata/rest/data";
 const SW_DATA_NAME = "172.168.3.181_thxm:";
 // const SW_DATA_NAME2 = "172.168.3.181_thxm_manage:";
 const SERVER_DEFAULT_DATA = SERVER_HOST + SW_DATA;
-
-// const SW_DATA2 = "/data-thzt/rest/data";
-// const SW_DATA_NAME2 = "thzt:";
-// const SERVER_DEFAULT_DATA2 = SERVER_HOST + SW_DATA2;
 
 //  公共设施
 const PUBLIC_INFO = [

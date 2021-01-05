@@ -26,7 +26,7 @@ import CommonDetailPopup from "./commonFrame/CommonDetailPopup/CommonDetailPopup
 import ProjectDetailPopup from "./commonFrame/ProjectDetailPopup/ProjectDetailPopup";
 import SejPopup from "./commonFrame/SejPopup/SejPopup";
 import SearchDetail from "./commonFrame/CommonDetailPopup/searchDetail";
-import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
+// import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import {
   initMapConfig,
   mapImageLayerInit,
@@ -181,6 +181,7 @@ export default {
                 }, 500);
               }
 
+              this.$refs.projectDetailPopup.closeDetail();
               this.$refs.projectDetailPopup.closeInfo();
             }
           }
@@ -698,6 +699,9 @@ export default {
 
     // 画缓冲区
     async drawProjectCircle({ geometry }, id) {
+
+      console.log('drawProjectCirclegeometry', geometry)
+      console.log('drawProjectCircleid', id)
       // 清除原有图形
       this.removeProjectCircle();
       const { x, y } = geometry;

@@ -1,16 +1,16 @@
 <template>
   <div class="cesiumMap">
     <div id="cesiumContainer"></div>
-    <div v-if="mapLoaded">
-      <LayerHub ref="LayerHub" />
+    <template v-if="mapLoaded">
+      <LayerHub v-show="showHub" ref="LayerHub" />
       <Search ref="Search" />
       <CommonDetailPopup ref="CommonDetailPopup" />
       <ProjectDetailPopup ref="ProjectDetailPopup" />
       <NamePopup ref="NamePopup" />
-      <Legend ref="Legend" />
+      <Legend v-show="showHub" ref="Legend" />
       <Topic ref="Topic" />
       <SpaceTool ref="SpaceTool" />
-    </div>
+    </template>
   </div>
 </template>
 
@@ -45,7 +45,9 @@ export default {
         blackMark: undefined,
         img: undefined,
         greenway: undefined,
+        roadLine: undefined
       },
+      showHub: true
     };
   },
   components: {
@@ -85,15 +87,16 @@ export default {
     ...mapActions("map", ["setSourceMap", "setSejList"]),
     async init3DMap(fn) {
       window.earth = new Cesium.Viewer("cesiumContainer", {
+        skyBox: false,
         infoBox: false,
         selectionIndicator: false,
-        shadows: false,
+        shadows: false, //  内存吃不消
       });
 
       // 地图初始配置
       initMapConfig();
 
-      // 矢量日景
+      // 矢量夜景
       this.maplayer.black = mapImageLayerInit(ServiceUrl.DataImage.black)
 
       // 矢量夜景注记
@@ -106,6 +109,8 @@ export default {
       // 绿道细
       this.maplayer.greenway = mapImageLayerInit(ServiceUrl.LVDAOImage.THIN)
 
+      $(".cesium-widget-credits").hide();
+      window.earth.scene.globe.depthTestAgainstTerrain = false;
 
       // 相机视角初始化
       initCamera();
@@ -122,6 +127,10 @@ export default {
         // 十二景名称点位
         if (this.$refs.NamePopup) {
           this.$refs.NamePopup.fixPopup();
+        }
+
+        if (this.$refs.SpaceTool) {
+          this.$refs.SpaceTool.fixPopup();
         }
       });
     },
@@ -171,11 +180,19 @@ export default {
         if (value == "vector") {
           this.maplayer.black && (this.maplayer.black.show = true);
           this.maplayer.img && (this.maplayer.img.show = false);
+          this.maplayer.roadLine && (this.maplayer.roadLine.show = false);
         } else if (value == "img") {
           this.maplayer.black && (this.maplayer.black.show = false);
           this.maplayer.img
             ? (this.maplayer.img.show = true)
             : (this.maplayer.img = mapImageLayerInit(ServiceUrl.SWImage[2019]));
+
+          this.maplayer["roadLine"]
+            ? (this.maplayer["roadLine"].show = true)
+            : (this.maplayer["roadLine"] = mapImageLayerInit(
+                ServiceUrl.RoadLine
+              ));
+          this.maplayer["roadLine"].alpha = 0.3;
 
           window.earth.imageryLayers.lowerToBottom(this.maplayer.img);
         } else if (value == "reset") {

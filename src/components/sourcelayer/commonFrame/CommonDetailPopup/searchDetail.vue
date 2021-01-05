@@ -230,6 +230,7 @@ export default {
       });
     },
     getForceEntity(forceEntity) {
+      console.log('forceEntity', forceEntity)
       this.forceEntity = forceEntity;
       this.showZB = true
     },

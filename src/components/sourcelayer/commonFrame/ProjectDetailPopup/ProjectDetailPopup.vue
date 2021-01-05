@@ -1,20 +1,20 @@
 <template>
   <div>
-    <transition name="fade" v-if="forceEntity.attributes">
+    <transition name="fade">
       <div class="project-detail-popup" v-show="isShow">
         <span class="close-btn" @click="closeDetail"></span>
         <div class="title-wrapper">
           <span class="pre"></span>
-          <span class="title">{{ forceEntity.attributes.NAME }}</span>
+          <span class="title">{{ detailData.name }}</span>
         </div>
         <div class="content-info">
           <div class="btn-list">
             <button
               class="btn-item"
-              :disabled="!this.forceEntity.attributes.QJ"
+              :disabled="!detailData.overallViews"
               :class="{
                 active: currentShow == 'qj',
-                disabled: !this.forceEntity.attributes.QJ,
+                disabled: !detailData.overallViews,
               }"
               @click="onTypeClick('qj')"
             >
@@ -22,10 +22,10 @@
             </button>
             <button
               class="btn-item"
-              :disabled="!this.forceEntity.attributes.SP"
+              :disabled="!detailData.videos"
               :class="{
                 active: currentShow == 'sp',
-                disabled: !this.forceEntity.attributes.SP,
+                disabled: !detailData.videos,
               }"
               @click="onTypeClick('sp')"
             >
@@ -33,10 +33,10 @@
             </button>
             <button
               class="btn-item"
-              :disabled="!this.forceEntity.attributes.PHOTO"
+              :disabled="!detailData.photos"
               :class="{
                 active: currentShow == 'photo',
-                disabled: !this.forceEntity.attributes.PHOTO,
+                disabled: !detailData.photos,
               }"
               @click="onTypeClick('photo')"
             >
@@ -104,7 +104,7 @@
                   class="swiper-item"
                 >
                   <el-image
-                    :src="`/static/images/${forceEntity.type}/${item}`"
+                    :src="`/static/images/${item}`"
                     fit="contain"
                     @click="onPreview(currentData.photo, i)"
                   ></el-image>
@@ -129,11 +129,7 @@
                 >
                   <div class="item-content">
                     <span>{{ item.date.substring(0, 4) }}</span>
-                    <span
-                      >{{ item.date.substring(4, 6) }}-{{
-                        item.date.substring(6, 8)
-                      }}</span
-                    >
+                    <span>{{ item.date.substring(5) }}</span>
                   </div>
                 </swiper-slide>
               </swiper>
@@ -147,7 +143,7 @@
             <span class="title">信息详情</span>
             <span
               class="more"
-              v-show="~forceEntity.type.indexOf('项目')"
+              v-show="detailData.resourceType=='project_all'"
               @click="openInfo()"
               >查看更多>></span
             >
@@ -158,32 +154,32 @@
                 <img src="./images/name-icon.png" />
                 <span>名称：</span>
               </div>
-              <div class="value">{{ forceEntity.attributes.NAME }}</div>
+              <div class="value">{{ detailData.name }}</div>
             </div>
             <div class="inline bg">
-              <div class="base-item" v-if="~forceEntity.type.indexOf('项目')">
+              <div class="base-item" v-if="detailData.resourceType=='project_all'">
                 <div class="title">
                   <img src="./images/type-icon.png" />
                   <span>类型：</span>
                 </div>
-                <div class="value">{{ forceEntity.attributes.FUNDTYPE }}</div>
+                <div class="value">{{ detailData.fundType }}</div>
               </div>
-              <div class="base-item" v-if="forceEntity.type == '绿道断点'">
+              <div class="base-item" v-if="detailData.resourceType=='greenway_all'">
                 <div class="title">
                   <img src="./images/length-icon.png" />
                   <span>断点长度：</span>
                 </div>
-                <div class="value">{{ forceEntity.attributes.LENGTH }}米</div>
+                <div class="value">{{ detailData.length }}米</div>
               </div>
-              <div class="base-item">
+              <div class="base-item" v-if="detailData.resourceType=='project_all'">
                 <div class="title">
                   <img src="./images/count-icon.png" />
                   <span>总投资：</span>
                 </div>
                 <div class="value">
                   {{
-                    forceEntity.attributes.TOTALAMOUNT
-                      ? `${forceEntity.attributes.TOTALAMOUNT}万元`
+                    detailData.totalamount
+                      ? `${detailData.totalamount}万元`
                       : "无"
                   }}
                 </div>
@@ -197,8 +193,7 @@
                 </div>
                 <div class="value">
                   {{
-                    forceEntity.attributes.ZR_DEPTID ||
-                    forceEntity.attributes.ZRDW
+                    detailData.sysOrgCodeName
                   }}
                 </div>
               </div>
@@ -207,7 +202,7 @@
                   <img src="./images/street-icon.png" />
                   <span>所属街道：</span>
                 </div>
-                <div class="value">{{ forceEntity.attributes.STREET }}</div>
+                <div class="value">{{ detailData.street }}</div>
               </div>
             </div>
             <div class="base-item bg">
@@ -217,21 +212,21 @@
               </div>
               <div class="value">
                 {{
-                  forceEntity.attributes.CZWT
-                    ? forceEntity.attributes.CZWT
+                  detailData.problems
+                    ? detailData.problems
                     : "无"
                 }}
               </div>
             </div>
-            <div class="base-item" v-if="~forceEntity.type.indexOf('项目')">
+            <div class="base-item" v-if="detailData.resourceType=='project_all'">
               <div class="title">
                 <img src="./images/question-icon.png" />
                 <span>规模：</span>
               </div>
               <div class="value">
                 {{
-                  forceEntity.attributes.CONTENTGM
-                    ? forceEntity.attributes.CONTENTGM
+                  detailData.contentgm
+                    ? detailData.contentgm
                     : "无"
                 }}
               </div>
@@ -243,8 +238,8 @@
               </div>
               <div class="value">
                 {{
-                  forceEntity.attributes.ZXJZ
-                    ? forceEntity.attributes.ZXJZ
+                  detailData.recentStatus
+                    ? detailData.recentStatus
                     : "无"
                 }}
               </div>
@@ -257,88 +252,88 @@
             </div>
             <div
               class="time-line-wrapper"
-              v-if="~forceEntity.type.indexOf('项目')"
+              v-if="detailData.resourceType=='project_all'"
             >
               <div class="time-line">
                 <div class="progressEmpty">
                   <img src="./images/计划时间轴底.png" class="empty" />
                   <div
                     class="progressFull"
-                    v-if="forceEntity.attributes.CURRENT_STATE == '前期研究'"
+                    v-if="detailData.status == '前期研究'"
                   >
                     <img src="./images/前期研究.png" class="full" />
                   </div>
                   <div
                     class="progressFull"
-                    v-if="forceEntity.attributes.CURRENT_STATE == '前期(滞后)'"
+                    v-if="detailData.status == '前期(滞后)'"
                   >
                     <img src="./images/前期滞后.png" class="full" />
                   </div>
                   <div
                     class="progressFull"
-                    v-if="forceEntity.attributes.CURRENT_STATE == '在建'"
+                    v-if="detailData.status == '在建'"
                   >
                     <img src="./images/正在建设.png" class="full" />
                   </div>
                   <div
                     class="progressFull"
-                    v-if="forceEntity.attributes.CURRENT_STATE == '在建(滞后)'"
+                    v-if="detailData.status == '在建(滞后)'"
                   >
                     <img src="./images/建设滞后.png" class="full" />
                   </div>
                   <div
                     class="progressFull"
-                    v-if="forceEntity.attributes.CURRENT_STATE == '完工'"
+                    v-if="detailData.status == '完工'"
                   >
                     <img src="./images/完美建设.png" class="full" />
                   </div>
                 </div>
-                <div v-if="forceEntity.attributes.CURRENT_STATE == '前期研究'">
+                <div v-if="detailData.status == '前期研究'">
                   <div class="pop pop1">前期研究</div>
                 </div>
                 <div
-                  v-if="forceEntity.attributes.CURRENT_STATE == '前期(滞后)'"
+                  v-if="detailData.status == '前期(滞后)'"
                 >
                   <div class="pop pop2">前期滞后</div>
                 </div>
-                <div v-if="forceEntity.attributes.CURRENT_STATE == '在建'">
+                <div v-if="detailData.status == '在建'">
                   <div class="pop pop3">正在建设</div>
                 </div>
                 <div
-                  v-if="forceEntity.attributes.CURRENT_STATE == '在建(滞后)'"
+                  v-if="detailData.status == '在建(滞后)'"
                 >
                   <div class="pop pop4">在建滞后</div>
                 </div>
-                <div v-if="forceEntity.attributes.CURRENT_STATE == '完工'">
+                <div v-if="detailData.status == '完工'">
                   <div class="pop pop5">完工建设</div>
                 </div>
               </div>
               <div class="time-desc">
                 <div class="start-time">
-                  计划开工时间：{{ forceEntity.attributes.CONSYEARB }}
+                  计划开工时间：{{ detailData.consdates }}
                 </div>
                 <div class="end-time">
-                  计划建成时间：{{ forceEntity.attributes.CONSYEARE }}
+                  计划建成时间：{{ detailData.consdatee }}
                 </div>
               </div>
             </div>
             <div
               class="time-line-wrapper"
-              v-if="forceEntity.type == '绿道断点'"
+              v-if="detailData.resourceType=='greenway_all'"
             >
               <div class="time-line">
                 <div
                   class="line-item green"
                   :style="{
                     flex:
-                      forceEntity.attributes.JHGTSJ.substring(0, 4) > 2021
+                      detailData.consdatee.substring(0, 4) > 2021
                         ? 0.5
                         : 3,
                   }"
                 ></div>
                 <div class="line-item light-blue"></div>
                 <div
-                  v-if="forceEntity.attributes.JHGTSJ.substring(0, 4) > 2021"
+                  v-if="detailData.consdatee.substring(0, 4) > 2021"
                 >
                   <div class="pop pop6">{{ date }}</div>
                   <div class="circle circle6"></div>
@@ -350,7 +345,7 @@
               </div>
               <div class="time-desc flex-end">
                 <div class="end-time">
-                  计划贯通时间：{{ forceEntity.attributes.JHGTSJ }}
+                  计划贯通时间：{{ detailData.consdatee }}
                 </div>
               </div>
             </div>
@@ -361,7 +356,7 @@
               </div>
               <div class="value">
                 {{
-                  forceEntity.attributes.BZ ? forceEntity.attributes.BZ : "无"
+                  detailData.remark ? detailData.remark : "无"
                 }}
               </div>
             </div>
@@ -372,7 +367,7 @@
           :forceEntity="forceEntity"
           :aroundData="aroundData"
         />
-        <div class="qrcode-wrapper" v-show="~forceEntity.type.indexOf('项目')">
+        <div class="qrcode-wrapper" v-show="detailData.resourceType=='project_all'">
           <div class="title-wrapper">
             <span class="title">项目二维码</span>
           </div>
@@ -407,7 +402,7 @@ import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import { mapGetters } from "vuex";
 import ProjectInfoPopup from "./ProjectInfoPopup";
 import Around from "./Around";
-import { queryForOneMapById } from "api/tangheAPI";
+import { getProjectDetail, getPointDetail } from "api/tangheAPI";
 export default {
   name: "ProjectDetailPopup",
   components: {
@@ -422,6 +417,8 @@ export default {
     return {
       showLarge: window.showLarge,
       forceEntity: {},
+      resourceType: '',
+      detailData: {},
       aroundData: {},
       isShow: false,
       finalData: {},
@@ -491,98 +488,167 @@ export default {
       });
     },
     getForceEntity(forceEntity) {
-      this.forceEntity = forceEntity;
-      this.projectId = this.forceEntity.attributes.XMID;
-      this.isShow = true;
       console.log("aaa", forceEntity);
-      this.$nextTick(() => {
-        this.creatQrCode();
-      });
-      this.initData(forceEntity.attributes.GUID);
-    },
-    creatQrCode() {
-      document.getElementById("qrcode").innerHTML = "";
-      let qrcode = new QRCode(this.$refs.qrCodeUrl, {
-        text: this.forceEntity.attributes.QJ, // 需要转换为二维码的内容
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H,
-      });
+      if (forceEntity.attributes) {
+        this.resourceType = forceEntity.attributes.resourceType || forceEntity.attributes.RESOURCE_TYPE
+        // forceEntity.attributes.GUID || 
+        let id = forceEntity.attributes.resourceId || forceEntity.attributes.RESOURCE_ID
+        this.initData(id);
+      } else {
+        this.resourceType = forceEntity.resourceType
+        this.initData(forceEntity.resourceId);
+      }
+      this.forceEntity = forceEntity;
+      
+      // this.$nextTick(() => {
+      //   this.creatQrCode();
+      // });
     },
     async initData(id) {
-      this.$nextTick(() => {
-        this.$refs.SwiperTime.swiper.slideTo(0, 0, false);
-      });
+      // this.isShow = true;
+      // this.$nextTick(() => {
+      //   this.$refs.SwiperTime.swiper.slideTo(0, 0, false);
+      // });
 
       this.currentIndex = 0;
       this.currentData = {};
       this.finalData = {};
       this.currentShow = "qj";
 
-      // let res = await queryForOneMapById({id})
-      // if (res.code === 200) {
-      //   this.detailData = res.result
-      //   console.log('detailData', detailData)
-      // }
+      let res
+      if (this.resourceType == 'project_all') {
+        res = await getProjectDetail({id})
+      }
+      if (this.resourceType == 'greenway_all') {
+        res = await getPointDetail({id})
+      }
+      if (res.code === 200) {
+        this.isShow = true;
+        this.detailData = res.result
+        console.log('detailData', this.detailData)
+        this.formatData()
+        this.projectId = this.detailData.extraId;
+      }
 
-      this.formatData("PHOTO", "photo");
-      this.formatData("JGT", "photo");
-      this.formatData("QJSLT", "qjslt");
-      // this.formatData('ZBQJSLT', 'qjslt')
-      this.formatData("SP", "sp");
+      // this.formatData("PHOTO", "photo");
+      // this.formatData("JGT", "photo");
+      // this.formatData("QJSLT", "qjslt");
+      // // this.formatData('ZBQJSLT', 'qjslt')
+      // this.formatData("SP", "sp");
+      // console.log("finalData!!!!!!!!", this.finalData);
+      // this.finalList = Object.values(this.finalData).reverse();
+      // console.log("finalList", this.finalList);
+      // if (this.finalList.length) {
+      //   this.currentData = this.finalList[this.currentIndex];
+      // }
+    },
+    formatData(attr, key) {
+      let overallViews = this.detailData.overallViews
+      let videos = this.detailData.videos
+      let photos = this.detailData.photos
+      overallViews && overallViews.forEach(item => {
+        let time = item.shotTime || '2020-01-01'
+        if (this.finalData[time]) {
+          !this.finalData[time].qj && (this.finalData[time].qj = []);
+          !this.finalData[time].qjslt && (this.finalData[time].qjslt = []);
+          this.finalData[time].qj.push(item.path);
+          this.finalData[time].qjslt.push(item.thumbnail);
+        } else {
+          this.finalData[time] = { date: time };
+          this.finalData[time].qj = [item.path];
+          this.finalData[time].qjslt = [item.thumbnail];
+        }
+      })
+      videos && videos.forEach(item => {
+        let time = item.shotTime || '2020-01-01'
+        if (this.finalData[time]) {
+          !this.finalData[time].sp && (this.finalData[time].sp = []);
+          this.finalData[time].sp.push(item.path);
+        } else {
+          this.finalData[time] = { date: time };
+          this.finalData[time].sp = [item.path];
+        }
+      })
+      photos && photos.forEach(item => {
+        let time = item.shotTime || '2020-01-01'
+        if (this.finalData[time]) {
+          !this.finalData[time].photo && (this.finalData[time].photo = []);
+          this.finalData[time].photo.push(item.path);
+        } else {
+          this.finalData[time] = { date: time };
+          this.finalData[time].photo = [item.path];
+        }
+      })
       console.log("finalData!!!!!!!!", this.finalData);
-      this.finalList = Object.values(this.finalData).reverse();
+      this.finalList = Object.values(this.finalData);
+      this.finalList.sort((a, b) => {
+        if (a.date < b.date) {
+          return -1
+        } else if (a.date > b.date) {
+          return 1
+        } else {
+          return 0
+        }
+      })
       console.log("finalList", this.finalList);
       if (this.finalList.length) {
         this.currentData = this.finalList[this.currentIndex];
       }
+
+      // if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
+      //   let QJStr =
+      //     this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ;
+      //   let qjTempArr = QJStr && ~QJStr.indexOf(";") ? QJStr.split(";") : [];
+      //   let attrValue = this.forceEntity.attributes[attr];
+      //   if (attrValue.length) {
+      //     if (~attrValue.indexOf(";")) {
+      //       let tempArr = attrValue.split(";");
+      //       tempArr.forEach((item, index) => {
+      //         let time;
+      //         if (item.split("_")[1]) {
+      //           time = item.split("_")[1].split(".")[0];
+      //         } else {
+      //           time = "20200101";
+      //         }
+      //         if (this.finalData[time]) {
+      //           !this.finalData[time][key] && (this.finalData[time][key] = []);
+      //           this.finalData[time][key].push(item);
+      //         } else {
+      //           this.finalData[time] = { date: time };
+      //           this.finalData[time][key] = [item];
+      //         }
+      //         if (~attr.indexOf("SLT")) {
+      //           !this.finalData[time].qj && (this.finalData[time].qj = []);
+      //           this.finalData[time].qj.push(qjTempArr[index]);
+      //         }
+      //       });
+      //     } else {
+      //       let time;
+      //       if (attrValue.split("_")[1]) {
+      //         time = attrValue.split("_")[1].split(".")[0];
+      //         if (!this.finalData[time]) {
+      //           this.finalData[time] = { date: time };
+      //         }
+      //       } else {
+      //         time = "20200101";
+      //         this.finalData[time] = { date: time };
+      //       }
+      //       this.finalData[time][key] = [attrValue];
+      //       if (~attr.indexOf("SLT")) {
+      //         this.finalData[time].qj = [QJStr];
+      //       }
+      //     }
+      //   }
+      // }
     },
-    formatData(attr, key) {
-      if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
-        let QJStr =
-          this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ;
-        let qjTempArr = QJStr && ~QJStr.indexOf(";") ? QJStr.split(";") : [];
-        let attrValue = this.forceEntity.attributes[attr];
-        if (attrValue.length) {
-          if (~attrValue.indexOf(";")) {
-            let tempArr = attrValue.split(";");
-            tempArr.forEach((item, index) => {
-              let time;
-              if (item.split("_")[1]) {
-                time = item.split("_")[1].split(".")[0];
-              } else {
-                time = "20200101";
-              }
-              if (this.finalData[time]) {
-                !this.finalData[time][key] && (this.finalData[time][key] = []);
-                this.finalData[time][key].push(item);
-              } else {
-                this.finalData[time] = { date: time };
-                this.finalData[time][key] = [item];
-              }
-              if (~attr.indexOf("SLT")) {
-                !this.finalData[time].qj && (this.finalData[time].qj = []);
-                this.finalData[time].qj.push(qjTempArr[index]);
-              }
-            });
-          } else {
-            let time;
-            if (attrValue.split("_")[1]) {
-              time = attrValue.split("_")[1].split(".")[0];
-              if (!this.finalData[time]) {
-                this.finalData[time] = { date: time };
-              }
-            } else {
-              time = "20200101";
-              this.finalData[time] = { date: time };
-            }
-            this.finalData[time][key] = [attrValue];
-            if (~attr.indexOf("SLT")) {
-              this.finalData[time].qj = [QJStr];
-            }
-          }
-        }
-      }
+    creatQrCode() {
+      document.getElementById("qrcode").innerHTML = "";
+      let qrcode = new QRCode(this.$refs.qrCodeUrl, {
+        // text: this.forceEntity.attributes.QJ, // 需要转换为二维码的内容
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H,
+      });
     },
     onTypeClick(type) {
       if (!this.currentData[type]) {
@@ -627,7 +693,7 @@ export default {
       this.closeQJ();
       this.closeSP();
       this.srcList = list.map((item) => {
-        return `/static/images/${this.forceEntity.type}/${item}`;
+        return `/static/images/${item}`;
       });
       this.srcIndex = index;
       this.showViewer = true;
@@ -671,6 +737,7 @@ export default {
     getdata(temp) {
       this.aroundData = temp;
     },
+
     // 关闭面板
     closeCollapse() {
       this.$nextTick(() => {

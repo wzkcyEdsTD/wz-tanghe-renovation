@@ -46,19 +46,19 @@ const fixAttributesByOrigin = (attributes, fields) => {
  * @param {*} node
  * @param {*} context
  */
-export const fixTreeWithExtra = (gArr, eObj, node, context) => {
-  const extraKeys = Object.keys(eObj);
-  const drawFeatures = [];
-  const extraFeatures = [];
-  gArr.map(item => {
-    const { attributes } = item;
-    ~extraKeys.indexOf(attributes.SHORTNAME)
-      ? extraFeatures.push({ ...item, extra_data: eObj[attributes.SHORTNAME] })
-      : drawFeatures.push(item);
-  });
-  context[node.callback](extraFeatures);
-  return { drawFeatures };
-};
+// export const fixTreeWithExtra = (gArr, eObj, node, context) => {
+//   const extraKeys = Object.keys(eObj);
+//   const drawFeatures = [];
+//   const extraFeatures = [];
+//   gArr.map(item => {
+//     const { attributes } = item;
+//     ~extraKeys.indexOf(attributes.SHORTNAME)
+//       ? extraFeatures.push({ ...item, extra_data: eObj[attributes.SHORTNAME] })
+//       : drawFeatures.push(item);
+//   });
+//   context[node.callback](extraFeatures);
+//   return { drawFeatures };
+// };
 
 /**
  * 画点、面
@@ -86,7 +86,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     !window.featureMap[node.id] && (window.featureMap[node.id] = {});
     if (v.attributes) {
       window.featureMap[node.id][v.attributes.SMID] = {
-        name: v.attributes.SHORTNAME || v.attributes.NAME || v.attributes.MC || v.attributes.JC || v.attributes[node.withExtraKey],
+        name: v.attributes.SHORTNAME || v.attributes.SHORT_NAME || v.attributes.NAME,
         attributes: v.attributes,
         geometry: v.geometry,
         fix_data: fixAttributesByOrigin(v.attributes, fieldHash),
@@ -189,7 +189,7 @@ export const addWhiteLabel = (key, item) => {
   );
   window.whiteLabelMap[key].add({
     id: item.attributes ? `label@${item.attributes.SMID}@${key}` : `label@${item.resourceId}@${key}`,
-    text: item.attributes ? item.attributes.SHORTNAME || item.attributes.NAME : item.shortName || item.name,
+    text: item.attributes ? item.attributes.SHORTNAME || item.attributes.SHORT_NAME || item.attributes.NAME : item.shortName || item.name,
     // fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
     fillColor,
     font: "bold 14px Microsoft YaHei",
@@ -222,7 +222,7 @@ export const addBlackLabel = (key, item) => {
   );
   window.blackLabelMap[key].add({
     id: `label@${item.attributes.SMID}@${key}`,
-    text: item.attributes.SHORTNAME || item.attributes.NAME,
+    text: item.attributes ? item.attributes.SHORTNAME || item.attributes.SHORT_NAME || item.attributes.NAME : item.shortName || item.name,
     // fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
     fillColor,
     font: "bold 14px Microsoft YaHei",

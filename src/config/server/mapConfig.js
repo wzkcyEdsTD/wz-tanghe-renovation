@@ -102,22 +102,23 @@ export const ServiceUrl = {
 
 export const MediaServer = "http://172.168.3.182:8090/static";
 
-const datasource = "172.168.3.181_thxm:";
+const datasource = "172.168.3.181_thxm_manage:";
 
 // 图层列表
 export const LayerList = [{
     id: "十二景",
     label: "十二景",
-    dataset: `${datasource}十二景`,
+    dataset: `${datasource}sp_point_resource`,
     icon: '十二景',
     icon2: "十二景",
     type: "mvt",
     saveData: "setSejList",
+    param: "resource_type='scenicspot12'",
     check: false,
 }, {
     id: "项目",
     label: "项目",
-    dataset: `${datasource}项目`,
+    dataset: `${datasource}th_spatial_project_view`,
     icon: false,
     icon2: "项目",
     type: "mvt",
@@ -125,15 +126,16 @@ export const LayerList = [{
 }, {
     id: "绿道断点",
     label: "断点",
-    dataset: `${datasource}绿道断点`,
+    dataset: `${datasource}sp_point_resource`,
     icon: '断点',
     icon2: "断点",
     type: "mvt",
+    param: "resource_type='greenway_all'",
     check: false,
 }, {
     id: "绿道",
     label: "绿道",
-    dataset: `${datasource}绿道断点`,
+    // dataset: `${datasource}绿道断点`,
     icon: '绿道',
     icon2: "绿道",
     check: false,

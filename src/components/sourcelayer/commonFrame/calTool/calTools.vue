@@ -130,24 +130,24 @@ export default {
           var positions = result.positions;
           var points = [];
           positions.forEach((item) => {
-            console.log('item', item)
+            // console.log('item', item)
             var cartesian3 = new Cesium.Cartesian3(item.x, item.y, item.z);
             var cartographic = ellipsoid.cartesianToCartographic(cartesian3);
-            console.log("cartographic", cartographic);
+            // console.log("cartographic", cartographic);
             var lat = Cesium.Math.toDegrees(cartographic.latitude);
-            console.log("lat", lat);
+            // console.log("lat", lat);
             var lng = Cesium.Math.toDegrees(cartographic.longitude);
-            console.log("lng", lng);
+            // console.log("lng", lng);
             points.push(new SuperMap.Geometry.Point(lng, lat));
           });
-          console.log("points", points);
+          // console.log("points", points);
           let centerPosition = this.getCenterPoint(points)
-          console.log('centerPosition', centerPosition)
+          // console.log('centerPosition', centerPosition)
           var linearRings = new SuperMap.Geometry.LinearRing(points);
           var region = new SuperMap.Geometry.Polygon([linearRings]);
           let res = await this.fetchFromDataSets(region);
           console.log("uuu", res);
-          this.$bus.$emit("areaAnalyze", { value: centerPosition });
+          this.$bus.$emit("areaAnalyze", { position: centerPosition, result: res });
         }
       });
       window.handlerAreaAnalyze.activeEvt.addEventListener((isActive) => {
@@ -261,14 +261,38 @@ export default {
         getFeaturesByGeometryService.processAsync(
           new SuperMap.REST.GetFeaturesByGeometryParameters({
             datasetNames: [
-              "172.168.3.181_thxm:项目",
-              "172.168.3.181_thxm:绿道断点",
+              "172.168.3.181_thxm_manage:th_spatial_query",
             ],
             geometry,
             toIndex: -1,
           })
         );
-      });
+      })
+      // let p2 = new Promise((resolve, reject) => {
+      //   const getFeaturesByGeometryService = new SuperMap.REST.GetFeaturesByGeometryService(
+      //     "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data",
+      //     {
+      //       eventListeners: {
+      //         processCompleted: (data) => {
+      //           data && resolve(data);
+      //         },
+      //         processFailed: (err) => reject(err),
+      //       },
+      //     }
+      //   );
+      //   getFeaturesByGeometryService.processAsync(
+      //     new SuperMap.REST.GetFeaturesByGeometryParameters({
+      //       attributeFilter: "resource_type='greenway_all'",
+      //       datasetNames: [
+      //         "172.168.3.181_thxm_manage:sp_point_resource",
+      //       ],
+      //       geometry,
+      //       toIndex: -1,
+      //     })
+      //   );
+      // })
+
+      // return Promise.all([p1,p2])
     },
   },
 };

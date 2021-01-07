@@ -100,12 +100,12 @@ export default {
   methods: {
     ...mapActions("map", ["setSejList"]),
     eventRegsiter() {
-      this.$bus.$off("change-source");
-      this.$bus.$on("change-source", () => {
-        this.change(LayerList[0]);
-        this.change(LayerList[1]);
-        this.change(LayerList[2]);
-      })
+      // this.$bus.$off("change-source");
+      // this.$bus.$on("change-source", () => {
+      //   this.change(LayerList[0]);
+      //   this.change(LayerList[1]);
+      //   this.change(LayerList[2]);
+      // })
     },
     mapChange(item, index) {
       if (item.value != "reset") {
@@ -165,7 +165,7 @@ export default {
       const url = ServiceUrl.FEATUREMVT;
       let getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
       getFeatureParam = new SuperMap.REST.FilterParameter({
-        attributeFilter: `SMID <= 1000`,
+        attributeFilter: node.param,
       });
       getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
         queryParameter: getFeatureParam,

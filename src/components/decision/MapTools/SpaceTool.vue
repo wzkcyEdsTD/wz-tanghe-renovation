@@ -32,22 +32,22 @@
             <div class="top">
               <div class="left">
                 <div class="content">
-                  <span class="xm-number">67</span>
+                  <span class="xm-number">{{analyzeData.projectTotal}}</span>
                   <span class="unit">总数(个)</span>
                 </div>
                 <div class="content">
-                  <span class="xm-number">200</span>
+                  <span class="xm-number">{{(analyzeData.projectAmount/10000).toFixed(1)}}</span>
                   <span class="unit">金额(亿元)</span>
                 </div>
                 <div class="tag xm-tag">项目</div>
               </div>
               <div class="right">
                 <div class="content">
-                  <span class="kd-number">67</span>
+                  <span class="kd-number">{{analyzeData.pointTotal}}</span>
                   <span class="unit">总数(个)</span>
                 </div>
                 <div class="content">
-                  <span class="kd-number">200</span>
+                  <span class="kd-number">{{parseInt(analyzeData.pointLength)}}</span>
                   <span class="unit">长度(米)</span>
                 </div>
                 <div class="tag kd-tag">卡点</div>
@@ -57,43 +57,46 @@
               <div class="left">
                 <div class="header">
                   <div class="sub-title">统计结果</div>
-                  <el-select v-model="value" class="area-select">
+                  <el-select v-model="districtValue" class="area-select">
                     <el-option
-                      v-for="item in options"
+                      v-for="item in districtOptions"
                       :key="item.value"
                       :label="item.label"
-                      :value="item.value">
+                      :value="item.value"
+                    >
                     </el-option>
                   </el-select>
                 </div>
-                <div ref="pieEchart" style="width:24vh;height:18vh;" class="pieEchart"></div>
+                <div
+                  ref="pieEchart"
+                  style="width: 24vh; height: 18vh"
+                  class="pieEchart"
+                ></div>
               </div>
               <div class="right">
                 <div class="header">
                   <div class="sub-title">各责任单位</div>
-                  <el-select v-model="value" class="area-select">
+                  <el-select v-model="orgValue" class="area-select">
                     <el-option
-                      v-for="item in options"
+                      v-for="item in orgOptions"
                       :key="item.value"
                       :label="item.label"
-                      :value="item.value">
+                      :value="item.value"
+                    >
                     </el-option>
                   </el-select>
                 </div>
-                <div class="zrdw-list">
-                  <div class="zrdw-item">
-                    <span class="name">鹿城区政府</span>
-                    <span class="number">16</span>
+                <div class="zrdw-list" v-show="orgValue=='project'">
+                  <div class="zrdw-item" v-for="(value,key,index) in analyzeData.projectOrg" :key="index">
+                    <span class="name">{{key}}</span>
+                    <span class="number">{{value}}</span>
                     <span class="unit">个</span>
                   </div>
-                  <div class="zrdw-item">
-                    <span class="name">瓯海区政府</span>
-                    <span class="number">16</span>
-                    <span class="unit">个</span>
-                  </div>
-                  <div class="zrdw-item">
-                    <span class="name">龙湾区政府</span>
-                    <span class="number">16</span>
+                </div>
+                <div class="zrdw-list" v-show="orgValue=='point'">
+                  <div class="zrdw-item" v-for="(value,key,index) in analyzeData.pointOrg" :key="index">
+                    <span class="name">{{key}}</span>
+                    <span class="number">{{value}}</span>
                     <span class="unit">个</span>
                   </div>
                 </div>
@@ -136,27 +139,56 @@ export default {
       clampMode: 0,
       position: {},
       forcePosition: {},
+      analyzeData: {
+        projectTotal: 0,
+        projectAmount: 0,
+        pointTotal: 0,
+        pointLength: 0,
+        projectDistrict: {},
+        pointDistrict: {},
+        projectOrg: {},
+        pointOrg: {}
+      },
       pieEchart: null, // 饼状图
-      options: [{
-        value: '项目',
-        label: 'xm'
-      }, {
-        value: '卡点',
-        label: 'kd'
-      }],
-      value: '项目'
+      orgOptions: [
+        {
+          value: "project",
+          label: "项目",
+        },
+        {
+          value: "point",
+          label: "断点",
+        },
+      ],
+      orgValue: "project",
+      districtOptions: [
+        {
+          value: "project",
+          label: "项目",
+        },
+        {
+          value: "point",
+          label: "断点",
+        },
+      ],
+      districtValue: "project",
     };
   },
   methods: {
     eventRegsiter() {
       this.$bus.$off("areaAnalyze");
-      this.$bus.$on("areaAnalyze", ({ value }) => {
-        console.log("haha", value);
-        this.drawProjectCircle(value, new Date().getTime())
+      this.$bus.$on("areaAnalyze", ({ position, result }) => {
+        // console.log("haha", position);
+        this.initData(result);
+        this.drawProjectCircle(position, new Date().getTime());
         // 经纬度转世界坐标
-        this.position = Cesium.Cartesian3.fromDegrees(value.x, value.y, 1200);
-        console.log("hehe", this.position);
-        this.drawPie()
+        this.position = Cesium.Cartesian3.fromDegrees(
+          position.x,
+          position.y,
+          1200
+        );
+        // console.log("hehe", this.position);
+        this.drawPie();
       });
     },
     toolClick(item) {
@@ -185,10 +217,54 @@ export default {
       }
       // }
     },
+    initData(res) {
+      this.analyzeData = {
+        projectTotal: 0,
+        projectAmount: 0,
+        pointTotal: 0,
+        pointLength: 0,
+        projectDistrict: {},
+        pointDistrict: {},
+        projectOrg: {},
+        pointOrg: {}
+      };
+      res.result.features.forEach((feature) => {
+        if (feature.attributes.RESOURCE_TYPE == "project_all") {
+          this.analyzeData.projectTotal += 1;
+          this.analyzeData.projectAmount += Number(feature.attributes.TOTALAMOUNT);
+          this.analyzeData.projectDistrict[feature.attributes.DISTRICT]
+            ? (this.analyzeData.projectDistrict[feature.attributes.DISTRICT] += 1)
+            : (this.analyzeData.projectDistrict[feature.attributes.DISTRICT] = 1);
+          
+          let orgArr = ~feature.attributes.XM_ORG_CODE.indexOf(",") ? feature.attributes.XM_ORG_CODE.split(",") : [feature.attributes.XM_ORG_CODE]
+          orgArr.forEach(item => {
+            this.analyzeData.projectOrg[item]
+            ? (this.analyzeData.projectOrg[item] += 1)
+            : (this.analyzeData.projectOrg[item] = 1);
+          })
+        }
+        if (feature.attributes.RESOURCE_TYPE == "greenway_all") {
+          this.analyzeData.pointTotal += 1;
+          this.analyzeData.pointLength += Number(feature.attributes.LENGTH);
+          this.analyzeData.pointDistrict[feature.attributes.DISTRICT]
+            ? (this.analyzeData.pointDistrict[feature.attributes.DISTRICT] += 1)
+            : (this.analyzeData.pointDistrict[feature.attributes.DISTRICT] = 1);
+
+          let orgArr = ~feature.attributes.LD_ORG_CODE.indexOf(",") ? feature.attributes.LD_ORG_CODE.split(",") : [feature.attributes.LD_ORG_CODE]
+          orgArr.forEach(item => {
+            this.analyzeData.pointOrg[item]
+            ? (this.analyzeData.pointOrg[item] += 1)
+            : (this.analyzeData.pointOrg[item] = 1);
+          })
+        }
+      });
+      console.log('gogogo', this.analyzeData)
+    },
     // 创建datasource
     createEntityCollection() {
-      // 项目
-      const ProjectCircleEntityCollection = new Cesium.CustomDataSource("analyze");
+      const ProjectCircleEntityCollection = new Cesium.CustomDataSource(
+        "analyze"
+      );
       window.earth.dataSources.add(ProjectCircleEntityCollection);
     },
     drawProjectCircle(geometry, id) {
@@ -218,27 +294,31 @@ export default {
     },
     closePopup() {
       console.log("888");
-      this.currentTool = 0
+      this.currentTool = 0;
       this.$refs.tools.clearGauge();
-      this.position = {}
+      this.position = {};
       this.forcePosition = {};
       const datasource = window.earth.dataSources.getByName("analyze")[0];
       datasource.entities.removeAll();
     },
     drawPie() {
-      var data = [{
-          name: '瓯海区',
-          value: 25
-      }, {
-          name: '龙湾区',
-          value: 15
-      }, {
-          name: '鹿城区',
-          value: 69
-      }];
-      console.log('11111')
+      var data = [
+        {
+          name: "瓯海区",
+          value: 25,
+        },
+        {
+          name: "龙湾区",
+          value: 15,
+        },
+        {
+          name: "鹿城区",
+          value: 69,
+        },
+      ];
+      console.log("11111");
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
-      console.log('22222', this.pieEchart)
+      console.log("22222", this.pieEchart);
       this.pieEchart.setOption({
         legend: {
           orient: "horizontal",
@@ -250,7 +330,7 @@ export default {
           textStyle: {
             color: "#fff",
           },
-          data:  ['瓯海区', '龙湾区', '鹿城区'],
+          data: ["瓯海区", "龙湾区", "鹿城区"],
           // formatter: function (name) {
           //   let target;
           //   for (let i = 0; i < resultList.length; i++) {
@@ -267,20 +347,20 @@ export default {
             type: "pie",
             center: ["50%", "50%"],
             // radius: ["60%", "75%"],
-            radius: '50%',
+            radius: "50%",
             // avoidLabelOverlap: false,
             label: {
               // show: false,
-              formatter: '{b}: \n{d}%',
-              position: 'outer',
-              alignTo: 'none',
-              bleedMargin: 5
+              formatter: "{b}: \n{d}%",
+              position: "outer",
+              alignTo: "none",
+              bleedMargin: 5,
             },
             labelLine: {
-              length: 1
+              length: 1,
             },
-            left: '15%',
-            right: '15%',
+            left: "15%",
+            right: "15%",
             emphasis: {
               label: {
                 show: false,
@@ -294,7 +374,7 @@ export default {
           },
         ],
       });
-    }
+    },
   },
   mounted() {
     this.eventRegsiter();
@@ -309,7 +389,7 @@ export default {
 <style lang="less">
 .area-select {
   .el-input__inner {
-    width: 50px;
+    width: 55px;
     height: 20px;
     line-height: 20px;
     padding: 0;
@@ -332,7 +412,7 @@ export default {
     background: none !important;
   }
   .el-select-dropdown__item.selected {
-    color: #69FEE5;
+    color: #69fee5;
   }
 }
 </style>

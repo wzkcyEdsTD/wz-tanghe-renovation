@@ -161,9 +161,9 @@ export default {
             this.$refs.Search.results = [];
             this.$refs.Search.resultShow = false;
             if (~_NODEID_.indexOf("项目") || _NODEID_ == "绿道断点") {
-              // this.$refs.ProjectDetailPopup.isSearch = false;
+              this.$refs.ProjectDetailPopup.isSearch = false;
               this.$refs.ProjectDetailPopup.getForceEntity({ ...feature });
-              // this.$refs.CommonDetailPopup.closeInfo();
+              this.$refs.CommonDetailPopup.closeInfo();
             } else {
               // this.$refs.CommonDetailPopup.isSearch = false;
               // this.$refs.CommonDetailPopup.getForceEntity({ ...feature });

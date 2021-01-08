@@ -172,15 +172,11 @@
                       </td>
                       <td v-if="resourceType == 'greenway_all'">
                         <span>断点长度</span>
-                        <span
-                          >{{ detailData.length || `-` }}米</span
-                        >
+                        <span>{{ detailData.length || `-` }}米</span>
                       </td>
                       <td>
                         <span>责任单位</span>
-                        <span>{{
-                          detailData.sysOrgCodeName ||`无`
-                        }}</span>
+                        <span>{{ detailData.sysOrgCodeName || `无` }}</span>
                       </td>
                     </tr>
                     <!-- 空行 -->
@@ -190,11 +186,11 @@
                       <td></td>
                     </tr> -->
                     <!-- <tr> -->
-                      <!-- <td>
+                    <!-- <td>
                         <span>问题</span>
                         <span>{{ forceEntity.attributes.CZWT || `无` }}</span>
                       </td> -->
-                      <!-- <td>
+                    <!-- <td>
                         <span>备注</span>
                         <span>{{ forceEntity.attributes.BZ || `无` }}</span>
                       </td> -->
@@ -223,40 +219,51 @@
                   />
                   <div class="time-desc">
                     <span>
-                      计划开工时间：<br>
-                      {{
-                        detailData.consdates || `无`
-                      }}
+                      计划开工时间：<br />
+                      {{ detailData.consdates || `无` }}
                     </span>
                     <span>
-                      计划建成时间：<br>
-                      {{
-                        detailData.consdatee || `无`
-                      }}
+                      计划建成时间：<br />
+                      {{ detailData.consdatee || `无` }}
                     </span>
                   </div>
                 </div>
 
                 <div class="plan" v-if="resourceType == 'greenway_all'">
-                  <span>计划时间{{JHGTState}}</span>
-                  <div class="img-wrapper" v-if="JHGTState==1">
+                  <span>计划时间{{ JHGTState }}</span>
+                  <div class="img-wrapper" v-if="JHGTState == 1">
                     <!-- <div class="pop pop1">{{this.currentYear}}-{{this.currentMonth}}-{{this.currentDay}}</div> -->
-                    <img class="state-img" :src="require(`./images/已贯通.png`)"/>
+                    <img
+                      class="state-img"
+                      :src="require(`./images/已贯通.png`)"
+                    />
                   </div>
-                  <div class="img-wrapper" v-if="JHGTState==2">
-                    <div class="pop pop2">{{this.currentYear}}-{{this.currentMonth}}-{{this.currentDay}}</div>
-                    <img class="state-img" :src="require(`./images/小于三个月.png`)"/>
+                  <div class="img-wrapper" v-if="JHGTState == 2">
+                    <div class="pop pop2">
+                      {{ this.currentYear }}-{{ this.currentMonth }}-{{
+                        this.currentDay
+                      }}
+                    </div>
+                    <img
+                      class="state-img"
+                      :src="require(`./images/小于三个月.png`)"
+                    />
                   </div>
-                  <div class="img-wrapper" v-if="JHGTState==3">
-                    <div class="pop pop3">{{this.currentYear}}-{{this.currentMonth}}-{{this.currentDay}}</div>
-                    <img class="state-img" :src="require(`./images/大于三个月.png`)"/>
+                  <div class="img-wrapper" v-if="JHGTState == 3">
+                    <div class="pop pop3">
+                      {{ this.currentYear }}-{{ this.currentMonth }}-{{
+                        this.currentDay
+                      }}
+                    </div>
+                    <img
+                      class="state-img"
+                      :src="require(`./images/大于三个月.png`)"
+                    />
                   </div>
                   <div class="time-desc">
                     <span></span>
                     <span>
-                      计划贯通时间：{{
-                        detailData.consdatee || `无`
-                      }}
+                      计划贯通时间：{{ detailData.consdatee || `无` }}
                     </span>
                   </div>
                 </div>
@@ -273,13 +280,39 @@
                     <p class="text">总体评分</p>
                     <el-rate disabled v-model="value1"></el-rate>
                   </div>
-                  <div class="do-rate" @click="dorate=true">
-                    <img src="./images/comment.png" >
+                  <div class="do-rate" @click="dorate = true">
+                    <img src="./images/comment.png" />
                     <span>写评价</span>
                   </div>
                 </div>
                 <div class="comment-list">
-                  <div class="comment-item">
+                  <div
+                    class="comment-item"
+                    v-for="item in commentList"
+                    :key="item.id"
+                  >
+                    <div class="comment-header">
+                      <div class="left">
+                        <img class="avatar" src="./images/avatar.png" />
+                        <div class="info">
+                          <p class="name">{{ item.name }}</p>
+                          <el-rate
+                            class="comment-rate"
+                            disabled
+                            v-model="item.star"
+                          ></el-rate>
+                        </div>
+                      </div>
+                      <div class="right">{{ item.createTime }}</div>
+                    </div>
+                    <div class="comment-content">
+                      {{ item.commend }}
+                    </div>
+                  </div>
+                  <div class="no-data" v-show="!commentList.length">
+                    暂无评价
+                  </div>
+                  <!-- <div class="comment-item">
                     <div class="comment-header">
                       <div class="left">
                         <img class="avatar" src="./images/avatar.png" >
@@ -293,38 +326,26 @@
                     <div class="comment-content">
                       评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评
                     </div>
-                  </div>
-                  <div class="comment-item">
-                    <div class="comment-header">
-                      <div class="left">
-                        <img class="avatar" src="./images/avatar.png" >
-                        <div class="info">
-                          <p class="name">XXX</p>
-                          <el-rate class="comment-rate" disabled v-model="value1"></el-rate>
-                        </div>
-                      </div>
-                      <div class="right">2020.12.20  14:40:00</div>
-                    </div>
-                    <div class="comment-content">
-                      评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评
-                    </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="dorate-wrapper" v-show="dorate">
                 <div class="rate-box">
                   <p>总体评分</p>
-                  <el-rate v-model="value2"></el-rate>
+                  <el-rate v-model="inputStar"></el-rate>
                 </div>
                 <div class="comment-box">
                   <p>评论</p>
-                  <el-input resize="none" class="comment-input"
+                  <el-input
+                    resize="none"
+                    class="comment-input"
                     type="textarea"
                     :rows="2"
                     placeholder="请输入内容"
-                    v-model="textarea">
+                    v-model="inputComment"
+                  >
                   </el-input>
-                  <button class="submit" @click="dorate=false">上传评价</button>
+                  <button class="submit" @click="submit">上传评价</button>
                 </div>
               </div>
             </div>
@@ -349,7 +370,12 @@ import { topBtns, swiperOption, progressImgHash } from "@/common/js/hash";
 
 import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import Overview from "@/components/decision/Frame/Overview";
-import { getProjectDetail, getPointDetail } from "api/tangheAPI";
+import {
+  getProjectDetail,
+  getPointDetail,
+  addComment,
+  resourceComment,
+} from "api/tangheAPI";
 
 export default {
   data() {
@@ -359,8 +385,7 @@ export default {
       swiperOption,
       progressImgHash,
 
-      // name: "",
-      resourceType: '',
+      resourceType: "",
       forceEntity: {},
       detailData: {},
       infoShow: false,
@@ -378,15 +403,16 @@ export default {
 
       isSearch: false,
 
-      currentYear: '',
-      currentMonth: '',
-      currentDay: '',
-      JHGTState: 0,   // 1已贯通、2小于三个月、3大于三个月
+      currentYear: "",
+      currentMonth: "",
+      currentDay: "",
+      JHGTState: 0, // 1已贯通、2小于三个月、3大于三个月
 
       dorate: false,
+      commentList: [],
       value1: 4,
-      value2: null,
-      textarea: ""
+      inputStar: null,
+      inputComment: "",
     };
   },
   components: { ElImageViewer, Overview },
@@ -407,34 +433,34 @@ export default {
     // 判断 断点当前状态
     getJHGTState() {
       // let JHGTSJ = this.forceEntity.attributes.JHGTSJ
-      let JHGTSJ = this.detailData.consdatee
-      let y = JHGTSJ.substr(0,4)
-      let m = JHGTSJ.substr(5,2)
-      let date = new Date;
-      let currentY = date.getFullYear()
-      let currentM = date.getMonth() + 1
-      currentM = currentM < 10 ? '0' + currentM : currentM
-      let currentD = date.getDate()
-      currentD = currentD < 10 ? ('0' + currentD) : currentD
-      this.currentYear = currentY
-      this.currentMonth = currentM
-      this.currentDay = currentD
+      let JHGTSJ = this.detailData.consdatee;
+      let y = JHGTSJ.substr(0, 4);
+      let m = JHGTSJ.substr(5, 2);
+      let date = new Date();
+      let currentY = date.getFullYear();
+      let currentM = date.getMonth() + 1;
+      currentM = currentM < 10 ? "0" + currentM : currentM;
+      let currentD = date.getDate();
+      currentD = currentD < 10 ? "0" + currentD : currentD;
+      this.currentYear = currentY;
+      this.currentMonth = currentM;
+      this.currentDay = currentD;
       if (y > currentY) {
         if (m - currentM > -9) {
-          this.JHGTState = 3
+          this.JHGTState = 3;
         } else {
-          this.JHGTState = 2
+          this.JHGTState = 2;
         }
       }
       if (y == currentY) {
         if (m - currentM > 3) {
-          this.JHGTState = 3
+          this.JHGTState = 3;
         } else {
-          m - currentM > 0 ? this.JHGTState = 2 : this.JHGTState = 1
+          m - currentM > 0 ? (this.JHGTState = 2) : (this.JHGTState = 1);
         }
       }
       if (y < currentY) {
-        this.JHGTState = 1
+        this.JHGTState = 1;
       }
     },
 
@@ -457,12 +483,12 @@ export default {
 
       console.log("aaa", entity);
       if (entity.attributes) {
-        this.resourceType = entity.attributes.RESOURCE_TYPE
-        let id = entity.attributes.RESOURCE_ID
+        this.resourceType = entity.attributes.RESOURCE_TYPE;
+        let id = entity.attributes.RESOURCE_ID;
         this.initData(id);
       }
       this.forceEntity = entity;
-      
+
       // if (this.$refs.SwiperTime) {
       //   this.$refs.SwiperTime.swiper.activeIndex = 0;
       // }
@@ -474,27 +500,31 @@ export default {
 
     // 初始化数据
     async initData(id) {
+      this.dorate = false;
+      this.inputComment = "";
+      this.inputStar = null;
       this.currentIndex = 0;
       this.currentShow = "overview";
 
       this.currentData = {};
       this.finalData = {};
 
-      let res
-      if (this.resourceType == 'project_all') {
-        res = await getProjectDetail({id})
+      let res;
+      if (this.resourceType == "project_all") {
+        res = await getProjectDetail({ id });
       }
-      if (this.resourceType == 'greenway_all') {
-        res = await getPointDetail({id})
+      if (this.resourceType == "greenway_all") {
+        res = await getPointDetail({ id });
       }
       if (res.code === 200) {
         this.infoShow = true;
-        this.detailData = res.result
-        console.log('detailData', this.detailData)
-        this.fixData()
+        this.detailData = res.result;
+        console.log("detailData", this.detailData);
+        this.fixData();
+        this.getCommentList();
         // this.projectId = this.detailData.extraId;
-        if (this.resourceType == 'greenway_all') {
-          this.getJHGTState()
+        if (this.resourceType == "greenway_all") {
+          this.getJHGTState();
         }
       }
 
@@ -511,111 +541,144 @@ export default {
 
     // // 组装数据
     fixData() {
-      let overallViews = this.detailData.overallViews
-      let videos = this.detailData.videos
-      let photos = this.detailData.photos
-      overallViews && overallViews.forEach(item => {
-        let time = item.shotTime || '2020-01-01'
-        if (this.finalData[time]) {
-          !this.finalData[time].overview && (this.finalData[time].overview = []);
-          !this.finalData[time].thumbs && (this.finalData[time].thumbs = []);
-          this.finalData[time].overview.push(item.path);
-          this.finalData[time].thumbs.push(item.thumbnail);
-        } else {
-          this.finalData[time] = { date: time };
-          this.finalData[time].overview = [item.path];
-          this.finalData[time].thumbs = [item.thumbnail];
-        }
-      })
-      videos && videos.forEach(item => {
-        let time = item.shotTime || '2020-01-01'
-        if (this.finalData[time]) {
-          !this.finalData[time].video && (this.finalData[time].video = []);
-          this.finalData[time].video.push(item.path);
-        } else {
-          this.finalData[time] = { date: time };
-          this.finalData[time].video = [item.path];
-        }
-      })
-      photos && photos.forEach(item => {
-        let time = item.shotTime || '2020-01-01'
-        if (this.finalData[time]) {
-          !this.finalData[time].photo && (this.finalData[time].photo = []);
-          this.finalData[time].photo.push(item.path);
-        } else {
-          this.finalData[time] = { date: time };
-          this.finalData[time].photo = [item.path];
-        }
-      })
+      let overallViews = this.detailData.overallViews;
+      let videos = this.detailData.videos;
+      let photos = this.detailData.photos;
+      overallViews &&
+        overallViews.forEach((item) => {
+          let time = item.shotTime || "2020-01-01";
+          if (this.finalData[time]) {
+            !this.finalData[time].overview &&
+              (this.finalData[time].overview = []);
+            !this.finalData[time].thumbs && (this.finalData[time].thumbs = []);
+            this.finalData[time].overview.push(item.path);
+            this.finalData[time].thumbs.push(item.thumbnail);
+          } else {
+            this.finalData[time] = { date: time };
+            this.finalData[time].overview = [item.path];
+            this.finalData[time].thumbs = [item.thumbnail];
+          }
+        });
+      videos &&
+        videos.forEach((item) => {
+          let time = item.shotTime || "2020-01-01";
+          if (this.finalData[time]) {
+            !this.finalData[time].video && (this.finalData[time].video = []);
+            this.finalData[time].video.push(item.path);
+          } else {
+            this.finalData[time] = { date: time };
+            this.finalData[time].video = [item.path];
+          }
+        });
+      photos &&
+        photos.forEach((item) => {
+          let time = item.shotTime || "2020-01-01";
+          if (this.finalData[time]) {
+            !this.finalData[time].photo && (this.finalData[time].photo = []);
+            this.finalData[time].photo.push(item.path);
+          } else {
+            this.finalData[time] = { date: time };
+            this.finalData[time].photo = [item.path];
+          }
+        });
       console.log("finalData!!!!!!!!", this.finalData);
       this.finalList = Object.values(this.finalData);
       this.finalList.sort((a, b) => {
         if (a.date < b.date) {
-          return -1
+          return -1;
         } else if (a.date > b.date) {
-          return 1
+          return 1;
         } else {
-          return 0
+          return 0;
         }
-      })
+      });
       console.log("finalList", this.finalList);
       if (this.finalList.length) {
         this.currentData = this.finalList[this.currentIndex];
       }
-    //   if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
-    //     const overViewStr =
-    //       this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ;
-    //     const sArr =
-    //       overViewStr && ~overViewStr.indexOf(";")
-    //         ? overViewStr.split(";")
-    //         : [];
-    //     const attrVal = this.forceEntity.attributes[attr];
+      //   if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
+      //     const overViewStr =
+      //       this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ;
+      //     const sArr =
+      //       overViewStr && ~overViewStr.indexOf(";")
+      //         ? overViewStr.split(";")
+      //         : [];
+      //     const attrVal = this.forceEntity.attributes[attr];
 
-    //     if (attrVal) {
-    //       if (~attrVal.indexOf(";")) {
-    //         const tmp = attrVal.split(";");
-    //         tmp.forEach((item, index) => {
-    //           if (item.split("_")[1]) {
-    //             let time = item.split("_")[1].split(".")[0];
-    //             if (this.finalData[time]) {
-    //               if (!this.finalData[time][key]) {
-    //                 this.finalData[time][key] = [];
-    //               }
-    //               this.finalData[time][key].push(item);
-    //             } else {
-    //               this.finalData[time] = { date: time };
-    //               this.finalData[time][key] = [item];
-    //             }
-    //             if (~attr.indexOf("SLT")) {
-    //               this.finalData[time].overview = [sArr[index]];
-    //             }
-    //           } else {
-    //             let time = "20200101";
-    //             this.finalData[time] = { date: time };
-    //             this.finalData[time][key] = [];
-    //             this.finalData[time][key].push(item);
-    //             if (~attr.indexOf("SLT")) {
-    //               this.finalData[time].overview = [];
-    //               this.finalData[time].overview.push(sArr[index]);
-    //             }
-    //           }
-    //         });
-    //       } else {
-    //         let time = undefined;
-    //         if (attrVal.split("_")[1]) {
-    //           time = attrVal.split("_")[1].split(".")[0];
-    //           if (!this.finalData[time]) this.finalData[time] = { date: time };
-    //         } else {
-    //           time = "20200101";
-    //           this.finalData[time] = { date: time };
-    //         }
-    //         this.finalData[time][key] = [attrVal];
-    //         if (~attr.indexOf("SLT")) {
-    //           this.finalData[time].overview = [overViewStr];
-    //         }
-    //       }
-    //     }
-    //   }
+      //     if (attrVal) {
+      //       if (~attrVal.indexOf(";")) {
+      //         const tmp = attrVal.split(";");
+      //         tmp.forEach((item, index) => {
+      //           if (item.split("_")[1]) {
+      //             let time = item.split("_")[1].split(".")[0];
+      //             if (this.finalData[time]) {
+      //               if (!this.finalData[time][key]) {
+      //                 this.finalData[time][key] = [];
+      //               }
+      //               this.finalData[time][key].push(item);
+      //             } else {
+      //               this.finalData[time] = { date: time };
+      //               this.finalData[time][key] = [item];
+      //             }
+      //             if (~attr.indexOf("SLT")) {
+      //               this.finalData[time].overview = [sArr[index]];
+      //             }
+      //           } else {
+      //             let time = "20200101";
+      //             this.finalData[time] = { date: time };
+      //             this.finalData[time][key] = [];
+      //             this.finalData[time][key].push(item);
+      //             if (~attr.indexOf("SLT")) {
+      //               this.finalData[time].overview = [];
+      //               this.finalData[time].overview.push(sArr[index]);
+      //             }
+      //           }
+      //         });
+      //       } else {
+      //         let time = undefined;
+      //         if (attrVal.split("_")[1]) {
+      //           time = attrVal.split("_")[1].split(".")[0];
+      //           if (!this.finalData[time]) this.finalData[time] = { date: time };
+      //         } else {
+      //           time = "20200101";
+      //           this.finalData[time] = { date: time };
+      //         }
+      //         this.finalData[time][key] = [attrVal];
+      //         if (~attr.indexOf("SLT")) {
+      //           this.finalData[time].overview = [overViewStr];
+      //         }
+      //       }
+      //     }
+      //   }
+    },
+
+    async getCommentList() {
+      this.commentList = [];
+      let res = await resourceComment({
+        resourceId: this.detailData.id,
+      });
+      if (res.code === 200) {
+        this.commentList = res.result.records;
+      }
+    },
+
+    async submit() {
+      let res = await addComment({
+        username: "test",
+        name: "测试",
+        commend: this.inputComment,
+        star: this.inputStar,
+        resourceId: this.detailData.id,
+      });
+      if (res.code === 200) {
+        this.$message({
+          message: '评价成功',
+          type: 'success',
+          offset: 50
+        });
+        this.getCommentList()
+        this.dorate = false;
+      }
     },
 
     // 关闭详情

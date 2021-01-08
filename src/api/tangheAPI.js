@@ -102,3 +102,15 @@ export function rootList(data) {
   return get(url, data)
 }
 
+// 新增评论
+export function addComment(data) {
+  const url = 'http://192.168.2.136:8080/tanghe/front/resourceProjectComment/addComment'
+  return post(url, data)
+}
+
+// 查询评论
+export function resourceComment(data) {
+  const url = 'http://192.168.2.136:8080/tanghe/front/resourceProjectComment/list'
+  return get(url, data)
+}
+

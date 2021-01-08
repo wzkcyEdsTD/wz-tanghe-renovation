@@ -43,8 +43,8 @@
     position: absolute;
     top: -10px;
     right: -10px;
-    width: 3.2vh;
-    height: 3.2vh;
+    width: 2.6vh;
+    height: 2.6vh;
     text-decoration: none;
     cursor: pointer;
   }
@@ -59,7 +59,7 @@
   }
 
   .analyze-popup-content {
-    position: relative;
+    // position: relative;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -119,22 +119,19 @@
     }
     .bottom {
       position: relative;
+      margin-top: 2vh;
       width: 100%;
-      // display: flex;
+      display: flex;
       .left {
         position: absolute;
-        top: 1vh;
         width: 56%;
         height: 24vh;
         background-color: #001346;
         border: solid 1px #00414a;
       }
       .right {
-        position: absolute;
-        top: 1vh;
-        left: 56%;
-        right: 0;
-        // width: 40%;
+        margin-left: 56%;
+        width: 44%;
       }
       .header {
         padding: 1vh;
@@ -154,12 +151,14 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-top: 10px;
+          margin: 10px 0;
           .name {
             font-size: 1.4vh;
           }
           .number {
+            margin: 0 5px;
             padding: 5px 8px;
+            width: 40px;
             background-color: #011c33;
             border: solid 1px #008b9d;
             font-family: YouSheBiaoTiHei;
@@ -172,8 +171,9 @@
     }
     .side-wrapper {
       position: absolute;
-      left: -3vh;
-      bottom: -20vh;
+      left: -2.5vh;
+      // bottom: -20vh;
+      bottom: 0;
       width: 3vh;
       height: 12vh;
       display: flex;
@@ -185,6 +185,7 @@
         line-height: 3vh;
         font-size: 14px;
         writing-mode: vertical-rl;
+        cursor: pointer;
       }
     }
   }

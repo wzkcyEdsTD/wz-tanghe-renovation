@@ -143,7 +143,7 @@
             <span class="title">信息详情</span>
             <span
               class="more"
-              v-show="detailData.resourceType=='project_all'"
+              v-show="resourceType=='project_all'"
               @click="openInfo()"
               >查看更多>></span
             >
@@ -157,21 +157,21 @@
               <div class="value">{{ detailData.name }}</div>
             </div>
             <div class="inline bg">
-              <div class="base-item" v-if="detailData.resourceType=='project_all'">
+              <div class="base-item" v-if="resourceType=='project_all'">
                 <div class="title">
                   <img src="./images/type-icon.png" />
                   <span>类型：</span>
                 </div>
                 <div class="value">{{ detailData.fundType }}</div>
               </div>
-              <div class="base-item" v-if="detailData.resourceType=='greenway_all'">
+              <div class="base-item" v-if="resourceType=='greenway_all'">
                 <div class="title">
                   <img src="./images/length-icon.png" />
                   <span>断点长度：</span>
                 </div>
                 <div class="value">{{ detailData.length }}米</div>
               </div>
-              <div class="base-item" v-if="detailData.resourceType=='project_all'">
+              <div class="base-item" v-if="resourceType=='project_all'">
                 <div class="title">
                   <img src="./images/count-icon.png" />
                   <span>总投资：</span>
@@ -218,7 +218,7 @@
                 }}
               </div>
             </div>
-            <div class="base-item" v-if="detailData.resourceType=='project_all'">
+            <div class="base-item" v-if="resourceType=='project_all'">
               <div class="title">
                 <img src="./images/question-icon.png" />
                 <span>规模：</span>
@@ -252,7 +252,7 @@
             </div>
             <div
               class="time-line-wrapper"
-              v-if="detailData.resourceType=='project_all'"
+              v-if="resourceType=='project_all'"
             >
               <div class="time-line">
                 <div class="progressEmpty">
@@ -319,7 +319,7 @@
             </div>
             <div
               class="time-line-wrapper"
-              v-if="detailData.resourceType=='greenway_all'"
+              v-if="resourceType=='greenway_all'"
             >
               <div class="time-line">
                 <div
@@ -367,7 +367,7 @@
           :forceEntity="forceEntity"
           :aroundData="aroundData"
         />
-        <div class="qrcode-wrapper" v-show="detailData.resourceType=='project_all'">
+        <div class="qrcode-wrapper" v-show="resourceType=='project_all'">
           <div class="title-wrapper">
             <span class="title">项目二维码</span>
           </div>
@@ -491,7 +491,6 @@ export default {
       console.log("aaa", forceEntity);
       if (forceEntity.attributes) {
         this.resourceType = forceEntity.attributes.resourceType || forceEntity.attributes.RESOURCE_TYPE
-        // forceEntity.attributes.GUID || 
         let id = forceEntity.attributes.resourceId || forceEntity.attributes.RESOURCE_ID
         this.initData(id);
       } else {
@@ -542,7 +541,7 @@ export default {
       //   this.currentData = this.finalList[this.currentIndex];
       // }
     },
-    formatData(attr, key) {
+    formatData() {
       let overallViews = this.detailData.overallViews
       let videos = this.detailData.videos
       let photos = this.detailData.photos

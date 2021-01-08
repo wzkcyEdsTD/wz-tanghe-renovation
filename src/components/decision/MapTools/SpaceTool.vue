@@ -69,7 +69,7 @@
                 </div>
                 <div
                   ref="pieEchart"
-                  style="width: 24vh; height: 18vh"
+                  style="width: 24vh; height: 20vh"
                   class="pieEchart"
                 ></div>
               </div>
@@ -87,24 +87,24 @@
                   </el-select>
                 </div>
                 <div class="zrdw-list" v-show="orgValue=='project'">
-                  <div class="zrdw-item" v-for="(value,key,index) in analyzeData.projectOrg" :key="index">
-                    <span class="name">{{key}}</span>
-                    <span class="number">{{value}}</span>
+                  <div class="zrdw-item" v-for="(item,index) in analyzeData.projectOrg" :key="index">
+                    <span class="name">{{orgData[item.name]}}</span>
+                    <span class="number">{{item.value>9?item.value:`0${item.value}`}}</span>
                     <span class="unit">个</span>
                   </div>
                 </div>
                 <div class="zrdw-list" v-show="orgValue=='point'">
-                  <div class="zrdw-item" v-for="(value,key,index) in analyzeData.pointOrg" :key="index">
-                    <span class="name">{{key}}</span>
-                    <span class="number">{{value}}</span>
+                  <div class="zrdw-item" v-for="(item,index) in analyzeData.pointOrg" :key="index">
+                    <span class="name">{{orgData[item.name]}}</span>
+                    <span class="number">{{item.value>9?item.value:`0${item.value}`}}</span>
                     <span class="unit">个</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="side-wrapper">
-              <div class="side-item">区县</div>
-              <div class="side-item">街道</div>
+            <div id="side-wrapper" class="side-wrapper">
+              <div class="side-item" @click="sideValue='district'">区县</div>
+              <div class="side-item" @click="sideValue='street'">街道</div>
             </div>
           </div>
         </div>
@@ -121,6 +121,15 @@ export default {
   components: { calTools },
   data() {
     return {
+      orgData: {
+        A02A01: '鹿城区政府',
+        A02A02: '瓯海区政府',
+        A02A03: '龙湾区政府',
+        A02A04: '瑞安市政府',
+        A02A05: '浙南产业区',
+        A02A06: '市现代集团',
+        A02A07: '市城发集团',
+      },
       toolList: [
         {
           label: "空间标绘",
@@ -144,10 +153,12 @@ export default {
         projectAmount: 0,
         pointTotal: 0,
         pointLength: 0,
-        projectDistrict: {},
-        pointDistrict: {},
-        projectOrg: {},
-        pointOrg: {}
+        projectDistrict: [],
+        pointDistrict: [],
+        projectOrg: [],
+        pointOrg: [],
+        projectStreet: [],
+        pointStreet: []
       },
       pieEchart: null, // 饼状图
       orgOptions: [
@@ -172,13 +183,15 @@ export default {
         },
       ],
       districtValue: "project",
+      sideValue: 'district',
+      sideBg1: require('./images/side1-1.png'),
+      sideBg2: require('./images/side1-2.png'),
     };
   },
   methods: {
     eventRegsiter() {
       this.$bus.$off("areaAnalyze");
       this.$bus.$on("areaAnalyze", ({ position, result }) => {
-        // console.log("haha", position);
         this.initData(result);
         this.drawProjectCircle(position, new Date().getTime());
         // 经纬度转世界坐标
@@ -187,8 +200,6 @@ export default {
           position.y,
           1200
         );
-        // console.log("hehe", this.position);
-        this.drawPie();
       });
     },
     toolClick(item) {
@@ -202,7 +213,6 @@ export default {
     },
     renderForceEntity() {
       // const forceEntity = this.forceEntity;
-      // if (forceEntity.fix_data) {
       const pointToWindow = Cesium.SceneTransforms.wgs84ToWindowCoordinates(
         window.earth.scene,
         this.position
@@ -212,53 +222,114 @@ export default {
         this.forcePosition.x !== pointToWindow.x ||
         this.forcePosition.y !== pointToWindow.y
       ) {
-        // console.log('nonono')
         this.forcePosition = pointToWindow;
       }
-      // }
     },
     initData(res) {
+      this.orgValue = "project"
+      this.districtValue = "project"
       this.analyzeData = {
         projectTotal: 0,
         projectAmount: 0,
         pointTotal: 0,
         pointLength: 0,
-        projectDistrict: {},
-        pointDistrict: {},
-        projectOrg: {},
-        pointOrg: {}
+        projectDistrict: [],
+        pointDistrict: [],
+        projectOrg: [],
+        pointOrg: [],
+        projectStreet: [],
+        pointStreet: []
       };
       res.result.features.forEach((feature) => {
         if (feature.attributes.RESOURCE_TYPE == "project_all") {
           this.analyzeData.projectTotal += 1;
           this.analyzeData.projectAmount += Number(feature.attributes.TOTALAMOUNT);
-          this.analyzeData.projectDistrict[feature.attributes.DISTRICT]
-            ? (this.analyzeData.projectDistrict[feature.attributes.DISTRICT] += 1)
-            : (this.analyzeData.projectDistrict[feature.attributes.DISTRICT] = 1);
+
+          let districtIndex = this.analyzeData.projectDistrict.findIndex(item => {
+            return item.name == feature.attributes.DISTRICT
+          })
+          if (districtIndex>=0) {
+            this.analyzeData.projectDistrict[districtIndex].value += 1
+          } else {
+            this.analyzeData.projectDistrict.push({name: feature.attributes.DISTRICT, value: 1})
+          }
+
+          let streetIndex = this.analyzeData.projectStreet.findIndex(item => {
+            return item.name == feature.attributes.STREET
+          })
+          if (streetIndex>=0) {
+            this.analyzeData.projectStreet[streetIndex].value += 1
+          } else {
+            this.analyzeData.projectStreet.push({name: feature.attributes.STREET, value: 1})
+          }
           
           let orgArr = ~feature.attributes.XM_ORG_CODE.indexOf(",") ? feature.attributes.XM_ORG_CODE.split(",") : [feature.attributes.XM_ORG_CODE]
-          orgArr.forEach(item => {
-            this.analyzeData.projectOrg[item]
-            ? (this.analyzeData.projectOrg[item] += 1)
-            : (this.analyzeData.projectOrg[item] = 1);
+          orgArr.forEach(org => {
+            let orgIndex = this.analyzeData.projectOrg.findIndex(item => {
+              return item.name == org
+            })
+            if (orgIndex>=0) {
+              this.analyzeData.projectOrg[orgIndex].value += 1
+            } else {
+              this.analyzeData.projectOrg.push({name: org, value: 1})
+            }
+          })
+          this.analyzeData.projectOrg.sort((a, b) => {
+            if (a.value < b.value) {
+              return 1
+            } else if (a.value > b.value) {
+              return -1
+            } else {
+              return 0
+            }
           })
         }
         if (feature.attributes.RESOURCE_TYPE == "greenway_all") {
           this.analyzeData.pointTotal += 1;
           this.analyzeData.pointLength += Number(feature.attributes.LENGTH);
-          this.analyzeData.pointDistrict[feature.attributes.DISTRICT]
-            ? (this.analyzeData.pointDistrict[feature.attributes.DISTRICT] += 1)
-            : (this.analyzeData.pointDistrict[feature.attributes.DISTRICT] = 1);
+
+          let districtIndex = this.analyzeData.pointDistrict.findIndex(item => {
+            return item.name == feature.attributes.DISTRICT
+          })
+          if (districtIndex>=0) {
+            this.analyzeData.pointDistrict[districtIndex].value += 1
+          } else {
+            this.analyzeData.pointDistrict.push({name: feature.attributes.DISTRICT, value: 1})
+          }
+
+          let streetIndex = this.analyzeData.pointStreet.findIndex(item => {
+            return item.name == feature.attributes.STREET
+          })
+          if (streetIndex>=0) {
+            this.analyzeData.pointStreet[streetIndex].value += 1
+          } else {
+            this.analyzeData.pointStreet.push({name: feature.attributes.STREET, value: 1})
+          }
 
           let orgArr = ~feature.attributes.LD_ORG_CODE.indexOf(",") ? feature.attributes.LD_ORG_CODE.split(",") : [feature.attributes.LD_ORG_CODE]
-          orgArr.forEach(item => {
-            this.analyzeData.pointOrg[item]
-            ? (this.analyzeData.pointOrg[item] += 1)
-            : (this.analyzeData.pointOrg[item] = 1);
+          orgArr.forEach(org => {
+            let orgIndex = this.analyzeData.pointOrg.findIndex(item => {
+              return item.name == org
+            })
+            if (orgIndex>=0) {
+              this.analyzeData.pointOrg[orgIndex].value += 1
+            } else {
+              this.analyzeData.pointOrg.push({name: org, value: 1})
+            }
+          })
+          this.analyzeData.pointOrg.sort((a, b) => {
+            if (a.value < b.value) {
+              return 1
+            } else if (a.value > b.value) {
+              return -1
+            } else {
+              return 0
+            }
           })
         }
       });
       console.log('gogogo', this.analyzeData)
+      this.drawPie();
     },
     // 创建datasource
     createEntityCollection() {
@@ -302,55 +373,48 @@ export default {
       datasource.entities.removeAll();
     },
     drawPie() {
-      var data = [
-        {
-          name: "瓯海区",
-          value: 25,
-        },
-        {
-          name: "龙湾区",
-          value: 15,
-        },
-        {
-          name: "鹿城区",
-          value: 69,
-        },
-      ];
-      console.log("11111");
+      let data
+      if (this.sideValue == 'district') {
+        if (this.districtValue == 'project') {
+          data = this.analyzeData.projectDistrict
+        }
+        if (this.districtValue == 'point') {
+          data = this.analyzeData.pointDistrict
+        }
+      }
+      if (this.sideValue == 'street') {
+        if (this.districtValue == 'project') {
+          data = this.analyzeData.projectStreet
+        }
+        if (this.districtValue == 'point') {
+          data = this.analyzeData.pointStreet
+        }
+      }
+      let nameList = data.map(item => {
+        return item.name
+      })
       this.pieEchart = this.$echarts.init(this.$refs.pieEchart);
-      console.log("22222", this.pieEchart);
       this.pieEchart.setOption({
         legend: {
+          selectedMode: false,
           orient: "horizontal",
-          // top: "25%",
-          // left: "34%",
           icon: "rect",
           itemWidth: 14,
           itemHeight: 14,
           textStyle: {
             color: "#fff",
           },
-          data: ["瓯海区", "龙湾区", "鹿城区"],
-          // formatter: function (name) {
-          //   let target;
-          //   for (let i = 0; i < resultList.length; i++) {
-          //     if (resultList[i].name === name) {
-          //       target = resultList[i].value;
-          //     }
-          //   }
-          //   return name + target + "%";
-          // },
+          data: nameList,
         },
+        color:['#00b1ff', '#baffff', '#4e4eff', '#AC88FF'],
         series: [
           {
             name: "项目构成",
             type: "pie",
-            center: ["50%", "50%"],
-            // radius: ["60%", "75%"],
-            radius: "50%",
+            center: ["50%", "55%"],
+            radius: "65%",
             // avoidLabelOverlap: false,
             label: {
-              // show: false,
               formatter: "{b}: \n{d}%",
               position: "outer",
               alignTo: "none",
@@ -361,13 +425,10 @@ export default {
             },
             left: "15%",
             right: "15%",
-            emphasis: {
-              label: {
-                show: false,
-              },
-            },
-            // labelLine: {
-            //   show: false,
+            // emphasis: {
+            //   label: {
+            //     show: false,
+            //   },
             // },
             data: data,
             animation: false,
@@ -380,6 +441,20 @@ export default {
     this.eventRegsiter();
     this.createEntityCollection();
   },
+  watch: {
+    districtValue(val) {
+      this.drawPie()
+    },
+    sideValue(val) {
+      this.drawPie()
+      if (val == 'district') {
+        document.getElementById('side-wrapper').style.backgroundImage = "url('" + this.sideBg1 + "')";
+      }
+      if (val == 'street') {
+        document.getElementById('side-wrapper').style.backgroundImage = "url('" + this.sideBg2 + "')";
+      }
+    }
+  }
 };
 </script>
 

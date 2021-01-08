@@ -8,6 +8,26 @@
           <span class="title">{{ forceEntity.attributes.NAME }}</span>
         </div>
         <div class="content-info">
+          <div class="jgt-wrapper" v-show="forceEntity.attributes.JGT">
+            <div class="swiper-buttons jgt-swiper-button-left"></div>
+            <swiper
+              class="swiper-wrapper"
+              :options="jgtSwiperOptions"
+            >
+              <swiper-slide
+                v-for="(item, i) in jgtList"
+                :key="i"
+                class="swiper-item"
+              >
+                <el-image
+                  :src="item"
+                  fit="contain"
+                  @click="onJGTPreview(jgtList, i)"
+                ></el-image>
+              </swiper-slide>
+            </swiper>
+            <div class="swiper-buttons jgt-swiper-button-right"></div>
+          </div>
           <div class="btn-list">
             <button
               class="btn-item"
@@ -383,11 +403,16 @@
       </div>
     </transition>
     <el-image-viewer
-      :style="{ left: showLarge ? '55%' : '0' }"
-      v-if="showViewer"
+      v-show="showViewer"
       :on-close="closeViewer"
       :url-list="srcList"
       :initial-index="srcIndex"
+    />
+    <el-image-viewer  :style="{ right: showLarge ? '45%' : '0' }"
+      v-show="showJGTViewer"
+      :on-close="closeJGTViewer"
+      :url-list="jgtList"
+      :initial-index="jgtIndex"
     />
     <div class="QJFrame" v-show="showQJ">
       <i class="close" @click="closeQJ"></i>
@@ -459,9 +484,22 @@ export default {
           },
         },
       },
+      jgtSwiperOptions: {
+        slidesPerView: 1,
+        // scrollbar: {
+        //   el: ".swiper-scrollbar",
+        // },
+        navigation: {
+          nextEl: ".jgt-swiper-button-right",
+          prevEl: ".jgt-swiper-button-left",
+        },
+      },
       showViewer: false,
+      showJGTViewer: false,
       srcList: [],
       srcIndex: 0,
+      jgtList: [],
+      jgtIndex: 0,
       showQJ: false,
       showSP: false,
       QJURL: "",
@@ -493,6 +531,11 @@ export default {
     getForceEntity(forceEntity) {
       this.forceEntity = forceEntity;
       this.projectId = this.forceEntity.attributes.XMID;
+      let jgtList = ~this.forceEntity.attributes.JGT.indexOf(";") ? this.forceEntity.attributes.JGT.split(";") : [this.forceEntity.attributes.JGT];
+      this.jgtList = jgtList.map((item) => {
+        return `/static/images/${this.forceEntity.type}/${item}`;
+      });
+      console.log('jgtList', this.jgtList)
       this.isShow = true;
       console.log("aaa", forceEntity);
       this.$nextTick(() => {
@@ -600,11 +643,13 @@ export default {
       this.closeQJ()
       this.closeSP()
       this.closeViewer()
+      this.closeJGTViewer()
       this.isShow = false;
     },
     openQJ(index) {
       this.closeSP();
       this.closeViewer();
+      this.closeJGTViewer()
       if (this.showLarge) {
         this.$bus.$emit("change-rightContent", {
           type: "qj",
@@ -629,14 +674,33 @@ export default {
       this.srcList = list.map((item) => {
         return `/static/images/${this.forceEntity.type}/${item}`;
       });
-      this.srcIndex = index;
-      this.showViewer = true;
+      if (this.showLarge) {
+        this.$bus.$emit("open-rightPreview", {
+          value: this.srcList,
+          index
+        });
+      } else {
+        this.closeJGTViewer();
+        this.srcIndex = index;
+        this.showViewer = true;
+      }
+    },
+    onJGTPreview(list, index) {
+      this.closeQJ();
+      this.closeSP();
+      this.jgtIndex = index;
+      this.showJGTViewer = true;
+      !this.showLarge && this.closeViewer();
     },
     closeViewer() {
       this.showViewer = false;
     },
+    closeJGTViewer() {
+      this.showJGTViewer = false;
+    },
     handlePlay(e) {
       this.closeViewer();
+      this.closeJGTViewer();
       console.log("handlePlay", e);
       e.target.pause()
       if (this.showLarge) {
@@ -646,7 +710,7 @@ export default {
         });
       } else {
         this.closeQJ();
-        this.closeViewer();
+        // this.closeViewer();
         this.showSP = true
         this.SPURL = e.target.currentSrc
       }

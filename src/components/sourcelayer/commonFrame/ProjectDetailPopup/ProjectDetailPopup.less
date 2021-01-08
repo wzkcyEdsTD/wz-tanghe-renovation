@@ -22,6 +22,15 @@
   .content-info {
     display: flex;
     flex-direction: column;
+    .jgt-wrapper {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      margin-left: 1vh;
+      margin-top: 1.5vh;
+      padding-bottom: 1.5vh;
+      border-bottom: 1px solid #666;
+    }
     .btn-list {
       display: flex;
       justify-content: center;
@@ -56,47 +65,6 @@
         align-items: center;
         margin-left: 1vh;
         flex: 1;
-        .swiper-buttons {
-          cursor: pointer;
-          width: 1vh;
-          height: 3vh;
-          .bg-image("./images/swiper-btn");
-        }
-        .swiper-button-left {
-          margin-right: 1vh;
-        }
-        .swiper-button-right {
-          margin-left: 1vh;
-          transform: rotate(180deg);
-        }
-        .swiper-wrapper {
-          display: flex;
-          align-items: center;
-          margin: 0;
-          width: 26vh;
-          flex: 1;
-          .swiper-item {
-            img {
-              width: 100%;
-            }
-            .no-tip {
-              height: 16vh;
-              line-height: 16vh;
-              width: 100%;
-              text-align: center;
-              font-family: YouSheBiaoTiHei;
-              font-size: 2vh;
-              color: #165FEA;
-            }
-          }
-          .swiper-scrollbar {
-            height: 3px;
-            background: rgba(0, 0, 0, 0.5);
-          }
-          .swiper-scrollbar-drag {
-            background-color: #fff;
-          }
-        }
       }
       .bottom {
         height: 3.38vh;
@@ -164,6 +132,47 @@
             }
           }
         }
+      }
+    }
+    .swiper-buttons {
+      cursor: pointer;
+      width: 1vh;
+      height: 3vh;
+      .bg-image("./images/swiper-btn");
+    }
+    .swiper-button-left, .jgt-swiper-button-left {
+      margin-right: 1vh;
+    }
+    .swiper-button-right, .jgt-swiper-button-right {
+      margin-left: 1vh;
+      transform: rotate(180deg);
+    }
+    .swiper-wrapper {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      width: 26vh;
+      flex: 1;
+      .swiper-item {
+        img {
+          width: 100%;
+        }
+        .no-tip {
+          height: 16vh;
+          line-height: 16vh;
+          width: 100%;
+          text-align: center;
+          font-family: YouSheBiaoTiHei;
+          font-size: 2vh;
+          color: #165FEA;
+        }
+      }
+      .swiper-scrollbar {
+        height: 3px;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      .swiper-scrollbar-drag {
+        background-color: #fff;
       }
     }
   }

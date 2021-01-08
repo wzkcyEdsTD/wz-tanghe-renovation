@@ -10,6 +10,12 @@
         <video class="video" v-show="showType=='video'" :src="showSrc" controls="controls" autoplay muted></video>
         <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
         <div v-show="showType=='jk'" id="player" class="frequency-pic type1" />
+        <el-image-viewer style="left: 55%"
+          v-show="showViewer"
+          :on-close="closeViewer"
+          :url-list="srcList"
+          :initial-index="srcIndex"
+        />
         <!-- <video-player v-show="showType=='jk'" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" controls></video-player> -->
       </div>
     </div>
@@ -25,6 +31,7 @@
 </template>
 
 <script>
+import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import MHeader from "components/m-header/m-header";
 import Loading from "components/loading/loading";
 import RightChart from "components/compare/rightChart/rightChart";
@@ -35,6 +42,7 @@ const Aliplayer = window.Aliplayer;
 export default {
   name: "App",
   components: {
+    ElImageViewer,
     MHeader,
     Loading,
     RightChart
@@ -67,6 +75,9 @@ export default {
       // }
       currentPage: '',
       showPlayer: false,
+      showViewer: false,
+      srcList: [],
+      srcIndex: 0,
     };
   },
   computed: {
@@ -142,6 +153,9 @@ export default {
         }
       );
     },
+    closeViewer() {
+      this.showViewer = false;
+    },
     eventRegsiter() {
       this.$bus.$off("change-screen");
       this.$bus.$on("change-screen", ({ value }) => {
@@ -172,6 +186,12 @@ export default {
       this.$bus.$off("close-rightPlayer");
       this.$bus.$on("close-rightPlayer", () => {
         this.showPlayer = false
+      })
+      this.$bus.$off("open-rightPreview");
+      this.$bus.$on("open-rightPreview", ({value, index}) => {
+        this.srcList = value;
+        this.srcIndex = index;
+        this.showViewer = true
       })
     }
   },

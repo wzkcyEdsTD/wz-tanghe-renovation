@@ -95,56 +95,8 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
   })
   context.setSourceMap({ [node.id]: forceDrawFeatures });
 
-  // 获取hash地址判断当前页面
-  let currentHash = window.location.hash
-
   forceDrawFeatures.map(item => {
-    const position = Cesium.Cartesian3.fromDegrees(
-      item.geometry.x,
-      item.geometry.y,
-      4
-    );
-
-    let billImage
-    let width = 32
-    let height = 32
-    if (node.icon) {
-      if (node.icon == '断点') {
-        if (~currentHash.indexOf('compare')) {
-          billImage = `/static/images/map-ico/断点2.png`
-          width = 28
-          height = 28
-        } else {
-          billImage = `/static/images/map-ico/断点.png`
-        }
-      } else if (node.icon == '全景') {
-        let rq = item.attributes.RQ.substr(0, 4)
-        billImage = `/static/images/map-ico/全景${rq}.png`
-      } else if (node.icon == '视频') {
-        billImage = `/static/images/map-ico/视频${item.attributes.TYPE}.png`
-      } else {
-        billImage = `/static/images/map-ico/${node.icon}.png`
-      }
-    } else {
-      if (~currentHash.indexOf('sourcelayer')) {
-        billImage = `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`
-      }
-      if (~currentHash.indexOf('compare')) {
-        billImage = `/static/images/map-ico/${item.attributes.ZT.trim()}.png`
-        height = 35
-      }
-    }
-
-    window.billboardMap[node.id].add({
-      id: `billboard@${item.attributes.SMID}@${node.id}`,
-      image: billImage,
-      width: width,
-      height: height,
-      scaleByDistance: new Cesium.NearFarScalar(1000, 2, 6000, 1),
-      // sizeInMeters:true,
-      disableDepthTestDistance: Number.POSITIVE_INFINITY,
-      position
-    })
+    addBillboard(node.id, node.icon, item)
 
     if (node.id == '十二景') return;
 
@@ -158,16 +110,68 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
   fn && fn();
 };
 
-export const addWhiteLabel = (key, item) => {
+export const addBillboard = (id, icon, item) => {
+  // 获取hash地址判断当前页面
+  let currentHash = window.location.hash
+
   const position = Cesium.Cartesian3.fromDegrees(
     item.geometry.x,
     item.geometry.y,
     4
   );
-  window.whiteLabelMap[key].add({
-    id: `label@${item.attributes.SMID}@${key}`,
+
+  let billImage
+  let width = 32
+  let height = 32
+  if (icon) {
+    if (icon == '断点') {
+      if (~currentHash.indexOf('compare')) {
+        billImage = `/static/images/map-ico/断点2.png`
+        width = 28
+        height = 28
+      } else {
+        billImage = `/static/images/map-ico/断点.png`
+      }
+    } else if (icon == '全景') {
+      let rq = item.attributes.RQ.substr(0, 4)
+      billImage = `/static/images/map-ico/全景${rq}.png`
+    } else if (icon == '视频') {
+      billImage = `/static/images/map-ico/视频${item.attributes.TYPE}.png`
+    } else {
+      billImage = `/static/images/map-ico/${icon}.png`
+    }
+  } else {
+    if (~currentHash.indexOf('sourcelayer')) {
+      billImage = `/static/images/map-ico/${item.attributes.CURRENT_STATE.trim()}.png`
+    }
+    if (~currentHash.indexOf('compare')) {
+      billImage = `/static/images/map-ico/${item.attributes.ZT.trim()}.png`
+      height = 35
+    }
+  }
+
+  window.billboardMap[id].add({
+    id: `billboard@${item.attributes.SMID}@${id}`,
+    image: billImage,
+    width: width,
+    height: height,
+    scaleByDistance: new Cesium.NearFarScalar(1000, 2, 6000, 1),
+    // sizeInMeters:true,
+    disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    position
+  })
+}
+
+export const addWhiteLabel = (id, item) => {
+  const position = Cesium.Cartesian3.fromDegrees(
+    item.geometry.x,
+    item.geometry.y,
+    4
+  );
+  window.whiteLabelMap[id].add({
+    id: `label@${item.attributes.SMID}@${id}`,
     text: item.attributes.SHORTNAME || item.attributes.NAME,
-    fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
+    fillColor: ~id.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#fff"),
     font: "bold 14px Microsoft YaHei",
     outlineColor: Cesium.Color.BLACK,
     style: Cesium.LabelStyle.FILL_AND_OUTLINE,
@@ -180,16 +184,16 @@ export const addWhiteLabel = (key, item) => {
   });
 }
 
-export const addBlackLabel = (key, item) => {
+export const addBlackLabel = (id, item) => {
   const position = Cesium.Cartesian3.fromDegrees(
     item.geometry.x,
     item.geometry.y,
     4
   );
-  window.blackLabelMap[key].add({
-    id: `label@${item.attributes.SMID}@${key}`,
+  window.blackLabelMap[id].add({
+    id: `label@${item.attributes.SMID}@${id}`,
     text: item.attributes.SHORTNAME || item.attributes.NAME,
-    fillColor: ~key.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
+    fillColor: ~id.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#CD2626") : new Cesium.Color.fromCssColorString("#3379FF") : new Cesium.Color.fromCssColorString("#010C27"),
     font: "bold 14px Microsoft YaHei",
     outlineColor: Cesium.Color.WHITE,
     style: Cesium.LabelStyle.FILL_AND_OUTLINE,

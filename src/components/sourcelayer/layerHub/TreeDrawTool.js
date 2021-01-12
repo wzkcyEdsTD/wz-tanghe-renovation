@@ -117,6 +117,11 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
         } else {
           billImage = `/static/images/map-ico/断点.png`
         }
+      } else if (node.icon == '全景') {
+        let rq = item.attributes.RQ.substr(0, 4)
+        billImage = `/static/images/map-ico/全景${rq}.png`
+      } else if (node.icon == '视频') {
+        billImage = `/static/images/map-ico/视频${item.attributes.TYPE}.png`
       } else {
         billImage = `/static/images/map-ico/${node.icon}.png`
       }

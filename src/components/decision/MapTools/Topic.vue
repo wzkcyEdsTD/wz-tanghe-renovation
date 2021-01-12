@@ -245,9 +245,9 @@
       <div class="title-wrapper">
         <span class="pre"></span>
         <span class="title">各乡镇街道项目数排名</span>
-        <el-select style="width:100px;" v-model="zrdwValue" placeholder="请选择">
+        <el-select style="width:100px;" v-model="districtValue" placeholder="请选择">
           <el-option
-            v-for="item in zrdwOptions"
+            v-for="item in districtOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -256,9 +256,9 @@
       </div>
       <div class="content">
         <div class="rank-item" v-for="(item, index) in currentStreetList" :key="index">
-          <span class="name">{{item.streetName}}</span>
-          <div class="progress" :class="{red: index<=2, blue: index>=3}" :style="{width: `70%`}"></div>
-          <span class="num">{{item.streetSum}}</span>
+          <span class="name">{{item.name}}</span>
+          <div class="progress" :class="{red: index<=2, blue: index>=3}" :style="{width: `${item.num*7}%`}"></div>
+          <span class="num">{{item.num}}</span>
         </div>
         <!-- <div class="rank-item">
           <span class="name">景山街道</span>
@@ -298,7 +298,7 @@ import {
   getProjStatusByDept,
   countProjectProgressNum,
   queryProgressList,
-  getProjNumByStreet,
+  countProjectStreetNum,
   countProjectAmound
 } from "api/tangheAPI";
 export default {
@@ -372,6 +372,13 @@ export default {
         { label: "温州现代集团", value: "A02A06" },
       ],
       zrdwValue: 'A02A01',
+      districtOptions: [
+        { label: "鹿城区", value: "鹿城区" },
+        { label: "龙湾区", value: "龙湾区" },
+        { label: "瓯海区", value: "瓯海区" },
+        { label: "瑞安市", value: "瑞安市" },
+      ],
+      districtValue: '鹿城区',
       showScore: false,
       value1: 4,
       projectList: [],
@@ -387,6 +394,7 @@ export default {
       problemData: [],
       streetData: [],
       amountData: [],
+      // currentStreetList: [],
       amountList: [],
       currentYear: 2020
     };
@@ -399,19 +407,24 @@ export default {
       return res
     },
     currentStreetList() {
-      let res = this.streetData.filter(item => {
-        return item.sysOrgCode == this.zrdwValue
+      let res = this.streetData.find(item => {
+        return item.name == this.districtValue
       })
-      res.streetInfos && res.streetInfos.sort((a, b) => {
-        if (a.streetSum < b.streetSum) {
-          return 1
-        } else if (a.streetSum > b.streetSum) {
-          return -1
-        } else {
-          return 0
-        }
-      })
-      return res.streetInfos
+      console.log('aaaaaaaaaaa', res)
+      if (res) {
+        let arr = res.countBaseRespList
+        arr.sort((a, b) => {
+          if (a.num < b.num) {
+            return 1
+          } else if (a.num > b.num) {
+            return -1
+          } else {
+            return 0
+          }
+        })
+        console.log('bbb', arr)
+        return arr
+      }
     }
   },
   methods: {
@@ -604,7 +617,7 @@ export default {
       }
     },
     async getStreetData(child) {
-      let res = await getProjNumByStreet()
+      let res = await countProjectStreetNum()
       if (res.code == 200) {
         this.streetData = res.result
         this.currentChild = child

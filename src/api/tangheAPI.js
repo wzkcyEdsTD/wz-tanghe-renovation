@@ -132,6 +132,12 @@ export function queryProgressList(data) {
   return get(url, data)
 }
 
+// 根据街道统计项目数量
+export function countProjectStreetNum(data) {
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProject/countProjectStreetNum'
+  return get(url, data)
+}
+
 // 各单位总投资额统计
 export function countProjectAmound(data) {
   const url = 'http://192.168.2.103:8080/tanghe/front/resourceProject/countProjectAmound'

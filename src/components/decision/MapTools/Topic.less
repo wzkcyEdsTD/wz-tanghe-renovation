@@ -56,6 +56,9 @@
     left: 50%;
     transform: translateX(-50%);
     width: 50%;
+    .bg {
+      width: 100%;
+    }
     .top {
       position: absolute;
       top: -5%;
@@ -64,14 +67,17 @@
     }
     .content {
       position: absolute;
-      top: 22%;
+      top: 55%;
       left: 50%;
-      transform: translateX(-50%);
-      width: 95%;
+      transform: translate(-50%, -50%);
+      // width: 95%;
+      width: 100%;
       display: flex;
+      text-align: center;
+      // .bg-image("./images/analyze-bg");
       .start-item {
         position: relative;
-        margin: 0 1vh;
+        // margin: 0 1vh;
         flex: 1;
         .number {
           position: absolute;
@@ -402,7 +408,7 @@
 .result-wrapper {
   // margin-top: 1vh;
   width  : 99%;
-  height : 40vh;
+  height : 48vh;
   // font-family: PingFang;
   color: #fff;
   padding-left: 1vh;
@@ -444,5 +450,9 @@
     li:nth-child(even) {
       background: rgba(22, 95, 234, 0.24);
     }
+  }
+  .no-data {
+    margin-top: 2vh;
+    text-align: center;
   }
 }

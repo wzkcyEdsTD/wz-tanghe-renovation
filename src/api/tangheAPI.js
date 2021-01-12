@@ -56,61 +56,67 @@ export function getProjByConsdate(data) {
 
 // 项目详情
 export function getProjectDetail(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/resourceProject/count/queryForOneMapById'
+  const url = 'http://192.168.2.103:8080/tanghe/resourceProject/count/queryForOneMapById'
   return get(url, data)
 }
 
 // 卡点详情
 export function getPointDetail(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/resourceGreenwayPoint/count/queryForMap'
+  const url = 'http://192.168.2.103:8080/tanghe/resourceGreenwayPoint/count/queryForMap'
   return get(url, data)
 }
 
 // 互学互比列表查询
 export function queryMeetingSortFront(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/front/bsMeeting/queryMeetingSortFront'
+  const url = 'http://192.168.2.103:8080/tanghe/front/bsMeeting/queryMeetingSortFront'
   return get(url, data)
 }
 
 // 年度项目数量及总投资额
 export function countProjForCurAmound(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/front/resourceProject/countProjForCurAmound'
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProject/countProjForCurAmound'
   return get(url, data)
 }
 
 // 年度计划开工数据
 export function countProjByConsdates2(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/front/resourceProject/countProjByConsdates2'
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProject/countProjByConsdates2'
   return get(url, data)
 }
 
 // 年度计划完工数据
 export function countProjByConsdatee2(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/front/resourceProject/countProjByConsdatee2'
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProject/countProjByConsdatee2'
   return get(url, data)
 }
 
 // 年度投资完成率
 export function countProjByAmound(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/front/resourceProject/countProjByAmound'
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProject/countProjByAmound'
   return get(url, data)
 }
 
 // 资源目录
 export function rootList(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/front/resourceMenu/rootList'
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceMenu/rootList'
   return get(url, data)
 }
 
 // 新增评论
 export function addComment(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/front/resourceProjectComment/addComment'
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProjectComment/addComment'
   return post(url, data)
 }
 
 // 查询评论
 export function resourceComment(data) {
-  const url = 'http://192.168.2.136:8080/tanghe/front/resourceProjectComment/list'
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProjectComment/list'
+  return get(url, data)
+}
+
+// 根据参数查询项目列表
+export function resourceProjectList(data) {
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProject/list'
   return get(url, data)
 }
 

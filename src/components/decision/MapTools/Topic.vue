@@ -21,9 +21,9 @@
     <div class="analyze" v-show="showAnalyze">
       <img class="bg" src="./images/analyze-bg.png">
       <div class="top">
-        <el-select class="analyze-select" v-model="value" placeholder="请选择">
+        <el-select class="analyze-select" v-model="zrdwValue" placeholder="请选择">
           <el-option
-            v-for="item in options"
+            v-for="item in zrdwOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -109,10 +109,10 @@
         </div>
       </div>
     </div>
-    <div class="delay" v-show="currentChild=='延期项目'">
+    <div class="delay" v-show="currentChild=='滞后项目'">
       <div class="title-wrapper">
         <span class="pre"></span>
-        <span class="title">延期项目</span>
+        <span class="title">滞后项目</span>
       </div>
       <div class="count">
         <div class="count-item">
@@ -147,9 +147,9 @@
       <div class="bottom">
         <div class="header">
           <div class="line"></div>
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="zrdwValue" placeholder="请选择">
             <el-option
-              v-for="item in options"
+              v-for="item in zrdwOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -164,30 +164,31 @@
               <span class="content">计划建成时间</span>
               <span class="flex2">当前状态</span>
             </li>
-            <li class="result-item">
+            <!-- <li class="result-item">
               <span class="flex2">{{ "葡萄8-5地块" }}</span>
               <span class="content">{{ "2020-02-04" }}</span>
               <span class="content">{{ "2020-02-04" }}</span>
-              <span class="flex2">{{ "延期" }}</span>
+              <span class="flex2">{{ "滞后" }}</span>
             </li>
             <li class="result-item">
               <span class="flex2">{{ "葡萄8-5地块" }}</span>
               <span class="content">{{ "2020-02-04" }}</span>
               <span class="content">{{ "2020-02-04" }}</span>
-              <span class="flex2">{{ "延期" }}</span>
+              <span class="flex2">{{ "滞后" }}</span>
             </li>
             <li class="result-item">
               <span class="flex2">{{ "葡萄8-5地块" }}</span>
               <span class="content">{{ "2020-02-04" }}</span>
               <span class="content">{{ "2020-02-04" }}</span>
-              <span class="flex2">{{ "延期" }}</span>
-            </li>
-            <!-- <li class="result-item" v-for="(item, index) in lightXmList" :key="index">
-              <span class="index">{{ index }}</span>
-              <span class="name">{{ item.attributes.NAME }}</span>
-              <span class="content">{{ item.attributes.ZR_DEPTID }}</span>
-              <span class="content">{{ item.attributes.CURRENT_STATE }}</span>
+              <span class="flex2">{{ "滞后" }}</span>
             </li> -->
+            <li class="result-item" v-for="(item, index) in currentList" :key="index">
+              <span class="flex2">{{ item.name }}</span>
+              <span class="content">{{ item.consdates || '-' }}</span>
+              <span class="content">{{ item.consdatee }}</span>
+              <span class="flex2">{{ item.status }}</span>
+            </li>
+            <p class="no-data" v-show="!currentList.length">暂无数据</p>
           </ul>
         </div>
       </div>
@@ -230,9 +231,9 @@
       <div class="bottom">
         <div class="header">
           <div class="line"></div>
-          <el-select class="delay-select" v-model="value" placeholder="请选择">
+          <el-select class="delay-select" v-model="zrdwValue" placeholder="请选择">
             <el-option
-              v-for="item in options"
+              v-for="item in zrdwOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -389,6 +390,9 @@
 <script>
 import { ServiceUrl, LayerList } from "@/config/server/mapConfig";
 import { switchHeatMap, doHeatMap } from "./HeatMap";
+import {
+  resourceProjectList,
+} from "api/tangheAPI";
 export default {
   data() {
     return {
@@ -396,7 +400,7 @@ export default {
         {
           label: "进度预警专题",
           value: 1,
-          children: ['延期项目', '问题项目']
+          children: ['滞后项目', '问题项目']
         },
         {
           label: "项目投资专题",
@@ -432,26 +436,46 @@ export default {
       xianzhuang: undefined,
       datasource: [],
       showAnalyze: false,
-      options: [{
-        value: '选项1',
-        label: '鹿城区政府'
-      }, {
-        value: '选项2',
-        label: '瑞安市政府'
-      }, {
-        value: '选项3',
-        label: '现代集团'
-      }, {
-        value: '选项4',
-        label: '城发集团'
-      }, {
-        value: '选项5',
-        label: '浙南产业区'
-      }],
-      value: '选项1',
+      // options: [{
+      //   value: '选项1',
+      //   label: '鹿城区政府'
+      // }, {
+      //   value: '选项2',
+      //   label: '瑞安市政府'
+      // }, {
+      //   value: '选项3',
+      //   label: '现代集团'
+      // }, {
+      //   value: '选项4',
+      //   label: '城发集团'
+      // }, {
+      //   value: '选项5',
+      //   label: '浙南产业区'
+      // }],
+      // value: '选项1',
+      zrdwOptions: [
+        // { label: "指挥部", value: "A02" },
+        { label: "鹿城区政府", value: "A02A01" },
+        { label: "龙湾区政府", value: "A02A03" },
+        { label: "瓯海区政府", value: "A02A02" },
+        { label: "瑞安市政府", value: "A02A04" },
+        { label: "浙南产业区", value: "A02A05" },
+        { label: "温州城发集团", value: "A02A07" },
+        { label: "温州现代集团", value: "A02A06" },
+      ],
+      zrdwValue: 'A02A01',
       showScore: false,
       value1: 4,
+      projectList: []
     };
+  },
+  computed: {
+    currentList() {
+      let res = this.projectList.filter(item => {
+        return item.sysOrgCode == this.zrdwValue
+      })
+      return res
+    }
   },
   methods: {
     itemClick(item) {
@@ -465,9 +489,9 @@ export default {
 
       this.showAnalyze = false
       this.showScore = false
+      this.currentChild = ''
 
       if (item.value == this.currentTopic) {
-        this.currentChild = ''
         this.currentTopic = 0;
         return;
       }
@@ -549,7 +573,9 @@ export default {
         return;
       }
       this.$parent.showHub = false
-      this.currentChild = item
+      if (item == '滞后项目') {
+        this.getList('*滞后*', item)
+      }
     },
     addHeatMap() {
       let smallHeatArr = [];
@@ -575,6 +601,18 @@ export default {
       switchHeatMap(true, "k1", smallHeatArr, 30, 3000);
       switchHeatMap(true, "k2", bigHeatArr, 3000, 300000);
     },
+    async getList(status, child) {
+      let res = await resourceProjectList({
+        delFlag: 0,
+        status,
+        pageSize: 9999,
+      })
+      if (res.code == 200) {
+        this.projectList = res.result.records
+        console.log('projectList', this.projectList)
+        this.currentChild = child
+      }
+    }
   },
 };
 </script>

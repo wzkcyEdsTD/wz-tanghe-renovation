@@ -1,19 +1,29 @@
 <template>
   <div class="space-tool">
     <div class="tool-wrapper">
-      <div
-        class="tool-item"
-        :class="{ active: currentTool == item.value }"
-        v-for="item in toolList"
-        :key="item.value"
-        @click="toolClick(item)"
-      >
-        <img
-          class="dot"
-          v-show="currentTool == item.value"
-          src="./images/space-dot.png"
-        />
-        {{ item.label }}
+      <div class="tool-list">
+        <div
+          class="tool-item"
+          :class="{ active: currentTool == item.value }"
+          v-for="item in toolList"
+          :key="item.value"
+          @click="toolClick(item)"
+        >
+          <img
+            class="dot"
+            v-show="currentTool == item.value"
+            src="./images/space-dot.png"
+          />
+          <span>{{ item.label }}</span>
+        </div>
+      </div>
+      <div class="children-list" v-show="showChild">
+        <div class="children-item" @click.stop="childClick(item)" :class="{ active: currentChild == item.value }"
+          v-for="(item, index) in childList" :key="index">
+            <img v-show="currentChild != item.value" :src="require(`./images/${item.label}.png`)">
+            <img v-show="currentChild == item.value" :src="require(`./images/${item.label}高亮.png`)">
+            <span>{{item.label}}</span>
+        </div>
       </div>
     </div>
     <calTools ref="tools" v-show="false" />
@@ -130,6 +140,7 @@ export default {
         A02A06: '市现代集团',
         A02A07: '市城发集团',
       },
+      showChild: false,
       toolList: [
         {
           label: "空间标绘",
@@ -145,7 +156,22 @@ export default {
         },
       ],
       currentTool: 0,
-      clampMode: 0,
+      childList: [
+        {
+          label: '测距',
+          value: 'ju'
+        },
+        {
+          label: '测面',
+          value: 'mian'
+        },
+        {
+          label: '清除',
+          value: 'clear'
+        }
+      ],
+      currentChild: '',
+      // clampMode: 0,
       position: {},
       forcePosition: {},
       analyzeData: {
@@ -203,13 +229,24 @@ export default {
       });
     },
     toolClick(item) {
+      this.$parent.$refs.Topic.currentTopic = 0
+      this.$parent.$refs.Topic.currentChild = ''
+
       if (this.currentTool == item.value) {
         return;
       }
+      this.showChild = false;
       this.currentTool = item.value;
+
+      if (this.currentTool == 2) {
+        this.showChild = true
+      }
       if (this.currentTool == 3) {
         this.$refs.tools.gaugeAreaAnalyze();
       }
+    },
+    childClick(item) {
+      this.currentChild = item.value
     },
     renderForceEntity() {
       // const forceEntity = this.forceEntity;

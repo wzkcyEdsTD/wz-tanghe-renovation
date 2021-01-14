@@ -83,7 +83,7 @@ export default {
       this.mapLoaded = true;
 
       this.initPostRender();
-      // this.initHandler();
+      this.initHandler();
       this.createEntityCollection();
     });
   },
@@ -168,9 +168,9 @@ export default {
               this.$refs.ProjectDetailPopup.getForceEntity({ ...feature });
               this.$refs.CommonDetailPopup.closeInfo();
             } else {
-              // this.$refs.CommonDetailPopup.isSearch = false;
-              // this.$refs.CommonDetailPopup.getForceEntity({ ...feature });
-              // this.$refs.ProjectDetailPopup.closeInfo();
+              this.$refs.CommonDetailPopup.isSearch = false;
+              this.$refs.CommonDetailPopup.getForceEntity({ ...feature });
+              this.$refs.ProjectDetailPopup.closeInfo();
             }
           }
         }

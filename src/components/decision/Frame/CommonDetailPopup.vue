@@ -3,14 +3,14 @@
     <transition name="fade">
       <div
         class="detail-popup common-detail-popup"
-        v-if="infoShow && forceEntity.attributes"
+        v-if="infoShow"
         :style="{ top: (isSearch ? 16.81 : 13.81) + 'vh' }"
       >
         <i class="popup-close" @click="closeInfo" />
         <div class="info-container">
           <div class="panel-title">
             <img src="./images/title-before.png" />
-            <span>{{ name }}</span>
+            <span>{{ detailData.name }}</span>
           </div>
           <div class="panel-body">
             <div class="content-info">
@@ -39,18 +39,18 @@
                     v-show="currentShow == 'overview'"
                   >
                     <swiper-slide
-                      v-for="(item, i) in currentData.thumbs"
+                      v-for="(item, i) in currentData.overview"
                       :key="i"
                       class="swiper-item"
                     >
                       <img
-                        :src="`${MediaServer}/images/VRPic/${item}`"
+                        :src="`${MediaServer}/images/VRPic/${item.thumbnail}`"
                         @click="openOverview(i)"
                       />
                     </swiper-slide>
                     <swiper-slide
                       class="swiper-item"
-                      v-if="!currentData.thumbs"
+                      v-if="!currentData.overview"
                     >
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
@@ -72,7 +72,7 @@
                       <video
                         id="video"
                         ref="video"
-                        :src="`${MediaServer}/video/${item}`"
+                        :src="`${MediaServer}/video/${item.path}`"
                         controls="controls"
                         muted
                       ></video>
@@ -95,7 +95,7 @@
                       class="swiper-item"
                     >
                       <el-image
-                        :src="`${MediaServer}/images/${forceEntity.type}/${item}`"
+                        :src="`${MediaServer}/images/${item.path}`"
                         @click="onPreview(currentData.photo, i)"
                       ></el-image>
                     </swiper-slide>
@@ -117,16 +117,16 @@
               <div class="basic-content">
                 <div class="detail">
                   <span>详情</span>
-                  <span>{{ forceEntity.attributes.XQ || `暂无详情` }}</span>
+                  <span>{{ detailData.details || `暂无详情` }}</span>
                 </div>
                 <div class="desc">
                   <div>
                     <span>区县</span>
-                    <span>{{ forceEntity.attributes.DISTRICT || `无` }}</span>
+                    <span>{{ detailData.district || `无` }}</span>
                   </div>
                   <div>
                     <span>乡镇街道</span>
-                    <span>{{ forceEntity.attributes.STREET || `无` }}</span>
+                    <span>{{ detailData.street || `无` }}</span>
                   </div>
                 </div>
               </div>
@@ -138,10 +138,10 @@
               </div>
               <div
                 class="audio-content"
-                v-if="forceEntity.attributes && forceEntity.attributes.YY"
+                v-if="detailData.audioSrc"
               >
                 <MAudio
-                  :src="`${MediaServer}/audio/${forceEntity.type}/${forceEntity.attributes.YY}`"
+                  :src="`${MediaServer}/audio/${detailData.audioSrc}`"
                 />
               </div>
               <div v-else class="no-tip">暂无数据</div>
@@ -168,6 +168,7 @@ import { commonDetailHideField, topBtns, swiperOption } from "@/common/js/hash";
 import MAudio from "@/components/decision/Frame/MAudio";
 import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import Overview from "@/components/decision/Frame/Overview";
+import { getSpotDetail } from "api/tangheAPI";
 
 export default {
   data() {
@@ -176,8 +177,9 @@ export default {
       topBtns,
       swiperOption,
 
-      name: "",
-      forceEntity: {},
+      // name: "",
+      // forceEntity: {},
+      detailData: {},
       infoShow: false,
       currentData: {},
       currentIndex: 0,
@@ -196,40 +198,52 @@ export default {
   methods: {
     // 获取选中对象
     getForceEntity(entity) {
-      this.name = entity.name;
-      this.forceEntity = entity;
-      this.infoShow = true;
-      this.initData();
+      console.log('ccc', entity)
+      // this.name = entity.name;
+      // this.forceEntity = entity;
+      // this.infoShow = true;
+      this.initData(entity.attributes.RESOURCE_ID);
     },
 
     // 初始化数据
-    initData() {
+    async initData(id) {
       this.currentIndex = 0;
       this.currentShow = "overview";
-
       this.currentData = {};
 
-      this.formatData("PHOTO", "photo");
-      this.formatData("JGT", "photo");
-      this.formatData("QJSLT", "thumbs");
-      this.formatData("QJ", "overview");
-      this.formatData("SP", "video");
+      let res = await getSpotDetail({id})
+      if (res.code === 200) {
+        this.infoShow = true;
+        this.detailData = res.result;
+        console.log("detailData", this.detailData);
+        this.currentData = {
+          overview: res.result.overallViews,
+          video: res.result.videos,
+          photo: res.result.photos
+        }
+      }
+
+      // this.formatData("PHOTO", "photo");
+      // this.formatData("JGT", "photo");
+      // this.formatData("QJSLT", "thumbs");
+      // this.formatData("QJ", "overview");
+      // this.formatData("SP", "video");
     },
 
     // 组装数据
-    formatData(attr, key) {
-      const that = this;
-      if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
-        let attrVal = this.forceEntity.attributes[attr];
-        if (!that.currentData[key]) that.currentData[key] = [];
-        if (~attrVal.indexOf(";")) {
-          let tmp = attrVal.split(";");
-          that.currentData[key] = that.currentData[key].concat(tmp);
-        } else {
-          this.currentData[key] = that.currentData[key].concat([attrVal]);
-        }
-      }
-    },
+    // formatData(attr, key) {
+    //   const that = this;
+    //   if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
+    //     let attrVal = this.forceEntity.attributes[attr];
+    //     if (!that.currentData[key]) that.currentData[key] = [];
+    //     if (~attrVal.indexOf(";")) {
+    //       let tmp = attrVal.split(";");
+    //       that.currentData[key] = that.currentData[key].concat(tmp);
+    //     } else {
+    //       this.currentData[key] = that.currentData[key].concat([attrVal]);
+    //     }
+    //   }
+    // },
 
     // 关闭详情
     closeInfo() {
@@ -246,7 +260,7 @@ export default {
     // 开启图片查看
     onPreview(list, index) {
       this.imgList = list.map((item) => {
-        return `${MediaServer}/images/${this.forceEntity.type}/${item}`;
+        return `${MediaServer}/images/${item.path}`;
       });
       this.imgIndex = index;
       this.viewerShow = true;

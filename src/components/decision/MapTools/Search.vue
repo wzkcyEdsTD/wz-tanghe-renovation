@@ -21,7 +21,7 @@
             :key="index"
             @click="itemClick(item)"
           >
-            <img
+            <!-- <img
               v-if="item.img"
               class="item-thumb"
               :src="`${MediaServer}/images/${item.img_dir}/${item.img}`"
@@ -30,7 +30,7 @@
               v-else
               class="item-thumb"
               src="./images/暂无图片.png"
-            />
+            /> -->
             <div class="item-body">
               <div class="line">
                 <!-- <div class="item-type"> -->
@@ -52,10 +52,10 @@
                   <span class="item-name" slot="reference">{{ item.name }}</span>
                 </el-popover>
               </div>
-              <div class="item-dep">
+              <!-- <div class="item-dep">
                 <span>责任单位</span>
                 <span>{{ item.dep }}</span>
-              </div>
+              </div> -->
             </div>
           </li>
           <li class="result-item" v-show="moreShow" @click="checkMore">查看更多结果</li>
@@ -121,7 +121,7 @@ export default {
 
     // 多数据集查询
     multSqlQuery(word) {
-      const datasource = "172.168.3.181_thxm:";
+      const datasource = "172.168.3.181_thxm_manage:";
       const url = ServiceUrl.FEATUREMVT;
       const getFeatureParam = new SuperMap.REST.FilterParameter({
         attributeFilter: `NAME like '%${word}%'`,
@@ -131,9 +131,8 @@ export default {
           queryParameter: getFeatureParam,
           toIndex: -1,
           datasetNames: [
-            `${datasource}十二景`,
-            `${datasource}项目`,
-            `${datasource}绿道断点`,
+            `${datasource}sp_point_resource`,
+            `${datasource}th_spatial_project_view`,
           ],
         }
       );
@@ -177,50 +176,41 @@ export default {
 
       this.results = [];
       data.map(({ attributes, geometry }) => {
-        this.results.push({
-          id: `${attributes.SMID}@${
-            ~attributes.GUID.indexOf("sej")
+        let type = attributes.RESOURCE_TYPE
+        if (type == 'project_all' || type == 'greenway_all' || type == 'scenicspot12') {
+          this.results.push({
+            id: `${attributes.SMID}@${type}`,
+            type: type,
+            icon: type=="scenicspot12"
               ? `十二景`
-              : ~attributes.GUID.indexOf("xm")
-              ? `项目`
-              : "断点"
-          }`,
-          type: ~attributes.GUID.indexOf("sej")
-            ? `十二景`
-            : ~attributes.GUID.indexOf("xm")
-            ? `项目`
-            : "断点",
-          icon: ~attributes.GUID.indexOf("sej")
-            ? `十二景`
-            : ~attributes.GUID.indexOf("xm")
-            ? attributes.CURRENT_STATE
-            : "断点",
-          img_dir: ~attributes.GUID.indexOf("sej")
-            ? `十二景`
-            : ~attributes.GUID.indexOf("xm")
-            ? `项目`
-            : "绿道断点",
-          img:
-            (attributes.JGT
-              ? ~attributes.JGT.indexOf(";")
-                ? attributes.JGT.split(";")[0]
-                : attributes.JGT
-              : null) ||
-            (attributes.PHOTO
-              ? ~attributes.PHOTO.indexOf(";")
-                ? attributes.PHOTO.split(";")[0]
-                : attributes.PHOTO
-              : null) ||
-            null,
-          name:
-            attributes.SHORTNAME ||
-            attributes.NAME ||
-            attributes.MC ||
-            attributes.JC,
-          dep: attributes.ZRDW || attributes.ZR_DEPTID || `无`,
-          attributes,
-          geometry,
-        });
+              : type=="project_all"
+              ? attributes.STATUS
+              : "断点",
+            // img_dir: ~attributes.GUID.indexOf("sej")
+            //   ? `十二景`
+            //   : ~attributes.GUID.indexOf("xm")
+            //   ? `项目`
+            //   : "绿道断点",
+            // img:
+            //   (attributes.JGT
+            //     ? ~attributes.JGT.indexOf(";")
+            //       ? attributes.JGT.split(";")[0]
+            //       : attributes.JGT
+            //     : null) ||
+            //   (attributes.PHOTO
+            //     ? ~attributes.PHOTO.indexOf(";")
+            //       ? attributes.PHOTO.split(";")[0]
+            //       : attributes.PHOTO
+            //     : null) ||
+            //   null,
+            name:
+              attributes.SHORT_NAME ||
+              attributes.NAME,
+            // dep: attributes.ZRDW || attributes.ZR_DEPTID || `无`,
+            attributes,
+            geometry,
+          });
+        }
       });
     },
 
@@ -234,7 +224,7 @@ export default {
       addLocationIcon(item.geometry, item.id);
 
       // 详情
-      if (item.type == "十二景") {
+      if (item.type == "scenicspot12") {
         this.$parent.$refs.CommonDetailPopup.isSearch = true;
         this.$parent.$refs.CommonDetailPopup.getForceEntity({ ...item });
         this.$parent.$refs.ProjectDetailPopup.closeInfo();
@@ -336,7 +326,7 @@ export default {
       font-family: PingFang;
       font-size: 1.5vh;
       margin: 0.4vh 1vh 0.4vh 0;
-      color: #000;
+      color: #fff;
       outline: none;
     }
 

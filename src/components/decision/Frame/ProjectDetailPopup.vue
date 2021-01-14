@@ -469,8 +469,8 @@ export default {
       if (!date) return;
       return {
         year: `${date.substring(0, 4)}`,
-        month: `${date.substring(4, 6)}`,
-        day: `${date.substring(6, 8)}`,
+        month: `${date.substring(5, 7)}`,
+        day: `${date.substring(8, 10)}`,
       };
     },
 

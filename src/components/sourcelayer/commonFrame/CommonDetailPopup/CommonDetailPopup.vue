@@ -1,7 +1,7 @@
 
 <template>
   <div class="common-detail-popup">
-    <div id="forcePopUp" v-if="forcePosition.x && forcePosition.y">
+    <!-- <div id="forcePopUp" v-if="forcePosition.x && forcePosition.y">
       <div
         id="forcePopUpContent"
         class="leaflet-popup"
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <transition name="fade">
       <div class="info-container" v-show="isShow">
         <span class="close-btn" @click="closeInfo"></span>
@@ -51,7 +51,7 @@
         <div id="content-wrapper" class="content-wrapper">
           <div class="content-item basic-wrapper" id="basic">
             <div class="sub-title">基本信息</div>
-            <ul>
+            <ul v-if="!isSpot">
               <li v-for="(item,key,index) in fixData" :key="index" class="info-item">
                 <span class="key">{{key}}</span>
                 <span class="value">{{item}}</span>
@@ -61,19 +61,48 @@
                 <span class="value">{{forceEntity.attributes.XQ}}</span>
               </li>
             </ul>
+            <ul v-if="isSpot">
+              <li class="info-item">
+                <span class="key">区县</span>
+                <span class="value">{{detailData.district}}</span>
+              </li>
+              <li class="info-item">
+                <span class="key">区县代码</span>
+                <span class="value">{{detailData.districtCode}}</span>
+              </li>
+              <li class="info-item">
+                <span class="key">乡镇街道</span>
+                <span class="value">{{detailData.street}}</span>
+              </li>
+              <li class="info-item">
+                <span class="key">乡镇街道代码</span>
+                <span class="value">{{detailData.streetCode}}</span>
+              </li>
+              <li class="info-item" style="line-height:2vh;">
+                <span class="key">详情</span>
+                <span class="value">{{detailData.details}}</span>
+              </li>
+            </ul>
           </div>
-          <div id="spot" class="content-item">
-            <div class="spot-wrapper">
-              <div class="sub-title">景观图</div>
-              <div class="img-content">
-                <el-image style="width: 160px; height: 100px; margin-right: 10px; margin-top: 10px;" v-for="(item,index) in spotList" :key="index"
-                  :src="item"
-                  :preview-src-list="spotList">
-                </el-image>
-              </div>
-              <div class="no-tip" v-show="!haveSpot">暂无数据</div>
+          <div id="photo" class="content-item photo-wrapper">
+            <!-- <div class="spot-wrapper"> -->
+            <div class="sub-title">景观图</div>
+            <div class="img-content" v-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.JGT">
+              <el-image style="width: 160px; height: 100px; margin-right: 10px; margin-top: 10px;" v-for="(item,index) in jgtList" :key="index"
+                :src="item"
+                @click="onPreview(jgtList, index)">
+              </el-image>
             </div>
-            <div class="spot-wrapper">
+            <div class="img-content" v-else-if="this.isSpot && this.detailData.photos && this.detailData.photos.length">
+              <el-image style="width: 160px; height: 100px; margin-right: 10px; margin-top: 10px;" v-for="(item,index) in detailData.photos" :key="index"
+                :src="item.path"
+                @click="onPreview(detailData.photos, index)">
+              </el-image>
+            </div>
+            <!-- <div class="no-tip" v-show="!haveJGT || !detailData.photos.length">暂无数据</div> -->
+            <div v-else class="no-tip">暂无数据</div>
+            <!-- </div> -->
+            <!-- <div class="spot-wrapper">
               <div class="sub-title">现场记录</div>
               <div class="spot-box" v-for="(item,index) in photoList" :key="index">
                 <span class="time">{{`${item[0].split('_')[1].substring(0,4)}-${item[0].split('_')[1].substring(4,6)}-${item[0].split('_')[1].substring(6,8)}`}}</span>
@@ -85,40 +114,57 @@
                 </div>
               </div>
               <div class="no-tip" v-show="!havePhoto">暂无数据</div>
-            </div>
+            </div> -->
           </div>
           <div class="content-item video-wrapper" id="video">
             <div class="sub-title">视频</div>
-            <div class="video-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.SP">
+            <div class="video-content" v-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.SP">
               <video v-for="(item,index) in spList" :key="index" class="video" :src="`/static/video/${item}`" controls="controls"></video>
+            </div>
+            <div class="video-content" v-else-if="this.isSpot && this.detailData.videos && this.detailData.videos.length">
+              <video v-for="(item,index) in detailData.videos" :key="index" class="video" :src="`/static/video/${item.path}`" controls="controls"></video>
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
           <div class="content-item video-wrapper" id="audio">
             <div class="sub-title">音频</div>
-            <div class="video-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.YY">
-              <!-- <audio class="audio" :src="`/static/audio/${forceEntity.type}/${this.forceEntity.attributes.YY}`" controls="controls"></audio> -->
+            <div class="video-content" v-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.YY">
               <AudioTool :src="`/static/audio/${forceEntity.type}/${this.forceEntity.attributes.YY}`" />
+            </div>
+            <div class="video-content" v-else-if="this.isSpot && this.detailData.audioSrc">
+              <AudioTool :src="`/static/audio/${detailData.audioSrc}`" />
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
           <div class="content-item overall-wrapper" id="overall">
             <div class="sub-title">全景</div>
-            <div class="overall-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.ZBQJ">
+            <div class="overall-content" v-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.ZBQJ">
               <img v-for="(item,index) in zbOverallList" :key="index"
                 :src="`/static/images/VRPic/${item}`" @click="openQJ(index)"
               >
             </div>
-            <div class="overall-content" v-if="this.forceEntity.attributes && this.forceEntity.attributes.QJ">
+            <div class="overall-content" v-else-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.QJ">
               <img v-for="(item,index) in overallList" :key="index"
                 :src="`/static/images/VRPic/${item}`" @click="openQJ(index)"
               >
             </div>
-            <div class="no-tip" v-show="this.forceEntity.attributes && !this.forceEntity.attributes.QJ && !this.forceEntity.attributes.ZBQJ">暂无数据</div>
+            <div class="overall-content" v-else-if="this.isSpot && this.detailData.overallViews && this.detailData.overallViews.length">
+              <img v-for="(item,index) in detailData.overallViews" :key="index"
+                :src="`/static/images/VRPic/${item.thumbnail}`" @click="openQJ(index)"
+              >
+            </div>
+            <!-- <div class="no-tip" v-show="this.forceEntity.attributes && !this.forceEntity.attributes.QJ && !this.forceEntity.attributes.ZBQJ">暂无数据</div> -->
+            <div v-else class="no-tip">暂无数据</div>
           </div>
         </div>
       </div>
     </transition>
+    <el-image-viewer
+      v-if="showViewer"
+      :on-close="closeViewer"
+      :url-list="srcList"
+      :initial-index="srcIndex"
+    />
     <div class="QJFrame" v-show="showQJ">
       <i class="close" @click="closeQJ"></i>
       <iframe class="content" :src="QJURL"></iframe>
@@ -139,6 +185,7 @@
 // import {ZBQJList} from "config/ZBQJConfig";
 import AudioTool from "../AudioTool/AudioTool";
 import searchDetail from "./searchDetail";
+import { getSpotDetail } from "api/tangheAPI";
 import {mapGetters} from "vuex";
 export default {
   data() {
@@ -152,7 +199,7 @@ export default {
         value: 'basic'
       }, {
         label: '图片',
-        value: 'spot'
+        value: 'photo'
       }, {
         label: '视频',
         value: 'video'
@@ -164,7 +211,7 @@ export default {
         value: 'overall'
       }],
       havePhoto: false,
-      haveSpot: false,
+      haveJGT: false,
       activeStep: 0,
       showQJ: false,
       QJURL: '',
@@ -175,6 +222,11 @@ export default {
       JKVideo: undefined,
       showDetail:false,
       list:[],
+      isSpot: false,
+      detailData: {},
+      showViewer: false,
+      srcList: [],
+      srcIndex: 0,
     };
   },
   components: { AudioTool,searchDetail},
@@ -192,46 +244,46 @@ export default {
         return fixData
       }
     },
-    photoList() {
-      let tempArr = []
-      let tempObj = {}
-      if (this.forceEntity.attributes && this.forceEntity.attributes.PHOTO) {
-        let photoStr = this.forceEntity.attributes.PHOTO
-        if (photoStr.length) {
-          this.havePhoto = true
-          if (~photoStr.indexOf(';')) {
-            tempArr = photoStr.split(';')
-            tempArr.forEach(item => {
-              let time = item.split('_')[1].split('.')[0]
-              if (tempObj[time]) {
-                // tempObj[time].push(item)
-                tempObj[time].push(`/static/images/${this.forceEntity.type}/${item}`)
-              } else {
-                // tempObj[time] = [item]
-                tempObj[time] = [`/static/images/${this.forceEntity.type}/${item}`]
-              }
-            })
-          } else {
-            let time = photoStr.split('_')[1].split('.')[0]
-            // tempObj[time] = [photoStr]
-            tempObj[time] = [`/static/images/${this.forceEntity.type}/${photoStr}`]
-          }
-          console.log('tempObj!!!!', tempObj)
-          let arr = Object.values(tempObj).reverse()
-          console.log('arr!!!', arr);
-          return arr
-        }
-      } else {
-        this.havePhoto = false
-      }
-    },
-    spotList() {
+    // photoList() {
+    //   let tempArr = []
+    //   let tempObj = {}
+    //   if (this.forceEntity.attributes && this.forceEntity.attributes.PHOTO) {
+    //     let photoStr = this.forceEntity.attributes.PHOTO
+    //     if (photoStr.length) {
+    //       this.havePhoto = true
+    //       if (~photoStr.indexOf(';')) {
+    //         tempArr = photoStr.split(';')
+    //         tempArr.forEach(item => {
+    //           let time = item.split('_')[1].split('.')[0]
+    //           if (tempObj[time]) {
+    //             // tempObj[time].push(item)
+    //             tempObj[time].push(`/static/images/${this.forceEntity.type}/${item}`)
+    //           } else {
+    //             // tempObj[time] = [item]
+    //             tempObj[time] = [`/static/images/${this.forceEntity.type}/${item}`]
+    //           }
+    //         })
+    //       } else {
+    //         let time = photoStr.split('_')[1].split('.')[0]
+    //         // tempObj[time] = [photoStr]
+    //         tempObj[time] = [`/static/images/${this.forceEntity.type}/${photoStr}`]
+    //       }
+    //       console.log('tempObj!!!!', tempObj)
+    //       let arr = Object.values(tempObj).reverse()
+    //       console.log('arr!!!', arr);
+    //       return arr
+    //     }
+    //   } else {
+    //     this.havePhoto = false
+    //   }
+    // },
+    jgtList() {
       let tempArr = []
       let result = []
       if (this.forceEntity.attributes && this.forceEntity.attributes.JGT) {
         let photoStr = this.forceEntity.attributes.JGT
         if (photoStr.length) {
-          this.haveSpot = true
+          this.haveJGT = true
           if (~photoStr.indexOf(';')) {
             tempArr =  photoStr.split(';')
           } else {
@@ -243,7 +295,7 @@ export default {
         })
         return result
       } else {
-        this.haveSpot = false
+        this.haveJGT = false
       }
     },
     overallList() {
@@ -302,10 +354,10 @@ export default {
      *  详情点赋值
      *  @param {object} forceEntity 详情点信息
      */
-    getForceEntity(forceEntity) {
-      this.forceEntity = forceEntity;
-      console.log('aaa', forceEntity)
-    },
+    // getForceEntity(forceEntity) {
+    //   this.forceEntity = forceEntity;
+    //   console.log('aaa', forceEntity)
+    // },
     /**
      *  框体移动
      *  @param {object} position
@@ -350,15 +402,19 @@ export default {
     //   }
     // },
     openQJ(index) {
-      let arr = []
-      let qjStr = this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ
-      console.log('qjStr', qjStr, index)
-      if (~qjStr.indexOf(';')) {
-        arr = qjStr.split(';')
+      if (this.isSpot) {
+        this.QJURL = this.detailData.overallViews[index]
       } else {
-        arr = [qjStr]
+        let arr = []
+        let qjStr = this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ
+        console.log('qjStr', qjStr, index)
+        if (~qjStr.indexOf(';')) {
+          arr = qjStr.split(';')
+        } else {
+          arr = [qjStr]
+        }
+        this.QJURL = arr[index]
       }
-      this.QJURL = arr[index]
       console.log('QJURL', this.QJURL)
       this.showQJ = true
     },
@@ -391,8 +447,26 @@ export default {
       this.JKVideo = undefined;;
     },
 
+    closeViewer() {
+      this.showViewer = false;
+    },
+
+    onPreview(list, index) {
+      if (this.isSpot) {
+        this.srcList = list.map((item) => {
+          return `/static/images/${item.path}`;
+        });
+      } else {
+        this.srcList = list.map((item) => {
+          return `/static/images/${item}`;
+        });
+      }
+      this.srcIndex = index;
+      this.showViewer = true;
+    },
+
     // 跳转详情
-    goDetail(entity) {
+    async goDetail(entity) {
       if(entity.type === "quanjin") {
         if (this.showLarge) {
           this.$bus.$emit("change-rightContent", { type: 'qj', value: entity.attributes.QJMC });
@@ -418,8 +492,19 @@ export default {
           this.isShow = false;
         }
       } else {
-        this.forceEntity = entity;
-        this.isShow = true;
+        console.log('aaa', entity)
+        if (entity.type == "scenic_spot" || entity.type == "十二景") {
+          this.isSpot = true
+          let res = await getSpotDetail({id: entity.attributes.RESOURCE_ID})
+          if (res.code === 200) {
+            this.detailData = res.result
+            this.isShow = true;
+          }
+        } else {
+          this.isSpot = false
+          this.forceEntity = entity;
+          this.isShow = true;
+        }
       }
     },
 

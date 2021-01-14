@@ -66,6 +66,12 @@ export function getPointDetail(data) {
   return get(url, data)
 }
 
+// 景点详情
+export function getSpotDetail(data) {
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceScenicSpot/queryForMap'
+  return get(url, data)
+}
+
 // 互学互比列表查询
 export function queryMeetingSortFront(data) {
   const url = 'http://192.168.2.103:8080/tanghe/front/bsMeeting/queryMeetingSortFront'

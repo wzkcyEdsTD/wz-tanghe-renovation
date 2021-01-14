@@ -10,6 +10,7 @@
       <Legend v-show="showHub" ref="Legend" />
       <Topic ref="Topic" />
       <SpaceTool ref="SpaceTool" />
+      <AnalyzePopup ref="AnalyzePopup"/>
     </template>
   </div>
 </template>
@@ -34,6 +35,7 @@ import SpaceTool from "@/components/decision/MapTools/SpaceTool";
 import NamePopup from "@/components/decision/Frame/NamePopup";
 import CommonDetailPopup from "@/components/decision/Frame/CommonDetailPopup";
 import ProjectDetailPopup from "@/components/decision/Frame/ProjectDetailPopup";
+import AnalyzePopup from "@/components/decision/Frame/AnalyzePopup";
 
 export default {
   data() {
@@ -59,6 +61,7 @@ export default {
     NamePopup,
     CommonDetailPopup,
     ProjectDetailPopup,
+    AnalyzePopup
   },
   created() {
     // 点位信息 hash
@@ -80,7 +83,7 @@ export default {
       this.mapLoaded = true;
 
       this.initPostRender();
-      this.initHandler();
+      // this.initHandler();
       this.createEntityCollection();
     });
   },
@@ -130,8 +133,8 @@ export default {
           this.$refs.NamePopup.fixPopup();
         }
 
-        if (this.$refs.SpaceTool) {
-          this.$refs.SpaceTool.fixPopup();
+        if (this.$refs.AnalyzePopup) {
+          this.$refs.AnalyzePopup.fixPopup();
         }
       });
     },

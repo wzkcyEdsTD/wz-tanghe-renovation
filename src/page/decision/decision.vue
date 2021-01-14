@@ -17,6 +17,11 @@ export default {
   components: {
     CesiumMap,
   },
+  mounted() {
+    this.$router.onReady(() => {
+      console.log('fuckkkk', this.$route.query)
+    })
+  }
 }
 </script>
 

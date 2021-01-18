@@ -24,6 +24,7 @@
         placement="bottom-end"
         trigger="click"
         popper-class="layer-popper"
+        v-model="showPopover"
       >
         <div class="panel">
           <!-- <span class="panel-title">塘河沿线</span> -->
@@ -85,13 +86,14 @@ export default {
       LayerList,
       saveDataMap: {},
       currentMap: 0,
+      showPopover: false
     };
   },
 
   mounted() {
     // 默认显示
     // this.change(LayerList[0]);
-    // this.change(LayerList[1]);
+    this.change(LayerList[1]);
     // this.change(LayerList[2]);
     this.change(LayerList[3]);
     this.eventRegsiter()
@@ -132,7 +134,7 @@ export default {
             window.billboardMap[node.id]._billboards.map(
               (v) => (v.show = true)
             );
-            window.blackLabelMap[node.id].setAllLabelsVisible(true);
+            // window.blackLabelMap[node.id].setAllLabelsVisible(true);
             window.whiteLabelMap[node.id].setAllLabelsVisible(true);
           } else {
             this.addFeatures(node);
@@ -152,7 +154,7 @@ export default {
             if (node.id == "十二景") {
               node.saveData && this[node.saveData]([]);
             } else {
-              window.blackLabelMap[node.id].setAllLabelsVisible(false);
+              // window.blackLabelMap[node.id].setAllLabelsVisible(false);
               window.whiteLabelMap[node.id].setAllLabelsVisible(false);
             }
           }

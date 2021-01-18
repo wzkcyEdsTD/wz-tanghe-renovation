@@ -9,7 +9,7 @@ export const drawFeatures = (ctx, {
 }, node, fn) => {
     window.billboardMap[node.id] = window.earth.scene.primitives.add(new Cesium.BillboardCollection());
     window.whiteLabelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
-    window.blackLabelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
+    // window.blackLabelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());
 
     let forceDrawFeatures = result.features;
 
@@ -60,20 +60,20 @@ export const drawFeatures = (ctx, {
             disableDepthTestDistance: Number.POSITIVE_INFINITY,
             position
         });
-        window.blackLabelMap[node.id].add({
-            id: `label@${item.attributes.SMID}@${node.id}`,
-            text: item.attributes.SHORT_NAME || item.attributes.NAME,
-            fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#61F5F5") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#010C27"),
-            font: "bold 1.7vh Microsoft YaHei",
-            outlineColor: Cesium.Color.WHITE,
-            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-            outlineWidth: '2',
-            scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
-            distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
-            pixelOffset: new Cesium.Cartesian2(0, 46),
-            disableDepthTestDistance: Number.POSITIVE_INFINITY,
-            position
-        });
+        // window.blackLabelMap[node.id].add({
+        //     id: `label@${item.attributes.SMID}@${node.id}`,
+        //     text: item.attributes.SHORT_NAME || item.attributes.NAME,
+        //     fillColor: ~node.id.indexOf('项目') ? item.attributes.SF2021 == '是' ? new Cesium.Color.fromCssColorString("#61F5F5") : new Cesium.Color.fromCssColorString("#02FCDC") : new Cesium.Color.fromCssColorString("#010C27"),
+        //     font: "bold 1.7vh Microsoft YaHei",
+        //     outlineColor: Cesium.Color.WHITE,
+        //     style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        //     outlineWidth: '2',
+        //     scaleByDistance: new Cesium.NearFarScalar(500, 1.3, 6000, 1),
+        //     distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 6000),
+        //     pixelOffset: new Cesium.Cartesian2(0, 46),
+        //     disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        //     position
+        // });
     });
     fn && fn();
 }

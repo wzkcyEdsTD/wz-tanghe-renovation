@@ -36,6 +36,24 @@
     <div class="sign-wrapper" :style="{right: showLarge?'22%':'22%'}" v-if="showSign">
       <img src="/static/images/common/sign@2x.png">
     </div>
+    <div class="select-wrapper" v-show="showSelect">
+      <el-select class="filter-select" v-show="menu=='shipin'||menu=='quanjin'" style="width:90px;" v-model="yearValue" placeholder="年份" @change="changeYear">
+        <el-option
+          v-for="item in yearOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <el-select class="filter-select" v-show="menu=='shipin'" style="margin-left:10px;width:90px;" v-model="typeValue" placeholder="类型" @change="changeType">
+        <el-option
+          v-for="item in typeOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
     <MapTool />
   </div>
 </template>
@@ -62,13 +80,105 @@ export default {
       selected: 'synopsis',
       currentType: 'summary',
       showSign: true,
+      showSelect: false,
+      menu: '',
+      yearOptions: [{
+        label: '2020',
+        value: 2020
+      }, {
+        label: '2021',
+        value: 2021
+      }],
+      yearValue: '',
+      typeOptions: [{
+        label: '点',
+        value: '点'
+      }, {
+        label: '线',
+        value: '线'
+      }],
+      typeValue: ''
     };
   },
   computed: {
   },
-  created() {
+  mounted() {
+    this.eventRegsiter()
   },
   methods: {
+    eventRegsiter() {
+      this.$bus.$off("toggle-select");
+      this.$bus.$on("toggle-select", ({value, menu}) => {
+        this.yearValue = ''
+        this.typeValue = ''
+        if (value) {
+          this.showSelect = true
+          this.menu = menu
+        } else {
+          menu == this.menu && (this.showSelect = false)
+        }
+      })
+    },
+    changeYear(val) {
+      let res = []
+      for (let key in window.featureMap[this.menu]) {
+        let item = window.featureMap[this.menu][key]
+        if (this.typeValue) {
+          if (item.attributes.RQ.substr(0, 4) == val && item.attributes.TYPE == this.typeValue) {
+            res.push(item)
+          }
+        } else {
+          if (item.attributes.RQ.substr(0, 4) == val) {
+            res.push(item)
+          }
+        }
+      }
+      console.log('ressssssssss', res)
+      this.filterData(res)
+    },
+    changeType(val) {
+      let res = []
+      for (let key in window.featureMap[this.menu]) {
+        let item = window.featureMap[this.menu][key]
+        if (this.yearValue) {
+          if (item.attributes.TYPE == val && item.attributes.RQ.substr(0, 4) == this.yearValue) {
+            res.push(item)
+          }
+        } else {
+          if (item.attributes.TYPE == val) {
+            res.push(item)
+          }
+        }
+      }
+      console.log('ressssssssss', res)
+      this.filterData(res)
+    },
+    filterData(array) {
+      window.billboardMap[this.menu]._billboards.forEach(v => {
+        v.show = false
+        array.forEach(item => {
+          if (v.id == `billboard@${item.attributes.SMID}@${this.menu}`) {
+            v.show = true
+          }
+        })
+      })
+      window.whiteLabelMap[this.menu]._labels.forEach(v => {
+        v.show = false
+        array.forEach(item => {
+          if (v.id == `label@${item.attributes.SMID}@${this.menu}`) {
+            v.show = true
+          }
+        })
+      })
+      window.blackLabelMap[this.menu]._labels.forEach(v => {
+        v.show = false
+        array.forEach(item => {
+          if (v.id == `label@${item.attributes.SMID}@${this.menu}`) {
+            v.show = true
+          }
+        })
+      })
+    },
     switchMenu(value) {
       this.selected = value;
     },
@@ -78,4 +188,25 @@ export default {
 
 <style lang="less" scoped>
 @import url("./layerHub.less");
+</style>
+
+<style lang="less">
+.filter-select {
+  .el-input__inner {
+    background-color: rgba(5, 13, 50, 0.9) !important;
+    color: white !important;
+    border: none !important;
+    text-align: center !important;
+  }
+}
+.el-select-dropdown {
+  background-color: rgba(5, 13, 50, 0.9) !important;
+}
+.el-select-dropdown__item {
+  color: #fff !important;
+  text-align: center !important;
+}
+.el-select-dropdown__item.hover {
+  background-color: #015ead !important;
+}
 </style>

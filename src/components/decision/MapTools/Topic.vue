@@ -54,23 +54,33 @@
       <div class="content">
         <div class="start-item start1">
           <img src="./images/star1.png" />
-          <p class="number">{{ currentStarData.data.star1 || 0 }}<span class="unit">个</span></p>
+          <p class="number">
+            {{ currentStarData.data.star1 || 0 }}<span class="unit">个</span>
+          </p>
         </div>
         <div class="start-item start2">
           <img src="./images/star2.png" />
-          <p class="number">{{ currentStarData.data.star2 || 0 }}<span class="unit">个</span></p>
+          <p class="number">
+            {{ currentStarData.data.star2 || 0 }}<span class="unit">个</span>
+          </p>
         </div>
         <div class="start-item start3">
           <img src="./images/star3.png" />
-          <p class="number">{{ currentStarData.data.star3 || 0 }}<span class="unit">个</span></p>
+          <p class="number">
+            {{ currentStarData.data.star3 || 0 }}<span class="unit">个</span>
+          </p>
         </div>
         <div class="start-item start4">
           <img src="./images/star4.png" />
-          <p class="number">{{ currentStarData.data.star4 || 0 }}<span class="unit">个</span></p>
+          <p class="number">
+            {{ currentStarData.data.star4 || 0 }}<span class="unit">个</span>
+          </p>
         </div>
         <div class="start-item start5">
           <img src="./images/star5.png" />
-          <p class="number">{{ currentStarData.data.star5 || 0 }}<span class="unit">个</span></p>
+          <p class="number">
+            {{ currentStarData.data.star5 || 0 }}<span class="unit">个</span>
+          </p>
         </div>
       </div>
     </div>
@@ -428,7 +438,7 @@ export default {
       ldfwFace: undefined,
       ldfwLine: undefined,
       konggui: undefined,
-      xianzhuang: undefined,
+      // xianzhuang: undefined,
       datasource: [],
       showAnalyze: false,
       // options: [{
@@ -482,13 +492,41 @@ export default {
       streetData: [],
       amountData: [],
       starData: [
-        { label: "鹿城区政府", value: "A02A01", data: {star1: 0, star2:0, star3:0, star4:0, star5:0} },
-        { label: "瓯海区政府", value: "A02A02", data: {star1: 0, star2:0, star3:0, star4:0, star5:0} },
-        { label: "龙湾区政府", value: "A02A03", data: {star1: 0, star2:0, star3:0, star4:0, star5:0} },
-        { label: "瑞安市政府", value: "A02A04", data: {star1: 0, star2:0, star3:0, star4:0, star5:0} },
-        { label: "浙南产业区", value: "A02A05", data: {star1: 0, star2:0, star3:0, star4:0, star5:0} },
-        { label: "温州城发集团", value: "A02A07", data: {star1: 0, star2:0, star3:0, star4:0, star5:0} },
-        { label: "温州现代集团", value: "A02A06", data: {star1: 0, star2:0, star3:0, star4:0, star5:0} },
+        {
+          label: "鹿城区政府",
+          value: "A02A01",
+          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
+        },
+        {
+          label: "瓯海区政府",
+          value: "A02A02",
+          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
+        },
+        {
+          label: "龙湾区政府",
+          value: "A02A03",
+          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
+        },
+        {
+          label: "瑞安市政府",
+          value: "A02A04",
+          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
+        },
+        {
+          label: "浙南产业区",
+          value: "A02A05",
+          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
+        },
+        {
+          label: "温州城发集团",
+          value: "A02A07",
+          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
+        },
+        {
+          label: "温州现代集团",
+          value: "A02A06",
+          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
+        },
       ],
       // currentStreetList: [],
       amountList: [],
@@ -525,14 +563,14 @@ export default {
       let res = this.starData.find((item) => {
         return item.value == this.zrdwValue;
       });
-      return res
-    }
+      return res;
+    },
   },
   methods: {
     itemClick(item) {
-      // this.ldfwFace && (this.ldfwFace.show = false);
-      // this.ldfwLine && (this.ldfwLine.show = false);
-      // this.konggui && (this.konggui.show = false);
+      this.ldfwFace && (this.ldfwFace.show = false);
+      this.ldfwLine && (this.ldfwLine.show = false);
+      this.konggui && (this.konggui.show = false);
       // this.xianzhuang && (this.xianzhuang.show = false);
       // // 关闭热力图
       // switchHeatMap(false, "k1");
@@ -562,71 +600,34 @@ export default {
       if (item.value == 7) {
         this.getStarCount();
       }
-      // if (item.value == 1) {
-      //   if (this.datasource.length) {
-      //     this.addHeatMap();
-      //   } else {
-      //     let node = LayerList[1];
-      //     const url = ServiceUrl.FEATUREMVT;
-      //     let getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
-      //     getFeatureParam = new SuperMap.REST.FilterParameter({
-      //       attributeFilter: `SMID <= 1000`,
-      //     });
-      //     getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
-      //       queryParameter: getFeatureParam,
-      //       toIndex: -1,
-      //       datasetNames: [node.dataset],
-      //     });
-      //     getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(
-      //       url,
-      //       {
-      //         eventListeners: {
-      //           processCompleted: async (res) => {
-      //             this.datasource = res.result.features
-      //             this.addHeatMap();
-      //           },
-      //           processFailed: (msg) => console.log(msg),
-      //         },
-      //       }
-      //     );
-      //     getFeatureBySQLService.processAsync(getFeatureBySQLParams);
-      //   }
-      // }
-      // if (item.value == 2) {
-      //   this.ldfwFace = window.earth.imageryLayers.addImageryProvider(
-      //     new Cesium.SuperMapImageryProvider({
-      //       url:
-      //         "http://172.168.3.183:8090/iserver/services/3D-ldfw_polygon/rest/realspace/datas/ldfw_polygon",
-      //     })
-      //   );
-      //   this.ldfwFace.alpha = 0.6;
-      //   this.ldfwLine = window.earth.imageryLayers.addImageryProvider(
-      //     new Cesium.SuperMapImageryProvider({
-      //       url:
-      //         "http://172.168.3.183:8090/iserver/services/3D-ldfw_line/rest/realspace/datas/ldfw_line",
-      //     })
-      //   );
-      // }
-      // if (item.value == 3) {
-      //   this.konggui = window.earth.imageryLayers.addImageryProvider(
-      //     new Cesium.SuperMapImageryProvider({
-      //       url:
-      //         "http://172.168.3.183:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ",
-      //     })
-      //   );
-      //   this.konggui.alpha = 0.8;
-      // }
-      // if (item.value == 4) {
-      //   this.xianzhuang = window.earth.imageryLayers.addImageryProvider(
-      //     new Cesium.SuperMapImageryProvider({
-      //       url:
-      //         "http://172.168.3.183:8090/iserver/services/3D-dltb/rest/realspace/datas/dltb",
-      //     })
-      //   );
-      //   // window.earth.imageryLayers.lowerToBottom(this.xianzhuang);
-      // }
+      if (item.value == 3) {
+        this.ldfwFace = window.earth.imageryLayers.addImageryProvider(
+          new Cesium.SuperMapImageryProvider({
+            url:
+              "http://172.168.3.183:8090/iserver/services/3D-ldfw_polygon/rest/realspace/datas/ldfw_polygon",
+          })
+        );
+        this.ldfwFace.alpha = 0.6;
+        this.ldfwLine = window.earth.imageryLayers.addImageryProvider(
+          new Cesium.SuperMapImageryProvider({
+            url:
+              "http://172.168.3.183:8090/iserver/services/3D-ldfw_line/rest/realspace/datas/ldfw_line",
+          })
+        );
+      }
+      if (item.value == 4) {
+        this.konggui = window.earth.imageryLayers.addImageryProvider(
+          new Cesium.SuperMapImageryProvider({
+            url:
+              "http://172.168.3.183:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ",
+          })
+        );
+        this.konggui.alpha = 0.8;
+      }
     },
     childClick(item) {
+      this.$parent.$refs.LayerHub.showPopover = false;
+
       if (item == this.currentChild) {
         this.currentChild = "";
         this.$parent.showHub = true;
@@ -711,6 +712,17 @@ export default {
         this.projectList = res.result.records;
         console.log("projectList", this.projectList);
         this.currentChild = child;
+        console.log("yesssssssss", window.featureMap);
+        console.log("noooooooooo", window.billboardMap);
+        let tempArr = [];
+        for (let key in window.featureMap["项目"]) {
+          let item = window.featureMap["项目"][key];
+          if (~item.attributes.STATUS.indexOf("滞后")) {
+            tempArr.push(item);
+          }
+        }
+        console.log("tempArr", tempArr);
+        this.filterData(tempArr);
       }
     },
     async getProblemCount() {
@@ -724,7 +736,36 @@ export default {
       if (res.code == 200) {
         this.projectList = res.result;
         this.currentChild = child;
+        console.log("yesssssssss", window.featureMap);
+        console.log("noooooooooo", window.billboardMap);
+        let tempArr = [];
+        for (let key in window.featureMap["项目"]) {
+          let item = window.featureMap["项目"][key];
+          if (~item.attributes.STATUS.indexOf("滞后")) {
+            tempArr.push(item);
+          }
+        }
+        console.log("tempArr", tempArr);
+        this.filterData(tempArr);
       }
+    },
+    filterData(array) {
+      window.billboardMap["项目"]._billboards.forEach((v) => {
+        v.show = false;
+        array.forEach((item) => {
+          if (v.id == `billboard@${item.attributes.SMID}@项目`) {
+            v.show = true;
+          }
+        });
+      });
+      window.whiteLabelMap["项目"]._labels.forEach((v) => {
+        v.show = false;
+        array.forEach((item) => {
+          if (v.id == `label@${item.attributes.SMID}@项目`) {
+            v.show = true;
+          }
+        });
+      });
     },
     async getStreetData(child) {
       let res = await countProjectStreetNum();
@@ -798,6 +839,14 @@ export default {
     currentYear(val) {
       this.getAoumtList(val);
       this.getAmountCount(this.currentYear, "项目投资额分布");
+    },
+    currentChild(val, oldVal) {
+      console.log("val", val);
+      console.log("oldVal", oldVal);
+      if (oldVal == "滞后项目" || oldVal == "问题项目") {
+        window.billboardMap['项目']._billboards.map((v) => (v.show = true));
+        window.whiteLabelMap['项目'].setAllLabelsVisible(true);
+      }
     },
   },
 };

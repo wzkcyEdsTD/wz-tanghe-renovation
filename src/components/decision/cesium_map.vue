@@ -75,7 +75,7 @@ export default {
     // 点位浅色label hash
     window.whiteLabelMap = {};
     // 点位深色label hash
-    window.blackLabelMap = {};
+    // window.blackLabelMap = {};
     // 热力图信息
     window.heatMap = {};
   },

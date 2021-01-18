@@ -94,6 +94,11 @@ export default {
         this.selectedSourceList.push(node.label)
         console.log('selectedSourceList', this.selectedSourceList)
         if (~node.label.indexOf('项目')) this.$parent.showSign = true
+        if (node.label == '视频' || node.label == '全景') {
+          if (node.label == '视频') this.$refs.tree.setChecked('quanjin', false)
+          if (node.label == '全景') this.$refs.tree.setChecked('shipin', false)
+          this.$bus.$emit('toggle-select', { value:true, menu:node.id });
+        }
         if (nodeDetail.withImage) {
           nodeDetail.withImage.forEach((item) => {
             const LAYER = this.tileLayers[item.name];
@@ -151,6 +156,7 @@ export default {
         //  有相机视角配置 -> 跳视角
         node.camera && window.earth.scene.camera.setView(node.camera);
       } else {
+        if (node.label == '视频' || node.label == '全景') this.$bus.$emit('toggle-select', { value:false, menu:node.id });
         // 去掉目录选中，清空定位
         const datasource = window.earth.dataSources.getByName("location")[0];
         const entity = datasource.entities.values[0];

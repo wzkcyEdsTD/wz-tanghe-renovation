@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <m-header></m-header>
+    <!-- <m-header></m-header> -->
     <loading v-show="isLoading"></loading>
     <div id="content" class="content">
       <router-view />
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import MHeader from "components/m-header/m-header";
+// import MHeader from "components/m-header/m-header";
 import Loading from "components/loading/loading";
 import RightChart from "components/compare/rightChart/rightChart";
 import { getUserInfo } from "./api/public/public";
@@ -35,7 +35,7 @@ const Aliplayer = window.Aliplayer;
 export default {
   name: "App",
   components: {
-    MHeader,
+    // MHeader,
     Loading,
     RightChart
   },
@@ -82,7 +82,9 @@ export default {
     '$route' (to) {
       this.showPlayer = false
       this.currentPage = to.name
-      this.getKuanGao()
+      this.$nextTick(() => {
+        this.getKuanGao()
+      })
     }
   },
   created() {

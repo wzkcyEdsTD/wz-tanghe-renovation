@@ -1,5 +1,6 @@
 <template>
   <div class="page-map">
+    <m-header></m-header>
     <div class="cesium-map">
       <CesiumMap />
     </div>
@@ -11,11 +12,13 @@
 
 <script>
 import CesiumMap from "components/decision/cesium_map";
+import MHeader from "components/m-header/m-header";
 
 export default {
   name: "decision",
   components: {
     CesiumMap,
+    MHeader
   },
   mounted() {
   }

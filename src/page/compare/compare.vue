@@ -1,5 +1,6 @@
 <template>
   <div class="page-map">
+    <m-header></m-header>
     <div class="cesium-map">
       <CesiumMap />
     </div>
@@ -12,6 +13,7 @@
 </template>
 <script>
 import CesiumMap from "components/sourcelayer/cesium_map";
+import MHeader from "components/m-header/m-header";
 
 export default {
   name: "compare",
@@ -26,6 +28,7 @@ export default {
   },
   components: {
     CesiumMap,
+    MHeader
   },
   watch: {},
 };

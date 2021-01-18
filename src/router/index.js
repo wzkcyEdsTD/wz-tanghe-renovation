@@ -20,26 +20,22 @@ const router = new Router({
     {
       path: "/sourcelayer",
       name: "sourcelayer",
-      meta: {
-        title: "智慧塘河"
-      },
       component: resolve => require(["page/sourcelayer/sourcelayer"], resolve)
     },
     {
       path: "/compare",
       name: "compare",
-      meta: {
-        title: "智慧塘河"
-      },
       component: resolve => require(["page/compare/compare"], resolve)
     },
     {
       path: "/decision",
       name: "decision",
-      meta: {
-        title: "智慧塘河"
-      },
       component: resolve => require(["page/decision/decision"], resolve)
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: resolve => require(["page/login/login"], resolve)
     },
   ]
 })

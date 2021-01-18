@@ -150,3 +150,27 @@ export function countProjectAmound(data) {
   return get(url, data)
 }
 
+// 各单位总投资额统计
+export function countProjectStar(data) {
+  const url = 'http://192.168.2.103:8080/tanghe/front/resourceProjectComment/countProjectStar'
+  return get(url, data)
+}
+
+// 新增标绘
+export function addPlot(data) {
+  const url = 'http://192.168.2.103:8080/tanghe/front/spTemporaryPlotting/add'
+  return post(url, data)
+}
+
+// 标绘历史列表查询
+export function queryPlotList(data) {
+  const url = 'http://192.168.2.103:8080/tanghe/front/spTemporaryPlotting/queryList'
+  return get(url, data)
+}
+
+// 标绘历史列表查询
+export function queryPlot(data) {
+  const url = 'http://192.168.2.103:8080/tanghe/front/spTemporaryPlotting/queryByGroupId'
+  return get(url, data)
+}
+

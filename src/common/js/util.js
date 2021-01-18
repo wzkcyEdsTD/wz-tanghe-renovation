@@ -118,3 +118,9 @@ export function getRem(num) {
   const res = parseInt(num * defaultNum / 100)
   return res
 }
+
+// 图表vh转px
+export const vhToPx = (val) => {
+  const nowClientHeight = document.documentElement.clientHeight;
+  return (val * nowClientHeight) / 100;
+}

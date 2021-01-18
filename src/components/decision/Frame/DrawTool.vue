@@ -1,24 +1,129 @@
 <template>
-  <div id="drawTool" style="position: fixed; top: 20%">
-    <el-button id="pointBtn" @click="drawPoint">画点</el-button>
+  <div class="drawTool" v-show="showInput||showQuery">
+    <!-- <el-button id="pointBtn" @click="drawPoint">画点</el-button>
     <el-button id="lineBtn" @click="drawLine">画线</el-button>
     <el-button id="polyBtn" @click="drawPolygon">画面</el-button>
-    <el-button id="clearBtn" @click="clear">清除</el-button>
+    <el-button id="clearBtn" @click="clearDraw">清除</el-button> -->
     <!-- <div id="tooltip"></div> -->
+    <div class="title-wrapper">
+      <span class="pre"></span>
+      <span class="title">地图临时标注</span>
+    </div>
+    <div class="input-wrapper" v-show="showInput">
+      <div class="header">标注信息</div>
+      <div class="input-text">
+        <span>标注名称：</span>
+        <el-input class="draw-input" v-model="nameValue" placeholder="请输入名称"></el-input>
+      </div>
+      <div class="input-area">
+        <div>备注：</div>
+        <el-input class="draw-areainput"
+          type="textarea"
+          resize="none"
+          :rows="5"
+          v-model="remarkValue">
+        </el-input>
+      </div>
+      <div class="confirm-btn" @click="submit">确认</div>
+      <div class="clear"></div> 
+    </div>
+    <div class="query-wrapper" v-show="showQuery">
+      <div class="top">
+        <div class="query-item">
+          <div class="left">标注时间：</div>
+          <div class="right">
+            <el-date-picker
+              class="draw-datepicker"
+              value-format="yyyy-MM-dd"
+              v-model="startDate"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>至
+            <el-date-picker
+              class="draw-datepicker"
+              value-format="yyyy-MM-dd"
+              v-model="endDate"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
+          </div>
+        </div>
+        <div class="query-item">
+          <div class="left">名称：</div>
+          <div class="right">
+            <el-input class="draw-input" v-model="queryName"></el-input>
+          </div>
+        </div>
+        <div class="confirm-btn" @click="query">查询</div>
+        <div class="clear"></div> 
+      </div>
+      <div class="bottom">
+        <div class="header">查询结果</div>
+        <div class="result-wrapper">
+          <div class="result-header">
+            <span style="flex:1.1;">选择</span>
+            <span class="flex2">操作人</span>
+            <span class="flex2">名称</span>
+            <span class="flex2">备注</span>
+            <span class="flex2">操作时间</span>
+          </div>
+          <ul class="result-list">
+            <li class="result-item" v-for="(item,index) in historyList" :key="index">
+              <span class="flex1" style="padding-left:5px;"><el-checkbox v-model="item.checked" @change="checked=>handleCheckedChange(checked,item)"></el-checkbox></span>
+              <span class="flex2">{{item.createby}}</span>
+              <span class="flex2" :title="item.name">{{item.name}}</span>
+              <span class="flex2" :title="item.remark">{{item.remark}}</span>
+              <span class="flex2" :title="item.createtime.substr(0,10)">{{item.createtime.substr(0,10)}}</span>
+            </li>
+            <div class="no-data" v-show="!historyList.length">暂无数据</div>
+            <!-- <li class="result-item">
+              <span class="flex1" style="padding-left:5px;"><el-checkbox v-model="checked"></el-checkbox></span>
+              <span class="flex2">金盛</span>
+              <span class="flex2">标绘1</span>
+              <span class="flex2">test</span>
+              <span class="flex2">2021-01-115</span>
+            </li>
+            <li class="result-item">
+              <span class="flex1" style="padding-left:5px;"><el-checkbox v-model="checked"></el-checkbox></span>
+              <span class="flex2">金盛</span>
+              <span class="flex2">标绘1</span>
+              <span class="flex2">test</span>
+              <span class="flex2">2021-01-115</span>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 const Cesium = window.Cesium;
+import {
+  addPlot,
+  queryPlotList,
+  queryPlot
+} from "api/tangheAPI";
 export default {
   name: "drawTool",
   data() {
     return {
-      tempEntities: [],
       datasource: null,
+      pointHandler: null,
+      lineHandler: null,
+      polygonHandler: null,
+      tempEntities: [],   // 临时点位
       onePoints: [],
       linePoints: [],
-      polygonPoints: []
+      polygonPoints: [],
+      showInput: false,
+      showQuery: false,
+      nameValue: '',
+      remarkValue: '',
+      startDate: '',
+      endDate: '',
+      queryName: '',
+      historyList: []
     };
   },
   methods: {
@@ -28,33 +133,29 @@ export default {
       this.datasource = window.earth.dataSources.getByName("drawtool")[0];
     },
     drawPoint() {
-      this.onePoints = []
-      var handler = new Cesium.ScreenSpaceEventHandler(
+      this.destroyAll()
+      let tempArr = []
+      this.pointHandler = new Cesium.ScreenSpaceEventHandler(
         window.earth.scene.canvas
       );
-      handler.setInputAction((movement) => {
+      this.pointHandler.setInputAction((movement) => {
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-      handler.setInputAction((movement) => {
+      this.pointHandler.setInputAction((movement) => {
         let position = window.earth.camera.pickEllipsoid(
           movement.position,
           window.earth.scene.globe.ellipsoid
         );
-        this.onePoints.push(position)
+        tempArr.push(position)
+        this.onePoints.push(tempArr)
         let point = this._drawPoint(position);
-        this.tempEntities.push(point);
+        // this.tempEntities.push(point);
 
         console.log('onePoints', this.onePoints)
-        handler.destroy(); //关闭事件句柄
-        handler = null;
+        this.showInput = true
+        this.pointHandler.destroy(); //关闭事件句柄
+        this.pointHandler = null;
+        this.$parent.currentDraw = "";
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-      // handler.setInputAction(() => {
-      //   handler.destroy(); //关闭事件句柄
-      //   handler = null;
-      // }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
-      // handler.setInputAction(() => {
-      //   handler.destroy(); //关闭事件句柄
-      //   handler = null;
-      // }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     },
     _drawPoint(position, config) {
       var config = config ? config : {};
@@ -72,32 +173,33 @@ export default {
       return pointGeometry;
     },
     drawLine() {
+      this.destroyAll()
       // var tooltip = document.getElementById("tooltip");
-      this.linePoints = [];
-      var handler = new Cesium.ScreenSpaceEventHandler(
+      let tempArr = []
+      this.lineHandler = new Cesium.ScreenSpaceEventHandler(
         window.earth.scene.canvas
       );
       //鼠标移动事件
-      handler.setInputAction((movement) => {
+      this.lineHandler.setInputAction((movement) => {
         // tooltip.style.left = movement.endPosition.x + 10 + "px";
         // tooltip.style.top = movement.endPosition.y + 20 + "px";
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
       //左键点击操作
-      handler.setInputAction((click) => {
+      this.lineHandler.setInputAction((click) => {
         //调用获取位置信息的接口
         let position = window.earth.camera.pickEllipsoid(
           click.position,
           window.earth.scene.globe.ellipsoid
         );
-        this.linePoints.push(position);
-        let tempLength = this.linePoints.length;
+        tempArr.push(position)
+        let tempLength = tempArr.length
         //调用绘制点的接口
-        let point = this._drawPoint(this.linePoints[this.linePoints.length - 1]);
+        let point = this._drawPoint(tempArr[tempArr.length - 1]);
         this.tempEntities.push(point);
         if (tempLength > 1) {
           let pointline = this._drawLine([
-            this.linePoints[this.linePoints.length - 2],
-            this.linePoints[this.linePoints.length - 1],
+            tempArr[tempArr.length - 2],
+            tempArr[tempArr.length - 1],
           ]);
           this.tempEntities.push(pointline);
         } else {
@@ -106,13 +208,16 @@ export default {
         return;
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
       //右键点击操作
-      handler.setInputAction((click) => {
+      this.lineHandler.setInputAction((click) => {
         // tooltip.style.display = "none";
         // tooltip.innerHTML = "左键单击绘制,右键结束绘制";
-        // this.linePoints = [];
         console.log('linePoints', this.linePoints)
-        handler.destroy(); //关闭事件句柄
-        handler = null;
+        this.tempEntities = []
+        this.linePoints.push(tempArr)
+        this.showInput = true
+        this.lineHandler.destroy(); //关闭事件句柄
+        this.lineHandler = null;
+        this.$parent.currentDraw = "";
       }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     },
     _drawLine(positions, config) {
@@ -138,30 +243,31 @@ export default {
       return polylineGeometry;
     },
     drawPolygon() {
-      this.polygonPoints = [];
-      var handler = new Cesium.ScreenSpaceEventHandler(window.earth.scene.canvas);
+      this.destroyAll()
+      let tempArr = []
+      this.polygonHandler = new Cesium.ScreenSpaceEventHandler(window.earth.scene.canvas);
       // tooltip.style.display = "block";
       //鼠标移动事件
-      handler.setInputAction((movement) => {
+      this.polygonHandler.setInputAction((movement) => {
         // tooltip.style.left = movement.endPosition.x + 10 + "px";
         // tooltip.style.top = movement.endPosition.y + 20 + "px";
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
       //左键点击操作
-      handler.setInputAction((click) => {
+      this.polygonHandler.setInputAction((click) => {
         //调用获取位置信息的接口
         let position = window.earth.camera.pickEllipsoid(
           click.position,
           window.earth.scene.globe.ellipsoid
         );
-        this.polygonPoints.push(position);
-        let tempLength = this.polygonPoints.length;
+        tempArr.push(position)
+        let tempLength = tempArr.length
         //调用绘制点的接口
         let point = this._drawPoint(position);
         this.tempEntities.push(point);
         if (tempLength > 1) {
           let pointline = this._drawLine([
-            this.polygonPoints[this.polygonPoints.length - 2],
-            this.polygonPoints[this.polygonPoints.length - 1],
+            tempArr[tempArr.length - 2],
+            tempArr[tempArr.length - 1],
           ]);
           this.tempEntities.push(pointline);
         } else {
@@ -170,27 +276,35 @@ export default {
         return;
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
       //右键点击操作
-      handler.setInputAction((click) => {
+      this.polygonHandler.setInputAction((click) => {
         let cartesian = window.earth.camera.pickEllipsoid(
           click.position,
           window.earth.scene.globe.ellipsoid
         );
         if (cartesian) {
-          let tempLength = this.polygonPoints.length;
+          let tempLength = tempArr.length;
           if (tempLength < 3) {
-            alert("请选择3个以上的点再执行闭合操作命令");
+            this.$message({
+              message: '请选择3个以上的点再执行闭合操作命令',
+              type: 'error',
+              offset: 50
+            });
           } else {
             //闭合最后一条线
             let pointline = this._drawLine([
-              this.polygonPoints[this.polygonPoints.length - 1],
-              this.polygonPoints[0],
+              tempArr[tempArr.length - 1],
+              tempArr[0],
             ]);
-            this.tempEntities.push(pointline);
-            this._drawPolygon(this.polygonPoints);
-            this.tempEntities.push(this.polygonPoints);
+            // this.tempEntities.push(pointline);
+            this._drawPolygon(tempArr);
+            // this.tempEntities.push(tempArr);
             console.log('polygonPoints', this.polygonPoints)
-            handler.destroy(); //关闭事件句柄
-            handler = null;
+            this.tempEntities = []
+            this.polygonPoints.push(tempArr)
+            this.showInput = true
+            this.polygonHandler.destroy(); //关闭事件句柄
+            this.polygonHandler = null;
+            this.$parent.currentDraw = "";
           }
         }
       }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
@@ -211,15 +325,168 @@ export default {
       });
       return polygonGeometry;
     },
-    clear() {
+    clearDraw() {
+      this.showInput = false
       this.datasource.entities.removeAll();
+      this.destroyAll()
+      this.onePoints = []
+      this.linePoints = []
+      this.polygonPoints = []
+      this.historyList.forEach(item => {
+        item.checked = false
+      })
     },
+    destroyAll() {
+      console.log('tempEntities', this.tempEntities)
+      this.tempEntities.forEach(item => {
+        item.show = false
+        window.earth.entities.removeById(item.id)
+      })
+      this.tempEntities = []
+      if (this.pointHandler) {
+        this.pointHandler.destroy()
+        this.pointHandler = null
+      }
+      if (this.lineHandler) {
+        this.lineHandler.destroy()
+        this.lineHandler = null
+      }
+      if (this.polygonHandler) {
+        this.polygonHandler.destroy()
+        this.polygonHandler = null
+      }
+      // this.pointHandler && this.pointHandler.destroy()
+      // this.lineHandler && this.lineHandler.destroy()
+      // this.polygonHandler && this.polygonHandler.destroy()
+    },
+    async submit() {
+      this.destroyAll()
+      let createby = 'jinsheng';
+      console.log('onePoints', this.onePoints)
+      console.log('linePoints', this.linePoints)
+      console.log('polygonPoints', this.polygonPoints)
+
+      let listArr = []
+      this.onePoints.forEach(item => {
+        let obj = {
+          remark: this.remarkValue,
+          createby,
+          name: this.nameValue,
+          geometry: JSON.stringify(item),
+          type: 'point'
+        }
+        listArr.push(obj)
+      })
+      this.linePoints.forEach(item => {
+        let obj = {
+          remark: this.remarkValue,
+          createby,
+          name: this.nameValue,
+          geometry: JSON.stringify(item),
+          type: 'line'
+        }
+        listArr.push(obj)
+      })
+      this.polygonPoints.forEach(item => {
+        let obj = {
+          remark: this.remarkValue,
+          createby,
+          name: this.nameValue,
+          geometry: JSON.stringify(item),
+          type: 'polygon'
+        }
+        listArr.push(obj)
+      })
+      console.log('olalalala', listArr)
+
+      let res = await addPlot(listArr)
+      if (res.code == 200) {
+        this.$message({
+          message: '保存成功',
+          type: 'success',
+          offset: 50
+        });
+      }
+    },
+    async query() {
+      console.log('startDate', this.startDate)
+      console.log('endDate', this.endDate)
+      let res = await queryPlotList({
+        startTime: this.startDate,
+        endTime: this.endDate,
+        name: this.queryName
+      })
+      if (res.code == 200) {
+        this.historyList = res.result
+        this.historyList.map(item => {
+          // return Object.assign(item, {checked: false})
+          this.$set(item, 'checked', false)
+          return item
+        })
+        console.log(this.historyList)
+      }
+    },
+    async handleCheckedChange(val, item) {
+      if (val) {
+        let res = await queryPlot({groupId:item.groupid})
+        if (res.code == 200) {
+          res.result.forEach(item => {
+            let positions = JSON.parse(item.geometry)
+            if (item.type == 'point') {
+              this._drawPoint(positions[0])
+            }
+            if (item.type == 'line') {
+              this._drawLine(positions)
+            }
+            if (item.type == 'polygon') {
+              this._drawPolygon(positions)
+            }
+          })
+        }
+      }
+    },
+    showHistory() {
+      this.destroyAll()
+      this.showQuery = true
+    }
   },
   mounted() {
     this.createEntityCollection();
   },
+  watch: {
+    showInput(val) {
+      this.showQuery = !val
+    },
+    showQuery(val) {
+      this.showInput = !val
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
+@import url("./css/DrawTool.less");
+</style>
+<style lang="less">
+.draw-input {
+  .el-input__inner {
+    background: #00214e !important;
+    border: solid 1px #87bcc1 !important;
+    color: #fff !important;
+  }
+}
+.draw-areainput {
+  margin-top: 1vh;
+  .el-textarea__inner {
+    background: #00214e !important;
+    border: solid 1px #87bcc1 !important;
+    color: #fff !important;
+  }
+}
+.draw-datepicker {
+  width: 130px !important;
+  .el-input__inner {
+    background: #00214e !important;
+  }
+}
 </style>

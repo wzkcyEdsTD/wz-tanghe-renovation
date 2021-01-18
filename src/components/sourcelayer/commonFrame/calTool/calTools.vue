@@ -142,7 +142,7 @@ export default {
           });
           // console.log("points", points);
           let centerPosition = this.getCenterPoint(points)
-          // console.log('centerPosition', centerPosition)
+          console.log('centerPosition', centerPosition)
           var linearRings = new SuperMap.Geometry.LinearRing(points);
           var region = new SuperMap.Geometry.Polygon([linearRings]);
           let res = await this.fetchFromDataSets(region);

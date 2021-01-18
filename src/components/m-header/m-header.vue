@@ -70,7 +70,8 @@ export default {
 
 <style lang="less" scoped>
 .header-wrapper {
-  position: relative;
+  position: fixed;
+  top: 0;
   z-index: 1;
   width: 100%;
   height: 8vh;

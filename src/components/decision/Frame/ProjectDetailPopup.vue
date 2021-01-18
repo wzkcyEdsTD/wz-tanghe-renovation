@@ -269,7 +269,7 @@
                 </div>
               </div>
             </div>
-            <div class="rate-info">
+            <div class="rate-info" v-if="resourceType == 'project_all'">
               <div class="sub-title">
                 <span class="sub-title-text">打分</span>
                 <span class="sub-title-line"></span>
@@ -278,7 +278,7 @@
                 <div class="top">
                   <div class="rate-box">
                     <p class="text">总体评分</p>
-                    <el-rate disabled v-model="value1"></el-rate>
+                    <el-rate disabled v-model="detailData.star"></el-rate>
                   </div>
                   <div class="do-rate" @click="dorate = true">
                     <img src="./images/comment.png" />
@@ -312,21 +312,6 @@
                   <div class="no-data" v-show="!commentList.length">
                     暂无评价
                   </div>
-                  <!-- <div class="comment-item">
-                    <div class="comment-header">
-                      <div class="left">
-                        <img class="avatar" src="./images/avatar.png" >
-                        <div class="info">
-                          <p class="name">XXX</p>
-                          <el-rate class="comment-rate" disabled v-model="value1"></el-rate>
-                        </div>
-                      </div>
-                      <div class="right">2020.12.20  14:40:00</div>
-                    </div>
-                    <div class="comment-content">
-                      评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评
-                    </div>
-                  </div> -->
                 </div>
               </div>
               <div class="dorate-wrapper" v-show="dorate">
@@ -410,7 +395,7 @@ export default {
 
       dorate: false,
       commentList: [],
-      value1: 4,
+      // value1: 4,
       inputStar: null,
       inputComment: "",
     };

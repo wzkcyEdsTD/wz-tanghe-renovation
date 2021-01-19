@@ -100,7 +100,8 @@ export const ServiceUrl = {
   FEATUREMVT: "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data",
 };
 
-export const MediaServer = "http://172.168.3.182:8090/static";
+// export const MediaServer = "http://172.168.3.182:8090/static";
+export const MediaServer = "http://172.168.3.182:8080/jeecg-boot/sys/common/static";
 
 const datasource = "172.168.3.181_thxm_manage:";
 

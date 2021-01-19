@@ -119,20 +119,20 @@
           <div class="content-item video-wrapper" id="video">
             <div class="sub-title">视频</div>
             <div class="video-content" v-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.SP">
-              <video v-for="(item,index) in spList" :key="index" class="video" :src="`/static/video/${item}`" controls="controls"></video>
+              <video v-for="(item,index) in spList" :key="index" class="video" :src="`${MediaServer}/video/${item}`" controls="controls"></video>
             </div>
             <div class="video-content" v-else-if="this.isSpot && this.detailData.videos && this.detailData.videos.length">
-              <video v-for="(item,index) in detailData.videos" :key="index" class="video" :src="`/static/video/${item.path}`" controls="controls"></video>
+              <video v-for="(item,index) in detailData.videos" :key="index" class="video" :src="`${MediaServer}/${item.path}`" controls="controls"></video>
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
           <div class="content-item video-wrapper" id="audio">
             <div class="sub-title">音频</div>
             <div class="video-content" v-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.YY">
-              <AudioTool :src="`/static/audio/${forceEntity.type}/${this.forceEntity.attributes.YY}`" />
+              <AudioTool :src="`${MediaServer}/audio/${forceEntity.type}/${this.forceEntity.attributes.YY}`" />
             </div>
             <div class="video-content" v-else-if="this.isSpot && this.detailData.audioSrc">
-              <AudioTool :src="`/static/audio/${detailData.audioSrc}`" />
+              <AudioTool :src="`${MediaServer}/${detailData.audioSrc}`" />
             </div>
             <div v-else class="no-tip">暂无数据</div>
           </div>
@@ -140,17 +140,17 @@
             <div class="sub-title">全景</div>
             <div class="overall-content" v-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.ZBQJ">
               <img v-for="(item,index) in zbOverallList" :key="index"
-                :src="`/static/images/VRPic/${item}`" @click="openQJ(index)"
+                :src="`${MediaServer}/img/${item}`" @click="openQJ(index)"
               >
             </div>
             <div class="overall-content" v-else-if="!this.isSpot && this.forceEntity.attributes && this.forceEntity.attributes.QJ">
               <img v-for="(item,index) in overallList" :key="index"
-                :src="`/static/images/VRPic/${item}`" @click="openQJ(index)"
+                :src="`${MediaServer}/img/${item}`" @click="openQJ(index)"
               >
             </div>
             <div class="overall-content" v-else-if="this.isSpot && this.detailData.overallViews && this.detailData.overallViews.length">
               <img v-for="(item,index) in detailData.overallViews" :key="index"
-                :src="`/static/images/VRPic/${item.thumbnail}`" @click="openQJ(index)"
+                :src="`${MediaServer}/${item.thumbnail}`" @click="openQJ(index)"
               >
             </div>
             <!-- <div class="no-tip" v-show="this.forceEntity.attributes && !this.forceEntity.attributes.QJ && !this.forceEntity.attributes.ZBQJ">暂无数据</div> -->
@@ -183,6 +183,7 @@
 
 <script>
 // import {ZBQJList} from "config/ZBQJConfig";
+import { MediaServer } from "@/config/server/mapConfig";
 import AudioTool from "../AudioTool/AudioTool";
 import searchDetail from "./searchDetail";
 import { getSpotDetail } from "api/tangheAPI";
@@ -190,6 +191,7 @@ import {mapGetters} from "vuex";
 export default {
   data() {
     return {
+      MediaServer,
       showLarge: window.showLarge,
       forceEntity: {},
       forcePosition: {},
@@ -291,7 +293,7 @@ export default {
           }
         }
         result = tempArr.map(item => {
-          return `/static/images/${this.forceEntity.type}/${item}`
+          return `${MediaServer}/img/${item}`
         })
         return result
       } else {
@@ -454,11 +456,11 @@ export default {
     onPreview(list, index) {
       if (this.isSpot) {
         this.srcList = list.map((item) => {
-          return `/static/images/${item.path}`;
+          return `${MediaServer}/${item.path}`;
         });
       } else {
         this.srcList = list.map((item) => {
-          return `/static/images/${item}`;
+          return `${MediaServer}/img/${item}`;
         });
       }
       this.srcIndex = index;
@@ -477,9 +479,9 @@ export default {
         }
       } else if(entity.type === "shipin") {
         if (this.showLarge) {
-          this.$bus.$emit("change-rightContent", { type: 'video', value: `/static/video/${entity.attributes.SPWJM}` });
+          this.$bus.$emit("change-rightContent", { type: 'video', value: `${MediaServer}/video/${entity.attributes.SPWJM}` });
         } else {
-          this.VideoURL = `/static/video/${entity.attributes.SPWJM}`;
+          this.VideoURL = `${MediaServer}/video/${entity.attributes.SPWJM}`;
           this.showVideo = true;
           this.isShow = false;
         }

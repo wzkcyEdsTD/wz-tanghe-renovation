@@ -19,10 +19,10 @@
                   v-for="(item, index) in topBtns"
                   :key="index"
                   class="btn-type"
-                  :disabled="!currentData[item.id]"
+                  :disabled="!currentData[item.id] || !currentData[item.id].length"
                   :class="{
                     active: currentShow == item.id,
-                    disabled: !currentData[item.id],
+                    disabled: !currentData[item.id] || !currentData[item.id].length,
                   }"
                   @click="currentShow = item.id"
                 >
@@ -44,13 +44,13 @@
                       class="swiper-item"
                     >
                       <img
-                        :src="`${MediaServer}/images/VRPic/${item.thumbnail}`"
+                        :src="`${MediaServer}/${item.thumbnail}`"
                         @click="openOverview(i)"
                       />
                     </swiper-slide>
                     <swiper-slide
                       class="swiper-item"
-                      v-if="!currentData.overview"
+                      v-if="!currentData.overview||!currentData.overview.length"
                     >
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
@@ -72,12 +72,12 @@
                       <video
                         id="video"
                         ref="video"
-                        :src="`${MediaServer}/video/${item.path}`"
+                        :src="`${MediaServer}/${item.path}`"
                         controls="controls"
                         muted
                       ></video>
                     </swiper-slide>
-                    <swiper-slide class="swiper-item" v-if="!currentData.video">
+                    <swiper-slide class="swiper-item" v-if="!currentData.video||!currentData.video.length">
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
                     <div class="swiper-scrollbar" slot="scrollbar"></div>
@@ -95,11 +95,11 @@
                       class="swiper-item"
                     >
                       <el-image
-                        :src="`${MediaServer}/images/${item.path}`"
+                        :src="`${MediaServer}/${item.path}`"
                         @click="onPreview(currentData.photo, i)"
                       ></el-image>
                     </swiper-slide>
-                    <swiper-slide class="swiper-item" v-if="!currentData.photo">
+                    <swiper-slide class="swiper-item" v-if="!currentData.photo||!currentData.photo.length">
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
                     <div class="swiper-scrollbar" slot="scrollbar"></div>
@@ -141,7 +141,7 @@
                 v-if="detailData.audioSrc"
               >
                 <MAudio
-                  :src="`${MediaServer}/audio/${detailData.audioSrc}`"
+                  :src="`${MediaServer}/${detailData.audioSrc}`"
                 />
               </div>
               <div v-else class="no-tip">暂无数据</div>
@@ -260,7 +260,7 @@ export default {
     // 开启图片查看
     onPreview(list, index) {
       this.imgList = list.map((item) => {
-        return `${MediaServer}/images/${item.path}`;
+        return `${MediaServer}/${item.path}`;
       });
       this.imgIndex = index;
       this.viewerShow = true;

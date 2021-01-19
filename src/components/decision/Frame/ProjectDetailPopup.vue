@@ -19,10 +19,10 @@
                   v-for="(item, index) in topBtns"
                   :key="index"
                   class="btn-type"
-                  :disabled="!detailData.overallViews"
+                  :disabled="!currentData[item.id] || !currentData[item.id].length"
                   :class="{
                     active: currentShow == item.id,
-                    disabled: !detailData.overallViews,
+                    disabled: !currentData[item.id] || !currentData[item.id].length,
                   }"
                   @click="currentShow = item.id"
                 >
@@ -44,7 +44,7 @@
                       class="swiper-item"
                     >
                       <img
-                        :src="`${MediaServer}/images/VRPic/${item}`"
+                        :src="`${MediaServer}/${item}`"
                         @click="openOverview(i)"
                       />
                     </swiper-slide>
@@ -71,7 +71,7 @@
                       <video
                         id="video"
                         ref="video"
-                        :src="`${MediaServer}/video/${item}`"
+                        :src="`${MediaServer}/${item}`"
                         controls="controls"
                         muted
                       ></video>
@@ -94,7 +94,7 @@
                       class="swiper-item"
                     >
                       <el-image
-                        :src="`${MediaServer}/images/${item}`"
+                        :src="`${MediaServer}/${item}`"
                         @click="onPreview(currentData.photo, i)"
                       ></el-image>
                     </swiper-slide>
@@ -681,7 +681,7 @@ export default {
     // 开启图片查看
     onPreview(list, index) {
       this.imgList = list.map((item) => {
-        return `${MediaServer}/images/${item}`;
+        return `${MediaServer}/${item}`;
       });
       this.imgIndex = index;
       this.viewerShow = true;

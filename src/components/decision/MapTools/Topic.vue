@@ -1,6 +1,5 @@
 <template>
   <div class="topic">
-    <!-- <img class="bg" src="./images/topic-bg.png" alt="" /> -->
     <div class="topic-list">
       <div
         class="topic-item"
@@ -32,56 +31,6 @@
             {{ child }}
           </li>
         </ul>
-      </div>
-    </div>
-    <div class="analyze" v-show="showAnalyze">
-      <img class="bg" src="./images/analyze-bg.png" />
-      <div class="top">
-        <el-select
-          class="analyze-select"
-          v-model="zrdwValue"
-          placeholder="请选择"
-        >
-          <el-option
-            v-for="item in zrdwOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
-      </div>
-      <div class="content">
-        <div class="start-item start1">
-          <img src="./images/star1.png" />
-          <p class="number">
-            {{ currentStarData.data.star1 || 0 }}<span class="unit">个</span>
-          </p>
-        </div>
-        <div class="start-item start2">
-          <img src="./images/star2.png" />
-          <p class="number">
-            {{ currentStarData.data.star2 || 0 }}<span class="unit">个</span>
-          </p>
-        </div>
-        <div class="start-item start3">
-          <img src="./images/star3.png" />
-          <p class="number">
-            {{ currentStarData.data.star3 || 0 }}<span class="unit">个</span>
-          </p>
-        </div>
-        <div class="start-item start4">
-          <img src="./images/star4.png" />
-          <p class="number">
-            {{ currentStarData.data.star4 || 0 }}<span class="unit">个</span>
-          </p>
-        </div>
-        <div class="start-item start5">
-          <img src="./images/star5.png" />
-          <p class="number">
-            {{ currentStarData.data.star5 || 0 }}<span class="unit">个</span>
-          </p>
-        </div>
       </div>
     </div>
     <div class="score" v-show="showScore">
@@ -148,257 +97,29 @@
         </div>
       </div>
     </div>
-    <div class="delay" v-show="currentChild == '滞后项目'">
-      <div class="title-wrapper">
-        <span class="pre"></span>
-        <span class="title">滞后项目</span>
-      </div>
-      <div class="count">
-        <div class="count-item" v-for="(item, index) in delayData" :key="index">
-          <div class="name">{{ item.label }}</div>
-          <div class="number" :class="{ red: index <= 2, blue: index >= 3 }">
-            {{ item.number }}
-          </div>
-        </div>
-      </div>
-      <div class="bottom">
-        <div class="header">
-          <div class="line"></div>
-          <el-select v-model="zrdwValue" placeholder="请选择">
-            <el-option
-              v-for="item in zrdwOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </div>
-        <div class="result-wrapper">
-          <ul class="result-list">
-            <li class="result-item header">
-              <span class="flex2">项目名称</span>
-              <span class="content">计划开工时间</span>
-              <span class="content">计划建成时间</span>
-              <span class="flex2">当前状态</span>
-            </li>
-            <li
-              class="result-item"
-              v-for="(item, index) in currentList"
-              :key="index"
-            >
-              <span class="flex2">{{ item.name }}</span>
-              <span class="content">{{ item.consdates || "-" }}</span>
-              <span class="content">{{ item.consdatee || "-" }}</span>
-              <span class="flex2">{{ item.status }}</span>
-            </li>
-            <p class="no-data" v-show="!currentList.length">暂无数据</p>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="problem" v-show="currentChild == '问题项目'">
-      <div class="title-wrapper">
-        <span class="pre"></span>
-        <span class="title">问题项目</span>
-      </div>
-      <div class="count">
-        <div
-          class="count-item"
-          v-for="(item, index) in problemData"
-          :key="index"
-        >
-          <div class="name">{{ item.name }}</div>
-          <div class="number" :class="{ red: index <= 2, blue: index >= 3 }">
-            {{ item.num }}
-          </div>
-        </div>
-      </div>
-      <div class="bottom">
-        <div class="header">
-          <div class="line"></div>
-          <el-select
-            class="delay-select"
-            v-model="zrdwValue"
-            placeholder="请选择"
-          >
-            <el-option
-              v-for="item in zrdwOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </div>
-        <div class="result-wrapper">
-          <ul class="result-list">
-            <li class="result-item header">
-              <span class="flex2">项目名称</span>
-              <span class="content">存在问题</span>
-            </li>
-            <li
-              class="result-item"
-              v-for="(item, index) in currentList"
-              :key="index"
-            >
-              <span class="flex2">{{ item.name }}</span>
-              <span class="content">{{ item.problem }}</span>
-            </li>
-            <p class="no-data" v-show="!currentList.length">暂无数据</p>
-            <!-- <li class="result-item">
-              <span class="flex2">{{ "葡萄8-5地块" }}</span>
-              <span class="content">{{ "因为疫情影响，无法开工" }}</span>
-            </li> -->
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="amount-spread" v-show="currentChild == '项目投资额分布'">
-      <div class="title-wrapper">
-        <span class="pre"></span>
-        <span class="title">项目投资额分布</span>
-      </div>
-      <div class="header">
-        <div class="tip">各责任单位投资总额（亿元）</div>
-      </div>
-      <div class="count">
-        <div
-          class="count-item"
-          v-for="(item, index) in amountData"
-          :key="index"
-        >
-          <div class="name">{{ item.name }}</div>
-          <div class="number" :class="{ red: index <= 2, blue: index >= 3 }">
-            {{ parseInt(item.num / 10000) }}
-          </div>
-        </div>
-      </div>
-      <div class="bottom">
-        <div class="header">
-          <div class="tip">项目投资额排名列表</div>
-        </div>
-        <div class="result-wrapper">
-          <ul class="result-list">
-            <li class="result-item header">
-              <span class="flex2">项目名称</span>
-              <span class="content">总投资额</span>
-              <span class="content">责任单位</span>
-            </li>
-            <li
-              class="result-item"
-              v-for="(item, index) in amountList"
-              :key="index"
-            >
-              <span class="flex2">{{ item.name }}</span>
-              <span class="content">{{ item.totalamount.toFixed(1) }}万元</span>
-              <span class="content">{{ item.sysOrgCode_dictText }}</span>
-            </li>
-            <!-- <li class="result-item">
-              <span class="flex2">{{ "葡萄8-5地块" }}</span>
-              <span class="content">{{ "2000万元" }}</span>
-              <span class="content">{{ "鹿城区政府" }}</span>
-            </li>
-            <li class="result-item">
-              <span class="flex2">{{ "葡萄8-5地块" }}</span>
-              <span class="content">{{ "2000万元" }}</span>
-              <span class="content">{{ "鹿城区政府" }}</span>
-            </li> -->
-          </ul>
-        </div>
-      </div>
-      <div class="year-wrapper">
-        <div
-          class="year-item"
-          :class="{ active: currentYear == 2020 }"
-          @click="currentYear = 2020"
-        >
-          2020
-        </div>
-        <div
-          class="year-item"
-          :class="{ active: currentYear == 2021 }"
-          @click="currentYear = 2021"
-        >
-          2021
-        </div>
-      </div>
-    </div>
-    <div class="proj-spread" v-show="currentChild == '项目分布'">
-      <div class="title-wrapper">
-        <span class="pre"></span>
-        <span class="title">各乡镇街道项目数排名</span>
-        <el-select
-          style="width: 100px"
-          v-model="districtValue"
-          placeholder="请选择"
-        >
-          <el-option
-            v-for="item in districtOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
-      </div>
-      <div class="content">
-        <div
-          class="rank-item"
-          v-for="(item, index) in currentStreetList"
-          :key="index"
-        >
-          <span class="name">{{ item.name }}</span>
-          <div
-            class="progress"
-            :class="{ red: index <= 2, blue: index >= 3 }"
-            :style="{ width: `${item.num * 7}%` }"
-          ></div>
-          <span class="num">{{ item.num }}</span>
-        </div>
-        <!-- <div class="rank-item">
-          <span class="name">景山街道</span>
-          <div class="progress red" :style="{width: `62%`}"></div>
-          <span class="rate">10</span>
-        </div>
-        <div class="rank-item">
-          <span class="name">景山街道</span>
-          <div class="progress red" :style="{width: `54%`}"></div>
-          <span class="rate">9</span>
-        </div>
-        <div class="rank-item">
-          <span class="name">景山街道</span>
-          <div class="progress blue" :style="{width: `46%`}"></div>
-          <span class="rate">8</span>
-        </div>
-        <div class="rank-item">
-          <span class="name">景山街道</span>
-          <div class="progress blue" :style="{width: `38%`}"></div>
-          <span class="rate">7</span>
-        </div>
-        <div class="rank-item">
-          <span class="name">景山街道</span>
-          <div class="progress blue" :style="{width: `30%`}"></div>
-          <span class="rate">6</span>
-        </div> -->
-      </div>
-    </div>
+    <Analyze v-show="showAnalyze" />
+    <DelayProject :show="currentChild == '滞后项目'" />
+    <ProblemProject :show="currentChild == '问题项目'" />
+    <ProjectSpread :show="currentChild == '项目分布'"/>
+    <AmountSpread :show="currentChild == '项目投资额分布'" />
   </div>
 </template>
 
 <script>
-import { ServiceUrl, LayerList } from "@/config/server/mapConfig";
-import { switchHeatMap, doHeatMap } from "./HeatMap";
-import {
-  resourceProjectList,
-  getProjStatusByDept,
-  countProjectProgressNum,
-  queryProgressList,
-  countProjectStreetNum,
-  countProjectAmound,
-  countProjectStar,
-} from "api/tangheAPI";
+import Analyze from "../Frame/TopicSub/Analyze"
+import DelayProject from "../Frame/TopicSub/DelayProject"
+import ProblemProject from "../Frame/TopicSub/ProblemProject"
+import AmountSpread from "../Frame/TopicSub/AmountSpread"
+import ProjectSpread from "../Frame/TopicSub/ProjectSpread"
 export default {
+  name: 'Topic',
+  components: {
+    Analyze,
+    DelayProject,
+    ProblemProject,
+    AmountSpread,
+    ProjectSpread
+  },
   data() {
     return {
       topicList: [
@@ -438,143 +159,16 @@ export default {
       ldfwFace: undefined,
       ldfwLine: undefined,
       konggui: undefined,
-      // xianzhuang: undefined,
-      datasource: [],
       showAnalyze: false,
-      // options: [{
-      //   value: '选项1',
-      //   label: '鹿城区政府'
-      // }, {
-      //   value: '选项2',
-      //   label: '瑞安市政府'
-      // }, {
-      //   value: '选项3',
-      //   label: '现代集团'
-      // }, {
-      //   value: '选项4',
-      //   label: '城发集团'
-      // }, {
-      //   value: '选项5',
-      //   label: '浙南产业区'
-      // }],
-      // value: '选项1',
-      zrdwOptions: [
-        // { label: "指挥部", value: "A02" },
-        { label: "鹿城区政府", value: "A02A01" },
-        { label: "龙湾区政府", value: "A02A03" },
-        { label: "瓯海区政府", value: "A02A02" },
-        { label: "瑞安市政府", value: "A02A04" },
-        { label: "浙南产业区", value: "A02A05" },
-        { label: "温州城发集团", value: "A02A07" },
-        { label: "温州现代集团", value: "A02A06" },
-      ],
-      zrdwValue: "A02A01",
-      districtOptions: [
-        { label: "鹿城区", value: "鹿城区" },
-        { label: "龙湾区", value: "龙湾区" },
-        { label: "瓯海区", value: "瓯海区" },
-        { label: "瑞安市", value: "瑞安市" },
-      ],
-      districtValue: "鹿城区",
       showScore: false,
       value1: 4,
-      projectList: [],
-      delayData: [
-        { label: "鹿城区政府", value: "A02A01", number: 0 },
-        { label: "龙湾区政府", value: "A02A03", number: 0 },
-        { label: "瓯海区政府", value: "A02A02", number: 0 },
-        { label: "瑞安市政府", value: "A02A04", number: 0 },
-        { label: "浙南产业区", value: "A02A05", number: 0 },
-        { label: "温州城发集团", value: "A02A07", number: 0 },
-        { label: "温州现代集团", value: "A02A06", number: 0 },
-      ],
-      problemData: [],
-      streetData: [],
-      amountData: [],
-      starData: [
-        {
-          label: "鹿城区政府",
-          value: "A02A01",
-          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
-        },
-        {
-          label: "瓯海区政府",
-          value: "A02A02",
-          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
-        },
-        {
-          label: "龙湾区政府",
-          value: "A02A03",
-          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
-        },
-        {
-          label: "瑞安市政府",
-          value: "A02A04",
-          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
-        },
-        {
-          label: "浙南产业区",
-          value: "A02A05",
-          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
-        },
-        {
-          label: "温州城发集团",
-          value: "A02A07",
-          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
-        },
-        {
-          label: "温州现代集团",
-          value: "A02A06",
-          data: { star1: 0, star2: 0, star3: 0, star4: 0, star5: 0 },
-        },
-      ],
-      // currentStreetList: [],
-      amountList: [],
-      currentYear: 2020,
     };
-  },
-  computed: {
-    currentList() {
-      let res = this.projectList.filter((item) => {
-        return item.sysOrgCode == this.zrdwValue;
-      });
-      return res;
-    },
-    currentStreetList() {
-      let res = this.streetData.find((item) => {
-        return item.name == this.districtValue;
-      });
-      if (res) {
-        let arr = res.countBaseRespList;
-        arr.sort((a, b) => {
-          if (a.num < b.num) {
-            return 1;
-          } else if (a.num > b.num) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-        console.log("bbb", arr);
-        return arr;
-      }
-    },
-    currentStarData() {
-      let res = this.starData.find((item) => {
-        return item.value == this.zrdwValue;
-      });
-      return res;
-    },
   },
   methods: {
     itemClick(item) {
       this.ldfwFace && (this.ldfwFace.show = false);
       this.ldfwLine && (this.ldfwLine.show = false);
       this.konggui && (this.konggui.show = false);
-      // this.xianzhuang && (this.xianzhuang.show = false);
-      // // 关闭热力图
-      // switchHeatMap(false, "k1");
-      // switchHeatMap(false, "k2");
 
       this.showAnalyze = false;
       this.showScore = false;
@@ -589,17 +183,6 @@ export default {
         return;
       }
       this.currentTopic = item.value;
-      if (item.value == 5) {
-        this.showScore = true;
-      }
-      if (item.value == 6) {
-        this.$bus.$emit("set-bufferFlag", {
-          value: true,
-        });
-      }
-      if (item.value == 7) {
-        this.getStarCount();
-      }
       if (item.value == 3) {
         this.ldfwFace = window.earth.imageryLayers.addImageryProvider(
           new Cesium.SuperMapImageryProvider({
@@ -624,6 +207,17 @@ export default {
         );
         this.konggui.alpha = 0.8;
       }
+      if (item.value == 5) {
+        this.showScore = true;
+      }
+      if (item.value == 6) {
+        this.$bus.$emit("set-bufferFlag", {
+          value: true,
+        });
+      }
+      if (item.value == 7) {
+        this.showAnalyze = true
+      }
     },
     childClick(item) {
       this.$parent.$refs.LayerHub.showPopover = false;
@@ -634,120 +228,17 @@ export default {
         return;
       }
       this.$parent.showHub = false;
-      if (item == "滞后项目") {
-        this.getDelayCount();
-        this.getDelayList("*滞后*", item);
-      }
-      if (item == "问题项目") {
-        this.getProblemCount();
-        this.getProblemList(item);
-      }
-      if (item == "项目分布") {
-        this.getStreetData(item);
-      }
-      if (item == "项目投资额分布") {
-        this.getAmountCount(this.currentYear, item);
-        this.getAoumtList();
-      }
-    },
-    addHeatMap() {
-      let smallHeatArr = [];
-      let bigHeatArr = [];
-      this.datasource.forEach((v) => {
-        if (v.attributes.TOTALAMOUNT <= 3000) {
-          smallHeatArr.push([
-            v.geometry.x,
-            v.geometry.y,
-            v.attributes.TOTALAMOUNT,
-          ]);
-        }
-        if (v.attributes.TOTALAMOUNT > 3000) {
-          bigHeatArr.push([
-            v.geometry.x,
-            v.geometry.y,
-            v.attributes.TOTALAMOUNT,
-          ]);
-        }
-      });
-      console.log("smallHeatArr???", smallHeatArr);
-      console.log("bigHeatArr???", bigHeatArr);
-      switchHeatMap(true, "k1", smallHeatArr, 30, 3000);
-      switchHeatMap(true, "k2", bigHeatArr, 3000, 300000);
-    },
-    async getDelayCount() {
-      let res = await getProjStatusByDept({
-        status: "滞后",
-      });
-      if (res.code == 200) {
-        this.delayData.forEach((item) => {
-          res.result.forEach((v) => {
-            if (item.value == v.sysOrgCode) {
-              let number = 0;
-              v.statusInfos.forEach((info) => {
-                number += info.num;
-              });
-              item.number = number;
-            }
-          });
-        });
-        this.delayData.sort((a, b) => {
-          if (a.number < b.number) {
-            return 1;
-          } else if (a.number > b.number) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-      }
-    },
-    async getDelayList(status, child) {
-      let res = await resourceProjectList({
-        delFlag: 0,
-        status,
-        pageNo: 1,
-        pageSize: 9999,
-      });
-      if (res.code == 200) {
-        this.projectList = res.result.records;
-        console.log("projectList", this.projectList);
-        this.currentChild = child;
-        console.log("yesssssssss", window.featureMap);
-        console.log("noooooooooo", window.billboardMap);
-        let tempArr = [];
-        for (let key in window.featureMap["项目"]) {
-          let item = window.featureMap["项目"][key];
-          if (~item.attributes.STATUS.indexOf("滞后")) {
-            tempArr.push(item);
-          }
-        }
-        console.log("tempArr", tempArr);
-        this.filterData(tempArr);
-      }
-    },
-    async getProblemCount() {
-      let res = await countProjectProgressNum();
-      if (res.code == 200) {
-        this.problemData = res.result.slice(1);
-      }
-    },
-    async getProblemList(child) {
-      let res = await queryProgressList();
-      if (res.code == 200) {
-        this.projectList = res.result;
-        this.currentChild = child;
-        console.log("yesssssssss", window.featureMap);
-        console.log("noooooooooo", window.billboardMap);
-        let tempArr = [];
-        for (let key in window.featureMap["项目"]) {
-          let item = window.featureMap["项目"][key];
-          if (~item.attributes.STATUS.indexOf("滞后")) {
-            tempArr.push(item);
-          }
-        }
-        console.log("tempArr", tempArr);
-        this.filterData(tempArr);
-      }
+      this.currentChild = item
+      // if (item == "滞后项目") {
+      // }
+      // if (item == "问题项目") {
+      // }
+      // if (item == "项目分布") {
+      //   // this.showHeatMap = 'number'
+      // }
+      // if (item == "项目投资额分布") {
+      //   // this.showHeatMap = `amount${this.cu}`
+      // }
     },
     filterData(array) {
       window.billboardMap["项目"]._billboards.forEach((v) => {
@@ -767,79 +258,8 @@ export default {
         });
       });
     },
-    async getStreetData(child) {
-      let res = await countProjectStreetNum();
-      if (res.code == 200) {
-        this.streetData = res.result;
-        this.currentChild = child;
-      }
-    },
-    async getAmountCount(year, child) {
-      let res = await countProjectAmound({
-        tag: year,
-      });
-      if (res.code == 200) {
-        let index = res.result.findIndex((item) => {
-          return item.name == "指挥部";
-        });
-        res.result.splice(index, 1);
-        this.amountData = res.result;
-        this.amountData.sort((a, b) => {
-          if (a.num < b.num) {
-            return 1;
-          } else if (a.num > b.num) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-        this.currentChild = child;
-      }
-    },
-    async getAoumtList(year) {
-      let res = await resourceProjectList({
-        delFlag: 0,
-        status,
-        pageNo: 1,
-        pageSize: 9999,
-        tag: year,
-        column: "totalamount",
-        order: "desc",
-      });
-      if (res.code == 200) {
-        this.amountList = res.result.records;
-      }
-    },
-    async getStarCount() {
-      let res = await countProjectStar();
-      if (res.code == 200) {
-        this.starData.forEach((item) => {
-          res.result.forEach((v) => {
-            if (item.label == v.name) {
-              // const data = {};
-
-              // 增加评分数据
-              v.countBaseRespList.map(({ name, num }) => {
-                name == "1" && (item.data.star1 = num);
-                name == "2" && (item.data.star2 = num);
-                name == "3" && (item.data.star3 = num);
-                name == "4" && (item.data.star4 = num);
-                name == "5" && (item.data.star5 = num);
-              });
-
-              // item.data = data;
-            }
-          });
-        });
-        this.showAnalyze = true;
-      }
-    },
   },
   watch: {
-    currentYear(val) {
-      this.getAoumtList(val);
-      this.getAmountCount(this.currentYear, "项目投资额分布");
-    },
     currentChild(val, oldVal) {
       console.log("val", val);
       console.log("oldVal", oldVal);
@@ -852,7 +272,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import url("./Topic.less");
 </style>
 

@@ -257,19 +257,37 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 3vh;
+        margin-top: 2vh;
         width: 49%;
         .name {
           width: 30%;
+          font-size: 1.6vh;
           color: #fff;
+          line-height: 1.9vh;
         }
         .number {
-          font-family: YouSheBiaoTiHei;
-          font-size: 3vh;
+          position: relative;
+          margin-left: 1vh;
           width: 60px;
+          font-family: YouSheBiaoTiHei;
+          font-size: 4vh;
+          line-height: 5vh;
           text-align: center;
+          &::after {
+            content: "";
+            width: 5.06vh;
+            height: 4.25vh;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            .bg-image("./images/blue-bg@2x");
+          }
           &.red {
             color: #ff006c;
+            &::after {
+              .bg-image("./images/red-bg@2x");
+            }
           }
           &.blue {
             color: #00a2bf;
@@ -298,9 +316,9 @@
     }
   }
   .amount-spread {
-    bottom: 10%;
+    // bottom: 10%;
     .year-wrapper {
-      margin-top: 10%;
+      margin-top: 5%;
       width: 100%;
       display: flex;
       align-items: center;
@@ -443,7 +461,7 @@
         overflow:hidden;
         text-overflow:ellipsis;
       }
-      &.header {
+      &.header-item {
         background-color: #033850;
 	      border: solid 1px #52d1fe;
         font-size: 1.4vh;

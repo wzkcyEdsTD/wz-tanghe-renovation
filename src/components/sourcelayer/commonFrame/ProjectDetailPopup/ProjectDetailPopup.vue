@@ -11,10 +11,10 @@
           <div class="btn-list">
             <button
               class="btn-item"
-              :disabled="!detailData.overallViews"
+              :disabled="!detailData.overallViews || !detailData.overallViews.length"
               :class="{
                 active: currentShow == 'qj',
-                disabled: !detailData.overallViews,
+                disabled: !detailData.overallViews || !detailData.overallViews.length,
               }"
               @click="onTypeClick('qj')"
             >
@@ -22,10 +22,10 @@
             </button>
             <button
               class="btn-item"
-              :disabled="!detailData.videos"
+              :disabled="!detailData.videos || !detailData.videos.length"
               :class="{
                 active: currentShow == 'sp',
-                disabled: !detailData.videos,
+                disabled: !detailData.videos || !detailData.videos.length,
               }"
               @click="onTypeClick('sp')"
             >
@@ -33,10 +33,10 @@
             </button>
             <button
               class="btn-item"
-              :disabled="!detailData.photos"
+              :disabled="!detailData.photos || !detailData.photos.length"
               :class="{
                 active: currentShow == 'photo',
-                disabled: !detailData.photos,
+                disabled: !detailData.photos || !detailData.photos.length,
               }"
               @click="onTypeClick('photo')"
             >
@@ -58,7 +58,7 @@
                   class="swiper-item"
                 >
                   <img
-                    :src="`/static/images/VRPic/${item}`"
+                    :src="`${MediaServer}/${item}`"
                     style="object-fit: contain"
                     @click="openQJ(i)"
                   />
@@ -82,7 +82,7 @@
                   <video
                     ref="video"
                     style="width: 100%"
-                    :src="`/static/video/${item}`"
+                    :src="`${MediaServer}/${item}`"
                     controls="controls"
                     muted
                   ></video>
@@ -104,7 +104,7 @@
                   class="swiper-item"
                 >
                   <el-image
-                    :src="`/static/images/${item}`"
+                    :src="`${MediaServer}/${item}`"
                     fit="contain"
                     @click="onPreview(currentData.photo, i)"
                   ></el-image>
@@ -397,6 +397,7 @@
 </template>
 
 <script>
+import { MediaServer } from "@/config/server/mapConfig";
 import QRCode from "qrcodejs2";
 import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import { mapGetters } from "vuex";
@@ -415,6 +416,7 @@ export default {
   },
   data() {
     return {
+      MediaServer,
       showLarge: window.showLarge,
       forceEntity: {},
       resourceType: '',
@@ -439,7 +441,7 @@ export default {
           slideChangeTransitionEnd: () => {
             console.log("slideChangeTransitionEnd!!", this.currentShow);
             if (this.currentShow == "sp") {
-              this.$refs.video.forEach((item) => {
+              this.$refs.video && this.$refs.video.forEach((item) => {
                 item.pause();
               });
             }
@@ -470,23 +472,23 @@ export default {
   },
   mounted() {
     this.getNowFormatDate();
-    this.eventRegsiter();
+    // this.eventRegsiter();
   },
   methods: {
-    eventRegsiter() {
-      // 列表点击事件
-      this.$bus.$off("click-item");
-      this.$bus.$on("click-item", ({ value }) => {
-        let qj = value.attributes.QJ;
-        let sp = value.attributes.SP;
-        if (this.showQJ && qj) {
-          this.QJURL = ~qj.indexOf(";") ? qj.split(";")[0] : qj;
-        }
-        if (this.showSP && sp) {
-          this.SPURL = ~sp.indexOf(";") ? `/static/video/${sp.split(";")[0]}` : `/static/video/${sp}`;
-        }
-      });
-    },
+    // eventRegsiter() {
+    //   // 列表点击事件
+    //   this.$bus.$off("click-item");
+    //   this.$bus.$on("click-item", ({ value }) => {
+    //     let qj = value.attributes.QJ;
+    //     let sp = value.attributes.SP;
+    //     if (this.showQJ && qj) {
+    //       this.QJURL = ~qj.indexOf(";") ? qj.split(";")[0] : qj;
+    //     }
+    //     if (this.showSP && sp) {
+    //       this.SPURL = ~sp.indexOf(";") ? `/static/video/${sp.split(";")[0]}` : `/static/video/${sp}`;
+    //     }
+    //   });
+    // },
     getForceEntity(forceEntity) {
       console.log("aaa", forceEntity);
       if (forceEntity.attributes) {
@@ -527,6 +529,12 @@ export default {
         console.log('detailData', this.detailData)
         this.formatData()
         this.projectId = this.detailData.extraId;
+        if (this.showQJ && this.detailData.overallViews.length) {
+          this.QJURL = this.detailData.overallViews[0].path
+        }
+        if (this.showSP && this.detailData.videos.length) {
+          this.SPURL = `${MediaServer}/${this.detailData.videos[0].path}`;
+        }
       }
 
       // this.formatData("PHOTO", "photo");
@@ -692,7 +700,7 @@ export default {
       this.closeQJ();
       this.closeSP();
       this.srcList = list.map((item) => {
-        return `/static/images/${item}`;
+        return `${MediaServer}/${item}`;
       });
       this.srcIndex = index;
       this.showViewer = true;
@@ -779,7 +787,7 @@ export default {
     currentShow(val) {
       if (val == "sp") {
         this.$nextTick(() => {
-          this.$refs.video.forEach((item) => {
+          this.$refs.video && this.$refs.video.forEach((item) => {
             item.addEventListener("play", (e) => {
               this.handlePlay(e);
             });

@@ -343,11 +343,6 @@ import MarkRule from "./components/MarkRule";
 import MapTool from "../../sourcelayer/layerHub/components/mapTool";
 import { drawJSQK, drawWGJH, drawXMSL } from "./EchartsDrawTool";
 import {
-  // getProjStatusByDept,
-  // getProjDeptNumAmound,
-  // getProjStatusAmound,
-  // getProjNumAndAmound,
-  // getProjByConsdate,
   queryMeetingSortFront,
   countProjForCurAmound,
   countProjByConsdates2,
@@ -395,8 +390,6 @@ export default {
       amountData: [],
       investData: [],
       zfInvestData: [],
-      // projData: [
-      // ],
       currentData: {
         num: 0,
         amount: 0,
@@ -428,37 +421,6 @@ export default {
         this.allList = listRes.result;
         this.getCurrentList(true);
       }
-      // let res = await getProjStatusByDept({ status: "完工" });
-      // if (res.code === 200) {
-      //   res.result.forEach((i) => {
-      //     this.finishData.forEach((j) => {
-      //       if (j.name == i.deptName) {
-      //         j.num = i.statusInfos[0].num;
-      //         j.rate = Number(i.statusInfos[0].rate.toFixed(1));
-      //       }
-      //     });
-      //   });
-      //   this.finishData.sort((a, b) => {
-      //     return b.rate - a.rate;
-      //   });
-      // }
-
-      // let projRes = await getProjDeptNumAmound();
-      // if (projRes.code === 200) {
-      //   projRes.result.forEach((item) => {
-      //     if (item.name) {
-      //       this.amountData.push(item);
-      //       this.projData.push(item)
-      //     }
-      //   });
-      //   this.amountData.sort((a, b) => {
-      //     return b.projAmountSum - a.projAmountSum;
-      //   });
-      //   this.projData.sort((a, b) => {
-      //     return b.num - a.num;
-      //   });
-      //   drawXMSL(this, this.projData)
-      // }
 
       let res1 = await countProjForCurAmound();
       if (res1.code === 200) {
@@ -598,25 +560,6 @@ export default {
       } else {
         this.changeType = "other";
 
-        // this.projData.forEach((item) => {
-        //   if (item.name == zrdw.title) {
-        //     this.currentData.num = item.num;
-        //     this.currentData.amount = item.amount;
-        //     this.currentData.jhkg_num = item.jhkg_num;
-        //     this.currentData.ljkg_num = item.ljkg_num;
-        //     this.currentData.kg_rate = item.kg_rate;
-        //     this.currentData.jhjc_num = item.jhjc_num;
-        //     this.currentData.ljjc_num = item.ljjc_num;
-        //     this.currentData.jc_rate = item.jc_rate;
-        //     this.currentData.jhtz_num = item.jhtz_num;
-        //     this.currentData.ljtz_num = item.ljtz_num;
-        //     this.currentData.tz_rate = item.tz_rate;
-        //     this.currentData.jhzf_num = item.jhzf_num;
-        //     this.currentData.ljzf_num = item.ljzf_num;
-        //     this.currentData.zf_rate = item.zf_rate;
-        //   }
-        // });
-
         this.amountData.forEach(item => {
           if (item.name == zrdw.title) {
             this.currentData.num = item.num;
@@ -656,49 +599,6 @@ export default {
           }
         })
 
-        // let numRes = await getProjNumAndAmound({ sysOrgCode: zrdw.sysOrgCode });
-        // if (numRes.code === 200) {
-        //   this.currentData.num = numRes.result.num;
-        //   this.currentData.amount = (
-        //     numRes.result.projAmountSum / 10000
-        //   ).toFixed(1);
-        // }
-        // let rateRes = await getProjStatusAmound({
-        //   sysOrgCode: zrdw.sysOrgCode,
-        //   status: "*完工*",
-        // });
-        // if (rateRes.code === 200) {
-        //   this.currentData.stsRate = rateRes.result.stsRate.toFixed(1);
-        //   this.currentData.amoundRate = rateRes.result.amoundRate.toFixed(1);
-        // }
-
-        // let barRes = await getProjStatusByDept({ sysOrgCode: zrdw.sysOrgCode });
-        // if (barRes.code === 200) {
-        //   let barData = {};
-        //   barRes.result[0].statusInfos.forEach((item) => {
-        //     if (item.name === "前期(滞后)") {
-        //       barData.preLag = item.num;
-        //     }
-        //     if (item.name === "前期研究") {
-        //       barData.pre = item.num;
-        //     }
-        //     if (item.name === "完工") {
-        //       barData.finish = item.num;
-        //     }
-        //     if (item.name === "在建") {
-        //       barData.build = item.num;
-        //     }
-        //     if (item.name === "在建(滞后)") {
-        //       barData.buildLag = item.num;
-        //     }
-        //   });
-        //   drawJSQK(this, barData);
-        // }
-
-        // let lineRes = await getProjByConsdate({ sysOrgCode: zrdw.sysOrgCode });
-        // if (lineRes.code === 200) {
-        //   drawWGJH(this, lineRes.result);
-        // }
       }
 
       // 大屏下关闭多媒体窗口
@@ -716,8 +616,6 @@ export default {
       this.$parent.$refs.projectDetailPopup.closeCollapse();
       this.$parent.$refs.projectDetailPopup.getForceEntity(item);
       this.$parent.$refs.commonDetailPopup.closePopup();
-
-      // this.$bus.$emit("click-item", { value: item });
 
       window.earth.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(x, y, 1200),

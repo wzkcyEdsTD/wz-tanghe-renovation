@@ -529,6 +529,7 @@ export default {
         console.log('detailData', this.detailData)
         this.formatData()
         this.projectId = this.detailData.extraId;
+        this.creatQrCode();
         if (this.showQJ && this.detailData.overallViews.length) {
           this.QJURL = this.detailData.overallViews[0].path
         }
@@ -652,6 +653,7 @@ export default {
       document.getElementById("qrcode").innerHTML = "";
       let qrcode = new QRCode(this.$refs.qrCodeUrl, {
         // text: this.forceEntity.attributes.QJ, // 需要转换为二维码的内容
+        text: this.detailData.overallViews[0],
         colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H,

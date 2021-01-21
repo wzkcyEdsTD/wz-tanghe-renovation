@@ -189,22 +189,27 @@ export default {
           const [_TYPE_, _SMID_, _NODEID_] = pick.id.split("@");
 
           if (~["label", "billboard"].indexOf(_TYPE_)) {
-            const feature = window.featureMap[_NODEID_][_SMID_];
+            if (_NODEID_ != "supervise") {
+              const feature = window.featureMap[_NODEID_][_SMID_];
+              const geometry = feature.geometry;
 
-            // 定位图标
-            const geometry = feature.geometry;
-            addLocationIcon(geometry, _NODEID_);
+              // 定位图标
+              addLocationIcon(geometry, _NODEID_);
 
-            this.$refs.Search.results = [];
-            this.$refs.Search.resultShow = false;
-            if (~_NODEID_.indexOf("项目") || _NODEID_ == "绿道断点") {
-              this.$refs.ProjectDetailPopup.isSearch = false;
-              this.$refs.ProjectDetailPopup.getForceEntity({ ...feature });
-              this.$refs.CommonDetailPopup.closeInfo();
+              this.$refs.Search.results = [];
+              this.$refs.Search.resultShow = false;
+              if (~_NODEID_.indexOf("项目") || _NODEID_ == "绿道断点") {
+                this.$refs.ProjectDetailPopup.isSearch = false;
+                this.$refs.ProjectDetailPopup.getForceEntity({ ...feature });
+                this.$refs.CommonDetailPopup.closeInfo();
+              } else {
+                this.$refs.CommonDetailPopup.isSearch = false;
+                this.$refs.CommonDetailPopup.getForceEntity({ ...feature });
+                this.$refs.ProjectDetailPopup.closeInfo();
+              }
             } else {
-              this.$refs.CommonDetailPopup.isSearch = false;
-              this.$refs.CommonDetailPopup.getForceEntity({ ...feature });
-              this.$refs.ProjectDetailPopup.closeInfo();
+              const feature = window.featureMap[_NODEID_][_SMID_];
+              this.$bus.$emit("set-supervise", { feature });
             }
           }
         }
@@ -316,7 +321,7 @@ export default {
           new SuperMap.REST.GetFeaturesByBufferParameters({
             // 缓冲距离单位疑似十万米！！！图形单位米！！！
             bufferDistance: 0.002,
-            datasetNames: ["172.168.3.181_thxm2:wz_jd"],
+            datasetNames: ["thxm2:wz_jd"],
             geometry,
             returnContent: true,
             toIndex: -1,

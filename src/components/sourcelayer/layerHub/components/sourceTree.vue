@@ -14,8 +14,8 @@
         @check-change="nodeCheckChange">
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <div class="img-wrapper" v-if="!data.children">
-            <img v-if="~selectedSourceList.indexOf(node.label)" class="icon" :src="node.icon" />
-            <img v-else class="icon gray" :src="node.icon" />
+            <img v-if="~selectedSourceList.indexOf(node.label)" class="icon" :src="`${MediaServer}/${node.data.icon}`" />
+            <img v-else class="icon gray" :src="`${MediaServer}/${node.data.icon}`" />
           </div>
           <span class="label">{{ node.label }}</span>
         </span>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { MediaServer } from "@/config/server/mapConfig";
 import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "../TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
@@ -36,6 +37,7 @@ export default {
   name: "sourceTree",
   data() {
     return {
+      MediaServer,
       menuList: [],
       tileLayers: {},
       saveDataMap: {},
@@ -215,7 +217,7 @@ export default {
     }
     .title {
       display: block;
-      height: 3.5vh;
+      // height: 3.5vh;
       line-height: 3.5vh;
       font-family: YouSheBiaoTiHei;
       font-size: 3vh;
@@ -272,6 +274,9 @@ export default {
       .icon {
         height: 2vh;
         margin-right: 0.5vh;
+        &.gray {
+          filter: grayscale(1);
+        }
       }
       .label {
         font-size: 1.6vh;

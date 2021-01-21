@@ -9,101 +9,96 @@
 export const ServiceUrl = {
   // 温州白模
   WZBaimo:
-    // "http://172.168.3.183:8090/iserver/services/3D-bm_repair/rest/realspace/datas/thbm@bm_repair/config",
-    "http://172.168.3.183:8090/iserver/services/3D-bm/rest/realspace/datas/bm/config",
+    // "http://172.168.3.183:8090/iserver/services/3D-bm/rest/realspace/datas/bm/config",
+    "http://172.20.83.228:8090/iserver/services/3D-bm/rest/realspace/scenes/bm",
   //  影像底图
   SWImage: {
-    // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-YX2019SW/rest/realspace/datas/YX_2019_SW",
-    // "http://172.20.83.223:8098/iserver/services/3D-YX_2019_SW/rest/realspace/datas/YX_2019_SW",
-    2018: "http://172.168.3.183:8090/iserver/services/map-agscachev2-Layers/rest/maps/Layers",
-    2019: "http://172.168.3.183:8090/iserver/services/3D-yx2019/rest/realspace/datas/YX_2019_SW",
+    // 2018: "http://172.168.3.183:8090/iserver/services/map-agscachev2-Layers/rest/maps/Layers",
+    2018: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YX2018CGC2000/rest/maps/YX_2018_CGC2000",
+    // 2019: "http://172.168.3.183:8090/iserver/services/3D-yx2019/rest/realspace/datas/YX_2019_SW",
+    2019: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YJYX2019CGCS2000/rest/maps/YJ_YX_2019_CGCS2000"
   },
-  // 影像注记
-  ImageMark: "http://172.168.3.183:8090/iserver/services/3D-dlyzj/rest/realspace/datas/dlyzj",
-  RoadLine: "http://172.168.3.183:8090/iserver/services/3D-dlallzj_line/rest/realspace/datas/dlallzj_line",
+  // 影像道路线
+  // RoadLine: "http://172.168.3.183:8090/iserver/services/3D-dlallzj_line/rest/realspace/datas/dlallzj_line",
+  RoadLine: "http://172.20.83.228:8090/iserver/services/3D-dlallzj_line/rest/realspace/datas/dlallzj_line",
   // 矢量夜景注记
-  BlackMark: "http://172.168.3.183:8090/iserver/services/3D-dlallzjan/rest/realspace/datas/dlallzj_an",
+  // BlackMark: "http://172.168.3.183:8090/iserver/services/3D-dlallzjan/rest/realspace/datas/dlallzj_an",
+  BlackMark: "http://172.20.83.228:8090/iserver/services/3D-dlallzjan-2/rest/realspace/datas/dlallzj_an",
   //  大数据底图
   DataImage: {
-    // "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DSJCGS2000SW/rest/realspace/datas/DSJ_CGS2000_SW",
-    // "http://172.20.83.223:8091/iserver/services/map-agscachev2-YJDSJCGCS2000/rest/maps/YJ_DSJ_CGCS2000",
-    // "http://172.168.3.183:8090/iserver/services/3D-dsj/rest/realspace/datas/DSJ_CGCS2000_SW",
-    white: "http://172.168.3.183:8090/iserver/services/map-agscachev2-TuCeng/rest/maps/图层",
-    // white: "http://172.168.3.183:8090/iserver/services/3D-cs/rest/realspace/datas/TDT",
-    black: "http://172.168.3.183:8090/iserver/services/3D-dsj/rest/realspace/datas/DSJ_CGCS2000_SW",
+    // white: "http://172.168.3.183:8090/iserver/services/map-agscachev2-TuCeng/rest/maps/图层",
+    // white: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YJSGBZB2019CGCS2000/rest/maps/YJ_SG_BZB_2019_CGCS2000",
+    white: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YJSGBZBDemD2019CGCS2000/rest/maps/YJ_SG_BZB_DemD_2019_CGCS2000",
+    // black: "http://172.168.3.183:8090/iserver/services/3D-dsj/rest/realspace/datas/DSJ_CGCS2000_SW",
+    black: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YJDSJCGCS2000/rest/maps/YJ_DSJ_CGCS2000"
   },
-  // 十二景标注
-  // SEJBZ: 
-  //   "http://172.168.3.183:8090/iserver/services/3D-sej/rest/realspace/datas/sej_bz",
-  // 全市域地形
-  YJDem:
-    "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DEMLC/rest/realspace/datas/DEM_LC",
-  // mvt矢量服务
-  YJMVT:
-    "https://ditu.wzcitybrain.com/iserver/services/map-mongodbMvt-SWmap/restjsr/v1/vectortile/maps/SW_map",
-  //  全市区精模
-  WZMODEL:
-    "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-JMLC20121/rest/realspace/datas/JM_LC_2012_1/config",
-  // SCENE_WZMODEL: {
-  //   BUILDING:
-  //     "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012JZ/config",
-  //   OTHERS:
-  //     "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb2/rest/realspace/datas/MAXShiQu2012QT/config"
-  // },
+  // // 全市域地形
+  // YJDem:
+  //   "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-DEMLC/rest/realspace/datas/DEM_LC",
+  // // mvt矢量服务
+  // YJMVT:
+  //   "https://ditu.wzcitybrain.com/iserver/services/map-mongodbMvt-SWmap/restjsr/v1/vectortile/maps/SW_map",
+  // //  全市区精模
+  // WZMODEL:
+  //   "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb-JMLC20121/rest/realspace/datas/JM_LC_2012_1/config",
   // 三维塘河
-  TANGHE3D: 
-    // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
-    "http://172.168.3.183:8090/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
+  // TANGHE3D: 
+  //   "http://172.168.3.183:8090/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
   // 二维塘河
   TANGHE2D: 
-    // "http://172.20.83.223:8098/iserver/services/3D-TangHe3D/rest/realspace/datas/th/config",
-    // "http://172.168.3.183:8090/iserver/services/3D-thmplus/rest/realspace/datas/thmplus",
-    "http://172.168.3.183:8090/iserver/services/3D-th/rest/realspace/datas/th",
+    // "http://172.168.3.183:8090/iserver/services/3D-th/rest/realspace/datas/th",
+    "http://172.20.83.228:8090/iserver/services/3D-th/rest/realspace/datas/th",
   // 塘河发光
   TANGHEFG:
-    "http://172.168.3.183:8090/iserver/services/3D-thmfg/rest/realspace/datas/thmfg",
+    // "http://172.168.3.183:8090/iserver/services/3D-thmfg/rest/realspace/datas/thmfg",
+    "http://172.20.83.228:8090/iserver/services/3D-thmfg/rest/realspace/datas/thmfg",
   // 绿道
   LVDAOImage: {
-    BOLD: "http://172.168.3.183:8090/iserver/services/3D-ldc/rest/realspace/datas/ld1.59t19",
-    // THIN: "http://172.168.3.183:8090/iserver/services/3D-ld_0-55t19/rest/realspace/datas/ld_0.55t19",
-    THIN: "http://172.168.3.183:8090/iserver/services/3D-ld1/rest/realspace/datas/ld1"
+    // BOLD: "http://172.168.3.183:8090/iserver/services/3D-ldc/rest/realspace/datas/ld1.59t19",
+    BOLD: "http://172.20.83.228:8090/iserver/services/3D-ldc/rest/realspace/datas/ld1.59t19",
+    // THIN: "http://172.168.3.183:8090/iserver/services/3D-ld1/rest/realspace/datas/ld1"
+    THIN: "http://172.20.83.228:8090/iserver/services/3D-ld1/rest/realspace/datas/ld1"
   },
   // 行政区县
   XZJXQX:
-    "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/qx",
+    // "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/qx",
+    "http://172.20.83.228:8090/iserver/services/3D-xzqh/rest/realspace/datas/qx",
   // 行政区县面
   XZJXQXM:
-    "http://172.168.3.183:8090/iserver/services/3D-qxm/rest/realspace/datas/qxm",
+    // "http://172.168.3.183:8090/iserver/services/3D-qxm/rest/realspace/datas/qxm",
+    "http://172.20.83.228:8090/iserver/services/3D-qxm/rest/realspace/datas/qxm",
   // 行政街道
   XZJXJD:
-    // "http://172.168.3.183:8090/iserver/services/3D-xzqh/rest/realspace/datas/jd",
-    "http://172.168.3.183:8090/iserver/services/3D-jd/rest/realspace/datas/jd",
+    // "http://172.168.3.183:8090/iserver/services/3D-jd/rest/realspace/datas/jd",
+    "http://172.20.83.228:8090/iserver/services/3D-jd/rest/realspace/datas/jd",
+  // 手绘
   HANDDRAWN: 
-    "http://172.168.3.183:8090/iserver/services/3D-nt_map/rest/realspace/datas/nt_map",
-  // 绿道场景
-  // LVDAOScene:
-  //   "http://172.168.3.183:8090/iserver/services/3D-ldplus_xi/rest/realspace"
+    // "http://172.168.3.183:8090/iserver/services/3D-nt_map/rest/realspace/datas/nt_map",
+    "http://172.20.83.228:8090/iserver/services/3D-nt_map/rest/realspace/datas/nt_map",
   // 塘河范围面
   TANGHEFWM:
-    "http://172.168.3.183:8090/iserver/services/3D-thfwm/rest/realspace/datas/thfwm",
-  SCENE_WZMODEL: [
-    { key: "ZGDYP_ZB", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_ZB/config" },
-    { key: "ZGDYP_DL", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_DL/config" },
-    { key: "ZGDYP_QT", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_QT/config" },
-    { key: "ZGDYP_SX", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_SX/config" },
-    { key: "ZGDYP_JZ", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_JZ/config" },
-    { key: "ZGDYP_DX", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_DX/config" },
-    { key: "MaxShijuJZ", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/MaxShijuJZ/config" },
-    { key: "MaxShijuQT", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/MaxShijuQT/config" },
-  ],
+    // "http://172.168.3.183:8090/iserver/services/3D-thfwm/rest/realspace/datas/thfwm",
+    "http://172.20.83.228:8090/iserver/services/3D-thfwm/rest/realspace/datas/thfwm",
+  // SCENE_WZMODEL: [
+  //   { key: "ZGDYP_ZB", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_ZB/config" },
+  //   { key: "ZGDYP_DL", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_DL/config" },
+  //   { key: "ZGDYP_QT", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_QT/config" },
+  //   { key: "ZGDYP_SX", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_SX/config" },
+  //   { key: "ZGDYP_JZ", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_JZ/config" },
+  //   { key: "ZGDYP_DX", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/ZGDYP_DX/config" },
+  //   { key: "MaxShijuJZ", d: 5500, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/MaxShijuJZ/config" },
+  //   { key: "MaxShijuQT", d: 1400, url: "https://ditu.wzcitybrain.com/iserver/services/3D-mongodb3/rest/realspace/datas/MaxShijuQT/config" },
+  // ],
   // 要素服务
-  FEATUREMVT: "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data",
+  // FEATUREMVT: "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data",
+  FEATUREMVT: "http://172.20.83.228:8090/iserver/services/data-alldata/rest/data"
 };
 
 // export const MediaServer = "http://172.168.3.182:8090/static";
-export const MediaServer = "http://172.168.3.182:8080/jeecg-boot/sys/common/static";
+export const MediaServer = "http://172.20.83.227:8080/sys/common/static";
 
-const datasource = "172.168.3.181_thxm_manage:";
+// const datasource = "172.168.3.181_thxm_manage:";
+const datasource = "thxm:"
 
 // 图层列表
 export const LayerList = [{

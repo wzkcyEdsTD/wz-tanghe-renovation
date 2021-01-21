@@ -121,7 +121,7 @@ export default {
 
     // 多数据集查询
     multSqlQuery(word) {
-      const datasource = "172.168.3.181_thxm_manage:";
+      const datasource = "thxm:";
       const url = ServiceUrl.FEATUREMVT;
       const getFeatureParam = new SuperMap.REST.FilterParameter({
         attributeFilter: `NAME like '%${word}%'`,

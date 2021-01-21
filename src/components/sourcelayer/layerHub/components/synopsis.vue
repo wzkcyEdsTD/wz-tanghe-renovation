@@ -119,7 +119,7 @@ export default {
       }
       .title {
         display: block;
-        height: 3.6vh;
+        // height: 3.6vh;
         line-height: 3.6vh;
         font-family: YouSheBiaoTiHei;
         font-size: 3vh;

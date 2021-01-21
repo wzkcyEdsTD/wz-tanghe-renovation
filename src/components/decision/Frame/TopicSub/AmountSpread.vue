@@ -158,7 +158,7 @@ export default {
               attributeFilter: "",
             }),
             toIndex: -1,
-            datasetNames: ["172.168.3.181_thxm_manage:th_spatial_project_view"],
+            datasetNames: ["thxm:th_spatial_project_view"],
           })
         );
       });

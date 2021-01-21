@@ -35,7 +35,7 @@ import {
 } from "./cesium_map_init";
 import { addWhiteLabel, addBlackLabel } from "./layerHub/TreeDrawTool";
 import { mapGetters, mapActions } from "vuex";
-const LAYERS = ServiceUrl.SCENE_WZMODEL;
+// const LAYERS = ServiceUrl.SCENE_WZMODEL;
 const Cesium = window.Cesium;
 
 export default {
@@ -472,161 +472,6 @@ export default {
         },
       });
     },
-    // fly() {
-    //   const routes = new Cesium.RouteCollection(window.earth.entities);
-    //   routes.fromFile("./static/fpf/首页飞行.fpf");
-    //   //初始化飞行管理
-    //   const flyManager = new Cesium.FlyManager({
-    //     scene: window.earth.scene,
-    //     routes: routes,
-    //   });
-    //   flyManager.readyPromise.then(function () {
-    //     // 飞行路线就绪
-    //     flyManager.play();
-    //   });
-    // },
-    // lipai() {
-    //   this.lp(120.707729, 28.010275, "oj", "static/images/瓯江.png", 65, 65);
-    //   this.lp(120.599327, 27.789995, "fyj", "static/images/飞云江.png", 75, 75);
-    //   this.lp(120.726, 27.899, "wrth", "static/images/温瑞塘河.png", 130, 130);
-    // },
-    // quan() {
-    //   this.texiao(120.649, 27.786, "ruian", "static/images/瑞安.png");
-    //   this.texiao(120.72, 27.822, "tangxia", "static/images/塘下.png");
-    //   this.texiao(120.684, 27.88, "xianyan", "static/images/仙岩.png");
-    //   this.texiao(120.646, 27.921, "liao", "static/images/丽岙.png");
-    //   this.texiao(120.7, 27.942, "chshan", "static/images/茶山.png");
-    //   this.texiao(
-    //     120.649,
-    //     27.972,
-    //     "wenzhoushiqu",
-    //     "static/images/温州市区.png"
-    //   );
-    // },
-    // texiao(lon, lat, id, img) {
-    //   const viewer = window.earth;
-    //   const entitys = viewer.entities.getById(id);
-    //   if (!!entitys) {
-    //     return;
-    //   }
-    //   var rr1 = 0;
-    //   var rr = 0;
-    //   var ss1 = 0;
-    //   var ss = 0;
-    //   var deviationR = 4;
-    //   var MaxR = 900;
-    //   // debugger;
-    //   this.$nextTick(() => {
-    //     viewer.entities.add({
-    //       id: id,
-    //       position: Cesium.Cartesian3.fromDegrees(lon, lat, 50),
-    //       show: false,
-    //       ellipse: {
-    //         semiMinorAxis: new Cesium.CallbackProperty(function () {
-    //           var r1 = rr; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-    //           r1 = r1 + deviationR; //deviationR为每次圆增加的大小
-    //           if (r1 >= MaxR) {
-    //             r1 = 0;
-    //           }
-    //           rr = r1;
-    //           return r1;
-    //         }, false),
-    //         semiMajorAxis: new Cesium.CallbackProperty(function () {
-    //           var r1 = rr1; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-    //           r1 = r1 + deviationR; //deviationR为每次圆增加的大小
-    //           if (r1 >= MaxR) {
-    //             r1 = 0;
-    //           }
-    //           rr1 = r1;
-    //           return r1;
-    //         }, false),
-    //         height: 10,
-    //         material: new Cesium.ImageMaterialProperty({
-    //           image: "static/images/1.png",
-    //           transparent: true,
-    //         }),
-    //         // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(10000,Number.MAX_VALUE),
-    //       },
-    //     });
-    //     setTimeout(function () {
-    //       viewer.entities.add({
-    //         id: `${id}1`,
-    //         position: Cesium.Cartesian3.fromDegrees(lon, lat, 10),
-    //         show: false,
-    //         ellipse: {
-    //           semiMinorAxis: new Cesium.CallbackProperty(function () {
-    //             var r1 = ss; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-    //             r1 = r1 + deviationR; //deviationR为每次圆增加的大小
-    //             if (r1 >= MaxR) {
-    //               r1 = 0;
-    //             }
-    //             ss = r1;
-    //             return r1;
-    //           }, false),
-    //           semiMajorAxis: new Cesium.CallbackProperty(function () {
-    //             var r1 = ss1; //指定扩散圆的最小半径，maxR为扩散圆的最大半径
-    //             r1 = r1 + deviationR; //deviationR为每次圆增加的大小
-    //             if (r1 >= MaxR) {
-    //               r1 = 0;
-    //             }
-    //             ss1 = r1;
-    //             return r1;
-    //           }, false),
-    //           height: 10,
-    //           material: new Cesium.ImageMaterialProperty({
-    //             image: "static/images/1.png",
-    //             transparent: true,
-    //           }),
-    //           // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(20000,Number.MAX_VALUE),
-    //         },
-    //       });
-    //     }, 4000);
-    //   });
-    //   this.lp(lon, lat, `${id}p`, img, 60, 60, 600);
-    // },
-    // lp(lon, lat, id, img, width, height, high) {
-    //   const viewer = window.earth;
-    //   const entity = viewer.entities.getById(id);
-    //   if (!!entity) {
-    //     return;
-    //   }
-    //   viewer.entities.add({
-    //     id: id,
-    //     position: Cesium.Cartesian3.fromDegrees(lon, lat, high || 100),
-    //     show: false,
-    //     billboard: {
-    //       image: img,
-    //       width: width,
-    //       height: height,
-    //       disableDepthTestDistance: Number.POSITIVE_INFINITY,
-    //       // translucencyByDistance: new Cesium.NearFarScalar(7000, 0, 8000, 1)
-    //     },
-    //   });
-    // },
-    // removeAll(value) {
-    //   const viewer = window.earth;
-    //   const id = [
-    //     "ruian",
-    //     "tangxia",
-    //     "liao",
-    //     "chshan",
-    //     "wenzhoushiqu",
-    //     "xianyan",
-    //   ];
-    //   const idOther = ["wrth", "oj", "fyj"];
-    //   try {
-    //     id.forEach(function (element) {
-    //       viewer.entities.getById(element).show = value;
-    //       viewer.entities.getById(`${element}1`).show = value;
-    //       viewer.entities.getById(`${element}p`).show = value;
-    //     });
-    //     idOther.forEach(function (element) {
-    //       viewer.entities.getById(element).show = value;
-    //     });
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // },
 
     // 切换手绘地图
     switchHanddrawn(show) {
@@ -761,7 +606,7 @@ export default {
         // 缓冲距离单位疑似十万米！！！图形单位米！！！
         bufferDistance: 0.002,
         toIndex: -1,
-        datasetNames: [`172.168.3.181_thxm:${dataset}`],
+        datasetNames: [`thxm:${dataset}`],
         returnContent: true,
         geometry: geometryArgs,
       });

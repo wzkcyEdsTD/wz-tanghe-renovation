@@ -350,6 +350,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { MediaServer } from "@/config/server/mapConfig";
 import { topBtns, swiperOption, progressImgHash } from "@/common/js/hash";
 
@@ -363,6 +364,8 @@ import {
 } from "api/tangheAPI";
 
 export default {
+  components: { ElImageViewer, Overview },
+
   data() {
     return {
       MediaServer,
@@ -400,7 +403,10 @@ export default {
       inputComment: "",
     };
   },
-  components: { ElImageViewer, Overview },
+
+  computed: {
+    ...mapGetters("login", ["username", "name"]),
+  },
 
   mounted() {
     this.timeSwiperOption = {
@@ -649,8 +655,8 @@ export default {
 
     async submit() {
       let res = await addComment({
-        username: "test",
-        name: "测试",
+        username: this.username,
+        name: this.name,
         commend: this.inputComment,
         star: this.inputStar,
         resourceId: this.detailData.id,

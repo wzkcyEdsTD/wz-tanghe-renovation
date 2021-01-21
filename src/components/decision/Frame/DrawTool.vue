@@ -99,6 +99,7 @@
 
 <script>
 const Cesium = window.Cesium;
+import { mapGetters } from "vuex";
 import {
   addPlot,
   queryPlotList,
@@ -125,6 +126,9 @@ export default {
       queryName: '',
       historyList: []
     };
+  },
+  computed: {
+    ...mapGetters("login", ["username", "name"]),
   },
   methods: {
     createEntityCollection() {
@@ -361,7 +365,6 @@ export default {
     },
     async submit() {
       this.destroyAll()
-      let createby = 'jinsheng';
       console.log('onePoints', this.onePoints)
       console.log('linePoints', this.linePoints)
       console.log('polygonPoints', this.polygonPoints)
@@ -370,7 +373,7 @@ export default {
       this.onePoints.forEach(item => {
         let obj = {
           remark: this.remarkValue,
-          createby,
+          createby: this.name,
           name: this.nameValue,
           geometry: JSON.stringify(item),
           type: 'point'
@@ -380,7 +383,7 @@ export default {
       this.linePoints.forEach(item => {
         let obj = {
           remark: this.remarkValue,
-          createby,
+          createby: this.name,
           name: this.nameValue,
           geometry: JSON.stringify(item),
           type: 'line'
@@ -390,7 +393,7 @@ export default {
       this.polygonPoints.forEach(item => {
         let obj = {
           remark: this.remarkValue,
-          createby,
+          createby: this.name,
           name: this.nameValue,
           geometry: JSON.stringify(item),
           type: 'polygon'

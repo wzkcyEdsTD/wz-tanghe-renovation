@@ -39,6 +39,7 @@
 </template>
 <script>
 const Cesium = window.Cesium;
+import { ServiceUrl } from "@/config/server/mapConfig";
 export default {
   name: "calTools",
   data() {
@@ -248,7 +249,7 @@ export default {
     fetchFromDataSets(geometry) {
       return new Promise((resolve, reject) => {
         const getFeaturesByGeometryService = new SuperMap.REST.GetFeaturesByGeometryService(
-          "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data",
+          ServiceUrl.FEATUREMVT,
           {
             eventListeners: {
               processCompleted: (data) => {
@@ -261,38 +262,13 @@ export default {
         getFeaturesByGeometryService.processAsync(
           new SuperMap.REST.GetFeaturesByGeometryParameters({
             datasetNames: [
-              "172.168.3.181_thxm_manage:th_spatial_query",
+              "thxm:th_spatial_query",
             ],
             geometry,
             toIndex: -1,
           })
         );
       })
-      // let p2 = new Promise((resolve, reject) => {
-      //   const getFeaturesByGeometryService = new SuperMap.REST.GetFeaturesByGeometryService(
-      //     "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data",
-      //     {
-      //       eventListeners: {
-      //         processCompleted: (data) => {
-      //           data && resolve(data);
-      //         },
-      //         processFailed: (err) => reject(err),
-      //       },
-      //     }
-      //   );
-      //   getFeaturesByGeometryService.processAsync(
-      //     new SuperMap.REST.GetFeaturesByGeometryParameters({
-      //       attributeFilter: "resource_type='greenway_all'",
-      //       datasetNames: [
-      //         "172.168.3.181_thxm_manage:sp_point_resource",
-      //       ],
-      //       geometry,
-      //       toIndex: -1,
-      //     })
-      //   );
-      // })
-
-      // return Promise.all([p1,p2])
     },
   },
 };

@@ -6,13 +6,17 @@
         <span class="login-title">智慧塘河</span>
         <div class="login-username">
           <img src="./images/username.png" />
-          <input type="text" v-model="username" />
+          <input type="text" v-model="username" placeholder="账号" />
         </div>
         <div class="login-password">
           <img src="./images/password.png" />
-          <input type="password" v-model="password" />
+          <input type="password" v-model="password" placeholder="密码" />
         </div>
-        <button class="login-submit" @click="login">
+        <div class="login-verify">
+          <input type="text" v-model="verifyCode" placeholder="验证码" />
+          <img :src="verifyImg" @click="getVerifyImg" />
+        </div>
+        <button class="login-submit" @click="submit">
           <span>登录</span>
         </button>
       </div>
@@ -21,17 +25,56 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { randomImage, login } from "@/api/tangheAPI";
 export default {
   data() {
     return {
       username: "",
       password: "",
+      verifyCode: "",
+      verifyImg: ""
     };
   },
   methods: {
+    ...mapActions("login", ["setUsername", "setName"]),
+
+    async getVerifyImg() {
+      let res = await randomImage()
+      if (res.success) {
+        this.verifyImg = res.result
+      }
+    },
     // 登录
-    login() {},
+    async submit() {
+      let res = await login({
+        username: this.username,
+        password: this.password,
+        captcha: this.verifyCode,
+        checkKey: '1611107075676'
+      })
+      if (res.success) {
+        this.setUsername(this.username)
+        this.setName(res.result.userInfo.realname)
+        let redirect = this.$route.query.redirect
+        if (redirect) {
+          this.$router.push({name: redirect})
+        } else {
+          this.$router.push({name: 'sourcelayer'})
+        }
+      } else {
+        this.$message({
+          message: res.message,
+          type: 'error',
+          offset: 50
+        });
+      }
+    },
   },
+  mounted() {
+    console.log('query', this.$route.query)
+    this.getVerifyImg()
+  }
 };
 </script>
 
@@ -115,7 +158,7 @@ export default {
       }
 
       .login-submit {
-        top: 43.94vh;
+        top: 50vh;
         height: 4.94vh;
         line-height: 4.94vh;
         background-color: #0062ff;
@@ -129,7 +172,8 @@ export default {
       }
 
       .login-username,
-      .login-password {
+      .login-password,
+      .login-verify {
         display: flex;
         align-items: center;
         width: 47.63vh;
@@ -157,11 +201,19 @@ export default {
       }
 
       .login-username {
-        top: 26.63vh;
+        top: 23vh;
       }
 
       .login-password {
-        top: 35.31vh;
+        top: 32vh;
+      }
+
+      .login-verify {
+        top: 41vh;
+        > img {
+          margin: 0;
+          width: 8vh;
+        }
       }
     }
   }

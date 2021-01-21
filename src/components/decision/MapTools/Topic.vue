@@ -33,92 +33,32 @@
         </ul>
       </div>
     </div>
-    <div class="score" v-show="showScore">
-      <div class="title">
-        <p>打分</p>
-        <img src="./images/score-title.png" />
-      </div>
-      <img class="close" src="./images/close.png" @click="showScore = false" />
-      <div class="score-box">
-        <div class="top">
-          <div class="left">
-            <img src="./images/暂无图片.png" />
-          </div>
-          <div class="right">
-            <div class="name">高连大厦</div>
-            <div class="rate">
-              <span>总体评分</span>
-              <el-rate class="total-rate" disabled v-model="value1"></el-rate>
-            </div>
-          </div>
-        </div>
-        <div class="comment">
-          <div class="text">历史评论</div>
-          <div class="comment-list">
-            <div class="comment-item">
-              <div class="comment-header">
-                <div class="left">
-                  <img class="avatar" src="./images/avatar.png" />
-                  <div class="info">
-                    <p class="name">XXX</p>
-                    <el-rate
-                      class="comment-rate"
-                      disabled
-                      v-model="value1"
-                    ></el-rate>
-                  </div>
-                </div>
-                <div class="right">2020.12.20 14:40:00</div>
-              </div>
-              <div class="comment-content">
-                评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评
-              </div>
-            </div>
-            <div class="comment-item">
-              <div class="comment-header">
-                <div class="left">
-                  <img class="avatar" src="./images/avatar.png" />
-                  <div class="info">
-                    <p class="name">XXX</p>
-                    <el-rate
-                      class="comment-rate"
-                      disabled
-                      v-model="value1"
-                    ></el-rate>
-                  </div>
-                </div>
-                <div class="right">2020.12.20 14:40:00</div>
-              </div>
-              <div class="comment-content">
-                评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评论评
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <Analyze v-show="showAnalyze" />
     <DelayProject :show="currentChild == '滞后项目'" />
     <ProblemProject :show="currentChild == '问题项目'" />
-    <ProjectSpread :show="currentChild == '项目分布'"/>
+    <ProjectSpread :show="currentChild == '项目分布'" />
     <AmountSpread :show="currentChild == '项目投资额分布'" />
+    <Supervise ref="Supervise" />
   </div>
 </template>
 
 <script>
-import Analyze from "../Frame/TopicSub/Analyze"
-import DelayProject from "../Frame/TopicSub/DelayProject"
-import ProblemProject from "../Frame/TopicSub/ProblemProject"
-import AmountSpread from "../Frame/TopicSub/AmountSpread"
-import ProjectSpread from "../Frame/TopicSub/ProjectSpread"
+import { ServiceUrl, LayerList } from "@/config/server/mapConfig";
+import Analyze from "../Frame/TopicSub/Analyze";
+import DelayProject from "../Frame/TopicSub/DelayProject";
+import ProblemProject from "../Frame/TopicSub/ProblemProject";
+import AmountSpread from "../Frame/TopicSub/AmountSpread";
+import ProjectSpread from "../Frame/TopicSub/ProjectSpread";
+import Supervise from "../Frame/TopicSub/Supervise";
 export default {
-  name: 'Topic',
+  name: "Topic",
   components: {
     Analyze,
     DelayProject,
     ProblemProject,
     AmountSpread,
-    ProjectSpread
+    ProjectSpread,
+    Supervise,
   },
   data() {
     return {
@@ -160,8 +100,7 @@ export default {
       ldfwLine: undefined,
       konggui: undefined,
       showAnalyze: false,
-      showScore: false,
-      value1: 4,
+      // showSupervise: false,
     };
   },
   methods: {
@@ -171,8 +110,9 @@ export default {
       this.konggui && (this.konggui.show = false);
 
       this.showAnalyze = false;
-      this.showScore = false;
+      // this.showSupervise = false;
       this.currentChild = "";
+      this.superviseHandle(false);
       this.$bus.$emit("set-bufferFlag", {
         value: false,
       });
@@ -208,7 +148,8 @@ export default {
         this.konggui.alpha = 0.8;
       }
       if (item.value == 5) {
-        this.showScore = true;
+        // this.showSupervise = true;
+        this.superviseHandle(true);
       }
       if (item.value == 6) {
         this.$bus.$emit("set-bufferFlag", {
@@ -216,7 +157,7 @@ export default {
         });
       }
       if (item.value == 7) {
-        this.showAnalyze = true
+        this.showAnalyze = true;
       }
     },
     childClick(item) {
@@ -228,7 +169,7 @@ export default {
         return;
       }
       this.$parent.showHub = false;
-      this.currentChild = item
+      this.currentChild = item;
       // if (item == "滞后项目") {
       // }
       // if (item == "问题项目") {
@@ -258,14 +199,102 @@ export default {
         });
       });
     },
+    superviseHandle(check) {
+      window.billboardMap["项目"]._billboards.map((v) => (v.show = false));
+      // if (window.billboardMap["supervise"]) {
+      //   window.billboardMap["supervise"]._billboards.map(
+      //     (v) => (v.show = check)
+      //   );
+      // } else if (check && !window.billboardMap["supervise"]) {
+      //   this.addProjectLayer();
+      // }
+      if (check) {
+        this.addProjectLayer();
+      } else {
+        if (window.billboardMap["supervise"]) {
+          window.billboardMap["supervise"]._billboards.map(
+            (v) => (v.show = false)
+          );
+        }
+        this.$refs.Supervise.showSupervise = false;
+        if (LayerList[1].check) {
+          window.billboardMap["项目"]._billboards.map((v) => (v.show = true));
+        }
+      }
+    },
+    // 添加项目图层
+    async addProjectLayer() {
+      const { result } = await this.fetchProjectData();
+      console.log("rettttttt", result);
+      window.billboardMap["supervise"] = window.earth.scene.primitives.add(
+        new Cesium.BillboardCollection()
+      );
+
+      const forceDrawFeatures = result.features;
+      forceDrawFeatures.map((item) => {
+        !window.featureMap["supervise"] &&
+          (window.featureMap["supervise"] = {});
+        window.featureMap["supervise"][item.attributes.SMID] = {
+          name:
+            item.attributes.SHORT_NAME ||
+            item.attributes.NAME ||
+            item.attributes.MC ||
+            item.attributes.JC,
+          attributes: item.attributes,
+          geometry: item.geometry,
+          type: "supervise",
+        };
+
+        const position = Cesium.Cartesian3.fromDegrees(
+          item.geometry.x,
+          item.geometry.y,
+          4
+        );
+
+        window.billboardMap["supervise"].add({
+          id: `billboard@${item.attributes.SMID}@supervise`,
+          image: `/static/images/map-ico/${item.attributes.STATUS.trim()}-问题.png`,
+          width: 34,
+          height: 34,
+          scaleByDistance: new Cesium.NearFarScalar(500, 1.5, 6000, 1),
+          disableDepthTestDistance: Number.POSITIVE_INFINITY,
+          position,
+        });
+      });
+    },
+    // 获取项目数据
+    fetchProjectData() {
+      return new Promise((resolve, reject) => {
+        const getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(
+          ServiceUrl.FEATUREMVT,
+          {
+            eventListeners: {
+              processCompleted: (data) => {
+                data && resolve(data);
+              },
+              processFailed: (err) => reject(err),
+            },
+          }
+        );
+        getFeatureBySQLService.processAsync(
+          new SuperMap.REST.GetFeaturesBySQLParameters({
+            queryParameter: new SuperMap.REST.FilterParameter({
+              attributeFilter: "(commend != '' OR star > 0)",
+            }),
+            toIndex: -1,
+            datasetNames: ["thxm:th_spatial_project_view"],
+          })
+        );
+      });
+    },
   },
   watch: {
     currentChild(val, oldVal) {
       console.log("val", val);
       console.log("oldVal", oldVal);
       if (oldVal == "滞后项目" || oldVal == "问题项目") {
-        window.billboardMap['项目']._billboards.map((v) => (v.show = true));
-        window.whiteLabelMap['项目'].setAllLabelsVisible(true);
+        window.billboardMap["项目"]._billboards.map((v) => (v.show = true));
+        window.whiteLabelMap["项目"].setAllLabelsVisible(true);
       }
     },
   },

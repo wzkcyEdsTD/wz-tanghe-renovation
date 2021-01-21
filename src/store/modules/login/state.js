@@ -1,5 +1,5 @@
 const state = {
-  username: '1243',
-  pwd: 'admin'
+  username: '',
+  name: ''
 }
 export default state

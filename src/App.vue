@@ -118,7 +118,7 @@ export default {
           document.getElementById('content').style.width = '100%'
         }
       } else {
-        document.getElementById('header').style.width = '100%'
+        document.getElementById('header') && (document.getElementById('header').style.width = '100%')
         document.getElementById('content').style.width = '100%'
       }
     },

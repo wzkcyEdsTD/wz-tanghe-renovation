@@ -263,7 +263,7 @@ export default {
         getFeaturesByGeometryService.processAsync(
           new SuperMap.REST.GetFeaturesByGeometryParameters({
             datasetNames: [
-              "th_spatial_query",
+              "thxm:th_spatial_query",
             ],
             geometry,
             toIndex: -1,

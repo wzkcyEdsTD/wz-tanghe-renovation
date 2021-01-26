@@ -14,6 +14,12 @@
       <ProjectDetailPopup ref="projectDetailPopup" />
       <SearchDetail ref="searchDetail" />
     </div>
+    <div v-if="mapLoaded">
+      <div class="sign-wrapper" style="right: 22%" v-show="showSign">
+        <img src="/static/images/common/sign@2x.png">
+      </div>
+      <MapTool v-show="showMapTool" />
+    </div>
   </div>
 </template>
 
@@ -26,6 +32,7 @@ import CommonDetailPopup from "./commonFrame/CommonDetailPopup/CommonDetailPopup
 import ProjectDetailPopup from "./commonFrame/ProjectDetailPopup/ProjectDetailPopup";
 import SejPopup from "./commonFrame/SejPopup/SejPopup";
 import SearchDetail from "./commonFrame/CommonDetailPopup/searchDetail";
+import MapTool from "./layerHub/components/mapTool";
 // import { getCurrentExtent, isContainByExtent } from "./commonFrame/mapTool";
 import {
   initMapConfig,
@@ -48,10 +55,13 @@ export default {
     ProjectDetailPopup,
     SejPopup,
     SearchDetail,
+    MapTool
   },
   data() {
     return {
       mapLoaded: false,
+      showSign: true,
+      showMapTool: true,
       imagelayer: {
         2018: undefined,
         2019: undefined,
@@ -141,19 +151,20 @@ export default {
             const geometry = window.featureMap[_NODEID_][_SMID_].geometry;
             this.addLocationIcon(geometry, _NODEID_);
 
-            this.$refs.searchDetail && (this.$refs.searchDetail.showZB = false);
-
             if (~_NODEID_.indexOf("项目") || _NODEID_ == "绿道断点") {
+              // 关闭详情的查看周边面板
+              this.$refs.projectDetailPopup.closeCollapse();
+              this.$refs.commonDetailPopup.closePopup();
+              
               this.$refs.projectDetailPopup.getForceEntity({
                 ...window.featureMap[_NODEID_][_SMID_],
                 position: pick.primitive.position,
                 id: pick.id,
               });
-
-              // 关闭详情的查看周边面板
-              this.$refs.projectDetailPopup.closeCollapse();
-              this.$refs.commonDetailPopup.closePopup();
             } else {
+              this.$refs.projectDetailPopup.closeDetail();
+              this.$refs.projectDetailPopup.closeInfo();
+
               // 跳过查看详情步骤
               this.$refs.commonDetailPopup.goDetail({
                 ...window.featureMap[_NODEID_][_SMID_],
@@ -180,9 +191,6 @@ export default {
                   console.log("bufferQueryData", this.bufferQueryData);
                 }, 500);
               }
-
-              this.$refs.projectDetailPopup.closeDetail();
-              this.$refs.projectDetailPopup.closeInfo();
             }
           }
         }
@@ -646,6 +654,15 @@ export default {
     height: 100%;
     width: 100%;
     // color: rgb(42, 104, 163);
+  }
+  .sign-wrapper {
+    z-index: 999;
+    position: absolute;
+    bottom: 1vh;
+    right: 25%;
+    >img {
+      width: 15vh;
+    }
   }
 }
 </style>

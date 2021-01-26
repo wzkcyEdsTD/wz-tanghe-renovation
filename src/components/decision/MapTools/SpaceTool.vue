@@ -36,7 +36,7 @@
           <span>{{ item.label }}</span>
         </div>
       </div>
-      <div style="width: 52%;" class="children-list" v-show="showDraw">
+      <div style="width: 64%;" class="children-list" v-show="showDraw">
         <div
           class="children-item"
           @click.stop="drawClick(item)"
@@ -117,6 +117,10 @@ export default {
           value: "polygon",
         },
         {
+          label: "撤回",
+          value: "recall",
+        },
+        {
           label: "清除",
           value: "clear",
         },
@@ -132,12 +136,25 @@ export default {
     toolClick(item) {
       this.$parent.$refs.Topic.currentTopic = 0;
       this.$parent.$refs.Topic.currentChild = "";
+
+      this.currentMeasure = "";
+      this.currentDraw = "";
       this.showMeasure = false;
       this.showDraw = false;
       this.$parent.showHub = false
+      this.$refs.drawTools.showDrawInfo = false
+      this.$refs.measureTools.deactiveAll();
+      this.$refs.measureTools.clearGauge();
+      this.$refs.drawTools.clearDraw();
 
       if (this.currentTool == item.value) {
         this.currentTool = 0;
+        // this.currentMeasure = "";
+        // this.currentDraw = "";
+        // this.$refs.drawTools.showDrawInfo = false
+        // this.$refs.measureTools.deactiveAll();
+        // this.$refs.measureTools.clearGauge();
+        // this.$refs.drawTools.clearDraw();
         this.$parent.showHub = true
         return;
       }
@@ -175,10 +192,13 @@ export default {
       } else if (item.value == "polygon") {
         this.currentDraw = item.value;
         this.$refs.drawTools.drawPolygon();
+      } else if (item.value == "recall") {
+        // this.currentDraw = item.value;
+        this.$refs.drawTools.recall();
       } else if (item.value == "clear") {
-        if (this.currentDraw != "history") {
-          this.currentDraw = "";
-        }
+        // if (this.currentDraw != "history") {
+        this.currentDraw = "";
+        // }
         this.$refs.drawTools.clearDraw();
       } else if (item.value == "history") {
         this.currentDraw = item.value;

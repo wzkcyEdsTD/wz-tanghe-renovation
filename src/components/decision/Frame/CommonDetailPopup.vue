@@ -36,10 +36,10 @@
                     ref="SwiperMedia"
                     class="swiper-wrapper swiper-tool"
                     :options="swiperOption"
-                    v-show="currentShow == 'overview'"
+                    v-show="currentShow == 'overallViews'"
                   >
                     <swiper-slide
-                      v-for="(item, i) in currentData.overview"
+                      v-for="(item, i) in currentData.overallViews"
                       :key="i"
                       class="swiper-item"
                     >
@@ -50,7 +50,7 @@
                     </swiper-slide>
                     <swiper-slide
                       class="swiper-item"
-                      v-if="!currentData.overview||!currentData.overview.length"
+                      v-if="!currentData.overallViews||!currentData.overallViews.length"
                     >
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
@@ -62,10 +62,10 @@
                     ref="SwiperMedia"
                     class="swiper-wrapper swiper-tool"
                     :options="swiperOption"
-                    v-show="currentShow == 'video'"
+                    v-show="currentShow == 'videos'"
                   >
                     <swiper-slide
-                      v-for="(item, i) in currentData.video"
+                      v-for="(item, i) in currentData.videos"
                       :key="i"
                       class="swiper-item"
                     >
@@ -77,7 +77,7 @@
                         muted
                       ></video>
                     </swiper-slide>
-                    <swiper-slide class="swiper-item" v-if="!currentData.video||!currentData.video.length">
+                    <swiper-slide class="swiper-item" v-if="!currentData.videos||!currentData.videos.length">
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
                     <div class="swiper-scrollbar" slot="scrollbar"></div>
@@ -87,19 +87,19 @@
                     ref="SwiperMedia"
                     class="swiper-wrapper swiper-tool"
                     :options="swiperOption"
-                    v-show="currentShow == 'photo'"
+                    v-show="currentShow == 'photos'"
                   >
                     <swiper-slide
-                      v-for="(item, i) in currentData.photo"
+                      v-for="(item, i) in currentData.photos"
                       :key="i"
                       class="swiper-item"
                     >
                       <el-image
                         :src="`${MediaServer}/${item.path}`"
-                        @click="onPreview(currentData.photo, i)"
+                        @click="onPreview(currentData.photos, i)"
                       ></el-image>
                     </swiper-slide>
-                    <swiper-slide class="swiper-item" v-if="!currentData.photo||!currentData.photo.length">
+                    <swiper-slide class="swiper-item" v-if="!currentData.photos||!currentData.photos.length">
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
                     <div class="swiper-scrollbar" slot="scrollbar"></div>
@@ -217,10 +217,11 @@ export default {
         this.detailData = res.result;
         console.log("detailData", this.detailData);
         this.currentData = {
-          overview: res.result.overallViews,
-          video: res.result.videos,
-          photo: res.result.photos
+          overallViews: res.result.overallViews,
+          videos: res.result.videos,
+          photos: res.result.photos
         }
+        console.log("currentData", this.currentData);
       }
 
       // this.formatData("PHOTO", "photo");
@@ -253,7 +254,7 @@ export default {
     // 打开全景
     openOverview(index) {
       this.closeViewer();
-      this.overviewUrl = this.currentData.overview[index];
+      this.overviewUrl = this.currentData.overallViews[index];
       this.overShow = true;
     },
 
@@ -274,11 +275,20 @@ export default {
 
   watch: {
     currentData(val) {
-      this.currentShow = val.overview
-        ? "overview"
-        : val.video
-        ? "video"
-        : "photo";
+      if (!val[this.currentShow]) {
+        if (val.overallViews) {
+          this.currentShow = "overallViews";
+          return;
+        }
+        if (val.videos) {
+          this.currentShow = "videos";
+          return;
+        }
+        if (val.photos) {
+          this.currentShow = "photos";
+          return;
+        }
+      }
     },
     currentShow(val) {
       if (val != "video") {

@@ -11,6 +11,12 @@
         <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
         <div v-show="showType=='jk'" id="player" class="frequency-pic type1" />
         <!-- <video-player v-show="showType=='jk'" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions" controls></video-player> -->
+        <el-image-viewer style="left: 55%"
+          v-show="showViewer"
+          :on-close="closeViewer"
+          :url-list="srcList"
+          :initial-index="srcIndex"
+        />
       </div>
     </div>
     <div class="rightScreen-wrapper" v-if="showRightScreen && currentPage=='compare'">
@@ -19,6 +25,12 @@
         <video class="video" v-show="showType=='video'" :src="showSrc" controls="controls" autoplay muted></video>
         <iframe class="iframe" v-show="showType=='qj'" :src="showSrc"></iframe>
         <div v-show="showType=='jk'" id="player" class="frequency-pic type1" />
+        <el-image-viewer style="left: 55%"
+          v-show="showViewer"
+          :on-close="closeViewer"
+          :url-list="srcList"
+          :initial-index="srcIndex"
+        />
       </div>
     </div>
   </div>
@@ -26,6 +38,7 @@
 
 <script>
 // import MHeader from "components/m-header/m-header";
+import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 import Loading from "components/loading/loading";
 import RightChart from "components/compare/rightChart/rightChart";
 import { getUserInfo } from "./api/public/public";
@@ -36,6 +49,7 @@ export default {
   name: "App",
   components: {
     // MHeader,
+    ElImageViewer,
     Loading,
     RightChart
   },
@@ -67,6 +81,9 @@ export default {
       // }
       currentPage: '',
       showPlayer: false,
+      showViewer: false,
+      srcList: [],
+      srcIndex: 0,
     };
   },
   computed: {
@@ -82,9 +99,7 @@ export default {
     '$route' (to) {
       this.showPlayer = false
       this.currentPage = to.name
-      this.$nextTick(() => {
-        this.getKuanGao()
-      })
+      this.getKuanGao()
     }
   },
   created() {
@@ -101,10 +116,13 @@ export default {
       console.log('screenWidth!!!!', screenWidth);
       if(screenWidth>4000 && screeHeight>1000){
         window.showLarge = true
+        console.log('showLarge', window.showLarge)
       }else {
         window.showLarge = false
       }
-      this.initScreen()
+      this.$nextTick(() => {
+        this.initScreen()
+      })
     },
     initScreen() {
       if (window.showLarge) {
@@ -144,6 +162,9 @@ export default {
         }
       );
     },
+    closeViewer() {
+      this.showViewer = false;
+    },
     eventRegsiter() {
       this.$bus.$off("change-screen");
       this.$bus.$on("change-screen", ({ value }) => {
@@ -174,6 +195,12 @@ export default {
       this.$bus.$off("close-rightPlayer");
       this.$bus.$on("close-rightPlayer", () => {
         this.showPlayer = false
+      })
+      this.$bus.$off("open-rightPreview");
+      this.$bus.$on("open-rightPreview", ({value, index}) => {
+        this.srcList = value;
+        this.srcIndex = index;
+        this.showViewer = true
       })
     }
   },

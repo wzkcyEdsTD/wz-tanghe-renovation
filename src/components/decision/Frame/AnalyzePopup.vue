@@ -333,8 +333,8 @@ export default {
     },
     closePopup() {
       console.log("888");
-      this.currentTool = 0;
-      this.$parent.$refs.SpaceTool.$refs.tools.clearGauge();
+      this.$parent.$refs.SpaceTool.currentTool = 0;
+      this.$parent.$refs.SpaceTool.$refs.measureTools.clearGauge();
       this.position = {};
       this.forcePosition = {};
       const datasource = window.earth.dataSources.getByName("analyze")[0];

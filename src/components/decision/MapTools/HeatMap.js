@@ -36,10 +36,10 @@ export const doHeatMap = (forceKey, heatArr, valueMin, valueMax) => {
     bounds,
     {
       //   backgroundColor: "rgba(0,0,0,0)",
-      //   radius: 40,
-      //   maxOpacity: 0.4,
-      //   minOpacity: 0,
-      //   blur: 0.55
+        radius: 40,
+        maxOpacity: 0.4,
+        minOpacity: 0,
+        blur: 0.55
     }
   );
 

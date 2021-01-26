@@ -3,20 +3,20 @@
     <div class="title-wrapper">
       <span class="pre"></span>
       <span class="title">各乡镇街道项目数排名</span>
-      <el-select
-        style="width: 100px"
-        v-model="districtValue"
-        placeholder="请选择"
-      >
-        <el-option
-          v-for="item in districtOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
     </div>
+    <el-select
+      class="districtSelect"
+      v-model="districtValue"
+      placeholder="请选择"
+    >
+      <el-option
+        v-for="item in districtOptions"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+      </el-option>
+    </el-select>
     <div class="content">
       <div
         class="rank-item"
@@ -39,6 +39,13 @@
 import { ServiceUrl } from "@/config/server/mapConfig";
 import { switchHeatMap } from "../../MapTools/HeatMap";
 import { countProjectStreetNum } from "api/tangheAPI";
+
+const orientation = {
+  heading: 0.01768860454315663,
+  pitch: Cesium.Math.toRadians(-90),
+  roll: 0.0,
+};
+
 export default {
   props: ["show"],
   data() {
@@ -89,7 +96,8 @@ export default {
       result.features.forEach((v) => {
         areaArr.push([v.geometry.x, v.geometry.y, 1]);
       });
-      switchHeatMap(true, "k1", areaArr, 0, 3);
+      console.log("areaArr???", areaArr);
+      switchHeatMap(true, "k1", areaArr, 0, 2);
     },
     // 获取项目数据
     fetchProjectData() {
@@ -126,9 +134,60 @@ export default {
         switchHeatMap(false, "k1");
       }
     },
+    districtValue(val) {
+      if (val == "龙湾区") {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.803145,
+            27.933237,
+            15000
+          ),
+          orientation: orientation,
+        });
+      } else if (val == "瑞安市") {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.685643,
+            27.792632,
+            15000
+          ),
+          orientation: orientation,
+        });
+      } else if (val == "瓯海区") {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.646624,
+            27.964185,
+            15000
+          ),
+          orientation: orientation,
+        });
+      } else {
+        window.earth.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            120.67625660935506,
+            27.990332018707733,
+            15000.0
+          ),
+          orientation: orientation,
+        });
+      }
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.proj-spread {
+  .districtSelect {
+    width:100px;
+    float:right;
+    /deep/ .el-input__inner {
+      height: 30px;
+    }
+    /deep/ .el-input__icon {
+      line-height: 30px;
+    }
+  }
+}
 </style>

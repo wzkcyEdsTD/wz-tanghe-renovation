@@ -1,5 +1,5 @@
 <template>
-  <div class="drawTool" v-show="showInput||showQuery">
+  <div class="drawTool" v-show="showDrawInfo">
     <!-- <el-button id="pointBtn" @click="drawPoint">画点</el-button>
     <el-button id="lineBtn" @click="drawLine">画线</el-button>
     <el-button id="polyBtn" @click="drawPolygon">画面</el-button>
@@ -109,6 +109,7 @@ export default {
   name: "drawTool",
   data() {
     return {
+      showDrawInfo: false,
       datasource: null,
       pointHandler: null,
       lineHandler: null,
@@ -164,7 +165,7 @@ export default {
     _drawPoint(position, config) {
       var config = config ? config : {};
       var pointGeometry = this.datasource.entities.add({
-        name: "点几何对象",
+        name: config.name || "点几何对象",
         position: position,
         point: {
           color: Cesium.Color.SKYBLUE,
@@ -199,13 +200,13 @@ export default {
         let tempLength = tempArr.length
         //调用绘制点的接口
         let point = this._drawPoint(tempArr[tempArr.length - 1]);
-        this.tempEntities.push(point);
+        this.tempEntities.push({type:'point',data:point});
         if (tempLength > 1) {
           let pointline = this._drawLine([
             tempArr[tempArr.length - 2],
             tempArr[tempArr.length - 1],
           ]);
-          this.tempEntities.push(pointline);
+          this.tempEntities.push({type:'line',data:pointline});
         } else {
           // tooltip.innerHTML = "请绘制下一个点，右键结束";
         }
@@ -215,7 +216,19 @@ export default {
       this.lineHandler.setInputAction((click) => {
         // tooltip.style.display = "none";
         // tooltip.innerHTML = "左键单击绘制,右键结束绘制";
-        console.log('linePoints', this.linePoints)
+
+        // console.log('linePoints', this.linePoints)
+        // console.log('tempArrLENGTH', tempArr.length)
+        // console.log('tempEntities', this.tempEntities)
+        // console.log('datasource', this.datasource)
+        // let delArr = this.tempEntities.slice(Number(`-${tempArr.length}`))
+        // console.log('delArr', delArr)
+        this.tempEntities.forEach(item => {
+          if (item.type == 'point') {
+            this.datasource.entities.removeById(item.data.id)
+          }
+        })
+
         this.tempEntities = []
         this.linePoints.push(tempArr)
         this.showInput = true
@@ -228,7 +241,7 @@ export default {
       if (positions.length < 1) return;
       var config = config ? config : {};
       var polylineGeometry = this.datasource.entities.add({
-        name: "线几何对象",
+        name: config.name || "线几何对象",
         polyline: {
           positions: positions,
           width: config.width ? config.width : 5.0,
@@ -267,13 +280,13 @@ export default {
         let tempLength = tempArr.length
         //调用绘制点的接口
         let point = this._drawPoint(position);
-        this.tempEntities.push(point);
+        this.tempEntities.push({type:'point',data:point});
         if (tempLength > 1) {
           let pointline = this._drawLine([
             tempArr[tempArr.length - 2],
             tempArr[tempArr.length - 1],
           ]);
-          this.tempEntities.push(pointline);
+          this.tempEntities.push({type:'line',data:pointline});
         } else {
           // tooltip.innerHTML = "请绘制下一个点，右键结束";
         }
@@ -299,10 +312,16 @@ export default {
               tempArr[tempArr.length - 1],
               tempArr[0],
             ]);
-            // this.tempEntities.push(pointline);
+            this.tempEntities.push({type:'line',data:pointline});
             this._drawPolygon(tempArr);
             // this.tempEntities.push(tempArr);
-            console.log('polygonPoints', this.polygonPoints)
+
+            // let delArr = this.tempEntities.slice(Number(`-${tempArr.length}`))
+            // console.log('delArr', delArr)
+            this.tempEntities.forEach(item => {
+              this.datasource.entities.removeById(item.data.id)
+            })
+            // console.log('polygonPoints', this.polygonPoints)
             this.tempEntities = []
             this.polygonPoints.push(tempArr)
             this.showInput = true
@@ -317,7 +336,7 @@ export default {
       if (positions.length < 2) return;
       var config = config ? config : {};
       var polygonGeometry = this.datasource.entities.add({
-        name: "线几何对象",
+        name: config.name || "面几何对象",
         polygon: {
           height: 0.1,
           hierarchy: new Cesium.PolygonHierarchy(positions),
@@ -329,8 +348,26 @@ export default {
       });
       return polygonGeometry;
     },
+    recall() {
+      console.log('datasource', this.datasource)
+      console.log('entities', this.datasource.entities._entities._array)
+      let lastEntity = this.datasource.entities._entities._array.slice(-1)[0]
+      console.log('lastEntity', lastEntity)
+      this.datasource.entities.remove(lastEntity)
+      if (~lastEntity.name.indexOf('点')) {
+        this.onePoints.pop()
+      }
+      if (~lastEntity.name.indexOf('线')) {
+        this.linePoints.pop()
+      }
+      if (~lastEntity.name.indexOf('面')) {
+        this.polygonPoints.pop()
+      }
+    },
     clearDraw() {
-      this.showInput = false
+      // this.showInput = false
+      // this.showQuery = false
+      this.showDrawInfo = false
       this.datasource.entities.removeAll();
       this.destroyAll()
       this.onePoints = []
@@ -343,8 +380,8 @@ export default {
     destroyAll() {
       console.log('tempEntities', this.tempEntities)
       this.tempEntities.forEach(item => {
-        item.show = false
-        window.earth.entities.removeById(item.id)
+        item.data.show = false
+        window.earth.entities.removeById(item.data.id)
       })
       this.tempEntities = []
       if (this.pointHandler) {
@@ -400,13 +437,21 @@ export default {
         }
         listArr.push(obj)
       })
-      console.log('olalalala', listArr)
 
-      let res = await addPlot(listArr)
-      if (res.code == 200) {
+      if (listArr.length && this.nameValue) {
+        let res = await addPlot(listArr)
+        if (res.code == 200) {
+          this.$message({
+            message: '保存成功',
+            type: 'success',
+            offset: 50
+          });
+          this.showQuery = true
+        }
+      } else {
         this.$message({
-          message: '保存成功',
-          type: 'success',
+          message: '请先完成绘制',
+          type: 'error',
           offset: 50
         });
       }
@@ -429,39 +474,55 @@ export default {
         console.log(this.historyList)
       }
     },
-    async handleCheckedChange(val, item) {
+    async handleCheckedChange(val, node) {
       if (val) {
-        let res = await queryPlot({groupId:item.groupid})
+        let res = await queryPlot({groupId:node.groupid})
         if (res.code == 200) {
           res.result.forEach(item => {
             let positions = JSON.parse(item.geometry)
             if (item.type == 'point') {
-              this._drawPoint(positions[0])
+              this._drawPoint(positions[0], {name: node.groupid})
             }
             if (item.type == 'line') {
-              this._drawLine(positions)
+              this._drawLine(positions, {name: node.groupid})
             }
             if (item.type == 'polygon') {
-              this._drawPolygon(positions)
+              this._drawPolygon(positions, {name: item.groupid})
             }
           })
         }
+      } else {
+        this.datasource.entities._entities._array.forEach(item => {
+          if (item.name == node.groupid) {
+            this.datasource.entities.removeById(item.id)
+          }
+        })
       }
     },
     showHistory() {
       this.destroyAll()
+      this.showDrawInfo = true
       this.showQuery = true
     }
   },
   mounted() {
+    let d = new Date();
+    this.startDate = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
+    this.endDate = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
     this.createEntityCollection();
   },
   watch: {
     showInput(val) {
-      this.showQuery = !val
+      // val && (this.showDrawInfo = true)
+      if (this.showDrawInfo = true) {
+        this.showQuery = !val
+      }
     },
     showQuery(val) {
-      this.showInput = !val
+      // val && (this.showDrawInfo = true)
+      if (this.showDrawInfo = true) {
+        this.showInput = !val
+      }
     }
   }
 };
@@ -487,9 +548,14 @@ export default {
   }
 }
 .draw-datepicker {
-  width: 130px !important;
+  width: 110px !important;
   .el-input__inner {
+    padding: 0 !important;
     background: #00214e !important;
+    text-align: center !important;
+  }
+  .el-input__prefix {
+    display: none !important;
   }
 }
 </style>

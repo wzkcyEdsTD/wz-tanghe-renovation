@@ -83,6 +83,7 @@ export default {
     this.eventRegsiter();
   },
   beforeDestroy() {
+    this.deactiveAll();
     this.clearGauge();
   },
   methods: {
@@ -262,7 +263,7 @@ export default {
         getFeaturesByGeometryService.processAsync(
           new SuperMap.REST.GetFeaturesByGeometryParameters({
             datasetNames: [
-              "thxm:th_spatial_query",
+              "th_spatial_query",
             ],
             geometry,
             toIndex: -1,

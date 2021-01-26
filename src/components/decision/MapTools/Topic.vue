@@ -33,11 +33,17 @@
         </ul>
       </div>
     </div>
+    <div class="right-container animated" :class="{slideInRight:showRihgt, slideOutRight:!showRihgt}">
+      <i v-show="!showRihgt&&(~currentChild.indexOf('项目'))" class="popup-open" @click="toggle" />
+      <div class="right-body" v-show="showRihgt">
+        <i v-show="showRihgt" class="popup-close" @click="toggle" />
+        <DelayProject :show="showRihgt && currentChild == '滞后项目'" />
+        <ProblemProject :show="showRihgt && currentChild == '问题项目'" />
+        <ProjectSpread :show="showRihgt && currentChild == '项目分布'" />
+        <AmountSpread :show="showRihgt && currentChild == '项目投资额分布'" />
+      </div>
+    </div>
     <Analyze v-show="showAnalyze" />
-    <DelayProject :show="currentChild == '滞后项目'" />
-    <ProblemProject :show="currentChild == '问题项目'" />
-    <ProjectSpread :show="currentChild == '项目分布'" />
-    <AmountSpread :show="currentChild == '项目投资额分布'" />
     <Supervise ref="Supervise" />
   </div>
 </template>
@@ -50,6 +56,7 @@ import ProblemProject from "../Frame/TopicSub/ProblemProject";
 import AmountSpread from "../Frame/TopicSub/AmountSpread";
 import ProjectSpread from "../Frame/TopicSub/ProjectSpread";
 import Supervise from "../Frame/TopicSub/Supervise";
+
 export default {
   name: "Topic",
   components: {
@@ -62,6 +69,7 @@ export default {
   },
   data() {
     return {
+      showRihgt: false,
       topicList: [
         {
           label: "进度预警专题",
@@ -80,6 +88,7 @@ export default {
         {
           label: "城市规划专题",
           value: 4,
+          children: ["用地现状", "用地性规划", "用地分析", "2020贯通绿道"],
         },
         {
           label: "领导督办专题",
@@ -99,6 +108,9 @@ export default {
       ldfwFace: undefined,
       ldfwLine: undefined,
       konggui: undefined,
+      yongdi: undefined,
+      ydfx: undefined,
+      gtld: undefined,
       showAnalyze: false,
       // showSupervise: false,
     };
@@ -108,6 +120,9 @@ export default {
       this.ldfwFace && (this.ldfwFace.show = false);
       this.ldfwLine && (this.ldfwLine.show = false);
       this.konggui && (this.konggui.show = false);
+      this.yongdi && (this.yongdi.show = false);
+      this.ydfx && (this.ydfx.show = false);
+      this.gtld && (this.gtld.show = false);
 
       this.showAnalyze = false;
       // this.showSupervise = false;
@@ -127,25 +142,18 @@ export default {
         this.ldfwFace = window.earth.imageryLayers.addImageryProvider(
           new Cesium.SuperMapImageryProvider({
             url:
-              "http://172.168.3.183:8090/iserver/services/3D-ldfw_polygon/rest/realspace/datas/ldfw_polygon",
+              // "http://172.168.3.183:8090/iserver/services/3D-ldfw_polygon/rest/realspace/datas/ldfw_polygon",
+              "http://172.20.83.228:8090/iserver/services/3D-ldfw_polygon/rest/realspace/datas/ldfw_polygon"
           })
         );
         this.ldfwFace.alpha = 0.6;
         this.ldfwLine = window.earth.imageryLayers.addImageryProvider(
           new Cesium.SuperMapImageryProvider({
             url:
-              "http://172.168.3.183:8090/iserver/services/3D-ldfw_line/rest/realspace/datas/ldfw_line",
+              // "http://172.168.3.183:8090/iserver/services/3D-ldfw_line/rest/realspace/datas/ldfw_line",
+              "http://172.20.83.228:8090/iserver/services/3D-ldfw_line/rest/realspace/datas/ldfw_line"
           })
         );
-      }
-      if (item.value == 4) {
-        this.konggui = window.earth.imageryLayers.addImageryProvider(
-          new Cesium.SuperMapImageryProvider({
-            url:
-              "http://172.168.3.183:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ",
-          })
-        );
-        this.konggui.alpha = 0.8;
       }
       if (item.value == 5) {
         // this.showSupervise = true;
@@ -164,22 +172,68 @@ export default {
       this.$parent.$refs.LayerHub.showPopover = false;
 
       if (item == this.currentChild) {
+        this.konggui && (this.konggui.show = false);
+        this.yongdi && (this.yongdi.show = false);
+        this.ydfx && (this.ydfx.show = false);
+        this.gtld && (this.gtld.show = false);
         this.currentChild = "";
         this.$parent.showHub = true;
+        this.showRihgt = false;
+        if (item == '2020贯通绿道') {
+          this.$bus.$emit("map-greenway-change", {
+            value: true,
+          });
+        }
         return;
       }
-      this.$parent.showHub = false;
       this.currentChild = item;
-      // if (item == "滞后项目") {
-      // }
-      // if (item == "问题项目") {
-      // }
-      // if (item == "项目分布") {
-      //   // this.showHeatMap = 'number'
-      // }
-      // if (item == "项目投资额分布") {
-      //   // this.showHeatMap = `amount${this.cu}`
-      // }
+      if (item == "用地现状") {
+        this.yongdi = window.earth.imageryLayers.addImageryProvider(
+          new Cesium.SuperMapImageryProvider({
+            url:
+              // "http://172.168.3.183:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ",
+              "http://172.20.83.228:8090/iserver/services/3D-dltb/rest/realspace/datas/dltb"
+          })
+        );
+        this.yongdi.alpha = 0.8;
+      } else if (item == "用地性规划") {
+        this.konggui = window.earth.imageryLayers.addImageryProvider(
+          new Cesium.SuperMapImageryProvider({
+            url:
+              // "http://172.168.3.183:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ",
+              "http://172.20.83.228:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ"
+          })
+        );
+        this.konggui.alpha = 0.8;
+      } else if (item == "用地分析") {
+        this.ydfx = window.earth.imageryLayers.addImageryProvider(
+          new Cesium.SuperMapImageryProvider({
+            url:
+              "http://172.20.83.228:8090/iserver/services/3D-rgfxm/rest/realspace/datas/rgfxm"
+          })
+        );
+        this.ydfx.alpha = 0.8;
+      } else if (item == "2020贯通绿道") {
+        this.gtld = window.earth.imageryLayers.addImageryProvider(
+          new Cesium.SuperMapImageryProvider({
+            url:
+              "http://172.20.83.228:8090/iserver/services/3D-ld2020/rest/realspace/datas/ld2020"
+          })
+        );
+        this.$bus.$emit("map-greenway-change", {
+          value: false,
+        });
+      } else {
+        this.$parent.showHub = false;
+      }
+
+      if (item == "滞后项目" || item == "问题项目" || item == "项目分布" || item == "项目投资额分布") {
+        this.showRihgt = true
+      }
+    },
+    toggle() {
+      this.showRihgt = !this.showRihgt;
+      this.$parent.showHub = !this.showRihgt;
     },
     filterData(array) {
       window.billboardMap["项目"]._billboards.forEach((v) => {

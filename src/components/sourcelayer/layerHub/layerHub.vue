@@ -33,9 +33,6 @@
       <Summary v-show="currentType == 'summary'" />
       <Source v-show="currentType == 'source'" />
     </div>
-    <div class="sign-wrapper" :style="{right: showLarge?'22%':'22%'}" v-if="showSign">
-      <img src="/static/images/common/sign@2x.png">
-    </div>
     <div class="select-wrapper" v-show="showSelect">
       <el-select class="filter-select" v-show="menu=='shipin'||menu=='quanjin'" style="width:90px;" v-model="yearValue" placeholder="年份" @change="changeYear">
         <el-option
@@ -54,14 +51,17 @@
         </el-option>
       </el-select>
     </div>
-    <MapTool />
+    <!-- <div class="sign-wrapper" :style="{right: showLarge?'22%':'22%'}" v-show="showSign">
+      <img src="/static/images/common/sign@2x.png">
+    </div>
+    <MapTool v-show="showMapTool" /> -->
   </div>
 </template>
 
 <script>
 import Synopsis from "./components/synopsis";
 import SourceTree from "./components/sourceTree";
-import MapTool from "./components/mapTool";
+// import MapTool from "./components/mapTool";
 import Source from "./components/source";
 import Summary from "./components/summary"
 
@@ -70,7 +70,7 @@ export default {
   components:{
     Synopsis,
     SourceTree,
-    MapTool,
+    // MapTool,
     Summary,
     Source,
   },
@@ -80,6 +80,7 @@ export default {
       selected: 'synopsis',
       currentType: 'summary',
       showSign: true,
+      showMapTool: true,
       showSelect: false,
       menu: '',
       yearOptions: [{
@@ -124,11 +125,11 @@ export default {
       for (let key in window.featureMap[this.menu]) {
         let item = window.featureMap[this.menu][key]
         if (this.typeValue) {
-          if (item.attributes.RQ.substr(0, 4) == val && item.attributes.TYPE == this.typeValue) {
+          if (item.attributes.TAG == val && item.attributes.TYPE == this.typeValue) {
             res.push(item)
           }
         } else {
-          if (item.attributes.RQ.substr(0, 4) == val) {
+          if (item.attributes.TAG == val) {
             res.push(item)
           }
         }
@@ -141,7 +142,7 @@ export default {
       for (let key in window.featureMap[this.menu]) {
         let item = window.featureMap[this.menu][key]
         if (this.yearValue) {
-          if (item.attributes.TYPE == val && item.attributes.RQ.substr(0, 4) == this.yearValue) {
+          if (item.attributes.TYPE == val && item.attributes.TAG == this.yearValue) {
             res.push(item)
           }
         } else {

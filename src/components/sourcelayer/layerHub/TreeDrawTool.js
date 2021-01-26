@@ -69,6 +69,7 @@ const fixAttributesByOrigin = (attributes, fields) => {
  */
 export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
   const fieldHash = fixFieldsByArr(fields);
+  console.log('fieldHashhhhhhh', fieldHash)
   //  hash赋值
   window.billboardMap[node.id] = window.earth.scene.primitives.add(new Cesium.BillboardCollection());
   window.whiteLabelMap[node.id] = window.earth.scene.primitives.add(new Cesium.LabelCollection());

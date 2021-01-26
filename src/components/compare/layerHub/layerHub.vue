@@ -1,10 +1,5 @@
 <template>
   <div class="layerhub-wrapper">
-    <div class="sign-wrapper" style="right: 24%">
-      <img src="/static/images/common/sign2@2x.png" />
-    </div>
-    <MarkRule v-if="showMark" />
-    <MapTool />
     <div class="left-wrapper">
       <div class="left-content">
         <ul class="zrdw-list">
@@ -332,6 +327,11 @@
         </div>
       </div>
     </div>
+    <!-- <div class="sign-wrapper" style="right: 22%" v-show="showSign">
+      <img src="/static/images/common/sign2@2x.png" />
+    </div>
+    <MapTool v-show="showMapTool" /> -->
+    <MarkRule v-if="showMark" />
   </div>
 </template>
 
@@ -340,7 +340,7 @@ import { mapGetters, mapActions } from "vuex";
 import { treeDrawTool } from "../../sourcelayer/layerHub/TreeDrawTool";
 import { getIserverFields } from "api/iServerAPI";
 import MarkRule from "./components/MarkRule";
-import MapTool from "../../sourcelayer/layerHub/components/mapTool";
+// import MapTool from "../../sourcelayer/layerHub/components/mapTool";
 import { drawJSQK, drawWGJH, drawXMSL } from "./EchartsDrawTool";
 import {
   queryMeetingSortFront,
@@ -359,11 +359,13 @@ const orientation = {
 export default {
   name: "LayerHub",
   components: {
-    MapTool,
+    // MapTool,
     MarkRule,
   },
   data() {
     return {
+      // showSign: true,
+      // showMapTool: true,
       showLarge: window.showLarge,
       currentType: "xm",
       changeType: "all",
@@ -614,8 +616,9 @@ export default {
       // 定位图标，详情变换
       this.$parent.addLocationIcon(geometry, item.id);
       this.$parent.$refs.projectDetailPopup.closeCollapse();
-      this.$parent.$refs.projectDetailPopup.getForceEntity(item);
       this.$parent.$refs.commonDetailPopup.closePopup();
+
+      this.$parent.$refs.projectDetailPopup.getForceEntity(item);
 
       window.earth.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(x, y, 1200),

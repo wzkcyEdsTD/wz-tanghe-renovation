@@ -8,6 +8,27 @@
           <span class="title">{{ detailData.name }}</span>
         </div>
         <div class="content-info">
+          <div class="jgt-wrapper" v-show="jgtList.length">
+            <div class="swiper-buttons jgt-swiper-button-left"></div>
+            <swiper
+              class="swiper-wrapper"
+              :options="jgtSwiperOptions"
+            >
+              <swiper-slide
+                v-for="(item, i) in jgtList"
+                :key="i"
+                class="swiper-item"
+              >
+                <el-image
+                  style="height:100%;"
+                  :src="item"
+                  fit="cover"
+                  @click="onJGTPreview(jgtList, i)"
+                ></el-image>
+              </swiper-slide>
+            </swiper>
+            <div class="swiper-buttons jgt-swiper-button-right"></div>
+          </div>
           <div class="btn-list">
             <button
               class="btn-item"
@@ -57,11 +78,12 @@
                   :key="i"
                   class="swiper-item"
                 >
-                  <img
+                  <el-image
+                    style="height:100%;"
+                    fit="cover"
                     :src="`${MediaServer}/${item}`"
-                    style="object-fit: contain"
                     @click="openQJ(i)"
-                  />
+                  ></el-image>
                 </swiper-slide>
                 <swiper-slide class="swiper-item" v-if="!currentData.qjslt">
                   <div class="no-tip">暂无数据</div>
@@ -81,7 +103,7 @@
                 >
                   <video
                     ref="video"
-                    style="width: 100%"
+                    style="width:100%;height:100%;"
                     :src="`${MediaServer}/${item}`"
                     controls="controls"
                     muted
@@ -104,8 +126,9 @@
                   class="swiper-item"
                 >
                   <el-image
+                    style="height:100%;"
                     :src="`${MediaServer}/${item}`"
-                    fit="contain"
+                    fit="cover"
                     @click="onPreview(currentData.photo, i)"
                   ></el-image>
                 </swiper-slide>
@@ -367,7 +390,7 @@
           :forceEntity="forceEntity"
           :aroundData="aroundData"
         />
-        <div class="qrcode-wrapper" v-show="resourceType=='project_all'">
+        <div class="qrcode-wrapper" v-show="showQRcode">
           <div class="title-wrapper">
             <span class="title">项目二维码</span>
           </div>
@@ -378,11 +401,16 @@
       </div>
     </transition>
     <el-image-viewer
-      :style="{ left: showLarge ? '55%' : '0' }"
-      v-if="showViewer"
+      v-show="showViewer"
       :on-close="closeViewer"
       :url-list="srcList"
       :initial-index="srcIndex"
+    />
+    <el-image-viewer :style="{ right: showLarge ? '45%' : '0' }"
+      v-show="showJGTViewer"
+      :on-close="closeJGTViewer"
+      :url-list="jgtList"
+      :initial-index="jgtIndex"
     />
     <div class="QJFrame" v-show="showQJ">
       <i class="close" @click="closeQJ"></i>
@@ -458,9 +486,19 @@ export default {
           },
         },
       },
+      jgtSwiperOptions: {
+        slidesPerView: 1,
+        navigation: {
+          nextEl: ".jgt-swiper-button-right",
+          prevEl: ".jgt-swiper-button-left",
+        },
+      },
       showViewer: false,
+      showJGTViewer: false,
       srcList: [],
       srcIndex: 0,
+      jgtList: [],
+      jgtIndex: 0,
       showQJ: false,
       showSP: false,
       QJURL: "",
@@ -468,28 +506,16 @@ export default {
       date: "",
       projectId: "",
       showInfo: false,
+      showQRcode: false
     };
   },
   mounted() {
     this.getNowFormatDate();
-    // this.eventRegsiter();
   },
   methods: {
-    // eventRegsiter() {
-    //   // 列表点击事件
-    //   this.$bus.$off("click-item");
-    //   this.$bus.$on("click-item", ({ value }) => {
-    //     let qj = value.attributes.QJ;
-    //     let sp = value.attributes.SP;
-    //     if (this.showQJ && qj) {
-    //       this.QJURL = ~qj.indexOf(";") ? qj.split(";")[0] : qj;
-    //     }
-    //     if (this.showSP && sp) {
-    //       this.SPURL = ~sp.indexOf(";") ? `/static/video/${sp.split(";")[0]}` : `/static/video/${sp}`;
-    //     }
-    //   });
-    // },
     getForceEntity(forceEntity) {
+      this.$parent.showSign = false;
+      this.$parent.showMapTool = false;
       console.log("aaa", forceEntity);
       if (forceEntity.attributes) {
         this.resourceType = forceEntity.attributes.resourceType || forceEntity.attributes.RESOURCE_TYPE
@@ -500,13 +526,8 @@ export default {
         this.initData(forceEntity.resourceId);
       }
       this.forceEntity = forceEntity;
-      
-      // this.$nextTick(() => {
-      //   this.creatQrCode();
-      // });
     },
     async initData(id) {
-      // this.isShow = true;
       // this.$nextTick(() => {
       //   this.$refs.SwiperTime.swiper.slideTo(0, 0, false);
       // });
@@ -515,6 +536,7 @@ export default {
       this.currentData = {};
       this.finalData = {};
       this.currentShow = "qj";
+      this.showQRcode = false
 
       let res
       if (this.resourceType == 'project_all') {
@@ -529,7 +551,17 @@ export default {
         console.log('detailData', this.detailData)
         this.formatData()
         this.projectId = this.detailData.extraId;
-        this.creatQrCode();
+        if (this.resourceType=='project_all' && this.detailData.overallViews && this.detailData.overallViews.length) {
+          this.showQRcode = true
+          this.creatQrCode();
+        }
+        if (this.detailData.photos.length) {
+          this.detailData.photos.forEach(item => {
+            if (item.type == 1) {
+              this.jgtList.push(`${MediaServer}/${item.path}`)
+            }
+          })
+        }
         if (this.showQJ && this.detailData.overallViews.length) {
           this.QJURL = this.detailData.overallViews[0].path
         }
@@ -537,18 +569,6 @@ export default {
           this.SPURL = `${MediaServer}/${this.detailData.videos[0].path}`;
         }
       }
-
-      // this.formatData("PHOTO", "photo");
-      // this.formatData("JGT", "photo");
-      // this.formatData("QJSLT", "qjslt");
-      // // this.formatData('ZBQJSLT', 'qjslt')
-      // this.formatData("SP", "sp");
-      // console.log("finalData!!!!!!!!", this.finalData);
-      // this.finalList = Object.values(this.finalData).reverse();
-      // console.log("finalList", this.finalList);
-      // if (this.finalList.length) {
-      //   this.currentData = this.finalList[this.currentIndex];
-      // }
     },
     formatData() {
       let overallViews = this.detailData.overallViews
@@ -587,13 +607,13 @@ export default {
           this.finalData[time].photo = [item.path];
         }
       })
-      console.log("finalData!!!!!!!!", this.finalData);
+      // console.log("finalData!!!!!!!!", this.finalData);
       this.finalList = Object.values(this.finalData);
       this.finalList.sort((a, b) => {
         if (a.date < b.date) {
-          return -1
-        } else if (a.date > b.date) {
           return 1
+        } else if (a.date > b.date) {
+          return -1
         } else {
           return 0
         }
@@ -603,51 +623,6 @@ export default {
         this.currentData = this.finalList[this.currentIndex];
       }
 
-      // if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
-      //   let QJStr =
-      //     this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ;
-      //   let qjTempArr = QJStr && ~QJStr.indexOf(";") ? QJStr.split(";") : [];
-      //   let attrValue = this.forceEntity.attributes[attr];
-      //   if (attrValue.length) {
-      //     if (~attrValue.indexOf(";")) {
-      //       let tempArr = attrValue.split(";");
-      //       tempArr.forEach((item, index) => {
-      //         let time;
-      //         if (item.split("_")[1]) {
-      //           time = item.split("_")[1].split(".")[0];
-      //         } else {
-      //           time = "20200101";
-      //         }
-      //         if (this.finalData[time]) {
-      //           !this.finalData[time][key] && (this.finalData[time][key] = []);
-      //           this.finalData[time][key].push(item);
-      //         } else {
-      //           this.finalData[time] = { date: time };
-      //           this.finalData[time][key] = [item];
-      //         }
-      //         if (~attr.indexOf("SLT")) {
-      //           !this.finalData[time].qj && (this.finalData[time].qj = []);
-      //           this.finalData[time].qj.push(qjTempArr[index]);
-      //         }
-      //       });
-      //     } else {
-      //       let time;
-      //       if (attrValue.split("_")[1]) {
-      //         time = attrValue.split("_")[1].split(".")[0];
-      //         if (!this.finalData[time]) {
-      //           this.finalData[time] = { date: time };
-      //         }
-      //       } else {
-      //         time = "20200101";
-      //         this.finalData[time] = { date: time };
-      //       }
-      //       this.finalData[time][key] = [attrValue];
-      //       if (~attr.indexOf("SLT")) {
-      //         this.finalData[time].qj = [QJStr];
-      //       }
-      //     }
-      //   }
-      // }
     },
     creatQrCode() {
       document.getElementById("qrcode").innerHTML = "";
@@ -676,8 +651,11 @@ export default {
       this.closeSP()
       this.closeViewer()
       this.isShow = false;
+      !this.$parent.showSign && (this.$parent.showSign = true)
+      !this.$parent.showMapTool && (this.$parent.showMapTool = true)
     },
     openQJ(index) {
+      console.log('showLarge', this.showLarge)
       this.closeSP();
       this.closeViewer();
       if (this.showLarge) {
@@ -704,11 +682,29 @@ export default {
       this.srcList = list.map((item) => {
         return `${MediaServer}/${item}`;
       });
-      this.srcIndex = index;
-      this.showViewer = true;
+      if (this.showLarge) {
+        this.$bus.$emit("open-rightPreview", {
+          value: this.srcList,
+          index
+        });
+      } else {
+        this.closeJGTViewer();
+        this.srcIndex = index;
+        this.showViewer = true;
+      }
+    },
+    onJGTPreview(list, index) {
+      this.closeQJ();
+      this.closeSP();
+      this.jgtIndex = index;
+      this.showJGTViewer = true;
+      !this.showLarge && this.closeViewer();
     },
     closeViewer() {
       this.showViewer = false;
+    },
+    closeJGTViewer() {
+      this.showJGTViewer = false;
     },
     handlePlay(e) {
       this.closeViewer();

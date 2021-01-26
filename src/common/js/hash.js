@@ -37,15 +37,15 @@ export const commonDetailHideField = [
 
 // 滑动组件按钮
 export const topBtns = [{
-        id: "overview",
+        id: "overallViews",
         label: "全景",
     },
     {
-        id: "video",
+        id: "videos",
         label: "视频",
     },
     {
-        id: "photo",
+        id: "photos",
         label: "图片",
     }
 ];

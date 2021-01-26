@@ -41,18 +41,18 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  }
-  if (to.name !== 'login') {
-    if (store.state.login.username) {
-      next()
-    } else {
-      next(`/login?redirect=${to.name}`)
-    }
-  }
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.title) {
+//     document.title = to.meta.title;
+//   }
+//   if (to.name !== 'login') {
+//     if (store.state.login.username) {
+//       next()
+//     } else {
+//       next(`/login?redirect=${to.name}`)
+//     }
+//   }
+//   next()
+// })
 
 export default router;

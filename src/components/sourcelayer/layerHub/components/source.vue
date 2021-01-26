@@ -412,8 +412,8 @@ export default {
 
       // 定位图标，详情变换
       this.$parent.$parent.addLocationIcon(item.geometry, item.id);
+      this.$parent.$parent.$refs.commonDetailPopup.closePopup();
       this.$parent.$parent.$refs.projectDetailPopup.getForceEntity(item);
-      this.$parent.$parent.$refs.commonDetailPopup.closePopup();  
 
       window.earth.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(x, y, 450),

@@ -19,12 +19,12 @@
                   v-for="(item, index) in topBtns"
                   :key="index"
                   class="btn-type"
-                  :disabled="!currentData[item.id] || !currentData[item.id].length"
+                  :disabled="!detailData[item.id] || !detailData[item.id].length"
                   :class="{
                     active: currentShow == item.id,
-                    disabled: !currentData[item.id] || !currentData[item.id].length,
+                    disabled: !detailData[item.id] || !detailData[item.id].length,
                   }"
-                  @click="currentShow = item.id"
+                  @click="onTypeClick(item.id)"
                 >
                   <span>{{ item.label }}</span>
                 </button>
@@ -36,7 +36,7 @@
                     ref="SwiperMedia"
                     class="swiper-wrapper swiper-tool"
                     :options="swiperOption"
-                    v-show="currentShow == 'overview'"
+                    v-show="currentShow == 'overallViews'"
                   >
                     <swiper-slide
                       v-for="(item, i) in currentData.thumbs"
@@ -61,10 +61,10 @@
                     ref="SwiperMedia"
                     class="swiper-wrapper swiper-tool"
                     :options="swiperOption"
-                    v-show="currentShow == 'video'"
+                    v-show="currentShow == 'videos'"
                   >
                     <swiper-slide
-                      v-for="(item, i) in currentData.video"
+                      v-for="(item, i) in currentData.videos"
                       :key="i"
                       class="swiper-item"
                     >
@@ -76,7 +76,7 @@
                         muted
                       ></video>
                     </swiper-slide>
-                    <swiper-slide class="swiper-item" v-if="!currentData.video">
+                    <swiper-slide class="swiper-item" v-if="!currentData.videos">
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
                     <div class="swiper-scrollbar" slot="scrollbar"></div>
@@ -86,19 +86,19 @@
                     ref="SwiperMedia"
                     class="swiper-wrapper swiper-tool"
                     :options="swiperOption"
-                    v-show="currentShow == 'photo'"
+                    v-show="currentShow == 'photos'"
                   >
                     <swiper-slide
-                      v-for="(item, i) in currentData.photo"
+                      v-for="(item, i) in currentData.photos"
                       :key="i"
                       class="swiper-item"
                     >
                       <el-image
                         :src="`${MediaServer}/${item}`"
-                        @click="onPreview(currentData.photo, i)"
+                        @click="onPreview(currentData.photos, i)"
                       ></el-image>
                     </swiper-slide>
-                    <swiper-slide class="swiper-item" v-if="!currentData.photo">
+                    <swiper-slide class="swiper-item" v-if="!currentData.photos">
                       <div class="no-tip">暂无数据</div>
                     </swiper-slide>
                     <div class="swiper-scrollbar" slot="scrollbar"></div>
@@ -372,7 +372,6 @@ export default {
       topBtns,
       swiperOption,
       progressImgHash,
-
       resourceType: "",
       forceEntity: {},
       detailData: {},
@@ -381,24 +380,19 @@ export default {
       finalList: [],
       currentData: {},
       currentIndex: 0,
-      currentShow: "overview",
-
+      currentShow: "overallViews",
       viewerShow: false,
       imgList: [],
       imgIndex: 0,
       overviewUrl: "",
       overShow: false,
-
       isSearch: false,
-
       currentYear: "",
       currentMonth: "",
       currentDay: "",
       JHGTState: 0, // 1已贯通、2小于三个月、3大于三个月
-
       dorate: false,
       commentList: [],
-      // value1: 4,
       inputStar: null,
       inputComment: "",
     };
@@ -423,7 +417,6 @@ export default {
   methods: {
     // 判断 断点当前状态
     getJHGTState() {
-      // let JHGTSJ = this.forceEntity.attributes.JHGTSJ
       let JHGTSJ = this.detailData.consdatee;
       let y = JHGTSJ.substr(0, 4);
       let m = JHGTSJ.substr(5, 2);
@@ -467,11 +460,6 @@ export default {
 
     // 获取选中对象
     getForceEntity(entity) {
-      // this.name = entity.name;
-      // this.forceEntity = entity;
-      // this.infoShow = true;
-      // this.currentIndex = 0;
-
       console.log("aaa", entity);
       if (entity.attributes) {
         this.resourceType = entity.attributes.RESOURCE_TYPE;
@@ -495,7 +483,7 @@ export default {
       this.inputComment = "";
       this.inputStar = null;
       this.currentIndex = 0;
-      this.currentShow = "overview";
+      this.currentShow = "overallViews";
 
       this.currentData = {};
       this.finalData = {};
@@ -513,21 +501,10 @@ export default {
         console.log("detailData", this.detailData);
         this.fixData();
         this.getCommentList();
-        // this.projectId = this.detailData.extraId;
         if (this.resourceType == "greenway_all") {
           this.getJHGTState();
         }
       }
-
-      // this.fixData("PHOTO", "photo");
-      // this.fixData("JGT", "photo");
-      // this.fixData("QJSLT", "thumbs");
-      // this.fixData("SP", "video");
-
-      // this.finalList = Object.values(this.finalData).reverse();
-      // if (this.finalList.length) {
-      //   this.currentData = this.finalList[this.currentIndex];
-      // }
     },
 
     // // 组装数据
@@ -539,14 +516,14 @@ export default {
         overallViews.forEach((item) => {
           let time = item.shotTime || "2020-01-01";
           if (this.finalData[time]) {
-            !this.finalData[time].overview &&
-              (this.finalData[time].overview = []);
+            !this.finalData[time].overallViews &&
+              (this.finalData[time].overallViews = []);
             !this.finalData[time].thumbs && (this.finalData[time].thumbs = []);
-            this.finalData[time].overview.push(item.path);
+            this.finalData[time].overallViews.push(item.path);
             this.finalData[time].thumbs.push(item.thumbnail);
           } else {
             this.finalData[time] = { date: time };
-            this.finalData[time].overview = [item.path];
+            this.finalData[time].overallViews = [item.path];
             this.finalData[time].thumbs = [item.thumbnail];
           }
         });
@@ -554,31 +531,31 @@ export default {
         videos.forEach((item) => {
           let time = item.shotTime || "2020-01-01";
           if (this.finalData[time]) {
-            !this.finalData[time].video && (this.finalData[time].video = []);
-            this.finalData[time].video.push(item.path);
+            !this.finalData[time].videos && (this.finalData[time].videos = []);
+            this.finalData[time].videos.push(item.path);
           } else {
             this.finalData[time] = { date: time };
-            this.finalData[time].video = [item.path];
+            this.finalData[time].videos = [item.path];
           }
         });
       photos &&
         photos.forEach((item) => {
           let time = item.shotTime || "2020-01-01";
           if (this.finalData[time]) {
-            !this.finalData[time].photo && (this.finalData[time].photo = []);
-            this.finalData[time].photo.push(item.path);
+            !this.finalData[time].photos && (this.finalData[time].photos = []);
+            this.finalData[time].photos.push(item.path);
           } else {
             this.finalData[time] = { date: time };
-            this.finalData[time].photo = [item.path];
+            this.finalData[time].photos = [item.path];
           }
         });
       console.log("finalData!!!!!!!!", this.finalData);
       this.finalList = Object.values(this.finalData);
       this.finalList.sort((a, b) => {
         if (a.date < b.date) {
-          return -1;
-        } else if (a.date > b.date) {
           return 1;
+        } else if (a.date > b.date) {
+          return -1;
         } else {
           return 0;
         }
@@ -586,61 +563,21 @@ export default {
       console.log("finalList", this.finalList);
       if (this.finalList.length) {
         this.currentData = this.finalList[this.currentIndex];
+        console.log('currentData', this.currentData)
       }
-      //   if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
-      //     const overViewStr =
-      //       this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ;
-      //     const sArr =
-      //       overViewStr && ~overViewStr.indexOf(";")
-      //         ? overViewStr.split(";")
-      //         : [];
-      //     const attrVal = this.forceEntity.attributes[attr];
+    },
 
-      //     if (attrVal) {
-      //       if (~attrVal.indexOf(";")) {
-      //         const tmp = attrVal.split(";");
-      //         tmp.forEach((item, index) => {
-      //           if (item.split("_")[1]) {
-      //             let time = item.split("_")[1].split(".")[0];
-      //             if (this.finalData[time]) {
-      //               if (!this.finalData[time][key]) {
-      //                 this.finalData[time][key] = [];
-      //               }
-      //               this.finalData[time][key].push(item);
-      //             } else {
-      //               this.finalData[time] = { date: time };
-      //               this.finalData[time][key] = [item];
-      //             }
-      //             if (~attr.indexOf("SLT")) {
-      //               this.finalData[time].overview = [sArr[index]];
-      //             }
-      //           } else {
-      //             let time = "20200101";
-      //             this.finalData[time] = { date: time };
-      //             this.finalData[time][key] = [];
-      //             this.finalData[time][key].push(item);
-      //             if (~attr.indexOf("SLT")) {
-      //               this.finalData[time].overview = [];
-      //               this.finalData[time].overview.push(sArr[index]);
-      //             }
-      //           }
-      //         });
-      //       } else {
-      //         let time = undefined;
-      //         if (attrVal.split("_")[1]) {
-      //           time = attrVal.split("_")[1].split(".")[0];
-      //           if (!this.finalData[time]) this.finalData[time] = { date: time };
-      //         } else {
-      //           time = "20200101";
-      //           this.finalData[time] = { date: time };
-      //         }
-      //         this.finalData[time][key] = [attrVal];
-      //         if (~attr.indexOf("SLT")) {
-      //           this.finalData[time].overview = [overViewStr];
-      //         }
-      //       }
-      //     }
-      //   }
+    onTypeClick(type) {
+      if (!this.currentData[type]) {
+        for (let i = 0; i < this.finalList.length; i++) {
+          if (this.finalList[i][type]) {
+            this.currentIndex = i;
+            this.$refs.SwiperTime.swiper.slideTo(i, 0, false);
+            break;
+          }
+        }
+      }
+      this.currentShow = type;
     },
 
     async getCommentList() {
@@ -680,7 +617,7 @@ export default {
     // 打开全景
     openOverview(index) {
       this.closeViewer();
-      this.overviewUrl = this.currentData.overview[index];
+      this.overviewUrl = this.currentData.overallViews[index];
       this.overShow = true;
     },
 
@@ -703,14 +640,24 @@ export default {
       this.currentData = this.finalList[val];
     },
     currentData(val) {
-      this.currentShow = val.overview
-        ? "overview"
-        : val.video
-        ? "video"
-        : "photo";
+      if (!val[this.currentShow]) {
+        if (val.overallViews) {
+          this.currentShow = "overallViews";
+          return;
+        }
+        if (val.videos) {
+          this.currentShow = "videos";
+          return;
+        }
+        if (val.photos) {
+          this.currentShow = "photos";
+          return;
+        }
+      }
     },
     currentShow(val) {
-      if (val != "video") {
+      console.log('??????', val)
+      if (val != "videos") {
         const video = document.getElementById("video");
         if (video) video.pause();
       }

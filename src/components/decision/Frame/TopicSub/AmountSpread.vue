@@ -11,7 +11,7 @@
       <div class="count-item" v-for="(item, index) in amountData" :key="index">
         <div class="name">{{ item.name }}</div>
         <div class="number" :class="{ red: index <= 2, blue: index >= 3 }">
-          {{ parseInt(item.num / 10000) }}
+          {{ (item.num / 10000).toFixed(1) }}
         </div>
       </div>
     </div>
@@ -72,11 +72,13 @@ export default {
     };
   },
   methods: {
-    async getAmountCount(year, child) {
+    async getAmountCount(year) {
+      this.amountData = []
       let res = await countProjectAmound({
         tag: year,
       });
       if (res.code == 200) {
+        console.log('aaaaaaaa', res.result)
         let index = res.result.findIndex((item) => {
           return item.name == "指挥部";
         });
@@ -91,7 +93,7 @@ export default {
             return 0;
           }
         });
-        this.currentChild = child;
+        console.log('bbbbb', this.amountData)
       }
     },
     async getAoumtList(year) {
@@ -100,7 +102,7 @@ export default {
         status,
         pageNo: 1,
         pageSize: 9999,
-        tag: year,
+        tag: `*${year}*`,
         column: "totalamount",
         order: "desc",
       });
@@ -111,12 +113,14 @@ export default {
     async addHeatMap() {
       switchHeatMap(false, "k2");
       switchHeatMap(false, "k3");
+      switchHeatMap(false, "k4");
+      switchHeatMap(false, "k5");
       const { result } = await this.fetchProjectData();
       console.log("resultttt", result);
       let smallHeatArr = [];
       let bigHeatArr = [];
       result.features.forEach((v) => {
-        if (v.attributes.TAG == this.currentYear) {
+        if (~v.attributes.TAG.indexOf(this.currentYear)) {
           if (v.attributes.TOTALAMOUNT <= 3000) {
             smallHeatArr.push([
               v.geometry.x,
@@ -135,8 +139,14 @@ export default {
       });
       console.log("smallHeatArr???", smallHeatArr);
       console.log("bigHeatArr???", bigHeatArr);
-      switchHeatMap(true, "k1", smallHeatArr, 30, 3000);
-      switchHeatMap(true, "k2", bigHeatArr, 3000, 300000);
+      if (this.currentYear == 2020) {
+        switchHeatMap(true, "k2", smallHeatArr, 30, 3000);
+        switchHeatMap(true, "k3", bigHeatArr, 3000, 300000);
+      }
+      if (this.currentYear == 2021) {
+        switchHeatMap(true, "k4", smallHeatArr, 30, 3000);
+        switchHeatMap(true, "k5", bigHeatArr, 3000, 300000);
+      }
     },
     // 获取项目数据
     fetchProjectData() {
@@ -173,11 +183,14 @@ export default {
       } else {
         switchHeatMap(false, "k2");
         switchHeatMap(false, "k3");
+        switchHeatMap(false, "k4");
+        switchHeatMap(false, "k5");
       }
     },
     currentYear(val) {
       this.getAoumtList(val);
-      this.getAmountCount(this.currentYear, "项目投资额分布");
+      this.getAmountCount(this.currentYear);
+      this.addHeatMap();
     },
   },
 };

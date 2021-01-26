@@ -29,10 +29,10 @@
       .children-list {
         position: absolute;
         left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-        top: -35%;
-        padding: 0 8px;
-        width: 70%;
+        transform: translateX(-50%);
+        bottom: 105%;
+        padding: 0 7px;
+        width: 80%;
         background-color: rgba(15, 77, 216, 0.5);
         border-radius: 10px;
         .children-item {
@@ -49,6 +49,16 @@
         color: #00e2ff;
       }
     }
+  }
+  .right-container {
+    display: flex;
+    position: fixed;
+    right: 3.45vh;
+    top: 10%;
+    bottom: 8%;
+    // padding: 6px;
+    // width: 40vh;
+    // background-color: rgba(0, 0, 0, 0.6);
   }
   .analyze {
     position: fixed;
@@ -85,7 +95,7 @@
           left: 50%;
           transform: translateX(-50%);
           font-family: YouSheBiaoTiHei;
-          font-size: 4vh;
+          font-size: 3.4vh;
           color: #fff;
           .unit {
             font-family: YouSheBiaoTiHei;
@@ -220,11 +230,11 @@
       }
     }
   }
-  .delay, .problem, .amount-spread {
-    position: fixed;
-    right: 1%;
-    top: 10%;
-    bottom: 10%;
+  .delay, .problem, .amount-spread, .proj-spread {
+    // position: fixed;
+    // right: 1%;
+    // top: 10%;
+    // bottom: 8%;
     padding: 6px;
     width: 40vh;
     background-color: rgba(0, 0, 0, 0.6);
@@ -339,14 +349,16 @@
     }
   }
   .proj-spread {
-    position: fixed;
-    right: 1%;
-    top: 10%;
-    bottom: 3%;
+    // position: fixed;
+    // right: 1%;
+    // top: 10%;
+    // bottom: 3%;
     padding: 10px 20px;
-    width: 40vh;
-    background-color: rgba(0, 0, 0, 0.6);
+    // width: 40vh;
+    // background-color: rgba(0, 0, 0, 0.6);
     .content {
+      margin-top: 4vh;
+      height: 72vh;
       .rank-item {
         display: flex;
         align-items: center;
@@ -479,4 +491,23 @@
     margin-top: 2vh;
     text-align: center;
   }
+}
+
+.popup-open {
+  width: 4.2vh;
+  height: 4.2vh;
+  .bg-image("./images/topic-popup-open");
+  cursor: pointer;
+  z-index: 99;
+}
+
+.popup-close {
+  width: 1.65vh;
+  height: 1.65vh;
+  position: absolute;
+  top: 1.25vh;
+  right: 1.25vh;
+  .bg-image("./images/topic-popup-close");
+  cursor: pointer;
+  z-index: 99;
 }

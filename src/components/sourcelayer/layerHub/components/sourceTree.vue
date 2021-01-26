@@ -79,6 +79,7 @@ export default {
         eventListeners: {
           processCompleted: async (res) => {
             const fields = await getIserverFields(src, datasetName);
+            console.log('fieldssssssssssss', fields)
             treeDrawTool(this, res, node, fields, fn);
           },
           processFailed: (msg) => console.log(msg),
@@ -115,6 +116,7 @@ export default {
                 })
               );
               item.alpha && (this.tileLayers[item.name].alpha = item.alpha);
+              window.earth.imageryLayers.lower(this.tileLayers[item.name]);
             }
           });
         }

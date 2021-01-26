@@ -2,6 +2,7 @@
   <div class="analyze">
     <img class="bg" src="../images/analyze-bg.png" />
     <div class="top">
+      <div class="top-title">项目评分</div>
       <el-select
         class="analyze-select"
         v-model="zrdwValue"
@@ -163,6 +164,13 @@ export default {
     top: -5%;
     left: 50%;
     transform: translateX(-50%);
+    .top-title {
+      margin-top: -30px;
+      font-family: YouSheBiaoTiHei;
+      font-size: 2.8vh;
+      text-align: center;
+      color: #fff;
+    }
   }
   .content {
     position: absolute;
@@ -192,6 +200,12 @@ export default {
           vertical-align: middle;
         }
       }
+    }
+  }
+  .analyze-select {
+    width: 120px;
+    /deep/ .el-input__inner {
+      text-align: center;
     }
   }
 }

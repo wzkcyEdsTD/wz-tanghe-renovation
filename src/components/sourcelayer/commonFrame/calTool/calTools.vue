@@ -248,6 +248,7 @@ export default {
       return { x: x, y: y };
     },
     fetchFromDataSets(geometry) {
+      console.log('geometry', geometry)
       return new Promise((resolve, reject) => {
         const getFeaturesByGeometryService = new SuperMap.REST.GetFeaturesByGeometryService(
           ServiceUrl.FEATUREMVT,

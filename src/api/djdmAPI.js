@@ -2,6 +2,7 @@
 import axios from "axios";
 // axios.defaults.baseURL = (process.env.NODE_ENV === 'development') ? '/djdmApi' : ''
 const serverInstanec = axios.create();
+const BASEURL = "http://172.20.83.227:8080"
 
 /**
  * axios default
@@ -19,7 +20,7 @@ const getAxios = (url = "", data = {}) => {
  * @param {*} id
  */
 export const queryInfoByid = (id) => {
-  const URL = `/details/${id}`;
+  const URL = `${BASEURL}/tanghe/front/resourceProject/queryDetailsId?id=${id}`;
   return getAxios(URL);
 };
 
@@ -28,7 +29,7 @@ export const queryInfoByid = (id) => {
  * @param {*} id
  */
 export const queryDetailByid = (id) => {
-  const URL = `/details/project/${id}`;
+  const URL = `${BASEURL}/tanghe/front/resourceProject/queryDetailProjectId?id=${id}`;
   return getAxios(URL);
 };
 
@@ -37,6 +38,6 @@ export const queryDetailByid = (id) => {
  * @param {*} code
  */
 export const queryDetailBycode = (code) => {
-  const URL = `/details/byCoding/${code}`;
+  const URL = `${BASEURL}/tanghe/front/resourceProject/queryDetailsByCoding?id=${code}`;
   return getAxios(URL);
 };

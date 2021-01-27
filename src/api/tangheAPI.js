@@ -1,6 +1,6 @@
 import { get, post, postRequest, uploadFileRequest, getRequest, putRequest, deleteRequest } from 'api/utils'
 
-let BASEURL = "http://172.20.83.227:8080"
+const BASEURL = "http://172.20.83.227:8080"
 // let BASEURL = "/api"
 
 // 项目统计

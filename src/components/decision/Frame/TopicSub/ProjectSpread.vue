@@ -89,7 +89,7 @@ export default {
         this.currentChild = child;
       }
     },
-    async addHeatMap(type) {
+    async addHeatMap() {
       const { result } = await this.fetchProjectData();
       console.log("resultttt", result);
       let areaArr = [];

@@ -267,20 +267,20 @@ export default {
       const { x, y } = geometry;
 
       const datasource = window.earth.dataSources.getByName("buffer")[0];
-      const circleEntity = new Cesium.Entity({
-        position: Cesium.Cartesian3.fromDegrees(x, y, 0),
-        ellipse: {
-          semiMinorAxis: 200,
-          semiMajorAxis: 200,
-          height: 0,
-          material: Cesium.Color.fromCssColorString("#A0F4FF").withAlpha(0.6),
-          outline: true,
-          outlineWidth: 4,
-          outlineColor: Cesium.Color.WHITE,
-        },
-        id: "circle",
-      });
-      datasource.entities.add(circleEntity);
+      // const circleEntity = new Cesium.Entity({
+      //   position: Cesium.Cartesian3.fromDegrees(x, y, 0),
+      //   ellipse: {
+      //     semiMinorAxis: 200,
+      //     semiMajorAxis: 200,
+      //     height: 0,
+      //     material: Cesium.Color.fromCssColorString("#A0F4FF").withAlpha(0.6),
+      //     outline: true,
+      //     outlineWidth: 4,
+      //     outlineColor: Cesium.Color.WHITE,
+      //   },
+      //   id: "circle",
+      // });
+      // datasource.entities.add(circleEntity);
 
       const pointEntity = new Cesium.Entity({
         position: Cesium.Cartesian3.fromDegrees(x, y, 0),

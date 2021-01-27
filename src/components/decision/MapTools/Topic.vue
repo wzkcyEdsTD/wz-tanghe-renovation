@@ -255,6 +255,7 @@ export default {
     },
     superviseHandle(check) {
       window.billboardMap["项目"]._billboards.map((v) => (v.show = false));
+
       // if (window.billboardMap["supervise"]) {
       //   window.billboardMap["supervise"]._billboards.map(
       //     (v) => (v.show = check)

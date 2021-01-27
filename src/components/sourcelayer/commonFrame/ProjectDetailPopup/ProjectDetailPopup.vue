@@ -420,7 +420,7 @@
       <i class="close" @click="closeSP"></i>
       <video id="content" :src="SPURL" controls="controls" autoplay muted></video>
     </div>
-    <ProjectInfoPopup v-if="showInfo" :id="projectId" />
+    <ProjectInfoPopup ref="ProjectInfoPopup" :id="projectId" />
   </div>
 </template>
 
@@ -505,7 +505,7 @@ export default {
       SPURL: "",
       date: "",
       projectId: "",
-      showInfo: false,
+      // showInfo: false,
       showQRcode: false
     };
   },
@@ -754,12 +754,13 @@ export default {
       if (!this.projectId) {
         return this.$message("暂无更多数据");
       }
-      this.showInfo = true;
+      // this.showInfo = true;
+      this.$refs.ProjectInfoPopup.getDetail()
     },
 
-    closeInfo() {   // 父级页面使用
-      this.showInfo = false;
-    }
+    // closeInfo() {   // 父级页面使用
+    //   this.showInfo = false;
+    // }
   },
   watch: {
     currentIndex(val) {

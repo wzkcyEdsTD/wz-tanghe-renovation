@@ -88,7 +88,6 @@ export default {
       getFeatureBySQLService.processAsync(getFeatureBySQLParams);
     },
     nodeCheckChange(node, checked) {
-      console.log('gogogo', node, checked)
       if (node.children) {
         return
       }

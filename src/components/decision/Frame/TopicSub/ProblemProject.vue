@@ -40,7 +40,7 @@
             v-for="(item, index) in currentList"
             :key="index"
           >
-            <span class="flex2">{{ item.name }}</span>
+            <span class="flex2" :title="item.name">{{ item.name }}</span>
             <span class="content">{{ item.problem || "-" }}</span>
           </li>
           <p class="no-data" v-show="!currentList.length">暂无数据</p>
@@ -96,7 +96,6 @@ export default {
       });
       if (res.code == 200) {
         this.projectList = res.result;
-        console.log("yesssssssss", window.featureMap);
         let tempArr = [];
         for (let key in window.featureMap["项目"]) {
           let item = window.featureMap["项目"][key];

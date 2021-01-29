@@ -4,34 +4,40 @@
     <div class="left-wrapper" >
       <div class="switch-menu-wrapper">
         <div class="switch-menu-container">
-          <span :class="{active: selected=='synopsis'}" @click="switchMenu('synopsis')">塘河简介</span>
-          <span :class="{active: selected=='source'}" @click="switchMenu('source')">资源目录</span>
+          <span class="synopsis" :class="{active: selected=='synopsis'}" @click="switchMenu('synopsis')">塘河简介</span>
+          <span class="source" :class="{active: selected=='source'}" @click="switchMenu('source')">资源目录</span>
         </div>
-        <div class="switch-menu-decorate"></div>
+        <!-- <div class="switch-menu-decorate"></div> -->
       </div>
       <SourceTree ref="SourceTree" v-show="selected=='source'" />
       <Synopsis v-show="selected=='synopsis'" />
     </div>
     <div class="right-wrapper">
-      <div class="box">
-        <div class="buttonpd" :class="{active: currentType=='summary'}" @click="currentType='summary'">
-          <div class="tp">
-            <img src="./images/组合.png" alt="" v-if="currentType=='summary'" class="tupianxuanzhong"/>
-            <img src="./images/button.png" alt="" v-if="currentType=='source'"   class="tupian"/>
-            <span class="button">总览</span>
+      <div class="right-box">
+        <div class="btn-box">
+          <div class="buttonpd" :class="{active: currentType=='summary'}" @click="currentType='summary'">
+            <!-- <div class="tp">
+              <img src="./images/组合.png" alt="" v-if="currentType=='summary'" class="tupianxuanzhong"/>
+              <img src="./images/button.png" alt="" v-if="currentType=='source'"   class="tupian"/>
+              <span class="button">总览</span>
+            </div> -->
+            总览
+          </div>
+          <div class="buttonpd" :class="{active: currentType=='source'}" @click="currentType='source'">
+            <!-- <div class="tp">
+              <img src="./images/组合.png" alt="" v-if="currentType=='source'" class="tupianxuanzhong"/>
+              <img src="./images/button.png" alt="" v-if="currentType=='summary'" class="tupian"/>
+              <span class="button">资源</span>
+            </div> -->
+            资源
           </div>
         </div>
-        <div class="buttonpd" :class="{active: currentType=='source'}" @click="currentType='source'">
-          <div class="tp">
-            <img src="./images/组合.png" alt="" v-if="currentType=='source'" class="tupianxuanzhong"/>
-            <img src="./images/button.png" alt="" v-if="currentType=='summary'" class="tupian"/>
-            <span class="button">资源</span>
-          </div>
+        <!-- <img src="./images/switch-decorate.png" class="zhuangshi"/> -->
+        <div class="right-content">
+          <Summary v-show="currentType == 'summary'" />
+          <Source v-show="currentType == 'source'" />
         </div>
       </div>
-      <img src="./images/switch-decorate.png" class="zhuangshi"/>
-      <Summary v-show="currentType == 'summary'" />
-      <Source v-show="currentType == 'source'" />
     </div>
     <div class="select-wrapper" v-show="showSelect">
       <el-select class="filter-select" v-show="menu=='shipin'||menu=='quanjin'" style="width:90px;" v-model="yearValue" placeholder="年份" @change="changeYear">

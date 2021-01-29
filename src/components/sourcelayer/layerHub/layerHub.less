@@ -6,9 +6,10 @@
     left      : 0vh;
     bottom: 0;
     // width: 40vh;
-    width: 20%;
+    width: 19%;
     padding-top: 3vh;
     padding-left: 1%;
+    padding-right: 1%;
     background-color: #040D33;
     .switch-menu-wrapper {
       margin-bottom: 1vh;
@@ -16,9 +17,9 @@
       .switch-menu-container {
         width: 34vh;
         height: 4vh;
-        cursor: pointer;
-        .bg-image('./images/switch-bg');
+        // .bg-image('./images/switch-bg');
         display: flex;
+        margin: 0 auto;
         >span {
           flex: 1;
           line-height: 4vh;
@@ -26,9 +27,22 @@
           font-size: 3vh;
           color: #fff;
           opacity: .5;
+          cursor: pointer;
           &.active {
             opacity: 1;
             font-size: 3vh;
+          }
+        }
+        .synopsis {
+          .bg-image('./images/synopsis');
+          &.active {
+            .bg-image('./images/synopsis-active');
+          }
+        }
+        .source {
+          .bg-image('./images/source');
+          &.active {
+            .bg-image('./images/source-active');
           }
         }
       }
@@ -46,7 +60,7 @@
     top: 5vh;
     bottom: 0;
     right: 0;
-    padding: 3vh 2vh 0 2vh;
+    padding: 3vh 1vh 0 1vh;
     width: 40vh;
     background-color: #040D33;
     color: white;
@@ -54,59 +68,39 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     z-index: 999;
-    .ding {
-      padding-top: 1vh;
+    .right-box {
+      position: relative;
+      height: 97%;
+      padding: 1vh 1vh 1vh 1.5vh;
+      border: 1px solid #1b4762;
     }
-    .ssj{
-      padding-top: 1.4vh
-    }
-    .box {
+    .btn-box {
+      position: absolute;
+      top: -2vh;
+      right: 0;
+      padding: 0 2vh;
+      width: 55%;
+      height: 4vh;
+      .bg-image('./images/btnbox-bg');
       display: flex;
-      flex-direction: row;
-    }
-    .buttonpd {
-      padding-right: 5vh;
-      cursor: pointer;
-      &.active {
-        .button {
-          top: 40%;
+      align-items: center;
+      .buttonpd {
+        flex: 1;
+        text-align: center;
+        font-size: 2.4vh;
+        font-family: YouSheBiaoTiHei;
+        opacity: 0.5;
+        cursor: pointer;
+        &.active {
+          opacity: 1;
+          text-shadow: 0px 5px 20px #fff;
         }
       }
     }
-    .tp {
-      position: relative;
-    }
-    .button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1.6vh;
-    }
-    .tupian{
-      width: 9vh;
-      height: 4vh;
-    }
-    .tupianxuanzhong{
-      width: 11vh;
-      height: 4.5vh;
-    }
-    .zhuangshi {
-      margin-top: 1vh;
-      width: 38vh;
-      height: 0.8vh;
-      transform: rotateY(180deg);
+    .right-content {
+      margin-top: 2vh;
     }
   }
-  // .sign-wrapper {
-  //   z-index: 999;
-  //   position: absolute;
-  //   bottom: 1vh;
-  //   right: 25%;
-  //   >img {
-  //     width: 15vh;
-  //   }
-  // }
   .select-wrapper {
     z-index: 999;
     position: absolute;

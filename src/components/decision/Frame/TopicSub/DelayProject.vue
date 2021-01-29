@@ -38,7 +38,7 @@
             v-for="(item, index) in currentList"
             :key="index"
           >
-            <span class="flex2">{{ item.name }}</span>
+            <span class="flex2" :title="item.name">{{ item.name }}</span>
             <span class="content">{{ item.consdates || "-" }}</span>
             <span class="content">{{ item.consdatee || "-" }}</span>
             <span class="flex2">{{ item.status }}</span>

@@ -256,13 +256,6 @@ export default {
     superviseHandle(check) {
       window.billboardMap["项目"]._billboards.map((v) => (v.show = false));
 
-      // if (window.billboardMap["supervise"]) {
-      //   window.billboardMap["supervise"]._billboards.map(
-      //     (v) => (v.show = check)
-      //   );
-      // } else if (check && !window.billboardMap["supervise"]) {
-      //   this.addProjectLayer();
-      // }
       if (check) {
         this.addProjectLayer();
       } else {

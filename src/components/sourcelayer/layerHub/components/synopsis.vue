@@ -1,10 +1,10 @@
 <template>
   <div class="rightSummary">
     <div class="frame_">
-      <div class="title-wrapper">
+      <!-- <div class="title-wrapper">
         <span class="pre"></span>
         <span class="title">温瑞塘河</span>
-      </div>
+      </div> -->
       <div class="wenzi">
         <!-- <div class="jianju">
             <span class="xbt">简介</span>
@@ -18,8 +18,10 @@
           src="static/video/温瑞塘河.mp4"
         ></video>
         <div class="jianju">
-          <span class="xbt">流域</span>
-          <img src="../images/装饰.png" alt="" class="zs" />
+          <div class="xbt">流 域</div>
+          <div class="zs">
+            <img src="../images/装饰.png" alt="" />
+          </div>
         </div>
         <div class="box">
           <div class="left1">
@@ -57,9 +59,15 @@
           </div>
         </div>
       </div>
-      <div class="title-wrapper">
+      <!-- <div class="title-wrapper">
         <span class="pre"></span>
         <span class="title">温瑞塘河航道</span>
+      </div> -->
+      <div class="jianju">
+        <div class="xbt">温瑞塘河航道</div>
+        <div class="zs">
+          <img src="../images/装饰.png" alt="" />
+        </div>
       </div>
       <div class="zsj">
         <div class="ssj">
@@ -119,7 +127,6 @@ export default {
       }
       .title {
         display: block;
-        // height: 3.6vh;
         line-height: 3.6vh;
         font-family: YouSheBiaoTiHei;
         font-size: 3vh;
@@ -143,7 +150,6 @@ export default {
       .desc {
         margin-left: 4px;
         font-size: 11px;
-        // font-family: PingFang;
         color: #fff;
         opacity: .8;
       }
@@ -151,27 +157,26 @@ export default {
   }
   .left1 {
     margin-top: 1vh;
-    margin-right: 10vh;
-    height: 18vh;
+    margin-right: 8vh;
+    // height: 18vh;
     flex: 1;
     text-align: left;
     padding-left: 1vh;
   }
   .hangdao{
     width: 90%;
-    // width:35vh;
-    // height: 25vh;
   }
   .right1 {
     flex-shrink: 0;
     margin-top: 1vh;
-    height: 18vh;
+    // height: 18vh;
     flex: 1;
     text-align:left
   }
   .lybq {
     font-size: 2vh;
-    color: #2acbfe;
+    // color: #2acbfe;
+    color: #fff;
     font-family: DIN;
     line-height: 2vh;
   }
@@ -180,56 +185,72 @@ export default {
   }
   .lydw {
     font-size: 1.2vh;
-    color: #2acbfe;
+    color: #fff;
     font-family: DIN;
     line-height: 1.8vh;
   }
   .ly {
     font-size: 1.3vh;
-    color: #2acbfe;
+    color: #fff;
     font-family: DIN;
     line-height: 1.8vh;
     opacity: 1;
+    white-space: nowrap;
   }
   .lywz {
+    position: relative;
     font-size: 1.7vh;
     line-height: 2vh;
-    color: #ffffff;
+    color: #2acbfe;
     margin-bottom: 1vh;
+    &:before {
+      content: ' ';
+      position: absolute;
+      left: -12px;
+      top: 40%;
+      width: 5px;
+      height: 5px;
+      background-color: #2acbfe;
+      border-radius: 4px;
+    }
   }
   .lab {
     margin-bottom: 1vh;
     font-size: 1.5vh;
-    // width: 35vh;
-    color: #dedede;
+    color: #fff;
     line-height: 2vh;
     padding-top: 0.5vh;
     text-indent: 2em;
     text-align:left;
     padding-left: 1vh;
   }
-  .xbt {
-    font-size: 2vh;
-    font-family: YouSheBiaoTiHei;
-    line-height: 2vh;
-    color: #ffffff;
-    overflow-y: auto;
-    letter-spacing: 1.5vh;
-  }
-  .zs {
-    width: 70%;
-  }
   .wenzi {
     padding-left: 1vh;
   }
-  .jianju{
+  .jianju {
+    display: flex;
+    align-items: center;
     padding-top: 1vh;
-    text-align: left;
     padding-left: 1vh;
+    text-align: left;
+    .xbt {
+      font-size: 2vh;
+      font-family: YouSheBiaoTiHei;
+      line-height: 2vh;
+      color: #ffffff;
+      // letter-spacing: 1.5vh;
+    }
+    .zs {
+      flex: 1;
+      >img {
+        width: 100%;
+      }
+    }
   }
   .box {
     display: flex;
     flex-direction: row;
+    padding: 20px;
   }
   .zsj {
     padding-left: 1vh;
@@ -238,9 +259,7 @@ export default {
     padding-top: 1vh;
   }
   .sp {
-    // width: 35vh;
     width: 100%;
-    padding-right: 1vh;
   }
 }
 </style>

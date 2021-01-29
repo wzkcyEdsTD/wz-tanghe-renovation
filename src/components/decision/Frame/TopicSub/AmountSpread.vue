@@ -31,7 +31,7 @@
             v-for="(item, index) in amountList"
             :key="index"
           >
-            <span class="flex2">{{ item.name }}</span>
+            <span class="flex2" :title="item.name">{{ item.name }}</span>
             <span class="content">{{ item.totalamount.toFixed(1) }}万元</span>
             <span class="content">{{ item.sysOrgCode_dictText }}</span>
           </li>

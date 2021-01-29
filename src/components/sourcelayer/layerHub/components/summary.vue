@@ -10,8 +10,9 @@
           <div class="box">
             <div class="left">
               <div class="tp">
-                <img src="../images/zuo.png" alt="" class="quanquan" />
-                <span class="xmzs">{{projSum}}</span>
+                <!-- <img src="../images/zuo.png" alt="" class="quanquan" /> -->
+                <!-- <span class="xmzs">{{projSum}}</span> -->
+                {{projSum}}
               </div>
               <div class="yxxm">
                 <span class="yxwz">项目总数(个)</span>
@@ -19,8 +20,9 @@
             </div>
             <div class="right">
               <div class="tp">
-                <img src="../images/you.png" alt="" class="quanquan" />
-                <span class="xmzje">{{projAmountSum}}</span>
+                <!-- <img src="../images/you.png" alt="" class="quanquan" /> -->
+                <!-- <span class="xmzje">{{projAmountSum}}</span> -->
+                {{projAmountSum}}
               </div>
               <div class="yxxm">
                 <span class="yxwz">项目总金额(亿元)</span>
@@ -47,7 +49,7 @@
       <div class="kdjj">
         <div class="zsj">
           <div class="jianju">
-            <span class="xbt">断点预计完成情况</span>
+            <span class="xbt">断点建设情况</span>
             <!--                  <img src="../images/装饰.png" alt="" class="zs" />-->
             <div class="dw">
               <span class="smalls">单位：个(累计)</span>
@@ -79,9 +81,9 @@
       </div>
       <img src="../images/装饰1.svg" class="zxp" />
       <div class="ssj1">
-        <div class="uls">
-          <div class="left2">
-            <span class="jz">东线</span>
+        <div class="list">
+          <span class="jz">东线</span>
+          <div class="uls">
             <div class="xwz" @click="itemClick('世纪之光')">
               <img src="../images/世纪之光icon.svg" class="jz2" />
               <span class="sejdx">世纪之光</span>
@@ -91,57 +93,52 @@
               <span class="sejdx">蒲州新韵</span>
             </div>
           </div>
-          <img src="../images/直线12.svg" class="zx" />
-          <div class="left1">
-            <span class="jz">西线</span>
-            <div class="uls">
-              <div class="xwz" @click="itemClick('瞿溪溯源')">
-                <img src="../images/瞿溪溯源icon.svg" class="jz2" />
-                <span class="sejxx">瞿溪溯源</span>
-              </div>
-              <div class="xwz" @click="itemClick('仙门烟柳')">
-                <img src="../images/仙门烟柳icon.svg" class="jz2" />
-                <span class="sejxx">仙门烟柳</span>
-              </div>
+        </div>
+        <div class="list">
+          <span class="jz">西线</span>
+          <div class="uls">
+            <div class="xwz" @click="itemClick('瞿溪溯源')">
+              <img src="../images/瞿溪溯源icon.svg" class="jz2" />
+              <span class="sejxx">瞿溪溯源</span>
             </div>
-            <div class="uls">
-              <div class="xwz" @click="itemClick('镜湖古岸')">
-                <img src="../images/镜湖古岸icon.svg" class="jz2" />
-                <span class="sejxx">镜湖古岸</span>
-              </div>
-              <div class="xwz" @click="itemClick('会昌竞渡')">
-                <img src="../images/会昌竞渡icon.svg" class="jz2" />
-                <span class="sejxx">会昌竞渡</span>
-              </div>
+            <div class="xwz" @click="itemClick('仙门烟柳')">
+              <img src="../images/仙门烟柳icon.svg" class="jz2" />
+              <span class="sejxx">仙门烟柳</span>
+            </div>
+            <div class="xwz" @click="itemClick('镜湖古岸')">
+              <img src="../images/镜湖古岸icon.svg" class="jz2" />
+              <span class="sejxx">镜湖古岸</span>
+            </div>
+            <div class="xwz" @click="itemClick('会昌竞渡')">
+              <img src="../images/会昌竞渡icon.svg" class="jz2" />
+              <span class="sejxx">会昌竞渡</span>
             </div>
           </div>
         </div>
-        <div class="left3">
+        <div class="list">
           <span class="jz">南线</span>
           <div class="uls">
-            <div class="xwz1" @click="itemClick('南塘印象')">
+            <div class="xwz" @click="itemClick('南塘印象')">
               <img src="../images/南塘印象icon.svg" class="jz2" />
               <span class="sejnx">南塘印象</span>
             </div>
-            <div class="xwz1" @click="itemClick('南湖月色')">
+            <div class="xwz" @click="itemClick('南湖月色')">
               <img src="../images/南湖月色icon.svg" class="jz2" />
               <span class="sejnx">南湖月色</span>
             </div>
-            <div class="xwz1" @click="itemClick('浮岛帆游')">
+            <div class="xwz" @click="itemClick('浮岛帆游')">
               <img src="../images/浮岛帆游icon.svg" class="jz2" />
               <span class="sejnx">浮岛帆游</span>
             </div>
-          </div>
-          <div class="uls">
-            <div class="xwz1" @click="itemClick('梧田老街')">
+            <div class="xwz" @click="itemClick('梧田老街')">
               <img src="../images/梧田老街icon.svg" class="jz2" />
               <span class="sejnx">梧田老街</span>
             </div>
-            <div class="xwz1" @click="itemClick('白象塔院')">
+            <div class="xwz" @click="itemClick('白象塔院')">
               <img src="../images/白象塔院icon.svg" class="jz2" />
               <span class="sejnx">白象塔院</span>
             </div>
-            <div class="xwz1" @click="itemClick('穗丰怀古')">
+            <div class="xwz" @click="itemClick('穗丰怀古')">
               <img src="../images/穗丰怀古icon.svg" class="jz2" />
               <span class="sejnx">穗丰怀古</span>
             </div>
@@ -549,105 +546,70 @@ export default {
     opacity: 0.8;
   }
 }
-.quanquan {
-  width: 9vh;
-  height: 9vh;
-}
-.left {
-  margin-right: 8vh;
-  padding-left: 0.5vh;
-}
-.right {
-  flex-shrink: 0;
-}
-.left1 {
-  text-align: center;
-}
-.left2 {
-  text-align: right;
-}
-.left3 {
-  margin-top: 1.5vh;
-  margin-bottom: 1.5vh;
-  text-align: center;
-}
-.zx {
-  padding-left: 4vh;
-  height: 11vh;
-  padding-right: 1vh;
-}
-.xwz {
-  width: 10vh;
-  padding-top: 1vh;
+.ssj1 {
+  margin-left: 2vh;
+  .list {
+    // text-align: center;
+    display: flex;
+    width: 90%;
+    padding: 1vh 0;
+    align-items: center;
+    border-bottom: 1px solid #0b3189;
+    &:last-child {
+      border-bottom: none;
+    }
+    .xwz {
+      display: flex;
+      align-items: center;
+      width: 10vh;
+      padding: 0.5vh 0;
+    }
+    .sejdx {
+      color: #16eaea;
+      font-size: 1.6vh;
+    }
+    .sejxx {
+      font-size: 1.6vh;
+      color: #00ffd4;
+    }
+    .sejnx {
+      font-size: 1.6vh;
+      color: #a2f6b6;
+    }
+    .jz2 {
+      width: 2vh;
+      height: 2vh;
+    }
+    .jz {
+      margin-right: 3vh;
+      text-align: center;
+      font-family: YouSheBiaoTiHei;
+      font-size: 3vh;
+      white-space: nowrap;
+    }
+    .uls {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
 }
 .zxp {
   padding-top: 1vh;
   width: 2vh;
 }
 .zxp1 {
-  // position: absolute;
-  /*top: 1vh;*/
-  // right: 1vh;
   float: right;
   width: 2vh;
   transform: rotate(-180deg);
-}
-.xwz1 {
-  width: 14vh;
-  padding-top: 1vh;
 }
 .dw {
   padding-bottom: 1vh;
   padding-top: 1vh;
 }
-
-.sejdx {
-  color: #16eaea;
-  font-size: 1.6vh;
-  // font-family: PingFang;
-  /*padding-left: 3%;*/
-}
-.sejxx {
-  font-size: 1.6vh;
-  // font-family: PingFang;
-  color: #00ffd4;
-}
-.sejnx {
-  font-size: 1.6vh;
-  // font-family: PingFang;
-  color: #a2f6b6;
-}
 .jz1 {
   vertical-align: middle;
-  /*flex: 1;*/
   width: 3vh;
   height: 3vh;
-  /*width:50%;*/
-}
-.jz2 {
-  /*flex: 1;*/
-  width: 2vh;
-  height: 2vh;
-}
-.jz {
-  text-align: center;
-  font-family: YouSheBiaoTiHei;
-  font-size: 3vh;
-}
-
-.xmzs {
-  font-size: 2vh;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: YouSheBiaoTiHei;
-  color: #ffffff;
-}
-.uls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .uls1 {
   display: flex;
@@ -657,36 +619,19 @@ export default {
   font-size: 1vh;
   color: #fafafa;
   line-height: 1vh;
-  // font-family: PingFang;
   align-self: center;
   width: 9vh;
-  /*padding-right: 10px*/
-}
-.xmzje {
-  font-size: 2vh;
-  position: absolute;
-  top: 50%;
-  left: 47%;
-  transform: translate(-50%, -50%);
-  font-family: YouSheBiaoTiHei;
-  color: #26bce5;
 }
 .yxwz {
-  // font-family: PingFang;
   font-size: 1vh;
-  //line-height: 18px;
-  //max-height: 140px;
   color: #ffffff;
   line-height: 1vh;
-  /*width: 100%;*/
-  /*padding-left: 1vh;*/
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .smalls {
   font-size: 1vh;
-  // font-family: PingFang;
   line-height: 1vh;
   color: #ffffff;
 }
@@ -704,16 +649,34 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-.yxxm {
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-}
-.zsj {
-  padding-left: 2vh;
-}
-.tp {
-  position: relative;
+  justify-content: center;
+  text-align: center;
+  .left {
+    width: 32%;
+    margin-right: 4vh;
+    .tp {
+      .bg-image('../images/total-bg');
+    }
+  }
+  .right {
+    width: 32%;
+    .tp {
+      .bg-image('../images/amount-bg');
+    }
+  }
+  .tp {
+    height: 9vh;
+    line-height: 9vh;
+    font-family: YouSheBiaoTiHei;
+    font-size: 4vh;
+  }
+  .yxxm {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+  }
+  .zsj {
+    padding-left: 2vh;
+  }
 }
 .ssj {
   padding-top: 1vh;

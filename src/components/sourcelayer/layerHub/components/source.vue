@@ -411,7 +411,7 @@ export default {
       const { x, y } = item.geometry;
 
       // 定位图标，详情变换
-      this.$parent.$parent.addLocationIcon(item.geometry, item.id);
+      this.$parent.$parent.addLocationIcon(item.geometry, item.type);
       this.$parent.$parent.$refs.commonDetailPopup.closePopup();
       this.$parent.$parent.$refs.projectDetailPopup.getForceEntity(item);
 

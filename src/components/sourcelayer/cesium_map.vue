@@ -163,7 +163,7 @@ export default {
               });
             } else {
               this.$refs.projectDetailPopup.closeDetail();
-              this.$refs.projectDetailPopup.closeInfo();
+              // this.$refs.projectDetailPopup.closeInfo();
 
               // 跳过查看详情步骤
               this.$refs.commonDetailPopup.goDetail({

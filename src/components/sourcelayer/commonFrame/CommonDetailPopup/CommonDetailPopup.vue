@@ -58,7 +58,7 @@
             <ul v-if="!isSpot">
               <li class="info-item">
                 <span class="key">名称</span>
-                <span class="value">{{ forceEntity.attributes && yforceEntity.attributes.NAME }}</span>
+                <span class="value">{{ forceEntity.attributes && forceEntity.attributes.NAME }}</span>
               </li>
               <li
                 v-for="(item, key, index) in fixData"
@@ -146,7 +146,7 @@
                 "
                 v-for="(item, index) in detailData.photos"
                 :key="index"
-                :src="item.path"
+                :src="`${MediaServer}/${item.path}`"
                 @click="onPreview(detailData.photos, index)"
               >
               </el-image>
@@ -239,7 +239,7 @@
               <img
                 v-for="(item, index) in zbOverallList"
                 :key="index"
-                :src="`${MediaServer}/img/${item}`"
+                :src="`${MediaServer}/${item}`"
                 @click="openQJ(index)"
               />
             </div>
@@ -254,7 +254,7 @@
               <img
                 v-for="(item, index) in overallList"
                 :key="index"
-                :src="`${MediaServer}/img/${item}`"
+                :src="`${MediaServer}/${item}`"
                 @click="openQJ(index)"
               />
             </div>
@@ -454,7 +454,7 @@ export default {
           }
         }
         result = tempArr.map((item) => {
-          return `${MediaServer}/img/${item}`;
+          return `${MediaServer}/${item}`;
         });
         return result;
       } else {
@@ -631,16 +631,17 @@ export default {
 
     // 跳转详情
     async goDetail(entity) {
+      console.log('entity', entity)
       this.$parent.showSign = false;
       this.$parent.showMapTool = false;
       if (entity.type === "quanjin") {
         if (this.showLarge) {
           this.$bus.$emit("change-rightContent", {
             type: "qj",
-            value: entity.attributes.QJMC,
+            value: entity.attributes.SRC,
           });
         } else {
-          this.QJURL = entity.attributes.QJMC;
+          this.QJURL = entity.attributes.SRC;
           this.showQJ = true;
           this.isShow = false;
         }
@@ -648,10 +649,10 @@ export default {
         if (this.showLarge) {
           this.$bus.$emit("change-rightContent", {
             type: "video",
-            value: `${MediaServer}/video/${entity.attributes.SPWJM}`,
+            value: `${MediaServer}/${entity.attributes.SRC}`,
           });
         } else {
-          this.VideoURL = `${MediaServer}/video/${entity.attributes.SPWJM}`;
+          this.VideoURL = `${MediaServer}/${entity.attributes.SRC}`;
           this.showVideo = true;
           this.isShow = false;
         }
@@ -667,7 +668,6 @@ export default {
           this.isShow = false;
         }
       } else {
-        console.log("aaa", entity);
         if (entity.type == "scenic_spot" || entity.type == "十二景") {
           this.isSpot = true;
           let res = await getSpotDetail({ id: entity.attributes.RESOURCE_ID });

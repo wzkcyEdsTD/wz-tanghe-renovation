@@ -156,6 +156,7 @@ export default {
         // this.tempEntities.push(point);
 
         console.log('onePoints', this.onePoints)
+        this.showDrawInfo = true
         this.showInput = true
         this.pointHandler.destroy(); //关闭事件句柄
         this.pointHandler = null;
@@ -231,6 +232,7 @@ export default {
 
         this.tempEntities = []
         this.linePoints.push(tempArr)
+        this.showDrawInfo = true
         this.showInput = true
         this.lineHandler.destroy(); //关闭事件句柄
         this.lineHandler = null;
@@ -324,6 +326,7 @@ export default {
             // console.log('polygonPoints', this.polygonPoints)
             this.tempEntities = []
             this.polygonPoints.push(tempArr)
+            this.showDrawInfo = true
             this.showInput = true
             this.polygonHandler.destroy(); //关闭事件句柄
             this.polygonHandler = null;

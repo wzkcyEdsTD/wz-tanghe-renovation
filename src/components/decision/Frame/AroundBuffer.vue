@@ -5,6 +5,11 @@
       <span class="around-title">附近人口</span>
       <img src="./images/around-header-bg.png" />
     </div>
+    <div class="streetName-box">
+      <p v-for="(item,index) in streetNameList" :key="index">
+        {{item}}<span v-show="index<streetNameList.length-1">&</span>
+      </p>
+    </div>
     <div class="around-sex-box">
       <div class="circle left-circle">
         <div class="circle-inner">
@@ -46,12 +51,15 @@ export default {
       maleNum: 0,
       femaleNum: 0,
       chartData: [],
+      streetNameList: [],
       aroundChart: undefined,
+      datasource: null
     };
   },
 
   mounted() {
     this.eventRegsiter();
+    this.createEntityCollection();
 
     // 图表自适应
     window.addEventListener("resize", () => {
@@ -93,6 +101,12 @@ export default {
       });
     },
 
+    createEntityCollection() {
+      const StreetEntityCollection = new Cesium.CustomDataSource("street");
+      window.earth.dataSources.add(StreetEntityCollection);
+      this.datasource = window.earth.dataSources.getByName("street")[0];
+    },
+
     // 组装数据
     fixData(res) {
       this.maleNum = 0;
@@ -111,14 +125,36 @@ export default {
           value: 0,
         },
       ];
+      this.streetNameList = [];
+      this.datasource.entities.removeAll();
 
       res.result.features.map((feature) => {
+        this.streetNameList.push(feature.attributes.STREET)
         this.maleNum += Number(feature.attributes.NX);
         this.femaleNum += Number(feature.attributes.NVX);
 
         this.chartData[0].value += Number(feature.attributes.YX);
         this.chartData[1].value += Number(feature.attributes.ZJ);
         this.chartData[2].value += Number(feature.attributes.YS);
+
+        // 画出街道面
+        let positions = []
+        feature.geometry.components.forEach(component => {
+          component.components.forEach(item => {
+            positions.push(item.x)
+            positions.push(item.y)
+          })
+        })
+        this.datasource.entities.add({
+          name: '街道面',
+          polygon: {
+            hierarchy: Cesium.Cartesian3.fromDegreesArray(positions),
+            perPositionHeight: true,
+            material: Cesium.Color.CYAN.withAlpha(0.5),
+            outline: true,
+            outlineColor: Cesium.Color.BLACK,
+          }
+        })
       });
 
       // 显示弹框
@@ -180,8 +216,9 @@ export default {
 
     closeInfo() {
       // 仅关闭弹框
-      this.$parent.removeBuffer();
       this.aroundShow = false;
+      this.$parent.removeBuffer();
+      this.datasource.entities.removeAll();
     },
   },
 };
@@ -241,10 +278,25 @@ export default {
     }
   }
 
+  .streetName-box {
+    // position: absolute;
+    // top: 3vh;
+    // height: 3vh;
+    margin-left: 3vh;
+    display: flex;
+    line-height: 3vh;
+    >p {
+      font-family: YouSheBiaoTiHei;
+      font-size: 2.6vh;
+      color: #fff;
+    }
+  }
+
   .around-sex-box {
-    position: absolute;
-    top: 3.88vh;
-    left: 0;
+    // position: absolute;
+    // top: 3.88vh;
+    // left: 0;
+    position: relative;
     width: 59vh;
     height: 7.38vh;
     box-sizing: border-box;

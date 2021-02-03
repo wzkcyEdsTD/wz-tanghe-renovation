@@ -401,13 +401,13 @@
       </div>
     </transition>
     <el-image-viewer
-      v-show="showViewer"
+      v-if="showViewer"
       :on-close="closeViewer"
       :url-list="srcList"
       :initial-index="srcIndex"
     />
     <el-image-viewer :style="{ right: showLarge ? '45%' : '0' }"
-      v-show="showJGTViewer"
+      v-if="showJGTViewer"
       :on-close="closeJGTViewer"
       :url-list="jgtList"
       :initial-index="jgtIndex"
@@ -535,6 +535,7 @@ export default {
       this.currentIndex = 0;
       this.currentData = {};
       this.finalData = {};
+      this.jgtList = [];
       this.currentShow = "qj";
       this.showQRcode = false
 

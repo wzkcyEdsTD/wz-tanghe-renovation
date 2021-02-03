@@ -113,7 +113,7 @@ export default {
       //4320*1280
       let screenWidth = document.body.clientWidth
       let screeHeight = document.body.clientHeight
-      console.log('screenWidth!!!!', screenWidth);
+      // console.log('screenWidth!!!!', screenWidth);
       if(screenWidth>4000 && screeHeight>1000){
         window.showLarge = true
         console.log('showLarge', window.showLarge)

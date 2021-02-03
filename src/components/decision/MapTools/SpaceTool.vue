@@ -182,7 +182,6 @@ export default {
       }
     },
     drawClick(item) {
-      console.log(111, item)
       if (item.value == "point") {
         this.currentDraw = item.value;
         this.$refs.drawTools.drawPoint();

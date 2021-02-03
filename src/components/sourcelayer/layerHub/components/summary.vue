@@ -198,7 +198,6 @@ export default {
       this.lineEchart = this.$echarts.init(this.$refs.lineEchart);
       const that = this;
       let e = this.getFontSize();
-      console.log(e);
       this.lineEchart.setOption({
         legend: {
           orient: "horizontal",

@@ -166,7 +166,7 @@ export default {
             destination: Cesium.Cartesian3.fromDegrees(
               geometry.x,
               geometry.y,
-              1200
+              5200
             ),
             orientation: {
               heading: 0.01768860454315663,
@@ -286,8 +286,8 @@ export default {
         position: Cesium.Cartesian3.fromDegrees(x, y, 0),
         billboard: {
           image: `/static/images/map-ico/buffer-point.png`,
-          width: 40,
-          height: 40,
+          width: 20,
+          height: 20,
           scaleByDistance: new Cesium.NearFarScalar(3000, 1.5, 6000, 1.2),
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
         },

@@ -173,7 +173,7 @@ export default {
           this.currentLayer = 'yx'
           this.currentYear = '2019'
         }
-        this.$parent.$parent.switchWmts(item.selected, item.value);
+        this.$parent.switchWmts(item.selected, item.value);
       } else {
         this.currentVector = ''
         this.currentLayer = 'yx'
@@ -183,10 +183,10 @@ export default {
     changeVector(item) {
       if (item.value == 'handdrawn') {
         item.selected = !item.selected
-        this.$parent.$parent.switchHanddrawn(item.selected);
+        this.$parent.switchHanddrawn(item.selected);
       } else {
         this.yearList[2].selected = false
-        this.$parent.$parent.switchWmts(false);
+        this.$parent.switchWmts(false);
         this.currentYear = ''
         this.currentLayer = 'vector'
         this.currentVector = item.value

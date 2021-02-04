@@ -108,4 +108,30 @@
     left: 22%;
     display: flex;
   }
+
+  .bottom-wrapper {
+    z-index: 999;
+    position: absolute;
+    bottom: 2vh;
+    left: 22%;
+    display: flex;
+
+    > div {
+      font-family: YouSheBiaoTiHei;
+      font-size: 1.8vh;
+      .bg-image("./images/bottom-btn");
+      color: #fff;
+      padding: 1vh 1vh 2vh;
+      cursor: pointer;
+
+      &:first-child{
+        margin-right: 1vh;
+      }
+
+      &.active {
+        .bg-image("./images/bottom-btn-check");
+      }
+    }
+  }
+
 }

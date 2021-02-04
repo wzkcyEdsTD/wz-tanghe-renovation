@@ -61,6 +61,19 @@
       <img src="/static/images/common/sign@2x.png">
     </div>
     <MapTool v-show="showMapTool" /> -->
+
+    <div class="bottom-wrapper">
+      <div 
+        v-for="(item, index) in bottomBtns" 
+        :key="index" 
+        :class="{ active: item.check }"
+        @click="showDetail(item, index)"
+      >
+        {{ item.label }}
+      </div>
+    </div>
+    <ProjectTable :tableShow="tableShow" @closeTable="closeTable" />
+    <TaskImage :imgViewShow="imgViewShow" @closeImgView="closeImgView" />
   </div>
 </template>
 
@@ -70,6 +83,8 @@ import SourceTree from "./components/sourceTree";
 // import MapTool from "./components/mapTool";
 import Source from "./components/source";
 import Summary from "./components/summary"
+import ProjectTable from "./components/ProjectTable";
+import TaskImage from "./components/TaskImage";
 
 export default {
   name: "layerHub",
@@ -79,6 +94,8 @@ export default {
     // MapTool,
     Summary,
     Source,
+    ProjectTable,
+    TaskImage
   },
   data() {
     return {
@@ -104,7 +121,14 @@ export default {
         label: '线',
         value: '线'
       }],
-      typeValue: ''
+      typeValue: '',
+
+      bottomBtns: [
+        { label: "2021重点项目表", check: false },
+        { label: "2021绿道打卡作战图", check: false }
+      ],
+      tableShow: false,
+      imgViewShow: false
     };
   },
   computed: {
@@ -189,6 +213,25 @@ export default {
     switchMenu(value) {
       this.selected = value;
     },
+
+    showDetail(item, index) {
+      item.check = true;
+      if (index == 0) {
+        this.tableShow = true;
+      } else if (index == 1) {
+        this.imgViewShow = true;
+      }
+    },
+
+    closeImgView() {
+      this.imgViewShow = false;
+      this.bottomBtns[1].check = false;
+    },
+
+    closeTable() {
+      this.tableShow = false;
+      this.bottomBtns[0].check = false;
+    }
   },
 };
 </script>

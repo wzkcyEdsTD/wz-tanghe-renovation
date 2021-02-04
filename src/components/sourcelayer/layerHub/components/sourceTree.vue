@@ -111,7 +111,7 @@ export default {
                 item.name
               ] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
-                  url: item.src,
+                  url: item.url,
                 })
               );
               item.alpha && (this.tileLayers[item.name].alpha = item.alpha);

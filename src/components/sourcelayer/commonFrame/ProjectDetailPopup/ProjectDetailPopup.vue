@@ -151,8 +151,8 @@
                   :class="{ active: currentIndex == index }"
                 >
                   <div class="item-content">
-                    <span>{{ item.date.substring(0, 4) }}</span>
-                    <span>{{ item.date.substring(5) }}</span>
+                    <span>{{ item.date && item.date.substring(0, 4) }}</span>
+                    <span>{{ item.date && item.date.substring(5) }}</span>
                   </div>
                 </swiper-slide>
               </swiper>
@@ -349,14 +349,14 @@
                   class="line-item green"
                   :style="{
                     flex:
-                      detailData.consdatee.substring(0, 4) > 2021
+                      detailData.consdatee && detailData.consdatee.substring(0, 4) > 2021
                         ? 0.5
                         : 3,
                   }"
                 ></div>
                 <div class="line-item light-blue"></div>
                 <div
-                  v-if="detailData.consdatee.substring(0, 4) > 2021"
+                  v-if="detailData.consdatee && detailData.consdatee.substring(0, 4) > 2021"
                 >
                   <div class="pop pop6">{{ date }}</div>
                   <div class="circle circle6"></div>

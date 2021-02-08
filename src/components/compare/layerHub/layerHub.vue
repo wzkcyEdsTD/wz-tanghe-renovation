@@ -533,7 +533,7 @@ export default {
         treeDrawTool(
           this,
           { result: { features: currentXmRes } },
-          { id: "项目", marker_icon: false }
+          { id: "项目", marker_icon: "项目" }
         );
         treeDrawTool(
           this,

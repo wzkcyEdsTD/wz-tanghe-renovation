@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="select-wrapper" v-show="showSelect">
-      <el-select class="filter-select" v-show="menu=='shipin'||menu=='quanjin'" style="width:90px;" v-model="yearValue" placeholder="年份" @change="changeYear">
+      <el-select class="filter-select" v-show="menu=='shipin'||menu=='quanjin'||menu=='绿道断点'" style="width:90px;" v-model="yearValue" placeholder="年份" @change="changeYear">
         <el-option
           v-for="item in yearOptions"
           :key="item.value"
@@ -51,6 +51,14 @@
       <el-select class="filter-select" v-show="menu=='shipin'" style="margin-left:10px;width:90px;" v-model="typeValue" placeholder="类型" @change="changeType">
         <el-option
           v-for="item in typeOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <el-select class="filter-select" v-show="menu=='绿道断点'" style="margin-left:10px;width:90px;" v-model="ddtypeValue" placeholder="类型" @change="changeType">
+        <el-option
+          v-for="item in ddtypeOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -116,13 +124,23 @@ export default {
       yearValue: '',
       typeOptions: [{
         label: '点',
-        value: '点'
+        value: '0'
       }, {
         label: '线',
-        value: '线'
+        value: '1'
       }],
       typeValue: '',
-
+      ddtypeOptions: [{
+        label: '断点',
+        value: 'breakpoint'
+      }, {
+        label: '贯通',
+        value: 'through'
+      }, {
+        label: '提升',
+        value: 'promote'
+      }],
+      ddtypeValue: '',
       bottomBtns: [
         { label: "2021重点项目表", check: false },
         { label: "2021绿道打卡作战图", check: false }
@@ -142,6 +160,7 @@ export default {
       this.$bus.$on("toggle-select", ({value, menu}) => {
         this.yearValue = ''
         this.typeValue = ''
+        this.ddtypeValue = ''
         if (value) {
           this.showSelect = true
           this.menu = menu
@@ -155,16 +174,19 @@ export default {
       for (let key in window.featureMap[this.menu]) {
         let item = window.featureMap[this.menu][key]
         if (this.typeValue) {
-          if (item.attributes.TAG == val && item.attributes.TYPE == this.typeValue) {
+          if (~item.attributes.TAG.indexOf(val) && item.attributes.TYPE == this.typeValue) {
+            res.push(item)
+          }
+        } else if (this.ddtypeValue) {
+          if (~item.attributes.TAG.indexOf(val) && item.attributes.TYPE == this.ddtypeValue) {
             res.push(item)
           }
         } else {
-          if (item.attributes.TAG == val) {
+          if (~item.attributes.TAG.indexOf(val)) {
             res.push(item)
           }
         }
       }
-      console.log('ressssssssss', res)
       this.filterData(res)
     },
     changeType(val) {
@@ -172,7 +194,7 @@ export default {
       for (let key in window.featureMap[this.menu]) {
         let item = window.featureMap[this.menu][key]
         if (this.yearValue) {
-          if (item.attributes.TYPE == val && item.attributes.TAG == this.yearValue) {
+          if (item.attributes.TYPE == val && ~item.attributes.TAG.indexOf(this.yearValue)) {
             res.push(item)
           }
         } else {
@@ -181,10 +203,10 @@ export default {
           }
         }
       }
-      console.log('ressssssssss', res)
       this.filterData(res)
     },
     filterData(array) {
+      // console.log('array', array)
       window.billboardMap[this.menu]._billboards.forEach(v => {
         v.show = false
         array.forEach(item => {

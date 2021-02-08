@@ -33,10 +33,17 @@ export const drawFeatures = (ctx, {
             item.geometry.y,
             4
         );
-
+        let billImage
+        if (node.icon == '项目') {
+            billImage = `/static/images/map-ico/${item.attributes.STATUS.trim()}.png`
+        } else if (node.icon == '断点') {
+            billImage = `/static/images/map-ico/${item.attributes.TYPE.trim()}.png`
+        } else {
+            billImage = `/static/images/map-ico/${node.icon}.png`
+        }
         window.billboardMap[node.id].add({
             id: `billboard@${item.attributes.SMID}@${node.id}`,
-            image: node.icon ? `/static/images/map-ico/${node.icon}.png` : `/static/images/map-ico/${item.attributes.STATUS.trim()}.png`,
+            image: billImage,
             width: node.icon=='断点' ? 30 : 34,
             height: node.icon=='断点' ? 30 : 34,
             scaleByDistance: new Cesium.NearFarScalar(500, 1.5, 6000, 1),

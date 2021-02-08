@@ -119,19 +119,7 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
     let billImage
     let width = 32
     let height = 32
-    if (node.marker_icon) {
-      if (node.marker_icon == '断点') {
-        if (~currentHash.indexOf('compare')) {
-          billImage = `/static/images/map-ico/断点2.png`
-          width = 28
-          height = 28
-        } else {
-          billImage = `/static/images/map-ico/断点.png`
-        }
-      } else {
-        billImage = `/static/images/map-ico/${node.marker_icon}.png`
-      }
-    } else {
+    if (node.marker_icon == '项目') {
       if (~currentHash.indexOf('sourcelayer')) {
         if (item.attributes) {
           billImage = `/static/images/map-ico/${item.attributes.STATUS.trim()}.png`
@@ -147,6 +135,16 @@ export const treeDrawTool = (context, { result }, node, fields = [], fn) => {
         }
         height = 35
       }
+    } else if (node.marker_icon == '断点') {
+      // width = 28
+      // height = 28
+      if (item.attributes) {
+        billImage = `/static/images/map-ico/${item.attributes.TYPE.trim()}.png`
+      } else {
+        billImage = `/static/images/map-ico/${item.zt.trim()}.png`
+      }
+    } else {
+      billImage = `/static/images/map-ico/${node.marker_icon}.png`
     }
 
     window.billboardMap[node.id].add({

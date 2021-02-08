@@ -137,7 +137,7 @@
                 <span class="sub-title-text">信息详情</span>
                 <span class="sub-title-line"></span>
               </div>
-              <div class="base-content">
+              <div class="base-content" :style="{height:forceEntity.type == '项目'?'28vh':'auto' }">
                 <div class="base-name">
                   <span>名称</span>
                   <span>{{ detailData.name }}</span>

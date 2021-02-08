@@ -96,9 +96,19 @@ export default {
         this.selectedSourceList.push(node.label)
         console.log('selectedSourceList', this.selectedSourceList)
         if (~node.label.indexOf('项目')) this.$parent.showSign = true
-        if (node.label == '视频' || node.label == '全景') {
-          if (node.label == '视频') this.$refs.tree.setChecked('quanjin', false)
-          if (node.label == '全景') this.$refs.tree.setChecked('shipin', false)
+        if (node.label == '视频' || node.label == '全景' || node.label == '绿道断点') {
+          if (node.label == '视频') {
+            this.$refs.tree.setChecked('quanjin', false)
+            this.$refs.tree.setChecked('绿道断点', false)
+          }
+          if (node.label == '全景') {
+            this.$refs.tree.setChecked('shipin', false)
+            this.$refs.tree.setChecked('绿道断点', false)
+          }
+          if (node.label == '绿道断点') {
+            this.$refs.tree.setChecked('quanjin', false)
+            this.$refs.tree.setChecked('shipin', false)
+          }
           this.$bus.$emit('toggle-select', { value:true, menu:node.id });
         }
         if (nodeDetail.withImage) {
@@ -111,7 +121,7 @@ export default {
                 item.name
               ] = window.earth.imageryLayers.addImageryProvider(
                 new Cesium.SuperMapImageryProvider({
-                  url: item.url,
+                  url: item.src,
                 })
               );
               item.alpha && (this.tileLayers[item.name].alpha = item.alpha);

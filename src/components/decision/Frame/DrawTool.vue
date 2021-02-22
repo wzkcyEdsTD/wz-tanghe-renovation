@@ -450,6 +450,9 @@ export default {
             offset: 50
           });
           this.showQuery = true
+          this.nameValue = ''
+          this.remarkValue = ''
+          this.clearDraw()
         }
       } else {
         this.$message({
@@ -484,10 +487,10 @@ export default {
           res.result.forEach(item => {
             let positions = JSON.parse(item.geometry)
             if (item.type == 'point') {
-              this._drawPoint(positions[0], {name: node.groupid})
+              this._drawPoint(positions[0], {name: item.groupid})
             }
             if (item.type == 'line') {
-              this._drawLine(positions, {name: node.groupid})
+              this._drawLine(positions, {name: item.groupid})
             }
             if (item.type == 'polygon') {
               this._drawPolygon(positions, {name: item.groupid})
@@ -495,11 +498,13 @@ export default {
           })
         }
       } else {
-        this.datasource.entities._entities._array.forEach(item => {
-          if (item.name == node.groupid) {
-            this.datasource.entities.removeById(item.id)
+        let entitys = this.datasource.entities._entities._array
+        for (let i = 0; i < entitys.length; i++) {
+          if (entitys[i]._name === node.groupid) {
+            this.datasource.entities.remove(entitys[i]);
+            i--;
           }
-        })
+        }
       }
     },
     showHistory() {

@@ -171,55 +171,66 @@ export default {
     childClick(item) {
       this.$parent.$refs.LayerHub.showPopover = false;
 
+      this.konggui && (this.konggui.show = false);
+      this.yongdi && (this.yongdi.show = false);
+      this.ydfx && (this.ydfx.show = false);
+      this.gtld && (this.gtld.show = false);
+      // this.currentChild = "";
+      this.$parent.showHub = true;
+      this.showRihgt = false;
+      if (item == '2020贯通绿道') {
+        this.$bus.$emit("map-greenway-change", {
+          value: true,
+        });
+      }
+
       if (item == this.currentChild) {
-        this.konggui && (this.konggui.show = false);
-        this.yongdi && (this.yongdi.show = false);
-        this.ydfx && (this.ydfx.show = false);
-        this.gtld && (this.gtld.show = false);
         this.currentChild = "";
-        this.$parent.showHub = true;
-        this.showRihgt = false;
-        if (item == '2020贯通绿道') {
-          this.$bus.$emit("map-greenway-change", {
-            value: true,
-          });
-        }
         return;
       }
+
       this.currentChild = item;
       if (item == "用地现状") {
-        this.yongdi = window.earth.imageryLayers.addImageryProvider(
+        this.yongdi
+          ? (this.yongdi.show = true)
+          : (this.yongdi = window.earth.imageryLayers.addImageryProvider(
           new Cesium.SuperMapImageryProvider({
             url:
               // "http://172.168.3.183:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ",
               "http://172.20.83.228:8090/iserver/services/3D-dltb/rest/realspace/datas/dltb"
           })
-        );
+        ));
         this.yongdi.alpha = 0.8;
       } else if (item == "用地性规划") {
-        this.konggui = window.earth.imageryLayers.addImageryProvider(
+        this.konggui
+          ? (this.konggui.show = true)
+          : (this.konggui = window.earth.imageryLayers.addImageryProvider(
           new Cesium.SuperMapImageryProvider({
             url:
               // "http://172.168.3.183:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ",
               "http://172.20.83.228:8090/iserver/services/3D-KGSQ/rest/realspace/datas/KGSQ"
           })
-        );
+        ));
         this.konggui.alpha = 0.8;
       } else if (item == "用地分析") {
-        this.ydfx = window.earth.imageryLayers.addImageryProvider(
+        this.ydfx
+          ? (this.ydfx.show = true)
+          : (this.ydfx = window.earth.imageryLayers.addImageryProvider(
           new Cesium.SuperMapImageryProvider({
             url:
               "http://172.20.83.228:8090/iserver/services/3D-rgfxm/rest/realspace/datas/rgfxm"
           })
-        );
+        ));
         this.ydfx.alpha = 0.8;
       } else if (item == "2020贯通绿道") {
-        this.gtld = window.earth.imageryLayers.addImageryProvider(
+        this.gtld
+          ? (this.gtld.show = true)
+          : (this.gtld = window.earth.imageryLayers.addImageryProvider(
           new Cesium.SuperMapImageryProvider({
             url:
               "http://172.20.83.228:8090/iserver/services/3D-ld2020/rest/realspace/datas/ld2020"
           })
-        );
+        ));
         this.$bus.$emit("map-greenway-change", {
           value: false,
         });
@@ -338,8 +349,8 @@ export default {
   },
   watch: {
     currentChild(val, oldVal) {
-      console.log("val", val);
-      console.log("oldVal", oldVal);
+      // console.log("val", val);
+      // console.log("oldVal", oldVal);
       if (oldVal == "滞后项目" || oldVal == "问题项目") {
         window.billboardMap["项目"]._billboards.map((v) => (v.show = true));
         window.whiteLabelMap["项目"].setAllLabelsVisible(true);

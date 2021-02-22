@@ -629,7 +629,7 @@ export default {
       document.getElementById("qrcode").innerHTML = "";
       let qrcode = new QRCode(this.$refs.qrCodeUrl, {
         // text: this.forceEntity.attributes.QJ, // 需要转换为二维码的内容
-        text: this.detailData.overallViews[0],
+        text: this.detailData.overallViews[0].path,
         colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H,

@@ -188,3 +188,9 @@ export function login(data) {
   const url = `${BASEURL}/sys/login`
   return post(url, data)
 }
+
+// 项目年度计划
+export function queryPlansDetailById(data) {
+  const url = `${BASEURL}/tanghe/front/resourceProject/queryPlansDetailById`
+  return get(url, data)
+}

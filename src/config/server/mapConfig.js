@@ -10,7 +10,7 @@ export const ServiceUrl = {
   // 温州白模
   WZBaimo:
     // "http://172.168.3.183:8090/iserver/services/3D-bm/rest/realspace/datas/bm/config",
-    "http://172.20.83.228:8090/iserver/services/3D-bm/rest/realspace/scenes/bm",
+    "http://172.20.83.228:8090/iserver/services/3D-bm/rest/realspace/datas/bm/config",
   //  影像底图
   SWImage: {
     // 2018: "http://172.168.3.183:8090/iserver/services/map-agscachev2-Layers/rest/maps/Layers",

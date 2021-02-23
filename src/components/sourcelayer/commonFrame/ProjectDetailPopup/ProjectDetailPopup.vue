@@ -164,12 +164,20 @@
         <div class="base-info">
           <div class="title-wrapper">
             <span class="title">信息详情</span>
-            <span
-              class="more"
-              v-show="resourceType=='project_all'"
-              @click="openInfo()"
-              >查看更多>></span
-            >
+            <div class="more-group">
+              <span
+                class="more"
+                v-show="resourceType=='project_all'"
+                @click="openPlan(detailData)"
+                >查看计划>></span
+              >
+              <span
+                class="more"
+                v-show="resourceType=='project_all'"
+                @click="openInfo()"
+                >查看更多>></span
+              >
+            </div>            
           </div>
           <div class="base-content">
             <div class="base-item">
@@ -421,6 +429,7 @@
       <video id="content" :src="SPURL" controls="controls" autoplay muted></video>
     </div>
     <ProjectInfoPopup ref="ProjectInfoPopup" :id="projectId" />
+    <SingleProjectTable ref="SingleProjectTable" :id="projectId" />
   </div>
 </template>
 
@@ -432,11 +441,13 @@ import { mapGetters } from "vuex";
 import ProjectInfoPopup from "./ProjectInfoPopup";
 import Around from "./Around";
 import { getProjectDetail, getPointDetail } from "api/tangheAPI";
+import SingleProjectTable from "@/components/sourcelayer/layerHub/components/SingleProjectTable";
 export default {
   name: "ProjectDetailPopup",
   components: {
     ElImageViewer,
     ProjectInfoPopup,
+    SingleProjectTable,
     Around,
   },
   computed: {
@@ -749,6 +760,11 @@ export default {
       this.$nextTick(() => {
         this.$refs.around.collapseChange([]);
       });
+    },
+
+    // 查看计划
+    openPlan(data) {
+      this.$refs.SingleProjectTable.getDetail(data);
     },
 
     openInfo() {

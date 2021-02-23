@@ -318,8 +318,23 @@ export default {
             Cesium.when(baimoPromise, async ([forceLayer, ...oLayer]) => {
               const LAYER = window.earth.scene.layers.find("baimo");
               LAYER.style3D.fillForeColor = new Cesium.Color.fromCssColorString(
-                "rgba(137,137,137, 1)"
+                "rgba(255, 255, 255, 1)"
               );
+              const hyp = new Cesium.HypsometricSetting();
+              const colorTable = new Cesium.ColorTable();
+              hyp.MaxVisibleValue = 300;
+              hyp.MinVisibleValue = 0;
+              colorTable.insert(300, new Cesium.Color(1, 1, 1));
+              colorTable.insert(160, new Cesium.Color(0.95, 0.95, 0.95));
+              colorTable.insert(0, new Cesium.Color(0.5, 0.5, 0.5));
+              hyp.ColorTable = colorTable;
+              hyp.DisplayMode = Cesium.HypsometricSettingEnum.DisplayMode.FACE;
+              hyp.Opacity = 1;
+              LAYER.hypsometricSetting = {
+                  hypsometricSetting: hyp,
+                  analysisMode:
+                      Cesium.HypsometricSettingEnum.AnalysisRegionMode.ARM_ALL,
+              };
             });
           }
         }
@@ -589,15 +604,15 @@ export default {
     bufferQuery(geometryArgs) {
       this.SetBufferQueryData({});
       // 查询
-      this.singleQuery(geometryArgs, "项目");
-      this.singleQuery(geometryArgs, "绿道断点");
-      this.singleQuery(geometryArgs, "quanjin");
-      this.singleQuery(geometryArgs, "shipin");
-      this.singleQuery(geometryArgs, "scenic_spot");
-      this.singleQuery(geometryArgs, "jiaotong");
-      this.singleQuery(geometryArgs, "toilet");
-      this.singleQuery(geometryArgs, "wharf");
-      this.singleQuery(geometryArgs, "bridge");
+      this.singleQuery(geometryArgs, "th_spatial_project_view");
+      this.singleQuery(geometryArgs, "th_spatial_greenway_view");
+      this.singleQuery(geometryArgs, "th_spatial_all");
+      this.singleQuery(geometryArgs, "th_spatial_all");
+      this.singleQuery(geometryArgs, "sp_point_resource");
+      this.singleQuery(geometryArgs, "resource_jiaotong");
+      this.singleQuery(geometryArgs, "resource_toilet");
+      this.singleQuery(geometryArgs, "resource_wharf");
+      this.singleQuery(geometryArgs, "resource_bridge");
 
       // 延时获取异步数据
       setTimeout(() => {

@@ -344,15 +344,15 @@ export default {
       console.log('aroundData', temp)
       let name = this.forceEntity.name;
       this.$nextTick(() => {
-        this.questionQjList = temp["quanjin"];
-        this.questionXmList = temp["项目"];
-        this.questionDdList = temp["绿道断点"];
-        this.questionSpList = temp["shipin"];
-        this.questionSpotList = temp["scenic_spot"];
-        this.questionBusList = temp["jiaotong"];
-        this.questionToiletList = temp["toilet"];
-        this.questionWharfList = temp["wharf"];
-        this.questionBridgeList = temp["bridge"];
+        this.questionQjList = temp["th_spatial_all"];
+        this.questionXmList = temp["th_spatial_project_view"];
+        this.questionDdList = temp["th_spatial_greenway_view"];
+        this.questionSpList = temp["th_spatial_all"];
+        this.questionSpotList = temp["sp_point_resource"];
+        this.questionBusList = temp["resource_jiaotong"];
+        this.questionToiletList = temp["resource_toilet"];
+        this.questionWharfList = temp["resource_wharf"];
+        this.questionBridgeList = temp["resource_bridge"];
         if (this.questionQjList) {
           this.questionQjList = this.questionQjList.filter((item) => {
             return item.attributes.NAME != name;

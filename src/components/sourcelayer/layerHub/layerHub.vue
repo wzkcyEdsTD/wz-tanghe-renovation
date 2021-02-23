@@ -48,6 +48,22 @@
           :value="item.value">
         </el-option>
       </el-select>
+      <el-select class="filter-select" v-show="menu=='项目'" style="width:120px;" v-model="yearValue" placeholder="项目年份" @change="changeYear">
+        <el-option
+          v-for="item in yearOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <el-select class="filter-select" v-show="menu=='项目'" style="margin-left:10px;width:150px;" v-model="importantValue" placeholder="是否重点项目" @change="changeImportant">
+        <el-option
+          v-for="item in importantOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
       <el-select class="filter-select" v-show="menu=='shipin'" style="margin-left:10px;width:90px;" v-model="typeValue" placeholder="类型" @change="changeType">
         <el-option
           v-for="item in typeOptions"
@@ -139,8 +155,16 @@ export default {
       }, {
         label: '提升',
         value: 'promote'
-      }],
+      }],      
       ddtypeValue: '',
+      importantOptions: [{
+        label: '重点项目',
+        value: '1'
+      }, {
+        label: '非重点项目',
+        value: '0'
+      }],
+      importantValue: '',
       bottomBtns: [
         { label: "2021重点项目表", check: false },
         { label: "2021绿道打卡作战图", check: false }
@@ -161,6 +185,7 @@ export default {
         this.yearValue = ''
         this.typeValue = ''
         this.ddtypeValue = ''
+        this.importantValue = ''
         if (value) {
           this.showSelect = true
           this.menu = menu
@@ -173,12 +198,16 @@ export default {
       let res = []
       for (let key in window.featureMap[this.menu]) {
         let item = window.featureMap[this.menu][key]
-        if (this.typeValue) {
+        if (this.menu=='shipin') {
           if (~item.attributes.TAG.indexOf(val) && item.attributes.TYPE == this.typeValue) {
             res.push(item)
           }
-        } else if (this.ddtypeValue) {
+        } else if (this.menu=='绿道断点') {
           if (~item.attributes.TAG.indexOf(val) && item.attributes.TYPE == this.ddtypeValue) {
+            res.push(item)
+          }
+        } else if (this.menu=='项目') {
+          if (~item.attributes.TAG.indexOf(val) && item.attributes.IS_IMPORTANT == this.importantValue) {
             res.push(item)
           }
         } else {
@@ -199,6 +228,22 @@ export default {
           }
         } else {
           if (item.attributes.TYPE == val) {
+            res.push(item)
+          }
+        }
+      }
+      this.filterData(res)
+    },
+    changeImportant(val) {
+      let res = []
+      for (let key in window.featureMap[this.menu]) {
+        let item = window.featureMap[this.menu][key]
+        if (this.yearValue) {
+          if (item.attributes.IS_IMPORTANT == val && ~item.attributes.TAG.indexOf(this.yearValue)) {
+            res.push(item)
+          }
+        } else {
+          if (item.attributes.IS_IMPORTANT == val) {
             res.push(item)
           }
         }

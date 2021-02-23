@@ -607,8 +607,8 @@ export default {
 
     // 单个查询
     singleQuery(geometryArgs, dataset) {
-      const baseUrl =
-        "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data";
+      // const baseUrl = "http://172.168.3.183:8090/iserver/services/data-alldata/rest/data";
+      const baseUrl = "http://172.20.83.228:8090/iserver/services/data-alldata/rest/data";
       let getFeatureParameter, getFeatureService;
       getFeatureParameter = new SuperMap.REST.GetFeaturesByBufferParameters({
         // 缓冲距离单位疑似十万米！！！图形单位米！！！

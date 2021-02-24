@@ -198,15 +198,15 @@ export default {
       let res = []
       for (let key in window.featureMap[this.menu]) {
         let item = window.featureMap[this.menu][key]
-        if (this.menu=='shipin') {
+        if (this.menu=='shipin' && this.typeValue) {
           if (~item.attributes.TAG.indexOf(val) && item.attributes.TYPE == this.typeValue) {
             res.push(item)
           }
-        } else if (this.menu=='绿道断点') {
+        } else if (this.menu=='绿道断点' && this.ddtypeValue) {
           if (~item.attributes.TAG.indexOf(val) && item.attributes.TYPE == this.ddtypeValue) {
             res.push(item)
           }
-        } else if (this.menu=='项目') {
+        } else if (this.menu=='项目' && this.importantValue) {
           if (~item.attributes.TAG.indexOf(val) && item.attributes.IS_IMPORTANT == this.importantValue) {
             res.push(item)
           }
@@ -251,7 +251,7 @@ export default {
       this.filterData(res)
     },
     filterData(array) {
-      // console.log('array', array)
+      console.log('array', array)
       window.billboardMap[this.menu]._billboards.forEach(v => {
         v.show = false
         array.forEach(item => {

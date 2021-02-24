@@ -161,7 +161,7 @@ export default {
   .project-table-body {
     display: flex;
     flex-direction: column;
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 10%;
     transform: translateY(-50%);

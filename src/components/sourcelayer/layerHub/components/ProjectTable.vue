@@ -197,7 +197,7 @@ export default {
   .project-table-body {
     display: flex;
     flex-direction: column;
-    position: fixed;
+    position: absolute;
     top: 10%;
     left: 10%;
     width: 80%;

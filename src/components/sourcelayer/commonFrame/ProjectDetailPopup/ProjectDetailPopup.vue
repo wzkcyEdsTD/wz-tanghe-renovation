@@ -167,7 +167,7 @@
             <div class="more-group">
               <span
                 class="more"
-                v-show="resourceType=='project_all'"
+                v-show="resourceType=='project_all' && isImportant"
                 @click="openPlan(detailData)"
                 >查看计划>></span
               >
@@ -459,6 +459,8 @@ export default {
       showLarge: window.showLarge,
       forceEntity: {},
       resourceType: '',
+      // 是否重点企业
+      isImportant: false,
       detailData: {},
       aroundData: {},
       isShow: false,
@@ -529,10 +531,12 @@ export default {
       this.$parent.showMapTool = false;
       console.log("aaa", forceEntity);
       if (forceEntity.attributes) {
+        this.isImportant = forceEntity.attributes.IS_IMPORTANT == "1" ? true : false;
         this.resourceType = forceEntity.attributes.resourceType || forceEntity.attributes.RESOURCE_TYPE
         let id = forceEntity.attributes.resourceId || forceEntity.attributes.RESOURCE_ID
         this.initData(id);
       } else {
+        this.isImportant = false;
         this.resourceType = forceEntity.resourceType
         this.initData(forceEntity.resourceId);
       }

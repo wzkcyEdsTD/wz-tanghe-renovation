@@ -135,7 +135,6 @@ export default {
             tempArr.push(item);
           }
         }
-        console.log("tempArr", tempArr);
         this.$parent.filterData(tempArr);
       }
     },

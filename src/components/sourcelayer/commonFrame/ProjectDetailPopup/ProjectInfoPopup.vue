@@ -156,9 +156,7 @@ export default {
       this.projectCode = null
       this.projectBaseInfo = {}
       const res = await queryInfoByid(this.id)
-      console.log('infoRes', res)
       if (res.code == 200) {
-        console.log('项目副码', res.result.data['项目副码'])
         this.projectBaseInfo = this.formatData(res.result.data)
         this.projectCode = res.result.data['项目副码']
         this.getXxjdData()
@@ -168,7 +166,6 @@ export default {
     },
     async getXxjdData() {
       const res = await queryDetailByid(this.id)
-      console.log('detailRes', res)
       if (res.code == 200) {
         const data = res.result.data
         let table = "<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\" class='xxjd-table'><tr><th style='width: 80px;'>年月</th><th style='width: 120px;'>本月完成投资</th><th style='width: 230px'>本月工程形象进度</th><th style='width: 230px;'>下月形象进度计划</th><th>存在问题</th><th style='width: 120px;'>建议要求</th></tr>";

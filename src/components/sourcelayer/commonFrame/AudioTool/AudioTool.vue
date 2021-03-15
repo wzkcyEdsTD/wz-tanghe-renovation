@@ -106,8 +106,6 @@ export default {
       this.nativeAudio.oncanplay = () => {
         that.duration = that.nativeAudio.duration;
 
-        console.log(that.duration)
-
         // 监听进度
         that.nativeAudio.addEventListener("timeupdate", that.updateProgress);
       };

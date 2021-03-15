@@ -60,7 +60,6 @@ export default {
       const promiseroute_level1 = Cesium.GeoJsonDataSource.load(
         "/mock/channel.json"
       );
-      console.log('promiseroute_level1', promiseroute_level1)
       // promiseroute_level1
       //   .then((dataSource) => {
       //     window.earth.dataSources.add(dataSource);
@@ -99,7 +98,6 @@ export default {
     //  初始化路线
     addDynamicLine() {
       const linePoints = tangheLine.geometries.map((v) => v.coordinates);
-      console.log("linePoints", linePoints);
       linePoints.map((v, vindex) =>
         v.forEach((c, cindex) => {
           this.drawPolyline(

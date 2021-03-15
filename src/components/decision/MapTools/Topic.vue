@@ -284,7 +284,6 @@ export default {
     // 添加项目图层
     async addProjectLayer() {
       const { result } = await this.fetchProjectData();
-      console.log("rettttttt", result);
       window.billboardMap["supervise"] = window.earth.scene.primitives.add(
         new Cesium.BillboardCollection()
       );
@@ -349,8 +348,6 @@ export default {
   },
   watch: {
     currentChild(val, oldVal) {
-      // console.log("val", val);
-      // console.log("oldVal", oldVal);
       if (oldVal == "滞后项目" || oldVal == "问题项目") {
         window.billboardMap["项目"]._billboards.map((v) => (v.show = true));
         window.whiteLabelMap["项目"].setAllLabelsVisible(true);

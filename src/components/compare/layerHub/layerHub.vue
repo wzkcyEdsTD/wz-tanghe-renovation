@@ -418,7 +418,6 @@ export default {
     ...mapActions("map", ["setSourceMap"]),
     async initData() {
       let listRes = await queryMeetingSortFront();
-      console.log("listRes", listRes);
       if (listRes.code === 200) {
         this.allList = listRes.result;
         this.getCurrentList(true);
@@ -436,7 +435,6 @@ export default {
             return 0;
           }
         });
-        console.log('xmsllllll', result)
         drawXMSL(this, result);
 
         this.amountData = JSON.parse(JSON.stringify(result))
@@ -449,13 +447,11 @@ export default {
             return 0;
           }
         });
-        console.log('amountData', this.amountData)
       }
 
       let res4 = await countProjByConsdates2()
       if (res4.code === 200) {
         this.startData = res4.result
-        console.log('startData', this.startData)
       }
 
       let res2 = await countProjByConsdatee2()
@@ -470,7 +466,6 @@ export default {
             return 0;
           }
         });
-        console.log('finishData', this.finishData)
       }
 
       let res3 = await countProjByAmound()
@@ -489,13 +484,11 @@ export default {
           let investCircleDiv = document.getElementsByClassName("invest-item")[0];
           this.investCircleWidth = investCircleDiv.clientWidth;
         });
-        console.log('investData', this.investData)
       }
 
       let res5 = await countProjByAmound({consType: '政府性投资'})
       if (res5.code === 200) {
         this.zfInvestData = res5.result
-        console.log('zfInvestData', this.zfInvestData)
       }      
     },
     getCurrentList(draw) {
@@ -629,7 +622,6 @@ export default {
       });
     },
     searchXMFilter() {
-      console.log("searchXMFilter", this.searchXMText);
       if (this.searchXMText) {
         this.currentList = this.currentList.filter((item) => {
           return item.name.indexOf(this.searchXMText) >= 0;

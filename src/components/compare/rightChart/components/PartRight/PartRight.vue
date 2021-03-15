@@ -146,13 +146,11 @@ export default {
   },
   methods: {
     initData() {
-      console.log('ffff', this.projData)
       this.projData.forEach((item) => {
         if (item.sysOrgCode && ~item.sysOrgCode.indexOf(this.zrdw)) {
           this.keyData.amount = (item.projAmountSum/10000).toFixed(2)
           this.keyData.total = item.num
           this.keyData.time = item.name ? item.name : ''
-          console.log('uuuuu', this.keyData)
         }
       });
     },

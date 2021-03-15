@@ -76,7 +76,6 @@ export default {
             return 0;
           }
         });
-        console.log("bbb", arr);
         return arr;
       }
     },
@@ -91,12 +90,10 @@ export default {
     },
     async addHeatMap() {
       const { result } = await this.fetchProjectData();
-      console.log("resultttt", result);
       let areaArr = [];
       result.features.forEach((v) => {
         areaArr.push([v.geometry.x, v.geometry.y, 1]);
       });
-      console.log("areaArr???", areaArr);
       switchHeatMap(true, "k1", areaArr, 0, 2);
     },
     // 获取项目数据

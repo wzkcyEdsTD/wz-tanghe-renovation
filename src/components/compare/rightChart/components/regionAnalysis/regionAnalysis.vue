@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     selectChange(e) {
-      console.log('selectChange', e)
       this.drawBar(e)
     },
     drawBar(regionCode) {

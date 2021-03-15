@@ -141,7 +141,6 @@ export default {
       // 监听左键点击事件
       handler.setInputAction((e) => {
         const pick = window.earth.scene.pick(e.position);
-        console.log("pick", pick);
         if (!pick || !pick.id) return;
         if (typeof pick.id == "string") {
           const [_TYPE_, _SMID_, _NODEID_] = pick.id.split("@");
@@ -188,7 +187,6 @@ export default {
                 });
                 setTimeout(() => {
                   this.$refs.searchDetail.getdata(this.bufferQueryData);
-                  console.log("bufferQueryData", this.bufferQueryData);
                 }, 500);
               }
             }
@@ -225,7 +223,6 @@ export default {
       this.$bus.$on("cesium-layer-switch", ({ type, value }) => {
         //  底图切换
         if (type == "yx") {
-          console.log("yx", value, ServiceUrl.SWImage, this.imagelayer);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
           this.datalayer.white && (this.datalayer.white.show = false);
@@ -254,7 +251,6 @@ export default {
           window.currentMapType = "yx";
         } else {
           // this.removeAll();
-          console.log("vector", value, ServiceUrl.DataImage);
           this.imagelayer[2018] && (this.imagelayer[2018].show = false);
           this.imagelayer[2019] && (this.imagelayer[2019].show = false);
           this.imagelayer["roadLine"] &&
@@ -568,8 +564,6 @@ export default {
     // 画缓冲区
     async drawProjectCircle({ geometry }, id) {
 
-      console.log('drawProjectCirclegeometry', geometry)
-      console.log('drawProjectCircleid', id)
       // 清除原有图形
       this.removeProjectCircle();
       const { x, y } = geometry;

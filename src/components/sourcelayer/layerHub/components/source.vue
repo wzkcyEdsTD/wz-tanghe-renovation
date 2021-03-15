@@ -78,7 +78,6 @@ export default {
     }
   },
   mounted() {
-    // console.log('mounted???', this.currentSource)
   },
   created() {
   },
@@ -99,7 +98,6 @@ export default {
       let resultList = []
       let colorList = ["#52D1FE", "#047DF6", "#8FEF8B", "#6852FE"]
       let list = this.sourceMap[this.currentSource]
-      console.log('drawPie', this.currentSource, this.sourceMap, list)
       list.forEach((item, index) => {
         let district = item.attributes.DISTRICT
         if(data[district]) {
@@ -395,8 +393,6 @@ export default {
       this.searchFilter();
     },
     searchFilter() {
-      // console.log('searchFilter111', this.sourceMap)
-      // console.log('searchFilter222', this.currentSource)
       let allSearchList = this.sourceMap[this.currentSource]
       allSearchList = allSearchList.filter(item => {
         return item.attributes.NAME.length

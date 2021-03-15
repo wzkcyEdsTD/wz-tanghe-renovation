@@ -50,7 +50,6 @@ export default {
     const temp = getDate();
     this.date = temp.split("data")[0];
     this.times = temp.split("data")[1];
-    console.log("时间",this.date,this.times);
     setInterval(() => {
       const temp = getDate();
       this.date = temp.split("data")[0];

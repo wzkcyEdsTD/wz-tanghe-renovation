@@ -79,7 +79,6 @@ export default {
         eventListeners: {
           processCompleted: async (res) => {
             const fields = await getIserverFields(src, datasetName);
-            // console.log('fields', fields)
             treeDrawTool(this, res, node, fields, fn);
           },
           processFailed: (msg) => console.log(msg),
@@ -94,7 +93,6 @@ export default {
       let nodeDetail = Object.assign(JSON.parse(node.serivcePath), {id: node.id})
       if (checked) {
         this.selectedSourceList.push(node.label)
-        console.log('selectedSourceList', this.selectedSourceList)
         if (~node.label.indexOf('项目')) this.$parent.showSign = true
         if (node.label == '视频' || node.label == '全景' || node.label == '绿道断点' || node.label == '项目') {
           if (node.label == '视频') {

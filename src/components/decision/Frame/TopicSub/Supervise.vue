@@ -81,7 +81,6 @@ export default {
     eventRegsiter() {
       this.$bus.$off("set-supervise");
       this.$bus.$on("set-supervise", ({ feature }) => {
-        console.log("feature", feature);
         // this.$refs.Supervise.fixData(feature);
         this.initData(feature.attributes.RESOURCE_ID);
       });
@@ -90,7 +89,6 @@ export default {
       let res = await getProjectDetail({ id });
       if (res.code === 200) {
         this.detailData = res.result;
-        console.log("detailData", this.detailData);
         this.getCommentList(id);
         this.showSupervise = true;
       }
@@ -102,7 +100,6 @@ export default {
       });
       if (res.code === 200) {
         this.commentList = res.result.records;
-        console.log("commentList", this.commentList);
       }
     },
   },

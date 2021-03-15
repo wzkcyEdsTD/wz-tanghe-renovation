@@ -72,7 +72,6 @@ export default {
     },
   },
   mounted() {
-    console.log('query', this.$route.query)
     this.getVerifyImg()
   }
 };

@@ -155,7 +155,6 @@ export default {
         let point = this._drawPoint(position);
         // this.tempEntities.push(point);
 
-        console.log('onePoints', this.onePoints)
         this.showDrawInfo = true
         this.showInput = true
         this.pointHandler.destroy(); //关闭事件句柄
@@ -218,12 +217,6 @@ export default {
         // tooltip.style.display = "none";
         // tooltip.innerHTML = "左键单击绘制,右键结束绘制";
 
-        // console.log('linePoints', this.linePoints)
-        // console.log('tempArrLENGTH', tempArr.length)
-        // console.log('tempEntities', this.tempEntities)
-        // console.log('datasource', this.datasource)
-        // let delArr = this.tempEntities.slice(Number(`-${tempArr.length}`))
-        // console.log('delArr', delArr)
         this.tempEntities.forEach(item => {
           if (item.type == 'point') {
             this.datasource.entities.removeById(item.data.id)
@@ -318,12 +311,9 @@ export default {
             this._drawPolygon(tempArr);
             // this.tempEntities.push(tempArr);
 
-            // let delArr = this.tempEntities.slice(Number(`-${tempArr.length}`))
-            // console.log('delArr', delArr)
             this.tempEntities.forEach(item => {
               this.datasource.entities.removeById(item.data.id)
             })
-            // console.log('polygonPoints', this.polygonPoints)
             this.tempEntities = []
             this.polygonPoints.push(tempArr)
             this.showDrawInfo = true
@@ -352,10 +342,7 @@ export default {
       return polygonGeometry;
     },
     recall() {
-      console.log('datasource', this.datasource)
-      console.log('entities', this.datasource.entities._entities._array)
       let lastEntity = this.datasource.entities._entities._array.slice(-1)[0]
-      console.log('lastEntity', lastEntity)
       this.datasource.entities.remove(lastEntity)
       if (~lastEntity.name.indexOf('点')) {
         this.onePoints.pop()
@@ -381,7 +368,6 @@ export default {
       })
     },
     destroyAll() {
-      console.log('tempEntities', this.tempEntities)
       this.tempEntities.forEach(item => {
         item.data.show = false
         window.earth.entities.removeById(item.data.id)
@@ -405,9 +391,6 @@ export default {
     },
     async submit() {
       this.destroyAll()
-      console.log('onePoints', this.onePoints)
-      console.log('linePoints', this.linePoints)
-      console.log('polygonPoints', this.polygonPoints)
 
       let listArr = []
       this.onePoints.forEach(item => {
@@ -463,8 +446,6 @@ export default {
       }
     },
     async query() {
-      console.log('startDate', this.startDate)
-      console.log('endDate', this.endDate)
       let res = await queryPlotList({
         startTime: this.startDate,
         endTime: this.endDate,
@@ -477,7 +458,6 @@ export default {
           this.$set(item, 'checked', false)
           return item
         })
-        console.log(this.historyList)
       }
     },
     async handleCheckedChange(val, node) {

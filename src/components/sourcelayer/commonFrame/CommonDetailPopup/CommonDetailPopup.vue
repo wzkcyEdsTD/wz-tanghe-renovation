@@ -431,9 +431,7 @@ export default {
     //         // tempObj[time] = [photoStr]
     //         tempObj[time] = [`/static/images/${this.forceEntity.type}/${photoStr}`]
     //       }
-    //       console.log('tempObj!!!!', tempObj)
     //       let arr = Object.values(tempObj).reverse()
-    //       console.log('arr!!!', arr);
     //       return arr
     //     }
     //   } else {
@@ -517,7 +515,6 @@ export default {
      */
     // getForceEntity(forceEntity) {
     //   this.forceEntity = forceEntity;
-    //   console.log('aaa', forceEntity)
     // },
     /**
      *  框体移动
@@ -569,7 +566,6 @@ export default {
         let arr = [];
         let qjStr =
           this.forceEntity.attributes.QJ || this.forceEntity.attributes.ZBQJ;
-        console.log("qjStr", qjStr, index);
         if (~qjStr.indexOf(";")) {
           arr = qjStr.split(";");
         } else {
@@ -577,7 +573,6 @@ export default {
         }
         this.QJURL = arr[index];
       }
-      console.log("QJURL", this.QJURL);
       this.showQJ = true;
     },
     closeQJ() {
@@ -631,7 +626,6 @@ export default {
 
     // 跳转详情
     async goDetail(entity) {
-      console.log('entity', entity)
       this.$parent.showSign = false;
       this.$parent.showMapTool = false;
       if (entity.type === "quanjin") {
@@ -690,7 +684,6 @@ export default {
     // },
 
     initRtmp(src) {
-      console.log("initRtmp");
       this.JKVideo = undefined;
       this.JKVideo = new Aliplayer(
         {
@@ -705,7 +698,6 @@ export default {
           isLive: true,
         },
         (player) => {
-          console.log("播放器创建");
           player.mute();
           player.play();
         }

@@ -198,7 +198,6 @@ export default {
   methods: {
     // 获取选中对象
     getForceEntity(entity) {
-      console.log('ccc', entity)
       // this.name = entity.name;
       // this.forceEntity = entity;
       // this.infoShow = true;
@@ -215,36 +214,13 @@ export default {
       if (res.code === 200) {
         this.infoShow = true;
         this.detailData = res.result;
-        console.log("detailData", this.detailData);
         this.currentData = {
           overallViews: res.result.overallViews,
           videos: res.result.videos,
           photos: res.result.photos
         }
-        console.log("currentData", this.currentData);
       }
-
-      // this.formatData("PHOTO", "photo");
-      // this.formatData("JGT", "photo");
-      // this.formatData("QJSLT", "thumbs");
-      // this.formatData("QJ", "overview");
-      // this.formatData("SP", "video");
     },
-
-    // 组装数据
-    // formatData(attr, key) {
-    //   const that = this;
-    //   if (this.forceEntity.attributes && this.forceEntity.attributes[attr]) {
-    //     let attrVal = this.forceEntity.attributes[attr];
-    //     if (!that.currentData[key]) that.currentData[key] = [];
-    //     if (~attrVal.indexOf(";")) {
-    //       let tmp = attrVal.split(";");
-    //       that.currentData[key] = that.currentData[key].concat(tmp);
-    //     } else {
-    //       this.currentData[key] = that.currentData[key].concat([attrVal]);
-    //     }
-    //   }
-    // },
 
     // 关闭详情
     closeInfo() {

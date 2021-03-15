@@ -460,7 +460,6 @@ export default {
 
     // 获取选中对象
     getForceEntity(entity) {
-      console.log("aaa", entity);
       if (entity.attributes) {
         this.resourceType = entity.attributes.RESOURCE_TYPE;
         let id = entity.attributes.RESOURCE_ID;
@@ -498,7 +497,6 @@ export default {
       if (res.code === 200) {
         this.infoShow = true;
         this.detailData = res.result;
-        console.log("detailData", this.detailData);
         this.fixData();
         this.getCommentList();
         if (this.resourceType == "greenway_all") {
@@ -549,7 +547,6 @@ export default {
             this.finalData[time].photos = [item.path];
           }
         });
-      console.log("finalData!!!!!!!!", this.finalData);
       this.finalList = Object.values(this.finalData);
       this.finalList.sort((a, b) => {
         if (a.date < b.date) {
@@ -560,10 +557,8 @@ export default {
           return 0;
         }
       });
-      console.log("finalList", this.finalList);
       if (this.finalList.length) {
         this.currentData = this.finalList[this.currentIndex];
-        console.log('currentData', this.currentData)
       }
     },
 
@@ -656,7 +651,6 @@ export default {
       }
     },
     currentShow(val) {
-      console.log('??????', val)
       if (val != "videos") {
         const video = document.getElementById("video");
         if (video) video.pause();

@@ -185,7 +185,6 @@ export default {
         window.earth.scene,
         this.position
       );
-      // console.log('pointToWindow', pointToWindow)
       if (
         this.forcePosition.x !== pointToWindow.x ||
         this.forcePosition.y !== pointToWindow.y
@@ -296,7 +295,6 @@ export default {
           })
         }
       });
-      console.log('gogogo', this.analyzeData)
       this.drawPie();
     },
     // 创建datasource
@@ -332,7 +330,6 @@ export default {
       }
     },
     closePopup() {
-      console.log("888");
       this.$parent.$refs.SpaceTool.currentTool = 0;
       this.$parent.$refs.SpaceTool.$refs.measureTools.clearGauge();
       this.position = {};

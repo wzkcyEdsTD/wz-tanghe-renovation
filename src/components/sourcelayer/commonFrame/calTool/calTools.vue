@@ -132,23 +132,16 @@ export default {
           var positions = result.positions;
           var points = [];
           positions.forEach((item) => {
-            // console.log('item', item)
             var cartesian3 = new Cesium.Cartesian3(item.x, item.y, item.z);
             var cartographic = ellipsoid.cartesianToCartographic(cartesian3);
-            // console.log("cartographic", cartographic);
             var lat = Cesium.Math.toDegrees(cartographic.latitude);
-            // console.log("lat", lat);
             var lng = Cesium.Math.toDegrees(cartographic.longitude);
-            // console.log("lng", lng);
             points.push(new SuperMap.Geometry.Point(lng, lat));
           });
-          // console.log("points", points);
           let centerPosition = this.getCenterPoint(points)
-          console.log('centerPosition', centerPosition)
           var linearRings = new SuperMap.Geometry.LinearRing(points);
           var region = new SuperMap.Geometry.Polygon([linearRings]);
           let res = await this.fetchFromDataSets(region);
-          console.log("uuu", res);
           this.$bus.$emit("areaAnalyze", { position: centerPosition, result: res });
         }
       });
@@ -248,7 +241,6 @@ export default {
       return { x: x, y: y };
     },
     fetchFromDataSets(geometry) {
-      console.log('geometry', geometry)
       return new Promise((resolve, reject) => {
         const getFeaturesByGeometryService = new SuperMap.REST.GetFeaturesByGeometryService(
           ServiceUrl.FEATUREMVT,

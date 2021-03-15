@@ -480,7 +480,6 @@ export default {
         },
         on: {
           slideChangeTransitionEnd: () => {
-            console.log("slideChangeTransitionEnd!!", this.currentShow);
             if (this.currentShow == "sp") {
               this.$refs.video && this.$refs.video.forEach((item) => {
                 item.pause();
@@ -529,7 +528,6 @@ export default {
     getForceEntity(forceEntity) {
       this.$parent.showSign = false;
       this.$parent.showMapTool = false;
-      console.log("aaa", forceEntity);
       if (forceEntity.attributes) {
         this.isImportant = forceEntity.attributes.IS_IMPORTANT == "1" ? true : false;
         this.resourceType = forceEntity.attributes.resourceType || forceEntity.attributes.RESOURCE_TYPE
@@ -564,7 +562,6 @@ export default {
       if (res.code === 200) {
         this.isShow = true;
         this.detailData = res.result
-        console.log('detailData', this.detailData)
         this.formatData()
         this.projectId = this.detailData.extraId;
         if (this.resourceType=='project_all' && this.detailData.overallViews && this.detailData.overallViews.length) {
@@ -623,7 +620,6 @@ export default {
           this.finalData[time].photo = [item.path];
         }
       })
-      // console.log("finalData!!!!!!!!", this.finalData);
       this.finalList = Object.values(this.finalData);
       this.finalList.sort((a, b) => {
         if (a.date < b.date) {
@@ -634,7 +630,6 @@ export default {
           return 0
         }
       })
-      console.log("finalList", this.finalList);
       if (this.finalList.length) {
         this.currentData = this.finalList[this.currentIndex];
       }
@@ -671,7 +666,6 @@ export default {
       !this.$parent.showMapTool && (this.$parent.showMapTool = true)
     },
     openQJ(index) {
-      console.log('showLarge', this.showLarge)
       this.closeSP();
       this.closeViewer();
       if (this.showLarge) {
@@ -724,7 +718,6 @@ export default {
     },
     handlePlay(e) {
       this.closeViewer();
-      console.log("handlePlay", e);
       e.target.pause()
       if (this.showLarge) {
         this.$bus.$emit("change-rightContent", {

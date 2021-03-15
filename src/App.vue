@@ -113,10 +113,8 @@ export default {
       //4320*1280
       let screenWidth = document.body.clientWidth
       let screeHeight = document.body.clientHeight
-      // console.log('screenWidth!!!!', screenWidth);
       if(screenWidth>4000 && screeHeight>1000){
         window.showLarge = true
-        console.log('showLarge', window.showLarge)
       }else {
         window.showLarge = false
       }
@@ -141,7 +139,6 @@ export default {
       }
     },
     initRtmp() {  // aliplayer方式
-      console.log('initRtmp')
       this.video = undefined;
       this.video = new Aliplayer(
         {
@@ -156,7 +153,6 @@ export default {
           isLive: true,
         },
         (player) => {
-          console.log("播放器创建");
           player.mute();
           player.play();
         }
@@ -168,7 +164,6 @@ export default {
     eventRegsiter() {
       this.$bus.$off("change-screen");
       this.$bus.$on("change-screen", ({ value }) => {
-        console.log('changeScreen!!!!!!!!', value)
         if (value) {
           document.getElementById('header').style.width = '55%'
           document.getElementById('content').style.width = '55%'
@@ -188,7 +183,6 @@ export default {
         if (type == 'jk') {
           this.initRtmp()
           // this.playerOptions.sources[0].src = this.showSrc
-          // console.log('fuckplayer', this.player)
           // this.player.play()
         }
       })

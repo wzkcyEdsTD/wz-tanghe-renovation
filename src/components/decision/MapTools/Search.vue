@@ -142,14 +142,12 @@ export default {
           eventListeners: {
             processCompleted: async (res) => {
               const features = res.result.features;
-              console.log('features~~~~~~~~~~~~~', features)
               if (features.length) {
                 // this.addressResultShow = false
                 this.moreShow = true
                 this.addressResults = []
                 this.fixData(features);
               } else {
-                console.log('addressAPI')
                 this.addressQuery()
               }
               this.resultShow = true;
@@ -165,7 +163,6 @@ export default {
     async addressQuery() {
       this.addressResults = []
       const { records } = await getAddressList(this.input);
-      console.log('records!!!!', records)
       // this.addressResultShow = true
       this.addressResults = records
     },
@@ -216,7 +213,6 @@ export default {
 
     // 结果点击
     itemClick(item) {
-      console.log('item', item)
       this.resultShow = false;
       const { x, y } = item.geometry;
 

@@ -315,7 +315,6 @@ export default {
       }
     },
     itemClick(item) {
-      console.log("itemClick!!!???", item);
       // const { x, y } = item.geometry;
 
       // // 定位图标，详情变换
@@ -341,7 +340,6 @@ export default {
     },
     getdata() {
       let temp = this.aroundData
-      console.log('aroundData', temp)
       let name = this.forceEntity.name;
       this.$nextTick(() => {
         this.questionQjList = temp["th_spatial_all"];

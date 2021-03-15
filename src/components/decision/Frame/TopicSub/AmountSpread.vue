@@ -78,7 +78,6 @@ export default {
         tag: year,
       });
       if (res.code == 200) {
-        console.log('aaaaaaaa', res.result)
         let index = res.result.findIndex((item) => {
           return item.name == "指挥部";
         });
@@ -93,7 +92,6 @@ export default {
             return 0;
           }
         });
-        console.log('bbbbb', this.amountData)
       }
     },
     async getAoumtList(year) {
@@ -116,7 +114,6 @@ export default {
       switchHeatMap(false, "k4");
       switchHeatMap(false, "k5");
       const { result } = await this.fetchProjectData();
-      console.log("resultttt", result);
       let smallHeatArr = [];
       let bigHeatArr = [];
       result.features.forEach((v) => {
@@ -137,8 +134,6 @@ export default {
           }
         }
       });
-      console.log("smallHeatArr???", smallHeatArr);
-      console.log("bigHeatArr???", bigHeatArr);
       if (this.currentYear == 2020) {
         switchHeatMap(true, "k2", smallHeatArr, 30, 3000);
         switchHeatMap(true, "k3", bigHeatArr, 3000, 300000);

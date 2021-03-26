@@ -1,10 +1,10 @@
 /*
  * @Author: eds
  * @Date: 2020-08-11 20:39:44
- * @LastEditTime: 2020-09-11 16:46:13
- * @LastEditors: eds
+ * @LastEditTime: 2021-03-26 10:23:42
+ * @LastEditors: Please set LastEditors
  * @Description:
- * @FilePath: \wz-city-culture-tour\src\config\server\mapConfig.js
+ * @FilePath: \wz-tanghe-renovation\src\config\server\mapConfig.js
  */
 export const ServiceUrl = {
   // 温州白模
@@ -28,7 +28,8 @@ export const ServiceUrl = {
   DataImage: {
     // white: "http://172.168.3.183:8090/iserver/services/map-agscachev2-TuCeng/rest/maps/图层",
     // white: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YJSGBZB2019CGCS2000/rest/maps/YJ_SG_BZB_2019_CGCS2000",
-    white: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YJSGBZBDemD2019CGCS2000/rest/maps/YJ_SG_BZB_DemD_2019_CGCS2000",
+    // white: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YJSGBZBDemD2019CGCS2000/rest/maps/YJ_SG_BZB_DemD_2019_CGCS2000",
+    white: "http://10.36.245.203:8090/iserver/services/map-agscachev2-JYFCGCS2000/rest/maps/JYF_CGCS2000",
     // black: "http://172.168.3.183:8090/iserver/services/3D-dsj/rest/realspace/datas/DSJ_CGCS2000_SW",
     black: "http://10.36.245.203:8090/iserver/services/map-agscachev2-YJDSJCGCS2000/rest/maps/YJ_DSJ_CGCS2000"
   },
